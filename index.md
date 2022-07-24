@@ -12,7 +12,7 @@ permalink: /
 <span class="pi">.</span> <span class="s"></span>
 
 
-<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="s"> ~/.yml███ ███████</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="s"> ~/.yml███</span></code></pre></figure>
 
 
 
