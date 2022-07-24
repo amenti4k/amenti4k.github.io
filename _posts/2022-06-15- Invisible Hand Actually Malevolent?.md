@@ -15,6 +15,7 @@ categories:
 
 <center><src="https://i1.wp.com/www.skwigly.co.uk/wp-content/uploads/2011/07/still7.jpg"></center>
 
+<img src="assets/images/moloch_1.png" alt="hi" class="inline"/>
 <p>
 Moloch is about the triumph of incentives over values. The triumph of instrumental goals over terminal goals. The Nash-Equilibrium where the system is at a steady state is Moloch. The source of most evil. A trap where people can't get out of as they are forced to think and act locally. Falling prey to the competitive forces that maximize individual outcomes, instead of preferring cooperation to submit to the god of our values. Moloch appears at any point when multiple agents have similar levels of power and different goals. Moloch exemplifies unfortunate competitive dynamics. 
 </p>
@@ -60,6 +61,8 @@ Do Moloch and Eula co-exist? Aren’t they one? An enforcer god(Moloch) for the 
 </p>
 
 <center><src="https://upload.wikimedia.org/wikipedia/commons/9/98/Moloch_the_god.gif"></center>
+
+<img src="assets/images/moloch_2.gif" alt="hi" class="inline"/>
 
 # Summary of Initial Passage 
 
