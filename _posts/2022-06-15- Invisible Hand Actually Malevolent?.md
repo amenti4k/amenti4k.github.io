@@ -11,11 +11,11 @@ categories:
 
 
 # Invisible Hand Actually Malevolent?
-## A Review of Meditations on Moloch
+## A Review of Meditations on Moloch!
 
-<center><src="https://i1.wp.com/www.skwigly.co.uk/wp-content/uploads/2011/07/still7.jpg"></center>
+<img width="1280" alt="Screen Shot 2022-07-24 at 1 38 19 AM" src="https://user-images.githubusercontent.com/55615576/180635529-d7ece215-163e-497d-8802-368f479c2d58.png">
 
-<img src="assets/images/moloch_1.png" alt="hi" class="inline"/>
+
 <p>
 Moloch is about the triumph of incentives over values. The triumph of instrumental goals over terminal goals. The Nash-Equilibrium where the system is at a steady state is Moloch. The source of most evil. A trap where people can't get out of as they are forced to think and act locally. Falling prey to the competitive forces that maximize individual outcomes, instead of preferring cooperation to submit to the god of our values. Moloch appears at any point when multiple agents have similar levels of power and different goals. Moloch exemplifies unfortunate competitive dynamics. 
 </p>
@@ -63,29 +63,35 @@ Do Moloch and Eula co-exist? Aren’t they one? An enforcer god(Moloch) for the 
 <center><src="https://upload.wikimedia.org/wikipedia/commons/9/98/Moloch_the_god.gif"></center>
 
 <img src="assets/images/moloch_2.gif" alt="hi" class="inline"/>
+  
+<img width="450" alt="Screen Shot 2022-07-24 at 1 39 24 AM" src="https://user-images.githubusercontent.com/55615576/180635563-7f2fb60e-9ae7-48c6-8748-88ab2d3c822b.png">
+
 
 # Summary of Initial Passage 
 
 **Introducing The Beast**
-<p>In Part I, the essay situates the main issue/character at play Moloch by illustrating him through Allen Ginsberg's Poem and multipolar traps that exist within society. In response to C.S Lewis' question "What does it? Earth could be fair, and all men glad and wise. Instead we have prisons, smokestacks, asylums...Sphinx of cement...eats up their imagination? The poem responds "Moloch does it" This part characterizes the theme of the essay by introducing us to Moloch -- the humanized version of civilization that we can almost "see". Through Bostrom's example of a dictator-less dystopia, Alexander introduces a lack of strong coordination mechanisms. From a god's-eye-view, we can optimize systems(especially ones filled with hardships with simple agreements, however, no agent within the system is able to "effect the transition without great risk to themselves".
+<p>
+  In Part I, the essay situates the main issue/character at play Moloch by illustrating him through Allen Ginsberg's Poem and multipolar traps that exist within society. In response to C.S Lewis' question "What does it? Earth could be fair, and all men glad and wise. Instead we have prisons, smokestacks, asylums...Sphinx of cement...eats up their imagination? The poem responds "Moloch does it" This part characterizes the theme of the essay by introducing us to Moloch -- the humanized version of civilization that we can almost "see". Through Bostrom's example of a dictator-less dystopia, Alexander introduces a lack of strong coordination mechanisms. From a god's-eye-view, we can optimize systems(especially ones filled with hardships with simple agreements, however, no agent within the system is able to "effect the transition without great risk to themselves".
 </p>
 
 <p>
-To further illustrate these coordination issues, Alexander uses 10 real-world examples of multipolar traps: The Prisoner's Dilemma, Fish-Farming Story (one sneaky farmer will find a way to not pay for treating the shared pond, and the entire system follows), The Malthusian Trap (rats on an island are happy and “play music” until resources start being depleted by overpopulation becoming hard to exist, let alone play music), The Two-Income Trap (having a second job becomes the norm, without increasing quality of life if everyone does it), Agriculture is a less enjoyable way of living, but we are overpopulated so we need it, Arms Race (esp. expensive nuclear standoffs leading to heavy overspending of budgets that could go to better use), Cancer (only certain human cells overpopulating killing the host itself), and The "race to the bottom" where politics are pushed toward being more competitive than optimal for development of the society it leads. 
+  To further illustrate these coordination issues, Alexander uses 10 real-world examples of multipolar traps: The Prisoner's Dilemma, Fish-Farming Story (one sneaky farmer will find a way to not pay for treating the shared pond, and the entire system follows), The Malthusian Trap (rats on an island are happy and “play music” until resources start being depleted by overpopulation becoming hard to exist, let alone play music), The Two-Income Trap (having a second job becomes the norm, without increasing quality of life if everyone does it), Agriculture is a less enjoyable way of living, but we are overpopulated so we need it, Arms Race (esp. expensive nuclear standoffs leading to heavy overspending of budgets that could go to better use), Cancer (only certain human cells overpopulating killing the host itself), and The "race to the bottom" where politics are pushed toward being more competitive than optimal for development of the society it leads. 
 </p>
 
 <p>
-Also other categories of multipolar traps where competition is regulated by an exterior source, i.e. social stigmas. Education - current methods are bad, but there is social signaling at play that perpetuates the system forward. Science - funding research, peer-reviews, and statistical significance tests are flawed, but rigor reduces the incentives a scientist gets from the previous. mentioned methods. Government Corruption. Congress - "From a god's-eye-view, every Congressperson ought to think only of the good of the nation. From within the system, you do what gets you elected."
+  Also other categories of multipolar traps where competition is regulated by an exterior source, i.e. social stigmas. Education - current methods are bad, but there is social signaling at play that perpetuates the system forward. Science - funding research, peer-reviews, and statistical significance tests are flawed, but rigor reduces the incentives a scientist gets from the previous. mentioned methods. Government Corruption. Congress - "From a god's-eye-view, every Congressperson ought to think only of the good of the nation. From within the system, you do what gets you elected."
 </p>
 
 **Questioning Our Motives**
+  
 <p>
-In this part Scott questions why as evolved and cognizant humans we fall to these traps. Answer – incentives hard-coded. Expands on why it's hard to switch these incentives. Due to these competitions everyone's "relative status is about the same as before, but everyone's absolute status is worse than before." Incentives drive us collectively and they're built in analogy of terrain to determine the shape of the river. Although building canals by altering terrains is possible, it's hard nonetheless. Incentives are hard to change -- especially from the hard coded ones of humanity. It's because of these incentives that things like Vegas, that doesn't optimize civilization, but "exists because of a quick in dopaminergic reward circuit", exist.
+  In this part Scott questions why as evolved and cognizant humans we fall to these traps. Answer – incentives hard-coded. Expands on why it's hard to switch these incentives. Due to these competitions everyone's "relative status is about the same as before, but everyone's absolute status is worse than before." Incentives drive us collectively and they're built in analogy of terrain to determine the shape of the river. Although building canals by altering terrains is possible, it's hard nonetheless. Incentives are hard to change -- especially from the hard coded ones of humanity. It's because of these incentives that things like Vegas, that doesn't optimize civilization, but "exists because of a quick in dopaminergic reward circuit", exist.
 </p>
 
 **Retardants Of Our Downfall**
+  
 <p>
-Given the beast and our inability to resist it, how have we not bottomed out yet. Part 3 discusses this by nominating reasons for a deceleration of our downfall. Well if everything seems rather bleak, what holds us from our incentives charging us rapidly downhill? "Why do things not degenerate..." Three basic reasons for the slowed, but inevitable, downfall.
+  Given the beast and our inability to resist it, how have we not bottomed out yet. Part 3 discusses this by nominating reasons for a deceleration of our downfall. Well if everything seems rather bleak, what holds us from our incentives charging us rapidly downhill? "Why do things not degenerate..." Three basic reasons for the slowed, but inevitable, downfall.
 Excess Resources - we haven't reached the critical breaking point the Mathusalan rats experienced yet.
 Physical Limitations - there's literal physical limits to how far we can run downhill (eg. #of babies a woman can bear)
 Utility Maximization - "We've been thinking in terms of preserving values versus winning competitions, and expecting optimizing for the latter to destroy the former." However, fulfilling utilities sometimes need values to be optimized - although the equilibrium is fragile. eg. CSR to be a good firm. Greed doesn't bear capitalism, capitalism bears greed in people...
@@ -93,27 +99,32 @@ Coordination - Although the lack of coordination is the main reason of these tra
 </p>
 
 **Tech Is An Accelerant**
-<p>
-In this part, Alexander takes away the slight bit of hope that these 4 brakes introduce to slow your descent by introducing a new dimension, time. Additionally, Alexander points out at the acceleration of tech to fasten the blow on this dimension with glim dystopian futures where tech/ai eliminates each of the four brakes in Part. 3.
+
+  <p>
+  In this part, Alexander takes away the slight bit of hope that these 4 brakes introduce to slow your descent by introducing a new dimension, time. Additionally, Alexander points out at the acceleration of tech to fasten the blow on this dimension with glim dystopian futures where tech/ai eliminates each of the four brakes in Part. 3.
 </p>
 
 <p>
-Well we'll reach these multipolar traps -- even if slow. Time is a relative, but key scale. Time is thus a dimension worth discussing. Time is further pushed by accelerated growth in technology. We can break the brakes in part 3, by reducing/removing physical limitations, for example. Tech deduces utility maximization as there is reduced need for human values, and coordination is unlocked to a new level by tech. Alexander further dramatizes the dimension of time and exasperation with technology by using a.i. dystopian futures. “The last value we have to sacrifice is being anything at all, having the lights on inside. With sufficient technology we will be "able" to give up even the final spark.”
+  Well we'll reach these multipolar traps -- even if slow. Time is a relative, but key scale. Time is thus a dimension worth discussing. Time is further pushed by accelerated growth in technology. We can break the brakes in part 3, by reducing/removing physical limitations, for example. Tech deduces utility maximization as there is reduced need for human values, and coordination is unlocked to a new level by tech. Alexander further dramatizes the dimension of time and exasperation with technology by using a.i. dystopian futures. “The last value we have to sacrifice is being anything at all, having the lights on inside. With sufficient technology we will be "able" to give up even the final spark.”
 </p>
 
 **Once The Genie's Out The Box, There's No Going Back.**
-<p>
-Gnon - nature, and its god - operates within Newton's third law of action necessitating a reaction. Gnon is basically Nick Land's version of Moloch. Violating these nature's laws through civilization leads to Gnon's wrath and our downfall. Gnon is a punishing god with no escape. 
+
+  <p>
+  Gnon - nature, and its god - operates within Newton's third law of action necessitating a reaction. Gnon is basically Nick Land's version of Moloch. Violating these nature's laws through civilization leads to Gnon's wrath and our downfall. Gnon is a punishing god with no escape. 
 
 **Reality Is Seemingly Sad**
-<p>
-The future is bleak, and Gnon is just another exemplification of Moloch. Submitting to them and following the "natural order of things" isn't going to make you "free". There is no order! It's always downfall.
+  
+  <p>
+  The future is bleak, and Gnon is just another exemplification of Moloch. Submitting to them and following the "natural order of things" isn't going to make you "free". There is no order! It's always downfall.
 
+    
 **Alternatives To Inevitable Downfall?**
 <p>
-So what now? Given that Moloch/Gnon or whatever wants us, and everything we value (i.e. art, science, love, philosophy, consciousness) dead, defeating them should be a high priority. Alluding to Bostrom's Superintelligence whereby the design of an intelligent machine will create a feedback loop of out-intellegenting itself. Given our action plan should be designing computers/intelligence that is smarter than us, but still keeps human values. But contrary to hubris where expecting god to wall us off if we submit to him, this Alexander proposes a transhumanist movement that is "rather actionable.” Remove God from the picture entirely. As he puts it, "I am a transhumanist because I do not have enough hubris not to try to kill God."
+  So what now? Given that Moloch/Gnon or whatever wants us, and everything we value (i.e. art, science, love, philosophy, consciousness) dead, defeating them should be a high priority. Alluding to Bostrom's Superintelligence whereby the design of an intelligent machine will create a feedback loop of out-intellegenting itself. Given our action plan should be designing computers/intelligence that is smarter than us, but still keeps human values. But contrary to hubris where expecting god to wall us off if we submit to him, this Alexander proposes a transhumanist movement that is "rather actionable.” Remove God from the picture entirely. As he puts it, "I am a transhumanist because I do not have enough hubris not to try to kill God."
 </p>
 
 **Un-incentivized Incentivizer!**
-<p>Elua – the god of "... free love and all soft and fragile things" and mostly human values still exists. Even if the god seems weaker without worshippers, there he exists. As long as Moloch, the god where you can throw things you love to be granted power, exists, the offer is irresistable. A stronger god where we should help.
+  <p>
+    Elua – the god of "... free love and all soft and fragile things" and mostly human values still exists. Even if the god seems weaker without worshippers, there he exists. As long as Moloch, the god where you can throw things you love to be granted power, exists, the offer is irresistable. A stronger god where we should help.
 </p>
