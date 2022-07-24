@@ -6,7 +6,7 @@ permalink: /
 <span class="pi">:</span> <span class="s">████</span>
 <span class="pi">:</span> <span class="s">████</span>
 
-<span class="na">~/.yml</span><span class="pi">:</span> <span class="s">████████</span>
+<span class="na">~/.yml████</span><span class="pi">:</span> <span class="s">████████</span>
 
 <span class="pi">:</span> <span class="s">████████</span>
 
