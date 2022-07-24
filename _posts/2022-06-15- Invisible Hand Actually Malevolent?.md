@@ -10,7 +10,6 @@ categories:
 ***If you’re not familiar with the original [SSC essay](https://web.archive.org/web/20200223133407/http:/slatestarcodex.com/2014/07/30/meditations-on-moloch/), read my [summary below](#summary-of-initial-passage) before reading my thoughts on top here…***
 
 
-### My Multi Word Header
 # Invisible Hand Actually Malevolent?
 ## A Review of Meditations on Moloch!
 
