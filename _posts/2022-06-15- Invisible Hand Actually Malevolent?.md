@@ -13,7 +13,7 @@ categories:
 # Invisible Hand Actually Malevolent?
 ## A Review of Meditations on Moloch
 
-<img width="1000" alt="Screen Shot 2022-07-19 at 5 35 19 PM" src="https://user-images.githubusercontent.com/55615576/179859776-2c89962d-b147-4030-8530-167a391737c2.png">
+<img src="assets/images/moloch 1.png">
 
 Moloch is about the triumph of incentives over values. The triumph of instrumental goals over terminal goals. The Nash-Equilibrium where the system is at a steady state is Moloch. The source of most evil. A trap where people can't get out of as they are forced to think and act locally. Falling prey to the competitive forces that maximize individual outcomes, instead of preferring cooperation to submit to the god of our values. Moloch appears at any point when multiple agents have similar levels of power and different goals. Moloch exemplifies unfortunate competitive dynamics. 
 
@@ -47,7 +47,7 @@ A lot of the rationalist community is focused on AI, which makes sense in that l
 Do Moloch and Eula co-exist? Aren’t they one? An enforcer god(Moloch) for the prize (Eula). Would we want Eula’s values if we didn’t strive for it? Anyways, let's finish off with this beautiful deception by Dostoevsky on the pessimism of utopia:
 "Shower upon him every earthly blessing, drown him in a sea of happiness, so that nothing but bubbles of bliss can be seen on the surface; give him economic prosperity, such that he should have nothing else to do but sleep, eat cakes and busy himself with the continuation of his species, and even then out of sheer ingratitude, sheer spite, man would play you some nasty trick. He would even risk his cakes and would deliberately desire the most fatal rubbish, the most uneconomical absurdity, simply to introduce into all this positive good sense his fatal fantastic element. It is just his fantastic dreams, his vulgar folly that he will desire to retain, simply in order to prove to himself--as though that were so necessary - that men still are men and not the keys of a piano"- Notes from Underground
 
-<img width="1000" alt="Screen Shot 2022-07-19 at 5 37 51 PM" src="https://user-images.githubusercontent.com/55615576/179860070-20e7a435-ba98-4f85-9b79-9704cda9b7a9.png">
+<img src="assets/images/moloch 2.gif">
 
 # Summary of Initial Passage 
 
