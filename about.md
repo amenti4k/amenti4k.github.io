@@ -2,6 +2,8 @@
 layout: page
 title: /about
 permalink: /about/
+https://contrary.com){:target="_blank"}
+
 ---
 
 <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="s"> ~/about.yml</span></code></pre></figure>
@@ -20,3 +22,4 @@ Currently data-scientist @meta
 ----
 
 <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="s"><br> ~/presentation.txt</span></code></pre></figure>
+https://contrary.com){:target="_blank"}
