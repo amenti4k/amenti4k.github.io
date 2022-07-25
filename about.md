@@ -8,7 +8,7 @@ permalink: /about/
 
 <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="s"> ~/about.yml</span></code></pre></figure>
 
-<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na"></span><span class="pi"></span> <span class="s">█Amenti ███ Kenea</span><span class="blink">█ </span>
+<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na"></span><span class="pi"></span> <span class="blink">█ </span><span class="s">Amenti ███ Kenea</span><span class="blink">█ </span>
 <span class="na">alias</span><span class="pi">:</span> <span class="s">x4k</span>
 <span class="na">residence</span><span class="pi">:</span> <span class="s">San Francisco,████████, US</span>
 <span class="na">twitter</span><span class="pi">:</span> <span class="s">[@amenti4k](twitter.com/amenti4k){:target="_blank"}</span>
