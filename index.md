@@ -3,15 +3,10 @@ title: switchboard operator
 layout: home
 permalink: /
 ---
-<span class="pi"></span> <span class="s">████</span>
+
 <span class="blink">>████</span>
 <span class="pi"></span> <span class="s">███</span>
-<span class="blink">>███</span>
-
-<span class="na">.</span><span class="pi"></span> <span class="s"></span>
-
-<span class="pi">.</span> <span class="s"></span>
-
+<span class="blink">>██</span>
 
 <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="s"> ~/.yml███</span></code></pre></figure>
 
