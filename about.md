@@ -21,7 +21,4 @@ Interned as a researcher/data-scientist @raiseme, microsoft, contrary-capital, &
 
 Currently data-scientist @meta.
 
-<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="s"><br> ~/presentation.txt</span></code></pre></figure><span class="s">            </span><span class="blink">█</span>
-
-
-
+<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="s"><br> ~/presentation.txt</span></code></pre></figure> <span class="blink">█ ████████ </span>
