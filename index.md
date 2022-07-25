@@ -16,6 +16,7 @@ permalink: /
 # yo
 
 Corner of the internet where I will practice harnessing thoughts coherently before they float away.
+Some are things I'm learning in public...
 
 
 # > Posts

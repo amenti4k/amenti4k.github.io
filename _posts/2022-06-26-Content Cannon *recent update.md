@@ -44,6 +44,8 @@ Enjoy - and watch the video as it’s an essential piece.
 <iframe width="560" height="315" src="https://www.youtube.com/embed/uCEv2NMr46E" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 
+{% include youtubePlayer.html id="PCKkvTTzkck&ab" %}
+
 ## Ruminations OFW 
 
 ***I was high when thinking of this, anyways, ways one spends their Sundays is an indication of where one is in life.***

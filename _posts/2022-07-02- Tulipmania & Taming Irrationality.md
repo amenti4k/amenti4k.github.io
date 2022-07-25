@@ -9,6 +9,7 @@ categories:
 My quest to understand market speculation —rather than relying on lazy quips about “animal spirits” or irrationality.
 
 ![Children given to Moloch](/assets/images/tulip/tulip_1.png)
+
 ## “Tulpenwoede” An Intro
 
 Once in the Netherlands, tulips were worth more than real estate. Legend has it that in the 1630s, a sailor was thrown in a Dutch jail for eating a tulip, thinking it was an onion. At the time, the sailor’s gluttony would have fed an entire crew.
