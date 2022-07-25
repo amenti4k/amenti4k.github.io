@@ -4,8 +4,9 @@ layout: home
 permalink: /
 ---
 <span class="pi"></span> <span class="s">████</span>
-
+<span class="blink">>████</span>
 <span class="pi"></span> <span class="s">███</span>
+<span class="blink">>███</span>
 
 <span class="na">.</span><span class="pi"></span> <span class="s"></span>
 
