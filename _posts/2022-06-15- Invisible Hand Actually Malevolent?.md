@@ -61,11 +61,8 @@ Do Moloch and Eula co-exist? Aren’t they one? An enforcer god(Moloch) for the 
 *"Shower upon him every earthly blessing, drown him in a sea of happiness, so that nothing but bubbles of bliss can be seen on the surface; give him economic prosperity, such that he should have nothing else to do but sleep, eat cakes and busy himself with the continuation of his species, and even then out of sheer ingratitude, sheer spite, man would play you some nasty trick. He would even risk his cakes and would deliberately desire the most fatal rubbish, the most uneconomical absurdity, simply to introduce into all this positive good sense his fatal fantastic element. It is just his fantastic dreams, his vulgar folly that he will desire to retain, simply in order to prove to himself--as though that were so necessary - that men still are men and not the keys of a piano"*- Notes from Underground
 </p>
 
-<center><src="https://upload.wikimedia.org/wikipedia/commons/9/98/Moloch_the_god.gif"></center>
 
-<img src="assets/images/moloch_2.gif" alt="hi" class="inline"/>
-  
-<img width="450" alt="Screen Shot 2022-07-24 at 1 39 24 AM" src="https://user-images.githubusercontent.com/55615576/180635563-7f2fb60e-9ae7-48c6-8748-88ab2d3c822b.png">
+![Biblical Moloch](/assets/images/moloch_2.gif)
 
 
 # Summary of Initial Passage 
