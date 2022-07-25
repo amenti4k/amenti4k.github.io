@@ -15,7 +15,7 @@ categories:
 
 <img width="1280" alt="Screen Shot 2022-07-24 at 1 38 19 AM" src="https://user-images.githubusercontent.com/55615576/180635529-d7ece215-163e-497d-8802-368f479c2d58.png">
 
-![Children given to Moloch](/assets/images/moloch_1.png)
+![Children given to Moloch](/assets/images/moloch_1.png | width=10) 
 
 <p>
 Moloch is about the triumph of incentives over values. The triumph of instrumental goals over terminal goals. The Nash-Equilibrium where the system is at a steady state is Moloch. The source of most evil. A trap where people can't get out of as they are forced to think and act locally. Falling prey to the competitive forces that maximize individual outcomes, instead of preferring cooperation to submit to the god of our values. Moloch appears at any point when multiple agents have similar levels of power and different goals. Moloch exemplifies unfortunate competitive dynamics. 
