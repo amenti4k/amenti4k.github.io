@@ -25,4 +25,4 @@ Currently data-scientist @meta.
 
 
 
-<span class="blink">█ ████████ ███████ believe█ █ ██████ ████  █ ██████████ █ █ ███ █ █████████████████ ████████</span>
+<span class="s">                                                     </span><span class="blink">█ ████████ </span>
