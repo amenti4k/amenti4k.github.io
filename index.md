@@ -1,20 +1,15 @@
 ---
-title: switchboard operator
+title: Amenti's Home 
 layout: home
 permalink: /
 ---
-
-<span class="blink">>████</span>
-<span class="pi"></span> <span class="s">███</span>
-<span class="blink">>██</span>
-
 <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="s"> ~/.yml███ 
 </span></code></pre></figure>
+<span class="blink">>██</span>
 
-# yoo
 
-Corner of the internet where I will practice harnessing thoughts coherently before they float away.
-Some are things I'm learning in public...
+# Yoo
+Corner of the internet where I harnessing thoughts and learning in public. 
 
 <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="s"> 
                                                             አ
@@ -26,6 +21,9 @@ Some are things I'm learning in public...
                                                             ነ
                                                             ኣ</span></code></pre></figure>
 
+
+<span class="pi"></span> <span class="s">█</span>
+<span class="blink">>█  █</span>
 # > Posts
 
 
