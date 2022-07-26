@@ -7,23 +7,17 @@ permalink: /
 </span></code></pre></figure>
 <span class="blink">>██</span>
 
-
-# Yoo
-Corner of the internet where I harnessing thoughts and learning in public. 
-
 <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="s"> 
-                                                            አ
-                                                            መ  
-                                                            ን   ኩ
-                                                            ቲ   መ 
-                                                                 ራ
-                                                            ቀ
-                                                            ነ
-                                                            ኣ</span></code></pre></figure>
+አ
+መ  
+ን   ኩ
+ቲ   መ 
+     ራ
+ቀ
+ነ
+ኣ</span></code></pre></figure> Corner of the internet where I harnessing thoughts and learning in public. 
+                                                                                  <span class="blink">>██</span>
 
-
-<span class="pi"></span> <span class="s">█</span>
-<span class="blink">>█  █</span>
 # > Posts
 
 
