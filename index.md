@@ -16,7 +16,7 @@ permalink: /
 Corner of the internet where I will practice harnessing thoughts coherently before they float away.
 Some are things I'm learning in public...
 
-<span class="blink">><figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="s"> 
+<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="s"> 
                                                             አ
                                                             መ  
                                                             ን   ኩ
@@ -24,7 +24,7 @@ Some are things I'm learning in public...
                                                                  ራ
                                                             ቀ
                                                             ነ
-                                                            ኣ</span></code></pre></figure> ██</span>
+                                                            ኣ</span></code></pre></figure>
 
 # > Posts
 
