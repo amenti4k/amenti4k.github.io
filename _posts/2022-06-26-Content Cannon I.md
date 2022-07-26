@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Content Cannon"
+title:  "Content Cannon I"
 date:   2022-03-10 01:42:45 +0100
 categories:
 ---
@@ -8,7 +8,11 @@ categories:
 ==========================================
 # Content Cannon Of The Week (OTW) 
 
-## Blogs/Pods OFW
+[Blogs/Pods](##Blogs/Pods)
+[Songs](##Songs)
+[Other](##Other-Findings)
+
+## Blogs/Pods
 
 [Beware of the Casual Polymath](https://applieddivinitystudies.com/2020/09/28/polymath/)
 
@@ -20,7 +24,7 @@ The blog argues against the presence of the casual polymath and how the generali
 
 > So go read your SaaS/Meta-Science/Aerospace blog and revel in the genuine joy of intellectual curiosity. As Tyler Cowen would say, I’m just here to lower the status of polymaths.
 
-## Songs OFW
+## Songs
 
 **Chance The Rapper**
 
@@ -46,7 +50,7 @@ Enjoy - and watch the video as it’s an essential piece.
 
 {% include youtubePlayer.html id="PCKkvTTzkck&ab" %}
 
-## Ruminations OFW 
+## Other Findings
 
 ***I was high when thinking of this, anyways, ways one spends their Sundays is an indication of where one is in life.***
 
