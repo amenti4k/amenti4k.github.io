@@ -3,9 +3,8 @@ title: Amenti's Home
 layout: home
 permalink: /
 ---
-</span></code></pre></figure>
 <span class="blink">>██</span>
-
+<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="s"> ~/.yml███ 
 
 # Yoo
 Corner of the internet where I harnessing thoughts and learning in public. 
@@ -22,8 +21,9 @@ Corner of the internet where I harnessing thoughts and learning in public.
                                                             ኣ</span></code></pre></figure> 
 
 <span class="blink">> █</span>
+
 # > Posts
-<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="s"> ~/.yml███ 
+
 
 
 
