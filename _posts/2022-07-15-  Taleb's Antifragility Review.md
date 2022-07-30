@@ -11,9 +11,17 @@ categories:
 
 **Content**
 [My Take](##my-take)
+
+
 [Summary](##summary)
+
+
 [Summarizing My Summary LOL](##summarizing-my-summary-LOL)
+
+
 [Random Quotes](##random-quotes…)
+
+
 ## My Take
 
 In this book Antifragility, Naseem Taleb introduces a new paradigm of looking at risk — a very optimistic one. Taleb approaches risk by focusing on the strength of our infrustrucutre to face them instead of predicting it.  The concept is a thoughtful and well explained way of convincing you to embrass nature’s stressors. At the core, it argues, with chaos, things can fall, so become resilient, or better yet feed from it to become better. Antifragility is a fun and interesting read. That is, even if you question what Taleb is saying—and sometimes you really should —he forces you to examine your own biases and assumptions.
