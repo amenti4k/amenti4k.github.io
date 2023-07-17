@@ -11,14 +11,14 @@ permalink: /
 Corner of the internet where I harnessing thoughts and learning in public. 
 
 <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="s"> 
-                                                            አ
-                                                            መ  
-                                                            ን   ኩ
-                                                            ቲ   መ 
-                                                                 ራ
-                                                            ቀ
-                                                            ነ
-                                                            ኣ</span></code></pre></figure>      
+                      አ
+                      መ  
+                      ን   ኩ
+                      ቲ   መ 
+                           ራ
+                      ቀ
+                      ነ
+                      ኣ</span></code></pre></figure>      
 
 <span class="blink">> █</span>
 
