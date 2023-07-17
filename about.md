@@ -10,7 +10,6 @@ permalink: /about/
 
 <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na"></span><span class="pi"></span> <span class="blink">█ </span><span class="s">Amenti█ Kenea</span><span class="blink">█ </span>
 <span class="na">residence</span><span class="pi">:</span> <span class="s">San Francisco,</span><span class="blink">████████</span><span class="s">,US</span>
-<span class="na">twitter</span><span class="pi">:</span> <span class="s">@amenti4k</span>
 
 ----
 
