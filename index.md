@@ -8,7 +8,7 @@ permalink: /
 
 # Yoo
 
-Corner of the internet where I harnessing thoughts and learning in public. 
+my internet patch of land 
 
 <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="s"> 
                       አ
