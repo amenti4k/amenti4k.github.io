@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Content Cannon I"
+title:  "content cannon I"
 date:   2022-03-10 01:42:45 +0100
 categories:
 ---
