@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Spotify Projects"
+title:  "spotify projects"
 date:   2022-06-20 3:20:45 +0100
 categories:
 ---
