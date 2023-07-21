@@ -4,16 +4,28 @@ layout: default
 
 {{ content }}
 {% assign contentwonl = content | strip_newlines %} {% unless contentwonl == ""  %} <br /> {% endunless %} <!-- add line break if there is any content -->
-  <head>
+<head>
   <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
-  </head>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 0 20%; /* This gives 20% padding on the left and right ends, creating a large border effect */
+    }
+    ul {
+      text-align: center; /* This centers the text within the unordered list */
+    }
+  </style>
+</head>
 {%- if site.posts.size > 0 -%}
-  <ul>
-    {%- for post in site.posts -%}
-    <li>
-      {%- assign date_format = "%Y-%m-%d" -%}
-      [ {{ post.date | date: date_format }} ] <a href="{{ post.url | relative_url }}">{{ post.title | escape }}</a>
-    </li>
-    {%- endfor -%}
-  </ul>
+<ul>
+  {%- for post in site.posts -%}
+  <li>
+    {%- assign date_format = "%Y-%m-%d" -%}
+    [ {{ post.date | date: date_format }} ] <a href="{{ post.url | relative_url }}">{{ post.title | escape }}</a>
+  </li>
+  {%- endfor -%}
+</ul>
 {%- endif -%}
