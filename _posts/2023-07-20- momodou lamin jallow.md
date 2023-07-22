@@ -35,3 +35,8 @@ Post outside, we're campers, come to your uni campus
 Splash him, John the Baptist, I don't need no accomplice
 Maybe only a driver, turn that man to a diver
 That day, it was raining, put on the windscreen wiper" 
+
+
+
+Also unrelated to Hus, but general music commentary -- it's truly magical how three biggest artists in the world can combine forces to make a song THAT boring. Hopefully Utopia isn't that bad. 
+
