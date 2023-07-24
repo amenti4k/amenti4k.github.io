@@ -10,7 +10,7 @@ I feel personally attached because of the following reasons:
 - I'm Ethiopian and love the traditional African sounds/instruments
 - I love it when words are emphasized and you can not only hear the words but feel them
 
-But he's had a three album now; 
+But he's had a three album RUNN now; 
 
 **1. Common Sense**
 "Came in a black Benz, left in a white one
