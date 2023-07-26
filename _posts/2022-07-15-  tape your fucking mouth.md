@@ -23,9 +23,9 @@ Little did I know, at the time, what led to mouth breathing was what seemed like
 
 1. People constantly telling me that I breath heavy and audibly when sitting. I just excused it as having bad sinuses. Eventually,  one of my friends found it idistracting, and showed me the meme below. 
     
-    ![Nasal Breathing](/assets/images/breathing.png)
+![Nasal Breathing](/assets/images/breathing.png)
     
-2. I knew I sort of snored, but I wasn’t aware of the magnitude until getting to live with two other friends in London flat. Looking back, having roomates that were light-sleepers was a blessing in disguise. They were waking up muliple times causee I snored so hard. We looked at possible reasons for my snoring, and I tried nasal decongestant sprays and nasal strip that didn’t help. 
+3. I knew I sort of snored, but I wasn’t aware of the magnitude until getting to live with two other friends in London flat. Looking back, having roomates that were light-sleepers was a blessing in disguise. They were waking up muliple times causee I snored so hard. We looked at possible reasons for my snoring, and I tried nasal decongestant sprays and nasal strip that didn’t help. 
 </p>
 <p>
 Having three sleep monitoring apps on my phone tracking the consistency of my snoring, I noticed the sounds mainly came from my mouth. So combining the noise’s source, and the two factors above, I decided, fuck it, I’m taping my mouth shut when I go to bed and see what happens. 
