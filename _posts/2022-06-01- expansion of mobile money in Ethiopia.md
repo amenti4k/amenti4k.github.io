@@ -1,4 +1,4 @@
-###Summary
+### Summary
 
 I looked at Ethiopia’s current business climate for mobile payment solutions that is financially
 inclusive. The current reach of mobile money has left the unbanked population that would’ve
@@ -9,7 +9,7 @@ Then, I look at the economic viability, market size, and economic considerations
 relationship established on the telecom giant’s infrastructure. Finally, I look at how current sociocultural complexes could be navigated and benefit from the solutions suggested. \
 
 
-###Introduction
+### Introduction
 Saying Ethiopia's economy is cash-dominated would be an understatement. Only 31% of
 the population has bank accounts, making financial services in rural areas close to impossible.
 Borrowing money and other financial services take place through mediocre Micro-Financing
@@ -23,7 +23,7 @@ incumbents would create great potential. Along with the right endorsement and or
 reach unbanked regions, improve saving, and fuel growth in Ethiopia. 1
 Regulatory Environment
 
-###Regulatory Environment
+### Regulatory Environment
 Since coming to power mid-2018, Ethiopia's Prime Minister Abiy has promised to "openup" the economy and loosen its monopoly on state-owned enterprises. (A) Ethiopia's highly
 regulated macroeconomic environment includes state ownership of the sole telecommunication
 provider – EthioTel. The commitment to liberalization started with partial privatization EthioTel
@@ -44,7 +44,7 @@ solutions. One is the ability to prioritize unbanked regions, as urban regions a
 their userbase. Second, these firms participate in developing social values of saving and investing.
 All the while, transaction trend data could be used to inform policy decision making in the future. 
 
-###Economic Considerations
+### Economic Considerations
 Ethiopia's economy has been growing with double digits over the past 10 years and will
 continue to thrive in 2021-24. (A) It also has high levels of FDI that will incentivize the
 government forward with similar reformist agendas. However, operational mobile payment
@@ -73,7 +73,7 @@ great benefit. To compete with more prominent incumbents (M-Birr and CBE-Birr), 
 should form coalitions and agree with banks. That would strengthen their reach and potential to
 support transactions backed with assets.
 
-###Social and Cultural Considerations
+### Social and Cultural Considerations
 Ethiopians are generally skeptical of innovation. They have a hard time trusting newer institutions,
 and legacy ones prevail – even with sub-par offerings. A past survey done in rural banked
 communities indicates that most people would rather walk an average of 3-4 miles for bank
