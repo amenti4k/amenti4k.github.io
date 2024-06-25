@@ -1,0 +1,52 @@
+<div class="music-player">
+  {% for track in site.data.current_tracks limit:3 %}
+    <div class="track">
+      <img src="{{ track.album_art }}" alt="{{ track.title }} album art" class="album-art" data-preview-url="{{ track.preview_url }}">
+      <div class="track-info">
+        <a href="https://open.spotify.com/track/{{ track.id }}" class="track-title">{{ track.title }}</a>
+        <a href="https://open.spotify.com/artist/{{ track.artist_id }}" class="track-artist">{{ track.artist }}</a>
+      </div>
+    </div>
+  {% endfor %}
+</div>
+
+<style>
+  .music-player {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+  }
+  .track {
+    width: 100px;
+    text-align: center;
+  }
+  .album-art {
+    width: 100px;
+    height: 100px;
+    cursor: pointer;
+  }
+  .track-info {
+    margin-top: 5px;
+  }
+  .track-title, .track-artist {
+    display: block;
+    text-decoration: none;
+    color: #333;
+    font-size: 0.8em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .track-artist {
+    color: #777;
+  }
+</style>
+
+<script>
+document.querySelectorAll('.album-art').forEach(img => {
+  img.addEventListener('click', function() {
+    const audio = new Audio(this.dataset.previewUrl);
+    audio.play();
+  });
+});
+</script>
