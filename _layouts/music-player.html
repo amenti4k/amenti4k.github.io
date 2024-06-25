@@ -1,13 +1,5 @@
-<div class="music-player">
-  {% for track in site.data.current_tracks limit:3 %}
-    <div class="track">
-      <img src="{{ track.album_art }}" alt="{{ track.title }} album art" class="album-art" data-preview-url="{{ track.preview_url }}">
-      <div class="track-info">
-        <a href="https://open.spotify.com/track/{{ track.id }}" class="track-title">{{ track.title }}</a>
-        <a href="https://open.spotify.com/artist/{{ track.artist_id }}" class="track-artist">{{ track.artist }}</a>
-      </div>
-    </div>
-  {% endfor %}
+<div class="music-player" id="musicPlayer">
+  <!-- Track containers will be dynamically added here -->
 </div>
 
 <style>
@@ -43,10 +35,55 @@
 </style>
 
 <script>
-document.querySelectorAll('.album-art').forEach(img => {
-  img.addEventListener('click', function() {
-    const audio = new Audio(this.dataset.previewUrl);
-    audio.play();
+const trackUrls = [
+  "https://open.spotify.com/embed/track/3w2PO4US2zMxFDxEjWT9yB",
+  "https://open.spotify.com/embed/track/3mHO1J6kfiArjBo1zhLFGP",
+  "https://open.spotify.com/embed/track/0zVk3uuV9UhxAt48F3OL12"
+];
+
+function extractTrackId(url) {
+  return url.split('/').pop().split('?')[0];
+}
+
+async function fetchTrackInfo(trackId) {
+  const response = await fetch(`https://api.spotify.com/v1/tracks/${trackId}`, {
+    headers: {
+      'Authorization': 'Bearer YOUR_ACCESS_TOKEN'
+    }
   });
-});
+  return await response.json();
+}
+
+async function setupMusicPlayer() {
+  const playerContainer = document.getElementById('musicPlayer');
+
+  for (const url of trackUrls) {
+    const trackId = extractTrackId(url);
+    try {
+      const trackInfo = await fetchTrackInfo(trackId);
+      const trackElement = document.createElement('div');
+      trackElement.className = 'track';
+      trackElement.innerHTML = `
+        <img src="${trackInfo.album.images[0].url}" alt="${trackInfo.name} album art" class="album-art" data-preview-url="${trackInfo.preview_url}">
+        <div class="track-info">
+          <a href="${trackInfo.external_urls.spotify}" class="track-title">${trackInfo.name}</a>
+          <a href="${trackInfo.artists[0].external_urls.spotify}" class="track-artist">${trackInfo.artists[0].name}</a>
+        </div>
+      `;
+      playerContainer.appendChild(trackElement);
+
+      const albumArt = trackElement.querySelector('.album-art');
+      albumArt.addEventListener('click', function() {
+        if (this.dataset.previewUrl) {
+          const audio = new Audio(this.dataset.previewUrl);
+          audio.play();
+        }
+      });
+    } catch (error) {
+      console.error('Error fetching track info:', error);
+    }
+  }
+}
+
+setupMusicPlayer();
 </script>
