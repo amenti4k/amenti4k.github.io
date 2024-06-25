@@ -2,30 +2,40 @@
 layout: default
 ---
 
-{{ content }}
-{% assign contentwonl = content | strip_newlines %} {% unless contentwonl == ""  %} <br /> {% endunless %} <!-- add line break if there is any content -->
-<head>
-  <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
-  <style>
-    body {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 0 20%; /* This gives 20% padding on the left and right ends, creating a large border effect */
+<div class="home">
+    <h2>Recent Posts</h2>
+    <ul class="post-list">
+        {% for post in site.posts limit:5 %}
+        <li>
+            <h3>
+                <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+            </h3>
+            <p class="post-meta">{{ post.date | date: "%B %d, %Y" }}</p>
+            {% if post.description %}
+                <p>{{ post.description }}</p>
+            {% else %}
+                <p>{{ post.excerpt | strip_html | truncate: 160 }}</p>
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+    <p><a href="{{ "/archive/" | relative_url }}">View all posts</a></p>
+</div>
+
+<style>
+    .post-list {
+        list-style-type: none;
+        padding: 0;
     }
-    ul {
-      text-align: center; /* This centers the text within the unordered list */
+    .post-list li {
+        margin-bottom: 30px;
     }
-  </style>
-</head>
-{%- if site.posts.size > 0 -%}
-<ul>
-  {%- for post in site.posts -%}
-  <li>
-    {%- assign date_format = "%Y-%m-%d" -%}
-    [ {{ post.date | date: date_format }} ] <a href="{{ post.url | relative_url }}">{{ post.title | escape }}</a>
-  </li>
-  {%- endfor -%}
-</ul>
-{%- endif -%}
+    .post-list h3 {
+        margin-bottom: 5px;
+    }
+    .post-meta {
+        color: #777;
+        font-size: 0.9em;
+        margin-top: 0;
+    }
+</style>
