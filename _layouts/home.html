@@ -3,23 +3,16 @@ layout: default
 ---
 
 <div class="home">
-    <h2>Recent Posts</h2>
     <ul class="post-list">
-        {% for post in site.posts limit:5 %}
+        {% for post in site.posts %}
         <li>
             <h3>
                 <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
             </h3>
-            <p class="post-meta">{{ post.date | date: "%B %d, %Y" }}</p>
-            {% if post.description %}
-                <p>{{ post.description }}</p>
-            {% else %}
-                <p>{{ post.excerpt | strip_html | truncate: 160 }}</p>
-            {% endif %}
+            <p class="post-meta">{{ post.date | date: "%Y-%m-%d" }}</p>
         </li>
         {% endfor %}
     </ul>
-    <p><a href="{{ "/archive/" | relative_url }}">View all posts</a></p>
 </div>
 
 <style>
@@ -28,14 +21,15 @@ layout: default
         padding: 0;
     }
     .post-list li {
-        margin-bottom: 30px;
+        margin-bottom: 15px;
     }
     .post-list h3 {
-        margin-bottom: 5px;
+        margin-bottom: 0;
+        font-size: 1.1em;
     }
     .post-meta {
         color: #777;
-        font-size: 0.9em;
+        font-size: 0.8em;
         margin-top: 0;
     }
 </style>
