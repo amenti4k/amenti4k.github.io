@@ -9,74 +9,92 @@
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             line-height: 1.6;
             color: #333;
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 20px;
+            margin: 0;
+            padding: 0;
             display: flex;
-            flex-direction: column;
             min-height: 100vh;
         }
-        header {
-            text-align: center;
-            margin-bottom: 20px;
+        .sidebar {
+            width: 25%;
+            padding: 20px;
+            background-color: #f5f5f5;
         }
-        h1 {
-            margin-bottom: 10px;
+        .main-content {
+            width: 75%;
+            padding: 20px;
+            overflow-y: auto;
         }
-        nav a {
-            margin: 0 5px;
-            text-decoration: none;
-            color: #0366d6;
+        .post-list {
+            max-width: 800px;
+            margin: 0 auto;
         }
-        main {
-            flex-grow: 1;
+        .post-item {
+            margin-bottom: 0.5rem;
         }
-        footer {
-            text-align: center;
-            margin-top: 20px;
-            font-size: 0.9em;
-            color: #777;
-        }
-        .music-player {
+        .post-title {
+            cursor: pointer;
+            padding: 0.5rem;
+            margin: 0;
+            border-bottom: 1px solid #eee;
             display: flex;
-            justify-content: space-between;
-            margin-bottom: 20px;
-            overflow-x: auto;
-            white-space: nowrap;
+            align-items: center;
+            font-size: 1rem;
+            font-weight: 500;
         }
-        .music-player iframe {
-            margin-right: 10px;
+        .arrow {
+            margin-right: 0.5rem;
+            transition: transform 0.2s ease;
+            display: inline-block;
+        }
+        .arrow.rotated {
+            transform: rotate(90deg);
+        }
+        .post-date {
+            margin-left: auto;
+            font-size: 0.8rem;
+            color: #666;
+            font-weight: normal;
+        }
+        .post-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out, padding 0.5s ease;
+            padding: 0 0.5rem;
+        }
+        .post-content.expanded {
+            max-height: 2000px;
+            padding: 0.5rem;
+            transition: max-height 0.5s ease-in, padding 0.5s ease;
         }
     </style>
 </head>
 <body>
-    <header>
-        <div class="music-player">
-            <iframe src="https://open.spotify.com/embed/track/3w2PO4US2zMxFDxEjWT9yB" width="180" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
-            <iframe src="https://open.spotify.com/embed/track/3mHO1J6kfiArjBo1zhLFGP" width="180" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
-            <iframe src="https://open.spotify.com/embed/track/0zVk3uuV9UhxAt48F3OL12" width="180" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
-        </div>
+    <div class="sidebar">
         <h1>{{ site.title }}</h1>
-        <nav>
-            <a href="{{ "/" | relative_url }}">Home</a>
-            <a href="{{ "/about/" | relative_url }}">About</a>
-        </nav>
-    </header>
-
-    <main>
+        <!-- Include your music player here -->
+        {% include music-player.html %}
+    </div>
+    <div class="main-content">
         {{ content }}
-    </main>
-
-    <footer>
-        <p>&copy; {{ site.time | date: '%Y' }} {{ site.title }}</p>
-    </footer>
-
+    </div>
     <script>
-        document.querySelectorAll('.music-player iframe').forEach(iframe => {
-            iframe.addEventListener('dblclick', function() {
-                window.open(this.src.replace('embed/', ''), '_blank');
-            });
+    function togglePost(element) {
+        const content = element.nextElementSibling;
+        const arrow = element.querySelector('.arrow');
+        const isVisible = content.classList.contains('expanded');
+        
+        document.querySelectorAll('.post-content').forEach(post => {
+            post.classList.remove('expanded');
         });
+        document.querySelectorAll('.arrow').forEach(arr => {
+            arr.classList.remove('rotated');
+        });
+        
+        if (!isVisible) {
+            content.classList.add('expanded');
+            arrow.classList.add('rotated');
+        }
+    }
     </script>
 </body>
 </html>
