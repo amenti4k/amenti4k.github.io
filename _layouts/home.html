@@ -5,8 +5,12 @@ layout: default
 <div class="post-list">
   {% for post in site.posts %}
     <div class="post-item">
-      <h2 class="post-title" onclick="togglePost(this)">{{ post.title }}</h2>
-      <div class="post-content" style="display: none;">
+      <h2 class="post-title" onclick="togglePost(this)">
+        <span class="arrow">›</span>
+        {{ post.title }}
+        <span class="post-date">{{ post.date | date: "%Y-%m-%d" }}</span>
+      </h2>
+      <div class="post-content">
         {{ post.content }}
       </div>
     </div>
@@ -16,16 +20,21 @@ layout: default
 <script>
 function togglePost(element) {
   const content = element.nextElementSibling;
-  const isVisible = content.style.display === 'block';
+  const arrow = element.querySelector('.arrow');
+  const isVisible = content.classList.contains('expanded');
   
-  // First hide all posts
+  // First collapse all posts
   document.querySelectorAll('.post-content').forEach(post => {
-    post.style.display = 'none';
+    post.classList.remove('expanded');
+  });
+  document.querySelectorAll('.arrow').forEach(arr => {
+    arr.classList.remove('rotated');
   });
   
-  // Then show the clicked one if it wasn't visible
+  // Then expand the clicked one if it wasn't visible
   if (!isVisible) {
-    content.style.display = 'block';
+    content.classList.add('expanded');
+    arrow.classList.add('rotated');
   }
 }
 </script>
@@ -35,25 +44,57 @@ function togglePost(element) {
   max-width: 800px;
   margin: 0 auto;
   padding: 20px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
 .post-item {
-  margin-bottom: 20px;
+  margin-bottom: 1rem;
 }
 
 .post-title {
   cursor: pointer;
-  padding: 10px;
+  padding: 1rem;
   margin: 0;
-  border-bottom: 1px solid #eee;
-  transition: background-color 0.2s;
-  
-  &:hover {
-    background-color: #f5f5f5;
-  }
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text-color);
+}
+
+.arrow {
+  margin-right: 0.5rem;
+  transition: transform 0.3s ease;
+  display: inline-block;
+}
+
+.arrow.rotated {
+  transform: rotate(90deg);
+}
+
+.post-date {
+  margin-left: auto;
+  font-size: 0.8rem;
+  color: var(--secondary-text);
+  font-weight: normal;
 }
 
 .post-content {
-  padding: 20px 10px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
+  padding: 0 1rem;
+}
+
+.post-content.expanded {
+  max-height: 2000px;
+  transition: max-height 0.5s ease-in;
+}
+
+:root {
+  --border-color: #eee;
+  --text-color: #333;
+  --secondary-text: #666;
 }
 </style>
