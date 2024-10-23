@@ -12,15 +12,9 @@
   {%- if site.listen_for_clients_preferred_style -%}
     <link rel="stylesheet" type="text/css" href="{{ "/assets/main.css" | relative_url }}">
   {%- else -%}
-    {%- if site.style == 'light' -%}
-      <link rel="stylesheet" type="text/css" href="{{ "/assets/main-light.css" | relative_url }}">
-    {%- elsif site.style == 'hacker' -%}
-      <link rel="stylesheet" type="text/css" href="{{ "/assets/main-hacker.css" | relative_url }}">
-    {%- else -%}
-#<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
-#<link rel="stylesheet" type="text/css" href="{{ "/assets/header.css" | relative_url }}">
-      <link rel="stylesheet" type="text/css" href="{{ "/assets/main-light.csc" | relative_url }}">
-    {%- endif -%}
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+    <link rel="stylesheet" type="text/css" href="{{ "/assets/header.css" | relative_url }}">
+    <link rel="stylesheet" type="text/css" href="{{ "/assets/main-light.css" | relative_url }}">
   {%- endif -%}
 
   {%- if jekyll.environment == 'production' and site.google_analytics -%}
