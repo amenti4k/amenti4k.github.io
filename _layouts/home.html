@@ -16,9 +16,9 @@ layout: default
 <div class="post-list">
   {% for post in site.posts %}
     <div class="post-item" data-tags="{{ post.tags | join: ' ' }}">
-      <h2 class="post-title" onclick="togglePost(this)" id="post-{{ forloop.index }}">
+      <h2 class="post-title" id="post-{{ forloop.index }}">
         <span class="arrow">›</span>
-        {{ post.title }}
+        <a href="{{ post.url | relative_url }}" class="post-link">{{ post.title }}</a>
         <span class="post-date">{{ post.date | date: "%Y-%m-%d" }}</span>
       </h2>
       <div class="post-content">

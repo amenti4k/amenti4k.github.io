@@ -4,12 +4,24 @@ layout: default
 
 <article class="post">
     <h1>{{ page.title }}</h1>
-    <p class="post-meta">{{ page.date | date: "%Y-%m-%d" }}</p>
-
+    <p class="post-meta">
+        {{ page.date | date: "%Y-%m-%d" }}
+        <button onclick="sharePost()" class="share-btn">
+            Share 📤
+        </button>
+    </p>
     <div class="post-content">
         {{ content }}
     </div>
 </article>
+
+<script>
+function sharePost() {
+    const url = window.location.href;
+    navigator.clipboard.writeText(url);
+    alert('Link copied to clipboard!');
+}
+</script>
 
 <style>
     .post h1 {
@@ -36,5 +48,20 @@ layout: default
         .post-content img {
             max-width: 100%;
         }
+    }
+    .share-btn {
+        float: right;
+        background: none;
+        border: 1px solid var(--border-color);
+        padding: 0.3rem 0.8rem;
+        border-radius: 15px;
+        cursor: pointer;
+        font-size: 0.8em;
+        transition: all 0.2s ease;
+    }
+
+    .share-btn:hover {
+        background: var(--text-color);
+        color: white;
     }
 </style>
