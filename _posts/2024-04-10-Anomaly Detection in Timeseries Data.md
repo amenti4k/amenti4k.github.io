@@ -15,7 +15,7 @@ PS: (1) used data like DAU, Funding Rounds, Acquisition Amounts, NYC taxi riders
 
 ### IPYNB Files
 
-[Detection_through_ADTK_+_Isolation_Forest (4).ipynb](Anomaly%20Detection%20in%20Timeseries%20Data%20b72c6e2f838047bf81a0290e714f3d7a/Detection_through_ADTK__Isolation_Forest_(4).ipynb)
+[Detection_through_ADTK_+_Isolation_Forest (4).ipynb](https://nbviewer.org/github/amenti4k/timeseries-anomaly-detection/blob/main/Detection_through_ADTK_+_Isolation_Forest_(4).ipynb)
 
 [Detection_through_Darts.ipynb](Anomaly%20Detection%20in%20Timeseries%20Data%20b72c6e2f838047bf81a0290e714f3d7a/Detection_through_Darts.ipynb)
 
