@@ -1,38 +1,37 @@
+<div class="music-suggestions">
+  <em>song suggestions of the week</em>
+</div>
+
 <div class="music-player" id="musicPlayer">
   <div class="track-circles">
-    <div class="track-circle" onclick="toggleSpotifyEmbed(this)" data-spotify-id="3w2PO4US2zMxFDxEjWT9yB">
+    <div class="track-circle" onclick="window.open('https://open.spotify.com/track/3w2PO4US2zMxFDxEjWT9yB', '_blank')">
       <img src="https://i.scdn.co/image/ab67616d0000b273b1c4b76e23414c9f20242268" alt="Track 1">
-      <div class="spotify-embed" style="display: none;">
-        <iframe src="https://open.spotify.com/embed/track/3w2PO4US2zMxFDxEjWT9yB" width="100%" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
-      </div>
+      <audio id="preview1" src="PREVIEW_URL_1"></audio>
     </div>
-    <div class="track-circle" onclick="toggleSpotifyEmbed(this)" data-spotify-id="3mHO1J6kfiArjBo1zhLFGP">
+    <div class="track-circle" onclick="window.open('https://open.spotify.com/track/3mHO1J6kfiArjBo1zhLFGP', '_blank')">
       <img src="https://i.scdn.co/image/ab67616d0000b273e319baafd16e84f0408af2a0" alt="Track 2">
-      <div class="spotify-embed" style="display: none;">
-        <iframe src="https://open.spotify.com/embed/track/3mHO1J6kfiArjBo1zhLFGP" width="100%" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
-      </div>
+      <audio id="preview2" src="PREVIEW_URL_2"></audio>
     </div>
-    <div class="track-circle" onclick="toggleSpotifyEmbed(this)" data-spotify-id="0zVk3uuV9UhxAt48F3OL12">
+    <div class="track-circle" onclick="window.open('https://open.spotify.com/track/0zVk3uuV9UhxAt48F3OL12', '_blank')">
       <img src="https://i.scdn.co/image/ab67616d0000b273f46b9d202509a8f7384b90de" alt="Track 3">
-      <div class="spotify-embed" style="display: none;">
-        <iframe src="https://open.spotify.com/embed/track/0zVk3uuV9UhxAt48F3OL12" width="100%" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
-      </div>
+      <audio id="preview3" src="PREVIEW_URL_3"></audio>
     </div>
   </div>
 </div>
 
 <style>
-  .music-player {
-    max-width: 800px;
-    margin: 20px auto;
-    padding: 0 20px;
+  .music-suggestions {
+    text-align: center;
+    color: var(--secondary-text);
+    font-size: 0.9em;
+    margin-bottom: 10px;
   }
   
   .track-circles {
     display: flex;
     justify-content: center;
     gap: 20px;
-    margin-bottom: 20px;
+    margin: 10px 0;
   }
   
   .track-circle {
@@ -53,24 +52,17 @@
     height: 100%;
     object-fit: cover;
   }
-  
-  .spotify-embed {
-    margin-top: 10px;
-    width: 100%;
-  }
 </style>
 
 <script>
-function toggleSpotifyEmbed(element) {
-  const embed = element.querySelector('.spotify-embed');
-  const allEmbeds = document.querySelectorAll('.spotify-embed');
-  
-  // Hide all other embeds
-  allEmbeds.forEach(e => {
-    if (e !== embed) e.style.display = 'none';
+document.querySelectorAll('.track-circle').forEach((circle, index) => {
+  const audio = circle.querySelector('audio');
+  circle.addEventListener('mouseenter', () => audio?.play());
+  circle.addEventListener('mouseleave', () => {
+    if (audio) {
+      audio.pause();
+      audio.currentTime = 0;
+    }
   });
-  
-  // Toggle current embed
-  embed.style.display = embed.style.display === 'none' ? 'block' : 'none';
-}
+});
 </script>
