@@ -1,8 +1,8 @@
 ---
 layout: post
-title: "Building a Natural Language to SQL Query Generator with Substrate"
+title: "Robust SQL Query Generator with Substrate"
 description: "An exploration of building a robust system for generating SQL queries from natural language using Substrate and modern LLMs"
-date: 2024-11-05
+date: 2024-06-10
 categories: [data]
 tags: [sql, llm, substrate, python, pydantic, openai]
 ---

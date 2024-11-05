@@ -1,8 +1,8 @@
 ---
 layout: post
-title: "Comprehensive Guide to LLM Evaluation Platforms and Methodologies"
-description: "An in-depth analysis of various LLM evaluation approaches, benchmarks, and their implications for model development and deployment"
-date: 2024-11-05
+title: "Are LLM Eval Benchmarks Pseudo-Science?"
+description: "Comprehensive Guide to LLM Evaluation Platforms and Methodologies"
+date: 2024-03-11
 categories: [machine-learning, llm]
 tags: [ai, data]
 toc: true
