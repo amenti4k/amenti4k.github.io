@@ -1,13 +1,10 @@
 backend:
-  name: git-gateway
+  name: github
+  repo: amenti4k/amenti4k.github.io
   branch: main
-  commit_messages:
-    create: 'Create {{collection}} "{{slug}}"'
-    update: 'Update {{collection}} "{{slug}}"'
-    delete: 'Delete {{collection}} "{{slug}}"'
 
 media_folder: "assets/images/uploads"
-public_folder: "/assets/images/uploads"
+public_folder: "/images/uploads"
 
 collections:
   - name: "posts"

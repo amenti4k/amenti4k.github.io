@@ -67,7 +67,7 @@
             transition: max-height 0.5s ease-in, padding 0.5s ease;
         }
     </style>
-    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    
 </head>
 <body>
     <div class="sidebar">
@@ -97,16 +97,6 @@
         }
     }
     </script>
-    <script>
-        if (window.netlifyIdentity) {
-            window.netlifyIdentity.on("init", user => {
-                if (!user) {
-                    window.netlifyIdentity.on("login", () => {
-                        document.location.href = "/admin/";
-                    });
-                }
-            });
-        }
-    </script>
+   
 </body>
 </html>
