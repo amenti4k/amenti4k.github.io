@@ -37,3 +37,7 @@ style: dark
 #   - vendor/cache/
 #   - vendor/gems/
 #   - vendor/ruby/
+
+# Add to your existing config
+include:
+  - admin
