@@ -1,4 +1,11 @@
- **J Hus** 
+---
+layout: post
+title: "Momodou Lamin Jallow"
+date: 2023-07-20
+tags: [music]
+---
+
+# Momodou Lamin Jallow
 
 
 Go listen to this guy. A true generational talent that's at his peak right now. 

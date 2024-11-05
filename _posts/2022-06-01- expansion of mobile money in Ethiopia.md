@@ -1,3 +1,10 @@
+---
+layout: post
+title: "Expansion of Mobile Money in Ethiopia"
+date: 2022-06-01
+tags: [business]
+---
+
 ### Summary
 
 I looked at Ethiopia’s current business climate for mobile payment solutions that is financially

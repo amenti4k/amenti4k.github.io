@@ -1,4 +1,10 @@
-# Radiooo Project
+---
+layout: post
+title: "Radiooo Project"
+date: 2024-10-01
+tags: [music, misc]
+---
+
 I BUILT AN ONLINE RADIO THAT I UPDATE EVERY 2 DAYS. I love sharing music w friends and wanted a corner on the internet to do that. 
 
 [aava.club/songs](https://aava.club/songs)
@@ -9,7 +15,7 @@ Now it’s more general public consensus. TikTok allows for true virality of a s
 
 [Radio Collection](https://www.are.na/amenti-kenea/radio-iqqpfizfzno)
 
-Current state of streaming and radio: Streaming revolutionised music listening by giving users on-demand access to everything — the opposite of radio. But, over time, streaming has started to look a lot like its predecessor. Streaming services now push algorithmically-generated playlists and ready-made mixes to soundtrack activities, like working out and cooking. Spotify’s AI-powered voice DJ is a lot like listening to a radio DJ provide context on their curated mix of songs. We even have streaming ��stations”! Where is all this heading?
+Current state of streaming and radio: Streaming revolutionised music listening by giving users on-demand access to everything — the opposite of radio. But, over time, streaming has started to look a lot like its predecessor. Streaming services now push algorithmically-generated playlists and ready-made mixes to soundtrack activities, like working out and cooking. Spotify’s AI-powered voice DJ is a lot like listening to a radio DJ provide context on their curated mix of songs. We even have streaming stations”! Where is all this heading?
 
 Given the noise, the true winners can be picked. They’re generally agreed on. It became democratic.
 
@@ -61,5 +67,5 @@ It could be vinyl, cassette, or CD players. Or it can randomly simulate other st
 
 One thing about this musical experience is **I want it to be as fun as humanly possible and interpreted on a computer as it can possibly become. FUN AND CULTURED.**
 
-The theory goes: limited (curation mattered but it was solo dumping,  not essential )→ universal consensus voting (multiple options and choose based on actual democracy) → age of tOo many good options (tell me what I like)
+The theory goes: limited (curation mattered but it was solo dumping, not essential )→ universal consensus voting (multiple options and choose based on actual democracy) → age of tOo many good options (tell me what I like)
 

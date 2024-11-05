@@ -1,3 +1,12 @@
+---
+layout: post
+title: "Paris Spring ‘24 Men’s Quick Reflections"
+date: 2023-07-10
+tags: [fashion]
+---
+
+# Paris Spring ‘24 Men’s Quick Reflections
+
 The most rick a rick show has been since pre pandemic. 
 
 Uncertain future at Lanvin is the re'see the new show? 

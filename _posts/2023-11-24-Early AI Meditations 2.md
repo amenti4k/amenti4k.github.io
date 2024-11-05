@@ -1,4 +1,9 @@
-# Early AI Meditations 2
+---
+layout: post
+title: "Early AI Meditations 2"
+date: 2023-11-24
+tags: [ai]
+---
 
 ## Tweet on my mind
 

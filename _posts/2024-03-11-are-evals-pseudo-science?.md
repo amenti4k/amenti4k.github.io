@@ -4,7 +4,7 @@ title: "Comprehensive Guide to LLM Evaluation Platforms and Methodologies"
 description: "An in-depth analysis of various LLM evaluation approaches, benchmarks, and their implications for model development and deployment"
 date: 2024-11-05
 categories: [machine-learning, llm]
-tags: [evaluation, benchmarks, model-testing, llm-development, ai-safety]
+tags: [ai, data]
 toc: true
 ---
 

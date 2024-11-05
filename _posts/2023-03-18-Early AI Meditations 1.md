@@ -1,3 +1,10 @@
+---
+layout: post
+title: "Early AI Meditations 1"
+date: 2023-03-18
+tags: [ai]
+---
+
 # Early AI Meditations 1
 
 ## Tweet on my mind

@@ -1,6 +1,11 @@
-# Suddenly Popular LLMOps
+---
+layout: post
+title: "Suddenly Popular LLMOps"
+date: 2023-11-03
+tags: [ai]
+---
 
-# LLMops
+# Suddenly Popular LLMOps
 
 Sometimes, all of sudden, micro-markets emerge. They can be triggered by all sorts of things, for example an external change (COVID) or a new technical capability (LLMs). The current LLMOps/PromptOps space is an instructive example. Over the last year, the number of developers experimenting with AI model APIs has 1000X'd.
 

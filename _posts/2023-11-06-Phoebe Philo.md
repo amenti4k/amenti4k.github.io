@@ -1,4 +1,9 @@
-# Phoebe Philo
+---
+layout: post
+title: "Phoebe Philo"
+date: 2023-11-06
+tags: [fashion]
+---
 
 # Phoebe A”cheaper”1 Philo
 

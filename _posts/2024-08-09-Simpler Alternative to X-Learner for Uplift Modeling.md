@@ -3,7 +3,7 @@ layout: post
 title: "Simpler Alternative to X-Learner for Uplift Modeling"
 description: "A guide to the simplified X-learner approach for Uplift modeling, comparing different meta-learner methods for treatment effect estimation"
 date: 2024-09-28
-categories: [machine-learning, causal-inference]
+categories: [data]
 tags: [uplift-modeling, x-learner, meta-learning, python, tutorial]
 ---
 

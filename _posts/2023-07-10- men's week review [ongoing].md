@@ -1,3 +1,10 @@
+---
+layout: post
+title: "Men's Week Review [Ongoing]"
+date: 2023-07-10
+tags: [fashion]
+---
+
 # Vetements
 Guram Gvasalia explained. “But when we still live in the real world, with Apple’s headset yet to be released, we wanted to create a physical object that would give the look and feel of an AI generated image.” The point of the exercise, much like what Jacobs was getting up to with his analog 1980s designs, was to champion the human. “At its core,” Gvasalia continued, “the collection is actually anti-AI, as quality can only be done by human hands.”
 

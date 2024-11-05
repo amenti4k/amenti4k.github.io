@@ -1,13 +1,13 @@
 ---
 layout: post
-title:  "tape your fucking mouth"
+title:  "tape your f***ing mouth"
 date:   2022-07-20 13:30:45 +0100
-categories:
+tags: [misc]
 ---
 #
 ==========================================
 
-# Tape Your Fucking Mouth 
+# Tape Your F***ing Mouth 
 
 ***A Graduation Towards Nasal Breathing.*** 
 

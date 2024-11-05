@@ -1,4 +1,9 @@
-# Anomaly Detection in Timeseries Data
+---
+layout: post
+title: "Anomaly Detection in Timeseries Data"
+date: 2024-04-10
+tags: [data]
+---
 
 ### Description
 

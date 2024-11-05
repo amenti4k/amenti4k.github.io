@@ -1,4 +1,9 @@
-# WTF Are GPUs?
+---
+layout: post
+title: "WTF Are GPUs?"
+date: 2024-02-07
+tags: [business, ai]
+---
 
 *A deep dive into the GPU supply and demand bottleneck that's shaking up AI development.*
 

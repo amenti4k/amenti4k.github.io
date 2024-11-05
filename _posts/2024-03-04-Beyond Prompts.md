@@ -1,4 +1,9 @@
-# Beyond Prompts
+---
+layout: post
+title: "Beyond Prompts"
+date: 2024-03-04
+tags: [ai]
+---
 
 - All I want to do is steering towards acceptable results rather than just tweaking prompts and hoping for the best — a judicious **balance of constraints and freedom**.
 - Finding interaction patterns that give more calibrated control could be key. How can we discover interfaces that unlock deeper and more tailored integrations between users and generative **models beyond sentence prompts?** This could significantly augment creative and knowledge work.

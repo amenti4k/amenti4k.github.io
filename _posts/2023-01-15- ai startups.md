@@ -1,4 +1,11 @@
-**A Hype Cycle Fueled by Excess Dry Powder?**
+---
+layout: post
+title: "A Hype Cycle Fueled by Excess Dry Powder?"
+date: 2023-01-15
+tags: [ai]
+---
+
+# A Hype Cycle Fueled by Excess Dry Powder?
 
 In the ever-evolving world of AI investments, there lies a constant question: are AI-driven businesses truly defensible? Amidst the cacophony of hype, it's crucial to take a stance and investigate the facts. With vector embedding startups as our case study, let's delve into this conundrum and explore whether these businesses hold the key to sustainable growth and profitability.
 

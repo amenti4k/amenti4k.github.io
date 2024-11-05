@@ -2,7 +2,7 @@
 layout: post
 title:  "tulipmania & taming irrationality"
 date:   2022-07-02 13:30:45 +0100
-categories:
+tags: [business]
 ---
 #
 ==========================================

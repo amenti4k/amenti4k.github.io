@@ -1,4 +1,9 @@
-# Glenn Martens - Vanguard of the Modern Silhouette?
+---
+layout: post
+title: "Glenn Martens: Vanguard of the Modern Silhouette?"
+date: 2023-06-04
+tags: [fashion]
+---
 
 # Glenn Martens: Vanguard of the Modern Silhouette?
 

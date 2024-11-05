@@ -1,3 +1,10 @@
+---
+layout: post
+title: "Paris Spring ‘24 Men’s Quick Reflections"
+date: 2023-10-23
+tags: [fashion]
+---
+
 # Paris Spring ‘24 Men’s Quick Reflections
 
 ### The most rick a rick show has been since pre pandemic.

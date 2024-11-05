@@ -2,9 +2,20 @@
 layout: default
 ---
 
+<div class="tag-filter">
+  <span class="tag-label">Filter by:</span>
+  <button class="tag-btn active" data-tag="all">all</button>
+  <button class="tag-btn" data-tag="ai">ai</button>
+  <button class="tag-btn" data-tag="data">data</button>
+  <button class="tag-btn" data-tag="fashion">fashion</button>
+  <button class="tag-btn" data-tag="business">business</button>
+  <button class="tag-btn" data-tag="music">music</button>
+  <button class="tag-btn" data-tag="misc">misc</button>
+</div>
+
 <div class="post-list">
   {% for post in site.posts %}
-    <div class="post-item">
+    <div class="post-item" data-tags="{{ post.tags | join: ' ' }}">
       <h2 class="post-title" onclick="togglePost(this)" id="post-{{ forloop.index }}">
         <span class="arrow">›</span>
         {{ post.title }}
@@ -41,6 +52,25 @@ function togglePost(element) {
     }, 100);
   }
 }
+
+document.querySelectorAll('.tag-btn').forEach(button => {
+  button.addEventListener('click', () => {
+    const tag = button.dataset.tag;
+    
+    // Update active button
+    document.querySelectorAll('.tag-btn').forEach(btn => btn.classList.remove('active'));
+    button.classList.add('active');
+    
+    // Filter posts
+    document.querySelectorAll('.post-item').forEach(post => {
+      if (tag === 'all' || post.dataset.tags.includes(tag)) {
+        post.style.display = '';
+      } else {
+        post.style.display = 'none';
+      }
+    });
+  });
+});
 </script>
 
 <style>
@@ -101,5 +131,25 @@ function togglePost(element) {
   --border-color: #eee;
   --text-color: #333;
   --secondary-text: #666;
+}
+
+.tag-filter {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.tag-btn {
+  background: none;
+  border: 1px solid var(--border-color);
+  padding: 0.5rem 1rem;
+  margin: 0 0.25rem;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tag-btn.active {
+  background: var(--text-color);
+  color: white;
 }
 </style>

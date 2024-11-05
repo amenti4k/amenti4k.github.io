@@ -1,4 +1,9 @@
-# Are Algorithmic Stablecoins Possible? A Deep Dive Into Crypto's Holy Grail
+---
+layout: post
+title: "Are Algorithmic Stablecoins Possible? A Deep Dive Into Crypto's Holy Grail"
+date: 2022-05-01
+tags: [business]
+---
 
 ## TL;DR
 After extensive research and analysis, I conclude that non-collateralized algorithmic stablecoins are possible, but with a major caveat: they need to earn their way to becoming fully algorithmic rather than starting that way from day one. Through analysis of historical attempts, game theory modeling, and statistical validation, I show that the optimal path is starting with partial collateralization and gradually reducing it as market confidence grows - similar to how the US dollar evolved away from the gold standard. FRAX's fractional-algorithmic approach demonstrates this is viable, maintaining remarkable stability while reducing collateral requirements based on market demand.
