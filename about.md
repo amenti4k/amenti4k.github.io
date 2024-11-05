@@ -5,14 +5,24 @@ permalink: /about/
 ---
 
 Amenti Kenea
+
 NYC
+
 ----
+
 Born and raised in Addis Ababa, Ethiopia.
+
 Lived in SF, CA.
+
 University @Minerva living in 7 countries. 
+
 Internships @(raiseme, microsoft, contrary-capital, & facebook)
+
 Currently data-scientist @meta.
-Chronically online. 
+
+Chronically online. Random thoughts on here. 
+
+Follow me on [twitter](https://twitter.com/amenti4k)
 
 
 <style>
