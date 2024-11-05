@@ -12,6 +12,3 @@ plugins:
   - jekyll-feed
 
 style: dark
-
-include:
-  - admin
