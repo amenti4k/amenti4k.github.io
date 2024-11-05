@@ -25,7 +25,8 @@ PS: (1) used data like DAU, Funding Rounds, Acquisition Amounts, NYC taxi riders
 
 ### Mockup
 
-![Screenshot 2024-04-25 at 6.21.57 PM.png](Anomaly%20Detection%20in%20Timeseries%20Data%20b72c6e2f838047bf81a0290e714f3d7a/Screenshot_2024-04-25_at_6.21.57_PM.png)
+![Screenshot 2024-04-25 at 6.21.57 PM.png](https://img.notionusercontent.com/s3/prod-files-secure%2Fc4c0fb6a-3b8e-44a5-b1c4-2c5efdb2d812%2Fa15e3816-9f69-454c-be4d-7b4547f702ed%2FScreenshot_2024-04-25_at_6.21.57_PM.png/size/?exp=1730932491&sig=JuumjJFB5bhDjszsidjtdbHr9Uz_U4uUnNBEJM4V8hE)
+
 
 ### Gists for Visibility
 

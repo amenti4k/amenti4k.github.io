@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "tape your f***ing mouth"
+title:  "Tape Your F***ing Mouth"
 date:   2022-07-20 13:30:45 +0100
 tags: [misc]
 ---

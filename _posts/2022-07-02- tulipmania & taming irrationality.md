@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "tulipmania & taming irrationality"
+title:  "Tulipmania & Taming Irrationality"
 date:   2022-07-02 13:30:45 +0100
 tags: [business]
 ---

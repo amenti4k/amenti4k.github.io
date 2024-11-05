@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "How I'm spending my day monitoring the elections"
+title: "Great Election Conversations on Metaculus"
 date: 2024-11-05
 tags: [ misc]
 ---

@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "taleb's antifragility review"
+title:  "Taleb's Antifragility Review"
 date:   2022-07-15 13:30:45 +0100
 tags: [misc]
 ---

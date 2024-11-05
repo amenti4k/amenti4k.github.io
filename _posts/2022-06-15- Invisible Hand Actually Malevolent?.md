@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "invisible hand actually malevolent?"
+title:  "Invisible Hand Actually Malevolent?"
 date:   2022-06-15 13:30:45 +0100
 tags: [misc]
 ---
