@@ -1,0 +1,71 @@
+---
+layout: default
+---
+
+<div id="auth-container">
+  <div id="login-form">
+    <h2>Enter your email to access research docs</h2>
+    <input type="email" id="email-input" placeholder="Enter your email">
+    <button onclick="verifyEmail()">Submit</button>
+  </div>
+  <div id="content" style="display: none;">
+    {{ content }}
+  </div>
+</div>
+
+<script>
+const allowedEmails = [
+  'amenti4k@gmail.com',
+  'example2@domain.com'
+];
+
+function verifyEmail() {
+  const email = document.getElementById('email-input').value;
+  if (allowedEmails.includes(email)) {
+    document.getElementById('login-form').style.display = 'none';
+    document.getElementById('content').style.display = 'block';
+    localStorage.setItem('researchAccess', email);
+  } else {
+    alert('Access denied. Please contact the administrator.');
+  }
+}
+
+// Check if already authenticated
+document.addEventListener('DOMContentLoaded', () => {
+  const savedEmail = localStorage.getItem('researchAccess');
+  if (savedEmail && allowedEmails.includes(savedEmail)) {
+    document.getElementById('login-form').style.display = 'none';
+    document.getElementById('content').style.display = 'block';
+  }
+});
+</script>
+
+<style>
+#auth-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+#login-form {
+  text-align: center;
+}
+
+input, button {
+  margin: 10px;
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid var(--border-color);
+}
+
+button {
+  cursor: pointer;
+  background: none;
+  transition: all 0.2s ease;
+}
+
+button:hover {
+  background: var(--text-color);
+  color: white;
+}
+</style>
