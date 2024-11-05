@@ -16,13 +16,14 @@ Lived in SF, CA.
 
 University @Minerva living in 7 countries. 
 
-Internships @(raiseme, microsoft, contrary-capital, & facebook)
+Internships @(RaiseMe, Microsoft, Contrary-Capital, & Facebook Messenger)
+[My LinkedIn](https://www.linkedin.com/in/amenti-kenea/)
 
-Currently data-scientist @meta.
+Currently Data-Scientist @Meta Ads Ecosystem
 
 Chronically online. Random thoughts on here. 
 
-Follow me on [twitter](https://twitter.com/amenti4k)
+Follow me on [Twitter](https://twitter.com/amenti4k)
 
 
 <style>
