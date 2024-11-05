@@ -1,9 +1,21 @@
 [build]
   publish = "_site"
-  command = "jekyll build"
+  command = "bundle exec jekyll build"
 
 [[plugins]]
   package = "netlify-plugin-jekyll-cache"
+
+[[plugins]]
+  package = "@netlify/plugin-sitemap"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "interest-cohort=()"
 
 [build.processing]
   skip_processing = false
@@ -14,4 +26,10 @@
   bundle = true
   minify = true
 [build.processing.images]
-  compress = true 
+  compress = true
+
+[dev]
+  command = "bundle exec jekyll serve"
+  targetPort = 4000
+  port = 8888
+  publish = "_site"
