@@ -16,9 +16,9 @@ layout: default
 <div class="post-list">
   {% for post in site.posts %}
     <div class="post-item" data-tags="{{ post.tags | join: ' ' }}">
-      <h2 class="post-title" id="post-{{ forloop.index }}">
+      <h2 class="post-title" onclick="togglePost(this)" id="post-{{ post.title | slugify }}">
         <span class="arrow">›</span>
-        <a href="{{ post.url | relative_url }}" class="post-link">{{ post.title }}</a>
+        <span class="title-text">{{ post.title }}</span>
         <span class="post-date">{{ post.date | date: "%Y-%m-%d" }}</span>
       </h2>
       <div class="post-content">
@@ -30,6 +30,7 @@ layout: default
 
 <script>
 function togglePost(element) {
+  const postId = element.id;
   const content = element.nextElementSibling;
   const arrow = element.querySelector('.arrow');
   const isVisible = content.classList.contains('expanded');
@@ -46,12 +47,27 @@ function togglePost(element) {
   if (!isVisible) {
     content.classList.add('expanded');
     arrow.classList.add('rotated');
-    // Smooth scroll to top of clicked post
+    // Update URL hash
+    window.history.replaceState(null, null, `#${postId}`);
     setTimeout(() => {
       element.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }, 100);
+  } else {
+    // Remove hash if closing
+    window.history.replaceState(null, null, ' ');
   }
 }
+
+// Check for hash on page load
+document.addEventListener('DOMContentLoaded', () => {
+  const hash = window.location.hash;
+  if (hash) {
+    const element = document.querySelector(hash);
+    if (element) {
+      togglePost(element);
+    }
+  }
+});
 
 document.querySelectorAll('.tag-btn').forEach(button => {
   button.addEventListener('click', () => {
