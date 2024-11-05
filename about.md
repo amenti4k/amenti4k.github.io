@@ -4,12 +4,29 @@ title: /about
 permalink: /about/
 ---
 
-Amenti Kenea
 
+Amenti Kenea
 NYC
 
 ----
 
+Born and raised in Addis Ababa, Ethiopia.
+
+Went to college in the US at [Minerva University](https://www.minerva.edu/) and lived in 7 countries across 4 continents.
+
+Chronically online and love playing around with technology. I write my thoughts on that and other things like fashion, and music here.  
+
+Previously worked at [RaiseMe](https://www.raiseme.com/), [Microsoft](https://www.microsoft.com/en-us/), [Contrary Capital](https://contrarycapital.com/), and [Facebook Messenger](https://www.facebook.com/messenger).
+
+Currently a Data Scientist at Meta Ads Ecosystem. 
+
+----
+
+{% include music-player.html %}
+^^ ***some of my music suggestions of the week***
+
+My online radio station: 
+- [aava.club/songs](https://aava.club/songs)
 Some fashion experimentation:
 - [aa-va](https://aava.club/)
 - [Aava Are.na](https://www.are.na/amenti-kenea/wall-vg_bgchhrg8)
@@ -18,24 +35,11 @@ My run club:
 - [dontwalkinsoho](https://www.instagram.com/dontwalkinsoho/?igsh=MzRlODBiMWZvbTVt)
 - [dontwalkinsoho.netlify.app](https://dontwalkinsoho.netlify.app/)
 
-My online radio station: 
-- [aava.club/songs](https://aava.club/songs)
-
---
-Lived in SF, CA.
-
-University @Minerva living in 7 countries. 
-
-Internships @(RaiseMe, Microsoft, Contrary-Capital, & Facebook Messenger)
-[My LinkedIn](https://www.linkedin.com/in/amenti-kenea/)
-
-Currently Data-Scientist @Meta Ads Ecosystem
-
 ----
 
-Chronically online. Random thoughts on here. 
 
-Follow me on [Twitter](https://twitter.com/amenti4k)
+[Twitter](https://twitter.com/amenti4k)
+[My LinkedIn](https://www.linkedin.com/in/amenti-kenea/)
 
 
 <style>
