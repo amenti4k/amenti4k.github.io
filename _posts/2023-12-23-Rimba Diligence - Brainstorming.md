@@ -1,7 +1,6 @@
 ---
 layout: post
 title: "Rimba Diligence - Brainstorming"
-date: 2023-12-23
 tags: [research]
 categories: [research]
 allowed_emails: ['amenti4k@gmail.com']

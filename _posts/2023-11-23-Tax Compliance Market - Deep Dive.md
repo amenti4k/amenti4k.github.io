@@ -1,7 +1,6 @@
 ---
 layout: post
 title: "Tax Compliance Market - Deep Dive"
-date: 2023-11-23
 tags: [research]
 categories: [research]
 allowed_emails: ['amenti4k@gmail.com']

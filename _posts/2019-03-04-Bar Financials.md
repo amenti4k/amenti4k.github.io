@@ -1,7 +1,6 @@
 ---
 layout: post
 title: "Bar Financials"
-date: 2024-04-14
 tags: [research]
 categories: [research]
 allowed_emails: ['amenti4k@gmail.com']
