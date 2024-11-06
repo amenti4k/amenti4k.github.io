@@ -32,20 +32,36 @@ function checkAccessAndToggle(element) {
   const content = element.nextElementSibling;
   const accessMap = JSON.parse(localStorage.getItem('documentAccess') || '{}');
   const savedEmail = accessMap[postId];
+  const arrow = element.querySelector('.arrow');
+  const isVisible = content.classList.contains('expanded');
   
-  if (savedEmail) {
-    content.querySelector('.auth-form').style.display = 'none';
-    content.querySelector('.content-wrapper').style.display = 'block';
+  // First collapse all posts
+  document.querySelectorAll('.post-content').forEach(post => {
+    post.classList.remove('expanded');
+  });
+  document.querySelectorAll('.arrow').forEach(arr => {
+    arr.classList.remove('rotated');
+  });
+  
+  if (!isVisible) {
+    content.classList.add('expanded');
+    arrow.classList.add('rotated');
+    if (savedEmail) {
+      content.querySelector('.auth-form').style.display = 'none';
+      content.querySelector('.content-wrapper').style.display = 'block';
+    } else {
+      content.querySelector('.auth-form').style.display = 'block';
+      content.querySelector('.content-wrapper').style.display = 'none';
+    }
   } else {
-    content.querySelector('.auth-form').style.display = 'block';
-    content.querySelector('.content-wrapper').style.display = 'none';
+    content.classList.remove('expanded');
+    arrow.classList.remove('rotated');
   }
-  togglePost(element);
 }
 
 function verifyEmailForPost(button, postId) {
   const email = button.previousElementSibling.value;
-  const allowedEmails = ['amenti4k@gmail.com']; // Hardcoded allowed email
+  const allowedEmails = ['amenti4k@gmail.com'];
   
   if (allowedEmails.includes(email)) {
     const contentDiv = button.closest('.post-content');
@@ -59,23 +75,62 @@ function verifyEmailForPost(button, postId) {
     alert('Access denied. Please contact the administrator.');
   }
 }
-
-function togglePost(element) {
-  const content = element.nextElementSibling;
-  const arrow = element.querySelector('.arrow');
-  const isVisible = content.classList.contains('expanded');
-  
-  if (!isVisible) {
-    content.classList.add('expanded');
-    arrow.classList.add('rotated');
-  } else {
-    content.classList.remove('expanded');
-    arrow.classList.remove('rotated');
-  }
-}
 </script>
 
 <style>
+.post-list {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.post-item {
+  margin-bottom: 1rem;
+}
+
+.post-title {
+  cursor: pointer;
+  padding: 1rem;
+  margin: 0;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text-color);
+}
+
+.arrow {
+  margin-right: 0.5rem;
+  transition: transform 0.3s ease;
+  display: inline-block;
+}
+
+.arrow.rotated {
+  transform: rotate(90deg);
+}
+
+.post-date {
+  margin-left: auto;
+  font-size: 0.8rem;
+  color: var(--secondary-text);
+  font-weight: normal;
+}
+
+.post-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease-out, padding 0.5s ease;
+  padding: 0 1rem;
+}
+
+.post-content.expanded {
+  max-height: none;
+  padding: 1rem;
+  transition: max-height 0.5s ease-in, padding 0.5s ease;
+}
+
 .auth-form {
   text-align: center;
   padding: 20px;
