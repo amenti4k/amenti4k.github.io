@@ -12,7 +12,7 @@ permalink: /research/
         <span class="title-text">{{ post.title }}</span>
         <span class="post-date">{{ post.date | date: "%Y-%m-%d" }}</span>
       </h2>
-      <div class="post-content" style="display: none;">
+      <div class="post-content">
         <div id="auth-{{ post.title | slugify }}" class="auth-form">
           <h3>Enter your email to access this document</h3>
           <input type="email" placeholder="Enter your email">
@@ -37,18 +37,14 @@ function checkAccessAndToggle(element) {
     content.querySelector('.auth-form').style.display = 'none';
     content.querySelector('.content-wrapper').style.display = 'block';
   }
-  
   togglePost(element);
 }
 
 function verifyEmailForPost(button, postId) {
   const email = button.previousElementSibling.value;
-  const allowedEmails = {
-    'research-document': ['amenti4k@gmail.com'],
-    // Add more documents and their allowed emails here
-  };
+  const allowedEmails = ['amenti4k@gmail.com']; // Hardcoded allowed email
   
-  if (allowedEmails[postId]?.includes(email)) {
+  if (allowedEmails.includes(email)) {
     const contentDiv = button.closest('.post-content');
     contentDiv.querySelector('.auth-form').style.display = 'none';
     contentDiv.querySelector('.content-wrapper').style.display = 'block';
@@ -64,13 +60,13 @@ function verifyEmailForPost(button, postId) {
 function togglePost(element) {
   const content = element.nextElementSibling;
   const arrow = element.querySelector('.arrow');
-  const isVisible = content.style.display === 'block';
+  const isVisible = content.classList.contains('expanded');
   
   if (!isVisible) {
-    content.style.display = 'block';
+    content.classList.add('expanded');
     arrow.classList.add('rotated');
   } else {
-    content.style.display = 'none';
+    content.classList.remove('expanded');
     arrow.classList.remove('rotated');
   }
 }
