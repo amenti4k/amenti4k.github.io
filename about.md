@@ -22,7 +22,7 @@ Previously managed to get an internship at [RaiseMe](https://www.raiseme.com/) a
 ----
 
 {% include music-player.html %}
-*some of my music suggestions of the week*
+
 
 My online radio station: 
 - [aava.club/songs](https://aava.club/songs)
