@@ -13,7 +13,7 @@ permalink: /research/
         <span class="post-date">{{ post.date | date: "%Y-%m-%d" }}</span>
       </h2>
       <div class="post-content">
-        <div id="auth-{{ post.title | slugify }}" class="auth-form">
+        <div id="auth-{{ post.title | slugify }}" class="auth-form" style="display: none;">
           <h3>Enter your email to access this document</h3>
           <input type="email" placeholder="Enter your email">
           <button onclick="verifyEmailForPost(this, '{{ post.title | slugify }}')">Submit</button>
@@ -36,6 +36,9 @@ function checkAccessAndToggle(element) {
   if (savedEmail) {
     content.querySelector('.auth-form').style.display = 'none';
     content.querySelector('.content-wrapper').style.display = 'block';
+  } else {
+    content.querySelector('.auth-form').style.display = 'block';
+    content.querySelector('.content-wrapper').style.display = 'none';
   }
   togglePost(element);
 }
