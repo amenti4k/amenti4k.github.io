@@ -1,9 +1,12 @@
+
 ---
 layout: post
-title: "Are Algorithmic Stablecoins Possible? A Deep Dive Into Crypto's Holy Grail"
-date: 2022-05-01
-tags: [business]
+title: "Algorithmic Stablecoin Issues and Game Theoretical Building Blocks"
+tags: [research]
+categories: [research]
+allowed_emails: ['amenti4k@gmail.com']
 ---
+
 
 > This is a simplified version of my capstone project about
 > standardizing the knowledge there is about algorithmic stablecoins --
