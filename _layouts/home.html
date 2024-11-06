@@ -15,16 +15,18 @@ layout: default
 
 <div class="post-list">
   {% for post in site.posts %}
-    <div class="post-item" data-tags="{{ post.tags | join: ' ' }}">
-      <h2 class="post-title" onclick="togglePost(this)" id="post-{{ post.title | slugify }}">
-        <span class="arrow">›</span>
-        <span class="title-text">{{ post.title }}</span>
-        <span class="post-date">{{ post.date | date: "%Y-%m-%d" }}</span>
-      </h2>
-      <div class="post-content">
-        {{ post.content }}
+    {% unless post.categories contains 'research' %}
+      <div class="post-item" data-tags="{{ post.tags | join: ' ' }}">
+        <h2 class="post-title" onclick="togglePost(this)" id="post-{{ post.title | slugify }}">
+          <span class="arrow">›</span>
+          <span class="title-text">{{ post.title }}</span>
+          <span class="post-date">{{ post.date | date: "%Y-%m-%d" }}</span>
+        </h2>
+        <div class="post-content">
+          {{ post.content }}
+        </div>
       </div>
-    </div>
+    {% endunless %}
   {% endfor %}
 </div>
 

@@ -5,6 +5,9 @@ date: 2024-10-01
 tags: [music, misc]
 ---
 
+*The theory goes: limited (curation mattered but it was solo dumping, not essential )→ universal consensus voting (multiple options and choose based on actual democracy) → age of too many good options (tell me what I like)*
+
+
 I BUILT AN ONLINE RADIO THAT I UPDATE EVERY 2 DAYS. I love sharing music w friends and wanted a corner on the internet to do that. 
 
 [aava.club/songs](https://aava.club/songs)
@@ -67,5 +70,5 @@ It could be vinyl, cassette, or CD players. Or it can randomly simulate other st
 
 One thing about this musical experience is **I want it to be as fun as humanly possible and interpreted on a computer as it can possibly become. FUN AND CULTURED.**
 
-The theory goes: limited (curation mattered but it was solo dumping, not essential )→ universal consensus voting (multiple options and choose based on actual democracy) → age of tOo many good options (tell me what I like)
+The theory goes: limited (curation mattered but it was solo dumping, not essential )→ universal consensus voting (multiple options and choose based on actual democracy) → age of too many good options (tell me what I like)
 
