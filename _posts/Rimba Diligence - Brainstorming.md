@@ -1,9 +1,11 @@
 ---
+layout: post
 title: "Rimba Diligence - Brainstorming"
-tags: [business]
+date: 2024-04-14
+tags: [research]
 categories: [research]
+allowed_emails: ['amenti4k@gmail.com']
 ---
-
 [https://rimba.cloud/](https://rimba.cloud/)
 
 ~~Send follow up mike wang intro to watershed employees~~
