@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Rimba Diligence - Brainstorming"
+title: "Workflow Streamlining with AI - Company Diligence"
 tags: [research]
 categories: [research]
 allowed_emails: ['amenti4k@gmail.com']
