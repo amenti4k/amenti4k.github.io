@@ -1,9 +1,11 @@
 ---
-title: "VC and Globalization"
-tags: [business]
+layout: post
+title: "Venture Capital and Globalization"
+date: 2024-04-14
+tags: [research]
 categories: [research]
+allowed_emails: ['amenti4k@gmail.com']
 ---
-
 <aside>
 💡 I used DHL's Global Connectedness Index about globalization to extrapolate to the Venture Capital industry in the global market.
 

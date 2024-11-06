@@ -4,7 +4,7 @@ layout: default
 
 <div id="auth-container">
   <div id="login-form">
-    <h2>Enter your email to access research docs</h2>
+    <h2>Enter your email to access this document</h2>
     <input type="email" id="email-input" placeholder="Enter your email">
     <button onclick="verifyEmail()">Submit</button>
   </div>
@@ -14,25 +14,30 @@ layout: default
 </div>
 
 <script>
-const allowedEmails = [
-  'amenti4k@gmail.com',
-  'example2@domain.com'
-];
-
 function verifyEmail() {
   const email = document.getElementById('email-input').value;
+  const postId = '{{ page.title | slugify }}';
+  const allowedEmails = JSON.parse('{{ page.allowed_emails | jsonify }}');
+  
   if (allowedEmails.includes(email)) {
     document.getElementById('login-form').style.display = 'none';
     document.getElementById('content').style.display = 'block';
-    localStorage.setItem('researchAccess', email);
+    // Store access for this specific document
+    const accessMap = JSON.parse(localStorage.getItem('documentAccess') || '{}');
+    accessMap[postId] = email;
+    localStorage.setItem('documentAccess', JSON.stringify(accessMap));
   } else {
     alert('Access denied. Please contact the administrator.');
   }
 }
 
-// Check if already authenticated
-document.addEventListener('DOMContentLoaded', () => {
-  const savedEmail = localStorage.getItem('researchAccess');
+// Check if already authenticated for this document
+document.addEventListener('DOMContentLoaded', function() {
+  const postId = '{{ page.title | slugify }}';
+  const accessMap = JSON.parse(localStorage.getItem('documentAccess') || '{}');
+  const savedEmail = accessMap[postId];
+  const allowedEmails = JSON.parse('{{ page.allowed_emails | jsonify }}');
+  
   if (savedEmail && allowedEmails.includes(savedEmail)) {
     document.getElementById('login-form').style.display = 'none';
     document.getElementById('content').style.display = 'block';
