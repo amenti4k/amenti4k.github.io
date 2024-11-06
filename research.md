@@ -1,5 +1,5 @@
 ---
-layout: protected
+layout: default
 title: /research
 permalink: /research/
 ---
@@ -13,7 +13,14 @@ permalink: /research/
         <span class="post-date">{{ post.date | date: "%Y-%m-%d" }}</span>
       </h2>
       <div class="post-content" style="display: none;">
-        {{ post.content }}
+        <div id="auth-{{ post.title | slugify }}" class="auth-form">
+          <h3>Enter your email to access this document</h3>
+          <input type="email" placeholder="Enter your email">
+          <button onclick="verifyEmailForPost(this, '{{ post.title | slugify }}')">Submit</button>
+        </div>
+        <div class="content-wrapper" style="display: none;">
+          {{ post.content }}
+        </div>
       </div>
     </div>
   {% endfor %}
@@ -22,31 +29,33 @@ permalink: /research/
 <script>
 function checkAccessAndToggle(element) {
   const postId = element.id;
+  const content = element.nextElementSibling;
   const accessMap = JSON.parse(localStorage.getItem('documentAccess') || '{}');
   const savedEmail = accessMap[postId];
   
-  if (!savedEmail) {
-    const email = prompt("Please enter your email to access this document:");
-    if (email) {
-      verifyEmailForPost(email, postId, element);
-    }
-  } else {
-    togglePost(element);
+  if (savedEmail) {
+    content.querySelector('.auth-form').style.display = 'none';
+    content.querySelector('.content-wrapper').style.display = 'block';
   }
+  
+  togglePost(element);
 }
 
-function verifyEmailForPost(email, postId, element) {
-  // This should match the allowed_emails in your post frontmatter
+function verifyEmailForPost(button, postId) {
+  const email = button.previousElementSibling.value;
   const allowedEmails = {
     'research-document': ['amenti4k@gmail.com'],
     // Add more documents and their allowed emails here
   };
   
   if (allowedEmails[postId]?.includes(email)) {
+    const contentDiv = button.closest('.post-content');
+    contentDiv.querySelector('.auth-form').style.display = 'none';
+    contentDiv.querySelector('.content-wrapper').style.display = 'block';
+    
     const accessMap = JSON.parse(localStorage.getItem('documentAccess') || '{}');
     accessMap[postId] = email;
     localStorage.setItem('documentAccess', JSON.stringify(accessMap));
-    togglePost(element);
   } else {
     alert('Access denied. Please contact the administrator.');
   }
@@ -66,3 +75,28 @@ function togglePost(element) {
   }
 }
 </script>
+
+<style>
+.auth-form {
+  text-align: center;
+  padding: 20px;
+}
+
+.auth-form input, .auth-form button {
+  margin: 10px;
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid var(--border-color);
+}
+
+.auth-form button {
+  cursor: pointer;
+  background: none;
+  transition: all 0.2s ease;
+}
+
+.auth-form button:hover {
+  background: var(--text-color);
+  color: white;
+}
+</style>
