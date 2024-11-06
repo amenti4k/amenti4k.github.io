@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Founders <> Open Water Swimming <> Ventures"
-date: 2024-10-25
+date: 2024-06-25
 categories: [business, misc]
 ---
 

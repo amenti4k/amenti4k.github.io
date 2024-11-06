@@ -1,6 +1,6 @@
 ---
 title: "Case Against Bloated MVPs"
-date: 2020-11-06
+date: 2024-01-06
 tags: [business]
 ---
 
