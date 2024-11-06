@@ -1,15 +1,15 @@
 ---
 layout: post
-title: "Simpler Alternative to X-Learner for Uplift Modeling"
+title: "Better Incremental Response Modeling"
 description: "A guide to the simplified X-learner approach for Uplift modeling, comparing different meta-learner methods for treatment effect estimation"
 date: 2024-09-28
 categories: [data]
 tags: [uplift-modeling, x-learner, meta-learning, python, tutorial]
 ---
 
-# Simpler Alternative to X-Learner for Uplift Modeling
+# Better Incremental Response Modeling
 
-A guide to the simplified X-learner approach for Uplift modeling
+*The article introduces the simplified X-Learner (Xs-Learner), a streamlined approach to uplift modeling that is easier to understand and implement than the traditional X-Learner. Uplift modeling goes beyond average treatment effects from A/B testing by estimating how a treatment's effect varies across different users. Using the Lenta dataset, the author compares meta-learners like the S-Learner, T-Learner, and both versions of the X-Learner, demonstrating that the simplified Xs-Learner often performs as well or better in practice. The article includes Python code examples and evaluates models using Qini curves, concluding that the simplified X-Learner offers practical advantages.*
 
 Meta-learners like S-Learner, T-Learner, and X-Learner are some of the most widely used approaches for Uplift modeling. When learning about these approaches, I find that most often find the X-learner model somewhat confusing to understand. In this post, I describe a modified approach I call simplified X-learner (Xs-learner) that is easier to understand, faster to implement, and in my experience often works as well or better in practice.
 
@@ -78,7 +78,7 @@ slearner_te = slearner.predict_proba(df_test[X].assign(**{T: 1}))[:, 1] \
 
 One downside of the S-learner model is that there is nothing that tells the model to give special attention to the treatment variable. This means that often your machine learning model will focus on other variables that are stronger predictors of the outcome and end up ignoring the effect of the treatment. This means that on average your estimates of the treatment will be biased towards 0.
 
-![S-learner treatment effect distribution](/assets/images/s-learner-dist.png)
+<img src="https://img.notionusercontent.com/s3/prod-files-secure%2Fc4c0fb6a-3b8e-44a5-b1c4-2c5efdb2d812%2Ffc48c2e1-94f5-45bc-9fbb-26a76f7e516d%2FScreenshot_2024-09-28_at_2.43.38_AM.png/size/?exp=1731015809&sig=LVKGEDSDJuT60Ru6mvtvDEoTIdx5yk9gBHe6S-StZ6M" alt="S-learner treatment effect distribution" style="max-width: 100%; height: auto;">
 
 ## T-learner
 
@@ -101,7 +101,8 @@ tlearner_te = tlearner_1.predict_proba[df_test[X]](:, 1) \
             - tlearner_0.predict_proba[df_test[X]](:, 1)
 ```
 
-![T-learner treatment effect distribution](/assets/images/t-learner-dist.png)
+<img src="https://img.notionusercontent.com/s3/prod-files-secure%2Fc4c0fb6a-3b8e-44a5-b1c4-2c5efdb2d812%2F3abbbdeb-c243-431f-89b1-9edeec45e998%2FScreenshot_2024-09-28_at_2.43.50_AM.png/size/?exp=1731015812&sig=pW1NUiPibquj1Qgwjo3SjhrMVYOZ-0cpsmtQpIDOGVI" alt="T-learner treatment effect distribution" style="max-width: 100%; height: auto;">
+
 
 ## Simplified X-learner (Xs-learner)
 
@@ -145,7 +146,7 @@ xlearner_combined.fit(
 xlearner_simple_te = xlearner_combined.predict(df_test[X])
 ```
 
-![Simplified X-learner treatment effect distribution](/assets/images/xs-learner-dist.png)
+<img src="https://img.notionusercontent.com/s3/prod-files-secure%2Fc4c0fb6a-3b8e-44a5-b1c4-2c5efdb2d812%2F33cce173-94f3-44c1-90c0-527d83a4c341%2FScreenshot_2024-09-28_at_2.44.21_AM.png/size/?exp=1731015817&sig=qQbJ2DuarorunO9E4AYW7JWWpf5js8HaeIikgBj4epM" alt="Simplified X-learner treatment effect distribution" style="max-width: 100%; height: auto;">
 
 ## Full X-learner
 
@@ -174,8 +175,7 @@ xlearner_propensities = xlearner_propensity.predict_proba[df_test[X]](:, 1)
 xlearner_te = xlearner_propensities * xlearner_te_model_0_te + \
               (1 - xlearner_propensities) * xlearner_te_model_1_te
 ```
-
-![Full X-learner treatment effect distribution](/assets/images/x-learner-dist.png)
+<img src="https://img.notionusercontent.com/s3/prod-files-secure%2Fc4c0fb6a-3b8e-44a5-b1c4-2c5efdb2d812%2F184c7eb5-d157-4fc7-9bb8-5b1be98b7680%2FScreenshot_2024-09-28_at_2.44.43_AM.png/size/?exp=1731015820&sig=8xNnLednaImPcldKDQhrjbA1kpoO0eZY2DWRBYK_uuI" alt="Radio Image" style="max-width: 100%; height: auto;">
 
 ## Comparing the Results
 
