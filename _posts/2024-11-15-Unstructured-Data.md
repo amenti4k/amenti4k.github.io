@@ -6,117 +6,87 @@ categories: [data, ai]
 ---
 
 ### Current state of using unstructured data
-
-*Unstructured data has become the frontier of data innovation, unlocking unprecedented opportunities for organizations to gain strategic insights and drive growth.*
-
-#### What is Unstructured Data?
-
-Information that does not conform to a predefined data model or schema.
-
-- Comprises **80-90% of all new data generated**, offering immense value if harnessed effectively.
-- Its complexity and lack of structure, however, challenge traditional data infrastructure stacks.
-  - There's sometimes a misconception that investing in unstructured data infrastructure is unnecessary because AI models can learn directly from raw data.
-    - Models trained on noisy or irrelevant data produce unreliable results
-    - Preprocessing steps like data cleansing and normalization are essential in improving model accuracy and reducing computational costs.
-      - Preprocessing reduces dimensionality and complexity, leading to faster training and lower resource consumption
-
-In industries - using unstructured data from medical records and imaging to improve diagnostics and patient care, analyzing unstructured data like customer interactions and market news to inform investment strategies, and IoT devices generating unstructured sensor data for predictive maintenance and operational efficiency.
-
-As organizations increasingly recognize its potential, a new unstructured data stack has emerged, consisting of three core components: **data extraction and ingestion**, **data processing**, and **data management**.
-
-#### 1. Data Extraction and Ingestion
-
-This step captures, extracts, transforms, and optimizes unstructured data for storage and further use.
-
-**Strawman Argument**: "Traditional ETL processes are sufficient for handling unstructured data"
-
-**Rebuttal**: This perspective underestimates the complexities involved in extracting meaningful information from unstructured sources
-
-**A. Capture and Extract:**
-- Sources include social media, customer feedback, emails, and beyond.
-- Techniques: web scraping, API integrations, file parsing.
-- Teams may create custom extractors or rely on pre-built solutions to achieve high extraction accuracy.
-
-**Tech:**
-- **Web Scraping and APIs**:
-  - Tools like Scrapy and BeautifulSoup facilitate web scraping
-  - Headless browsers like Puppeteer can handle dynamic content
-- **File Parsing**:
-  - Handling diverse file formats (PDFs, DOCX, images) requires specialized parsers
-  - Libraries like Apache Tika provide content detection and extraction
-- **Advanced Extraction Tools**:
-  - Unstructured.io: Uses machine learning to parse complex documents
-  - Lume AI: Specializes in natural language understanding to extract insights from textual data
-- **Computer Vision in Data Extraction**:
-  - Bem AI: Uses advanced computer vision to extract data from visual content
-  - Unlike older Intelligent Document Processing (IDP) services using OCR, these modern tools leverage vision models to improve parsing accuracy, particularly for text-dominant modalities used by large language models (LLMs).
-
-**B. Partition and Optimize:**
-- Data is semantically partitioned into smaller, logical units for contextual relevance.
-  - Eg. Semantic Segmentation: Topic modeling and clustering algorithms partition data into coherent units
-- Results are formatted in machine-readable structures (e.g., JSON), enabling preprocessing tasks like cleaning and embedding generation.
-
-**Storage Destination:**
-- Extracted data is stored in scalable systems like object storage data lakes or databases, ready for use in applications such as Retrieval-Augmented Generation (RAG).
-  - Object Storage Systems: Solutions like Amazon S3 or Apache Hadoop's HDFS provide scalable storage
-  - Databases Optimized for Unstructured Data: NoSQL databases like MongoDB or Elasticsearch offer flexible schemas and powerful querying
-
-**Key Considerations:**
-- **Extraction Accuracy**: Incorporating feedback loops and human-in-the-loop mechanisms can enhance accuracy
-- **Performance**: Parallel processing and hardware acceleration can address performance bottlenecks
-- **Multimodal Support**: Handling different data types in a unified pipeline is increasingly important
-
-#### 2. Data Processing
-
-Unstructured data undergoes further transformation and analysis to unlock its full utility.
-
-**Strawman Argument**: "Once the data is extracted, processing unstructured data is no different from processing structured data"
-
-**Rebuttal**: This overlooks the unique challenges posed by unstructured data during processing
-
-**A. Transformation and Cleansing:**
-- Cleansing ensures data consistency, while normalization prepares it for downstream applications.
-  - **Data Cleansing**: Spell correction, stop-word removal, tokenization for text data
-  - **Normalization**: Converting data into a consistent format
-  - **Feature Engineering**: Word embeddings and contextual embeddings transform textual data for machine learning
-
-**Processing Engines:**
-- Categorized by their focus (structured vs. unstructured data), scalability (single-node vs. distributed), and languages (SQL vs. Python)
-  - **Horizontal Scaling**: Distributing workloads across multiple nodes
-  - **Hardware Acceleration**: Utilizing GPUs, TPUs, or FPGAs to accelerate computationally intensive tasks
-  - **Real-Time Processing**: Stream processing systems like Apache Flink or Kafka Streams handle continuous data flows
-  - **Distributed Computing**: Leveraging frameworks for parallel processing
-- Popular engines like Spark, Dask, and Modin cater primarily to structured data, but emerging tools like Daft are gaining attention for their ability to handle multimodal data efficiently in distributed environments.
-
-**Scalability Challenges:**
-- **Memory Management**: Data streaming and on-the-fly processing can mitigate memory constraints
-- **Compute Optimization**: Hardware accelerators and optimized algorithms can address compute-intensive tasks
-
-#### 3. Data Management
-
-**Strawman Argument**: "Data management principles are universal; the same strategies used for structured data apply to unstructured data"
-
-**Rebuttal**: Unstructured data introduces complexities in storage optimization, metadata management, and governance
-
-The backbone of the unstructured data stack, data management encompasses the organization, storage, and governance of unstructured data.
-
-**Key Functions:**
-- Organizing and storing data to ensure easy retrieval and analysis.
-  - **Metadata Management**: Robust metadata schemas using JSON Schema etc
-  - **Indexing**: Inverted indices for rapid retrieval of unstructured text data
-- Implementing data governance policies for compliance, security, and privacy.
-  - **Access Control**: Role-based and attribute-based access controls
-  - **Audit Trails**: Logging data access and modifications for compliance and forensics
-
-**Regulatory and Privacy Safeguards:**
-- Policies control data access and usage, safeguarding sensitive information while empowering data-driven decision-making.
-
-**File Formats and Challenges:**
-- **Apache Parquet**, a widely adopted column-oriented format, is prevalent in object storage systems but has limitations:
-  - Full-page loading for single-row lookups is inefficient for random, single-row lookups common in unstructured data
-  - Handling wide columns typical of unstructured data is resource-intensive.
-  - Limited encoding options and metadata constraints at the page level hinder performance.
-
-#### Conclusion
-
-The unstructured data stack is still in its infancy. It needs to work and will eventually work as companies can transform this untapped resource into a competitive advantage. The stack's evolution will undoubtedly shape the future of data infrastructure.
+- **The Three Components of the Unstructured Data Stack**
+- __Unstructured data has become the frontier of data innovation, unlocking unprecedented opportunities for organizations to gain strategic insights and drive growth.__
+- ### **What is Unstructured Data?**
+    - Information that does not conform to a predefined data model or schema.
+    - Comprises **80-90% of all new data generated**, offering immense value if harnessed effectively.
+    - Its complexity and lack of structure, however, challenge traditional data infrastructure stacks.
+        - There's sometimes a misconception that investing in unstructured data infrastructure is unnecessary because AI models can learn directly from raw data.
+            - Models trained on noisy or irrelevant data produce unreliable results
+            - Preprocessing steps like data cleansing and normalization are essential in improving model accuracy and reducing computational costs.
+                - Preprocessing reduces dimensionality and complexity, leading to faster training and lower resource consumption
+    - In industries - using unstructured data from medical records and imaging to improve diagnostics and patient care, analyzing unstructured data like customer interactions and market news to inform investment strategies, and IoT devices generating unstructured sensor data for predictive maintenance and operational efficiency.
+    - As organizations increasingly recognize its potential, a new unstructured data stack has emerged, consisting of three core components: **data extraction and ingestion**, **data processing**, and **data management**.
+- ### **1. Data Extraction and Ingestion**
+    - This step captures, extracts, transforms, and optimizes unstructured data for storage and further use.
+    - **Strawman Argument**: "Traditional ETL processes are sufficient for handling unstructured data"
+    - **Rebuttal**: This perspective underestimates the complexities involved in extracting meaningful information from unstructured sources
+    - **A. Capture and Extract**:
+        - Sources include social media, customer feedback, emails, and beyond.
+        - Techniques: web scraping, API integrations, file parsing.
+        - Teams may create custom extractors or rely on pre-built solutions to achieve high extraction accuracy.
+        - **Tech**:
+            - **Web Scraping and APIs**:
+                - Tools like Scrapy and BeautifulSoup facilitate web scraping
+                - Headless browsers like Puppeteer can handle dynamic content
+            - **File Parsing**:
+                - Handling diverse file formats (PDFs, DOCX, images) requires specialized parsers
+                - Libraries like Apache Tika provide content detection and extraction
+            - **Advanced Extraction Tools**:
+                - Unstructured.io: Uses machine learning to parse complex documents
+                - Lume AI: Specializes in natural language understanding to extract insights from textual data
+            - **Computer Vision in Data Extraction**:
+                - Bem AI: Uses advanced computer vision to extract data from visual content
+            - Unlike older Intelligent Document Processing (IDP) services using OCR, these modern tools leverage vision models to improve parsing accuracy, particularly for text-dominant modalities used by large language models (LLMs).
+    - **Partition and Optimize**:
+        - Data is semantically partitioned into smaller, logical units for contextual relevance.
+            - Eg. Semantic Segmentation: Topic modeling and clustering algorithms partition data into coherent units
+        - Results are formatted in machine-readable structures (e.g., JSON), enabling preprocessing tasks like cleaning and embedding generation.
+    - **Storage Destination**:
+        - Extracted data is stored in scalable systems like object storage data lakes or databases, ready for use in applications such as Retrieval-Augmented Generation (RAG).
+            - Object Storage Systems: Solutions like Amazon S3 or Apache Hadoop's HDFS provide scalable storage
+            - Databases Optimized for Unstructured Data: NoSQL databases like MongoDB or Elasticsearch offer flexible schemas and powerful querying
+    - **Key Considerations**:
+        - **Extraction Accuracy**: Incorporating feedback loops and human-in-the-loop mechanisms can enhance accuracy
+        - **Performance**: Parallel processing and hardware acceleration can address performance bottlenecks
+        - **Multimodal Support**: Handling different data types in a unified pipeline is increasingly important
+- ### **2. Data Processing**
+    - Unstructured data undergoes further transformation and analysis to unlock its full utility.
+    - **Strawman Argument**: "Once the data is extracted, processing unstructured data is no different from processing structured data"
+    - **Rebuttal**: This overlooks the unique challenges posed by unstructured data during processing
+    - **Transformation and Cleansing**:
+        - Cleansing ensures data consistency, while normalization prepares it for downstream applications.
+            - **Data Cleansing**: Spell correction, stop-word removal, tokenization for text data
+            - **Normalization**: Converting data into a consistent format
+            - **Feature Engineering**: Word embeddings and contextual embeddings transform textual data for machine learning
+    - **Processing Engines**:
+        - Categorized by their focus (structured vs. unstructured data), scalability (single-node vs. distributed), and languages (SQL vs. Python)
+            - **Horizontal Scaling**: Distributing workloads across multiple nodes
+            - **Hardware Acceleration**: Utilizing GPUs, TPUs, or FPGAs to accelerate computationally intensive tasks
+            - **Real-Time Processing**: Stream processing systems like Apache Flink or Kafka Streams handle continuous data flows
+            - **Distributed Computing**: Leveraging frameworks for parallel processing
+        - Popular engines like Spark, Dask, and Modin cater primarily to structured data, but emerging tools like Daft are gaining attention for their ability to handle multimodal data efficiently in distributed environments.
+    - **Scalability Challenges**:
+        - **Memory Management**: Data streaming and on-the-fly processing can mitigate memory constraints
+        - **Compute Optimization**: Hardware accelerators and optimized algorithms can address compute-intensive tasks
+- ### **3. Data Management**
+    - **Strawman Argument**: "Data management principles are universal; the same strategies used for structured data apply to unstructured data"
+    - **Rebuttal**: Unstructured data introduces complexities in storage optimization, metadata management, and governance
+    - The backbone of the unstructured data stack, data management encompasses the organization, storage, and governance of unstructured data.
+        - **Key Functions**:
+            - Organizing and storing data to ensure easy retrieval and analysis.
+                - **Metadata Management**: Robust metadata schemas using JSON Schema etc
+                - **Indexing**: Inverted indices for rapid retrieval of unstructured text data
+            - Implementing data governance policies for compliance, security, and privacy.
+                - **Access Control**: Role-based and attribute-based access controls
+                - **Audit Trails**: Logging data access and modifications for compliance and forensics
+        - **Regulatory and Privacy Safeguards**:
+            - Policies control data access and usage, safeguarding sensitive information while empowering data-driven decision-making.
+        - **File Formats and Challenges**:
+            - **Apache Parquet**, a widely adopted column-oriented format, is prevalent in object storage systems but has limitations:
+                - Full-page loading for single-row lookups is inefficient for random, single-row lookups common in unstructured data
+                - Handling wide columns typical of unstructured data is resource-intensive.
+                - Limited encoding options and metadata constraints at the page level hinder performance.
+- **Conclusion**
+    - The unstructured data stack is still in its infancy. It needs to work and will eventually work as companies can transform this untapped resource into a competitive advantage. The stack’s evolution will undoubtedly shape the future of data infrastructure.
