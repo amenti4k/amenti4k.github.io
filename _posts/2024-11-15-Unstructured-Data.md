@@ -16,7 +16,6 @@ categories: [data, ai]
             - Models trained on noisy or irrelevant data produce unreliable results
             - Preprocessing steps like data cleansing and normalization are essential in improving model accuracy and reducing computational costs.
                 - Preprocessing reduces dimensionality and complexity, leading to faster training and lower resource consumption
-    - In industries - using unstructured data from medical records and imaging to improve diagnostics and patient care, analyzing unstructured data like customer interactions and market news to inform investment strategies, and IoT devices generating unstructured sensor data for predictive maintenance and operational efficiency.
     - As organizations increasingly recognize its potential, a new unstructured data stack has emerged, consisting of three core components: **data extraction and ingestion**, **data processing**, and **data management**.
 - ### **1. Data Extraction and Ingestion**
     - This step captures, extracts, transforms, and optimizes unstructured data for storage and further use.
