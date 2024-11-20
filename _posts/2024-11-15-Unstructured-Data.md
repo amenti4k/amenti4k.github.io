@@ -5,9 +5,7 @@ date: 2024-11-15
 categories: [data, ai]
 ---
 
-### Current state of using unstructured data
-- **The Three Components of the Unstructured Data Stack**
-- __Unstructured data has become the frontier of data innovation, unlocking unprecedented opportunities for organizations to gain strategic insights and drive growth.__
+## Current state of using unstructured data
 - ### **What is Unstructured Data?**
     - Information that does not conform to a predefined data model or schema.
     - Comprises **80-90% of all new data generated**, offering immense value if harnessed effectively.
