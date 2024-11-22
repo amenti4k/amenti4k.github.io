@@ -34,7 +34,7 @@ categories: [data, ai]
                 - Unstructured.io: Uses machine learning to parse complex documents
                 - Lume AI: Specializes in natural language understanding to extract insights from textual data
             - **Computer Vision in Data Extraction**:
-                - Bem AI: Uses advanced computer vision to extract data from visual content
+                - New startups use advanced computer vision to extract data from visual content
             - Unlike older Intelligent Document Processing (IDP) services using OCR, these modern tools leverage vision models to improve parsing accuracy, particularly for text-dominant modalities used by large language models (LLMs).
     - **Partition and Optimize**:
         - Data is semantically partitioned into smaller, logical units for contextual relevance.
