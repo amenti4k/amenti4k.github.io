@@ -52,18 +52,14 @@
             max-width: 600px;
         }
         .theme-toggle {
-            margin-left: 15px;
-            padding: 5px 10px;
-            background-color: var(--text-color);
-            color: var(--background-color);
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 12px;
-            font-family: inherit;
+            color: var(--text-color);
+            text-decoration: none;
+            margin: 0 15px;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.2s ease;
         }
         .theme-toggle:hover {
-            opacity: 0.9;
+            border-bottom: 1px solid var(--text-color);
         }
     </style>
     <script>
@@ -80,7 +76,7 @@
         <nav>
             <a href="/about">About</a>
             <a href="/research">Research</a>
-            <button id="theme-toggle" class="theme-toggle">dark</button>
+            <a href="#" id="theme-toggle" class="theme-toggle">dark</a>
         </nav>
     </header>
     <main>
@@ -91,10 +87,11 @@
             const themeToggle = document.getElementById('theme-toggle');
             const currentTheme = localStorage.getItem('theme') || '{{ site.style }}';
             
-            // Set initial button text
+            // Set initial link text
             themeToggle.textContent = currentTheme === 'dark' ? 'dark' : 'light';
             
-            themeToggle.addEventListener('click', function() {
+            themeToggle.addEventListener('click', function(e) {
+                e.preventDefault();
                 const currentTheme = document.documentElement.getAttribute('data-theme');
                 const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
                 
@@ -102,7 +99,7 @@
                 document.documentElement.setAttribute('data-theme', newTheme);
                 localStorage.setItem('theme', newTheme);
                 
-                // Update button text
+                // Update link text
                 themeToggle.textContent = newTheme;
             });
         });
