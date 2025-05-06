@@ -156,23 +156,12 @@ pre { background-color: var(--background-color);  border: none;  padding: 0;  ma
     }
   }
 
-:root[data-theme="light"] {
-  --base-color: #000;
-  --border: dashed 1px rgba(0, 0, 0, 1);
-  --selection-background: rgba(0, 0, 0, 0.99);
-  --selection-text: #FFF;
-  --background-color: #FFF;
-  --text-color: var(--base-color);
-  --placeholder-color: var(--base-color);
-  --link-color: var(--base-color);
-}
-
-:root[data-theme="dark"] {
-  --base-color: #DBDBDB;
-  --border: dashed 1px rgba(219, 219, 219, 0.9);
-  --selection-background: rgba(219, 219, 219, 0.99);
-  --selection-text: #000;
-  --background-color: #000;
+:root {
+  --base-color: #222;
+  --border: dashed 1px rgba(34, 34, 34, 0.9);
+  --selection-background: rgba(34, 34, 34, 0.99);
+  --selection-text: #FFC7B8;
+  --background-color: #FFD1C4;
   --text-color: var(--base-color);
   --placeholder-color: var(--base-color);
   --link-color: var(--base-color);
