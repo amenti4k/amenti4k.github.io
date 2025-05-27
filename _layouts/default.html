@@ -4,8 +4,43 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% if page.title %}{{ page.title }} - {% endif %}{{ site.title }}</title>
-    <link rel="stylesheet" href="{{ '/css/main.css' | relative_url }}">
     <style>
+        /* Coral theme (default) */
+        :root, [data-theme="coral"] {
+            --base-color: #222;
+            --border: dashed 1px rgba(34, 34, 34, 0.9);
+            --selection-background: rgba(34, 34, 34, 0.99);
+            --selection-text: #FFC7B8;
+            --background-color: #FFD1C4;
+            --text-color: var(--base-color);
+            --placeholder-color: var(--base-color);
+            --link-color: var(--base-color);
+        }
+        
+        /* Light theme */
+        [data-theme="light"] {
+            --base-color: #000;
+            --border: dashed 1px rgba(0, 0, 0, 1);
+            --selection-background: rgba(0, 0, 0, 0.99);
+            --selection-text: #FFF;
+            --background-color: #FFF;
+            --text-color: var(--base-color);
+            --placeholder-color: var(--base-color);
+            --link-color: var(--base-color);
+        }
+        
+        /* Dark theme */
+        [data-theme="dark"] {
+            --base-color: #DBDBDB;
+            --border: dashed 1px rgba(219, 219, 219, 0.9);
+            --selection-background: rgba(219, 219, 219, 0.99);
+            --selection-text: #000;
+            --background-color: #000;
+            --text-color: var(--base-color);
+            --placeholder-color: var(--base-color);
+            --link-color: var(--base-color);
+        }
+        
         body {
             margin: 0;
             padding: 20px;
