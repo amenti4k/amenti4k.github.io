@@ -5,6 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% if page.title %}{{ page.title }} - {% endif %}{{ site.title }}</title>
     <style>
+        /* Define CSS variables for themes */
+        :root, [data-theme="coral"] {
+            --background-color: #FFD1C4;
+            --text-color: #222;
+        }
+        [data-theme="light"] {
+            --background-color: #FFF;
+            --text-color: #000;
+        }
+        [data-theme="dark"] {
+            --background-color: #000;
+            --text-color: #DBDBDB;
+        }
+        
         body {
             margin: 0;
             padding: 20px;
@@ -85,15 +99,17 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const themeToggle = document.getElementById('theme-toggle');
-            const currentTheme = localStorage.getItem('theme') || '{{ site.style }}';
+            const themes = ['coral', 'light', 'dark'];
+            let currentTheme = localStorage.getItem('theme') || '{{ site.style }}';
             
             // Set initial link text
-            themeToggle.textContent = currentTheme === 'dark' ? 'dark' : 'light';
+            themeToggle.textContent = currentTheme;
             
             themeToggle.addEventListener('click', function(e) {
                 e.preventDefault();
-                const currentTheme = document.documentElement.getAttribute('data-theme');
-                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                currentTheme = document.documentElement.getAttribute('data-theme');
+                const currentIndex = themes.indexOf(currentTheme);
+                const newTheme = themes[(currentIndex + 1) % themes.length];
                 
                 // Update theme
                 document.documentElement.setAttribute('data-theme', newTheme);
