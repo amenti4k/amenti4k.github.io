@@ -2,7 +2,7 @@
  * Light theme variables
  */
 
-:root {
+[data-theme="light"] {
   --base-color: #000;
   --border: dashed 1px rgba(0, 0, 0, 1);
   --selection-background: rgba(0, 0, 0, 0.99);

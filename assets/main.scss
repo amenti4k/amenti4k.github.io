@@ -5,20 +5,7 @@
 // Import base styles
 @import "base";
 
-// Import theme-specific styles based on data-theme attribute
-[data-theme="dark"] {
-  @import "dark";
-}
-
-[data-theme="light"] {
-  @import "light";
-}
-
-[data-theme="coral"] {
-  @import "coral";
-}
-
-// Default theme (coral)
-:root {
-  @import "coral";
-}
+// Import all theme files
+@import "coral";
+@import "light";
+@import "dark";

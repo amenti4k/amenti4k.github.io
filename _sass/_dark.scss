@@ -2,7 +2,7 @@
  * Dark theme variables
  */
 
-:root {
+[data-theme="dark"] {
   --base-color: #DBDBDB;
   --border: dashed 1px rgba(219, 219, 219, 0.9);
   --selection-background: rgba(219, 219, 219, 0.99);
