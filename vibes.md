@@ -16,7 +16,7 @@ class ArenaVibes {
     this.container = document.getElementById('vibes-container');
     this.loading = document.getElementById('loading');
     this.placedBlocks = [];
-    this.animationDelay = 100;
+    this.animationDelay = 150; // Slower animation for better visual flow
   }
 
   async init() {
@@ -32,10 +32,49 @@ class ArenaVibes {
   }
 
   async fetchSampleBlocks() {
-    // Using Are.na public API for demo - replace with your user ID and access token
-    const response = await fetch('https://api.are.na/v2/channels/arena-influences');
-    const data = await response.json();
-    return data.contents.slice(0, 20); // Limit for demo
+    try {
+      // Fetch Amenti Kenea's channels
+      const userResponse = await fetch('https://api.are.na/v2/users/amenti-kenea/channels');
+      const userData = await userResponse.json();
+      
+      if (!userData.channels) {
+        throw new Error('No channels found');
+      }
+      
+      const allBlocks = [];
+      
+      // Fetch blocks from first few channels to avoid rate limits
+      const channelsToFetch = userData.channels.slice(0, 8);
+      
+      for (const channel of channelsToFetch) {
+        try {
+          const channelResponse = await fetch(`https://api.are.na/v2/channels/${channel.slug}`);
+          const channelData = await channelResponse.json();
+          
+          if (channelData.contents) {
+            // Filter for visual content and limit per channel
+            const visualBlocks = channelData.contents
+              .filter(block => block.class === 'Image' || block.class === 'Link' || block.class === 'Text')
+              .slice(0, 4); // Max 4 blocks per channel
+            allBlocks.push(...visualBlocks);
+          }
+          
+          // Small delay to be respectful to API
+          await new Promise(resolve => setTimeout(resolve, 200));
+        } catch (error) {
+          console.log(`Skipping channel ${channel.slug}:`, error);
+        }
+      }
+      
+      // Shuffle and limit total blocks for less crowding
+      this.shuffleArray(allBlocks);
+      return allBlocks.slice(0, 15); // Reduced from 20 to 15
+      
+    } catch (error) {
+      console.error('Error fetching Amenti channels:', error);
+      // Fallback to empty array
+      return [];
+    }
   }
 
   hideLoading() {
@@ -135,9 +174,9 @@ class ArenaVibes {
     return element;
   }
 
-  generatePosition(blockWidth, blockHeight, attempts = 30) {
+  generatePosition(blockWidth, blockHeight, attempts = 50) {
     const containerRect = this.container.getBoundingClientRect();
-    const padding = 20;
+    const padding = 40; // Increased padding for less crowding
 
     for (let i = 0; i < attempts; i++) {
       const x = Math.random() * (containerRect.width - blockWidth - padding * 2) + padding;
@@ -150,7 +189,7 @@ class ArenaVibes {
       }
     }
 
-    // Fallback position
+    // Fallback position with more spacing
     return {
       x: Math.random() * (containerRect.width - blockWidth - padding * 2) + padding,
       y: Math.random() * (containerRect.height - blockHeight - padding * 2) + padding
@@ -158,7 +197,7 @@ class ArenaVibes {
   }
 
   hasCollision(newRect) {
-    const buffer = 10;
+    const buffer = 30; // Increased buffer for more spacing
     return this.placedBlocks.some(block => {
       return !(newRect.x + newRect.width + buffer < block.x ||
                block.x + block.width + buffer < newRect.x ||
@@ -168,28 +207,28 @@ class ArenaVibes {
   }
 
   getBlockDimensions(blockData) {
-    const minSize = 80;
-    const maxSize = 250;
+    const minSize = 100;
+    const maxSize = 280;
 
     switch (blockData.class) {
       case 'Image':
         if (blockData.image && blockData.image.original) {
           const aspectRatio = blockData.image.original.width / blockData.image.original.height;
-          const width = Math.min(maxSize, Math.max(minSize, 150 + Math.random() * 100));
+          const width = Math.min(maxSize, Math.max(minSize, 160 + Math.random() * 80));
           return { width, height: width / aspectRatio };
         }
-        return { width: 150, height: 150 };
+        return { width: 180, height: 180 };
 
       case 'Text':
         const textLength = (blockData.content || blockData.generated_title || '').length;
-        const size = Math.min(maxSize, Math.max(minSize, 100 + textLength * 0.5));
-        return { width: size, height: size * 0.8 };
+        const size = Math.min(maxSize, Math.max(minSize, 120 + textLength * 0.4));
+        return { width: size, height: size * 0.75 };
 
       case 'Link':
-        return { width: 180, height: 120 };
+        return { width: 200, height: 140 };
 
       default:
-        return { width: 120, height: 120 };
+        return { width: 140, height: 140 };
     }
   }
 
@@ -201,6 +240,13 @@ class ArenaVibes {
   handleBlockClick(blockData) {
     if (blockData.source && blockData.source.url) {
       window.open(blockData.source.url, '_blank');
+    }
+  }
+
+  shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
     }
   }
 }
