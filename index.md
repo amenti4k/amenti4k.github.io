@@ -4,8 +4,7 @@ layout: home
 permalink: /
 ---
 
-<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="s"> 
-                      አ
+<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="s">                      አ
                       መ  
                       ን   ኩ
                       ቲ   መ 
