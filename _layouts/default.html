@@ -79,6 +79,22 @@
         .theme-toggle:hover {
             border-bottom: 1px solid var(--text-color);
         }
+        
+        /* Technical enhancements */
+        .theme-toggle::before {
+            content: '[';
+            opacity: 0.5;
+        }
+        .theme-toggle::after {
+            content: ']';
+            opacity: 0.5;
+        }
+        
+        /* Subtle glow on focus elements */
+        nav a:focus, .theme-toggle:focus {
+            outline: none;
+            text-shadow: 0 0 3px var(--code-color-5);
+        }
     </style>
     <script>
         // Set the initial theme
