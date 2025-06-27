@@ -79,10 +79,11 @@ function verifyEmailForPost(button, postId) {
 
 <style>
 .post-list {
-  max-width: 800px;
+  max-width: 900px;
   margin: 0 auto;
   padding: 20px;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family: 'Inconsolata', monospace;
+  font-size: 13px;
 }
 
 .post-item {
@@ -93,11 +94,11 @@ function verifyEmailForPost(button, postId) {
   cursor: pointer;
   padding: 1rem;
   margin: 0;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border);
   display: flex;
   align-items: center;
-  font-size: 1rem;
-  font-weight: 500;
+  font-size: 13px;
+  font-weight: normal;
   color: var(--text-color);
 }
 
@@ -105,6 +106,7 @@ function verifyEmailForPost(button, postId) {
   margin-right: 0.5rem;
   transition: transform 0.3s ease;
   display: inline-block;
+  color: var(--code-color-5);
 }
 
 .arrow.rotated {
@@ -113,8 +115,8 @@ function verifyEmailForPost(button, postId) {
 
 .post-date {
   margin-left: auto;
-  font-size: 0.8rem;
-  color: var(--secondary-text);
+  font-size: 13px;
+  color: var(--secondary-text-color);
   font-weight: normal;
 }
 
@@ -129,6 +131,9 @@ function verifyEmailForPost(button, postId) {
   max-height: none;
   padding: 1rem;
   transition: max-height 0.5s ease-in, padding 0.5s ease;
+  font-family: 'Inconsolata', monospace;
+  font-size: 13px;
+  line-height: 1.7;
 }
 
 .auth-form {
@@ -139,8 +144,11 @@ function verifyEmailForPost(button, postId) {
 .auth-form input, .auth-form button {
   margin: 10px;
   padding: 8px;
-  border-radius: 4px;
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--border);
+  font-family: 'Inconsolata', monospace;
+  font-size: 13px;
+  background-color: var(--background-color);
+  color: var(--text-color);
 }
 
 .auth-form button {
@@ -151,6 +159,6 @@ function verifyEmailForPost(button, postId) {
 
 .auth-form button:hover {
   background: var(--text-color);
-  color: white;
+  color: var(--background-color);
 }
 </style>
