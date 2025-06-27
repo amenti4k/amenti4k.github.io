@@ -6,17 +6,15 @@
     <title>{% if page.title %}{{ page.title }} - {% endif %}{{ site.title }}</title>
     <style>
         /* Define CSS variables for themes */
-        :root, [data-theme="coral"] {
-            --background-color: #FFD1C4;
-            --text-color: #222;
+        :root, [data-theme="dark"] {
+            --background-color: #000;
+            --text-color: #e1e1e1;
+            --secondary-text-color: #9b9b9b;
         }
         [data-theme="light"] {
             --background-color: #FFF;
             --text-color: #000;
-        }
-        [data-theme="dark"] {
-            --background-color: #000;
-            --text-color: #DBDBDB;
+            --secondary-text-color: #666;
         }
         
         body {
@@ -119,7 +117,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const themeToggle = document.getElementById('theme-toggle');
-            const themes = ['coral', 'light', 'dark'];
+            const themes = ['dark', 'light'];
             let currentTheme = localStorage.getItem('theme') || '{{ site.style }}';
             
             // Set initial link text
