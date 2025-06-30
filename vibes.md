@@ -21,60 +21,143 @@ class ArenaVibes {
 
   async init() {
     try {
-      // For demo purposes, using public API endpoints
+      console.log('Starting vibes page initialization...');
       const blocks = await this.fetchSampleBlocks();
+      console.log('Fetched blocks:', blocks.length, blocks);
+      
       this.hideLoading();
-      this.displayBlocks(blocks);
+      
+      if (blocks && blocks.length > 0) {
+        console.log('Displaying blocks...');
+        this.displayBlocks(blocks);
+        // Only show API info if we successfully got blocks from API
+        if (blocks[0] && blocks[0].id !== 'fallback-1') {
+          console.log('Content from API, showing info');
+        } else {
+          console.log('Using fallback content');
+        }
+      } else {
+        console.log('No blocks found, showing error and fallback...');
+        this.showError();
+        const fallbackBlocks = this.getFallbackBlocks();
+        this.displayBlocks(fallbackBlocks);
+      }
     } catch (error) {
       console.error('Error loading vibes:', error);
       this.showError();
+      const fallbackBlocks = this.getFallbackBlocks();
+      this.displayBlocks(fallbackBlocks);
     }
   }
 
   async fetchSampleBlocks() {
     try {
-      // Fetch Amenti Kenea's channels
-      const userResponse = await fetch('https://api.are.na/v2/users/amenti-kenea/channels');
-      const userData = await userResponse.json();
+      console.log('Attempting to fetch Are.na content...');
+      const blocks = await this.fetchFromMultipleSources();
+      console.log('Fetched', blocks.length, 'blocks from API');
       
-      if (!userData.channels) {
-        throw new Error('No channels found');
+      if (blocks.length === 0) {
+        console.log('No API content found, using fallback blocks');
+        return this.getFallbackBlocks();
       }
       
-      const allBlocks = [];
-      
-      // Fetch blocks from first few channels to avoid rate limits
-      const channelsToFetch = userData.channels.slice(0, 8);
-      
-      for (const channel of channelsToFetch) {
-        try {
-          const channelResponse = await fetch(`https://api.are.na/v2/channels/${channel.slug}`);
-          const channelData = await channelResponse.json();
-          
-          if (channelData.contents) {
-            // Filter for visual content and limit per channel
-            const visualBlocks = channelData.contents
-              .filter(block => block.class === 'Image' || block.class === 'Link' || block.class === 'Text')
-              .slice(0, 4); // Max 4 blocks per channel
-            allBlocks.push(...visualBlocks);
-          }
-          
-          // Small delay to be respectful to API
-          await new Promise(resolve => setTimeout(resolve, 200));
-        } catch (error) {
-          console.log(`Skipping channel ${channel.slug}:`, error);
-        }
-      }
-      
-      // Shuffle and limit total blocks for less crowding
-      this.shuffleArray(allBlocks);
-      return allBlocks.slice(0, 15); // Reduced from 20 to 15
-      
+      return blocks;
     } catch (error) {
-      console.error('Error fetching Amenti channels:', error);
-      // Fallback to empty array
-      return [];
+      console.error('Error in fetchSampleBlocks:', error);
+      return this.getFallbackBlocks();
     }
+  }
+
+  async fetchFromMultipleSources() {
+    console.log('Fetching from multiple sources...');
+    const allBlocks = [];
+    
+    // Method 1: Try specific curated public channels first (more reliable)
+    const curatedChannels = [
+      'arena-influences',
+      'creative-coding', 
+      'contemporary-art-daily',
+      'ornament-for-the-everyday'
+    ];
+
+    console.log('Trying curated channels...');
+    for (const channelSlug of curatedChannels) {
+      try {
+        console.log(`Fetching channel: ${channelSlug}`);
+        const channelResponse = await fetch(`https://api.are.na/v2/channels/${channelSlug}`);
+        
+        if (!channelResponse.ok) {
+          console.log(`Channel ${channelSlug} returned status: ${channelResponse.status}`);
+          continue;
+        }
+        
+        const channelData = await channelResponse.json();
+        console.log(`Channel ${channelSlug} data:`, channelData);
+        
+        if (channelData.contents && channelData.contents.length > 0) {
+          const visualBlocks = channelData.contents
+            .filter(block => {
+              return block.class === 'Image' || 
+                     (block.class === 'Link' && block.image) ||
+                     block.class === 'Text';
+            })
+            .slice(0, 4);
+          
+          console.log(`Adding ${visualBlocks.length} blocks from ${channelSlug}`);
+          allBlocks.push(...visualBlocks);
+        }
+        
+        await new Promise(resolve => setTimeout(resolve, 300));
+        
+        // Stop if we have enough content
+        if (allBlocks.length >= 12) break;
+        
+      } catch (error) {
+        console.error(`Error fetching channel ${channelSlug}:`, error);
+      }
+    }
+
+    console.log(`Total blocks collected: ${allBlocks.length}`);
+    
+    // Shuffle and limit total blocks
+    this.shuffleArray(allBlocks);
+    return allBlocks.slice(0, 12);
+  }
+
+  getFallbackBlocks() {
+    // Fallback content when API is completely unavailable
+    return [
+      {
+        id: 'fallback-1',
+        class: 'Text',
+        content: 'exploring digital aesthetics',
+        generated_title: 'exploring digital aesthetics'
+      },
+      {
+        id: 'fallback-2', 
+        class: 'Text',
+        content: 'visual research & curation',
+        generated_title: 'visual research & curation'
+      },
+      {
+        id: 'fallback-3',
+        class: 'Text', 
+        content: 'collections of inspiration',
+        generated_title: 'collections of inspiration'
+      },
+      {
+        id: 'fallback-4',
+        class: 'Text',
+        content: 'creative documentation',
+        generated_title: 'creative documentation'  
+      },
+      {
+        id: 'fallback-5',
+        class: 'Text',
+        content: 'mood & vibes archive',
+        generated_title: 'mood & vibes archive'
+      }
+    ];
   }
 
   hideLoading() {
@@ -85,12 +168,47 @@ class ArenaVibes {
   }
 
   showError() {
-    this.loading.innerHTML = '<span class="blink">> error_loading_vibes.exe</span>';
+    console.log('Showing error message');
+    this.loading.innerHTML = '<span class="blink">> using_fallback_vibes.exe</span>';
+    this.loading.style.display = 'block';
+    this.loading.style.opacity = '1';
+    
+    // Hide after a few seconds
+    setTimeout(() => {
+      this.loading.style.opacity = '0';
+      setTimeout(() => {
+        this.loading.style.display = 'none';
+      }, 500);
+    }, 2000);
+  }
+
+  showApiInfo() {
+    // Add debug info for API testing
+    const debugInfo = document.createElement('div');
+    debugInfo.style.cssText = `
+      position: fixed;
+      bottom: 10px;
+      right: 10px;
+      font-family: 'Inconsolata', monospace;
+      font-size: 9px;
+      color: var(--secondary-text-color);
+      opacity: 0.5;
+      z-index: 1000;
+    `;
+    debugInfo.innerHTML = 'vibes sourced from are.na API';
+    document.body.appendChild(debugInfo);
   }
 
   displayBlocks(blocks) {
+    console.log(`Displaying ${blocks.length} blocks`);
+    if (!blocks || blocks.length === 0) {
+      console.log('No blocks to display');
+      return;
+    }
+    
     blocks.forEach((block, index) => {
       setTimeout(() => {
+        console.log(`Adding block ${index}:`, block);
         this.addBlock(block);
       }, index * this.animationDelay);
     });
