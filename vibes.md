@@ -10,6 +10,15 @@ permalink: /vibes/
   </div>
 </div>
 
+<div id="spotify-container" class="spotify-container">
+  <h2 class="spotify-title">> recent_sounds.mp3</h2>
+  <div id="spotify-tracks" class="spotify-tracks">
+    <div class="spotify-loading">
+      <span class="blink">loading spotify data...</span>
+    </div>
+  </div>
+</div>
+
 <script>
 class ArenaVibes {
   constructor() {
@@ -294,7 +303,7 @@ class ArenaVibes {
 
   generatePosition(blockWidth, blockHeight, attempts = 50) {
     const containerRect = this.container.getBoundingClientRect();
-    const padding = 40; // Increased padding for less crowding
+    const padding = 60; // Increased padding for less crowding
 
     for (let i = 0; i < attempts; i++) {
       const x = Math.random() * (containerRect.width - blockWidth - padding * 2) + padding;
@@ -315,7 +324,7 @@ class ArenaVibes {
   }
 
   hasCollision(newRect) {
-    const buffer = 30; // Increased buffer for more spacing
+    const buffer = 50; // Increased buffer for more spacing
     return this.placedBlocks.some(block => {
       return !(newRect.x + newRect.width + buffer < block.x ||
                block.x + block.width + buffer < newRect.x ||
@@ -325,28 +334,28 @@ class ArenaVibes {
   }
 
   getBlockDimensions(blockData) {
-    const minSize = 100;
-    const maxSize = 280;
+    const minSize = 150;
+    const maxSize = 400;
 
     switch (blockData.class) {
       case 'Image':
         if (blockData.image && blockData.image.original) {
           const aspectRatio = blockData.image.original.width / blockData.image.original.height;
-          const width = Math.min(maxSize, Math.max(minSize, 160 + Math.random() * 80));
+          const width = Math.min(maxSize, Math.max(minSize, 240 + Math.random() * 120));
           return { width, height: width / aspectRatio };
         }
-        return { width: 180, height: 180 };
+        return { width: 280, height: 280 };
 
       case 'Text':
         const textLength = (blockData.content || blockData.generated_title || '').length;
-        const size = Math.min(maxSize, Math.max(minSize, 120 + textLength * 0.4));
+        const size = Math.min(maxSize, Math.max(minSize, 180 + textLength * 0.5));
         return { width: size, height: size * 0.75 };
 
       case 'Link':
-        return { width: 200, height: 140 };
+        return { width: 300, height: 200 };
 
       default:
-        return { width: 140, height: 140 };
+        return { width: 220, height: 220 };
     }
   }
 
@@ -369,10 +378,168 @@ class ArenaVibes {
   }
 }
 
+// Spotify Integration
+class SpotifyVibes {
+  constructor() {
+    this.container = document.getElementById('spotify-tracks');
+    this.clientId = 'YOUR_SPOTIFY_CLIENT_ID'; // Replace with your client ID
+    this.redirectUri = window.location.origin + '/vibes/';
+    this.scope = 'user-read-recently-played';
+  }
+
+  async init() {
+    // Check if we have an access token
+    const token = this.getAccessToken();
+    
+    if (token) {
+      await this.fetchRecentTracks(token);
+    } else {
+      this.showAuthButton();
+    }
+  }
+
+  getAccessToken() {
+    // Check URL hash for token
+    const hash = window.location.hash.substring(1);
+    const params = new URLSearchParams(hash);
+    const token = params.get('access_token');
+    
+    if (token) {
+      // Store token in sessionStorage
+      sessionStorage.setItem('spotify_token', token);
+      // Clean up URL
+      window.history.replaceState(null, null, window.location.pathname);
+      return token;
+    }
+    
+    // Check sessionStorage for existing token
+    return sessionStorage.getItem('spotify_token');
+  }
+
+  showAuthButton() {
+    this.container.innerHTML = `
+      <button class="spotify-auth-btn" onclick="spotifyVibes.authenticate()">
+        > connect_spotify.exe
+      </button>
+    `;
+  }
+
+  authenticate() {
+    const authUrl = `https://accounts.spotify.com/authorize?` +
+      `client_id=${this.clientId}&` +
+      `response_type=token&` +
+      `redirect_uri=${encodeURIComponent(this.redirectUri)}&` +
+      `scope=${this.scope}`;
+    
+    window.location.href = authUrl;
+  }
+
+  async fetchRecentTracks(token) {
+    try {
+      const response = await fetch('https://api.spotify.com/v1/me/player/recently-played?limit=10', {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+
+      if (!response.ok) {
+        if (response.status === 401) {
+          // Token expired
+          sessionStorage.removeItem('spotify_token');
+          this.showAuthButton();
+          return;
+        }
+        throw new Error('Failed to fetch tracks');
+      }
+
+      const data = await response.json();
+      this.displayTracks(data.items);
+    } catch (error) {
+      console.error('Error fetching Spotify data:', error);
+      this.showFallbackTracks();
+    }
+  }
+
+  displayTracks(tracks) {
+    if (!tracks || tracks.length === 0) {
+      this.showFallbackTracks();
+      return;
+    }
+
+    const tracksHtml = tracks.map((item, index) => {
+      const track = item.track;
+      const artists = track.artists.map(a => a.name).join(', ');
+      const playedAt = new Date(item.played_at);
+      const timeAgo = this.getTimeAgo(playedAt);
+      
+      return `
+        <div class="spotify-track" style="animation-delay: ${index * 100}ms">
+          <div class="track-info">
+            ${track.album.images.length > 0 ? 
+              `<img src="${track.album.images[2].url}" alt="${track.album.name}" class="track-album-art" />` : 
+              '<div class="track-album-art-placeholder"></div>'
+            }
+            <div class="track-details">
+              <a href="${track.external_urls.spotify}" target="_blank" class="track-name">${track.name}</a>
+              <div class="track-artist">${artists}</div>
+              <div class="track-time">${timeAgo}</div>
+            </div>
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    this.container.innerHTML = tracksHtml;
+  }
+
+  showFallbackTracks() {
+    // Show sample/placeholder tracks when API is unavailable
+    const fallbackTracks = [
+      { name: "dream sequence", artist: "unknown artist", time: "2 mins ago" },
+      { name: "digital rain", artist: "system", time: "5 mins ago" },
+      { name: "void walker", artist: "null", time: "12 mins ago" },
+      { name: "binary sunset", artist: "0x1", time: "23 mins ago" },
+      { name: "neural patterns", artist: "ai", time: "45 mins ago" }
+    ];
+
+    const tracksHtml = fallbackTracks.map((track, index) => `
+      <div class="spotify-track" style="animation-delay: ${index * 100}ms">
+        <div class="track-info">
+          <div class="track-album-art-placeholder"></div>
+          <div class="track-details">
+            <div class="track-name">${track.name}</div>
+            <div class="track-artist">${track.artist}</div>
+            <div class="track-time">${track.time}</div>
+          </div>
+        </div>
+      </div>
+    `).join('');
+
+    this.container.innerHTML = tracksHtml;
+  }
+
+  getTimeAgo(date) {
+    const seconds = Math.floor((new Date() - date) / 1000);
+    
+    if (seconds < 60) return 'just now';
+    const minutes = Math.floor(seconds / 60);
+    if (minutes < 60) return `${minutes} min${minutes > 1 ? 's' : ''} ago`;
+    const hours = Math.floor(minutes / 60);
+    if (hours < 24) return `${hours} hour${hours > 1 ? 's' : ''} ago`;
+    const days = Math.floor(hours / 24);
+    return `${days} day${days > 1 ? 's' : ''} ago`;
+  }
+}
+
+let spotifyVibes;
+
 // Initialize when page loads
 document.addEventListener('DOMContentLoaded', () => {
   const vibes = new ArenaVibes();
   vibes.init();
+  
+  spotifyVibes = new SpotifyVibes();
+  spotifyVibes.init();
 });
 </script>
 
@@ -424,7 +591,7 @@ document.addEventListener('DOMContentLoaded', () => {
 }
 
 .block-text {
-  padding: 12px;
+  padding: 20px;
   background-color: var(--background-color);
   border: 1px solid var(--border);
   border-radius: 4px;
@@ -435,8 +602,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 .block-content {
   font-family: 'Inconsolata', monospace;
-  font-size: 11px;
-  line-height: 1.4;
+  font-size: 14px;
+  line-height: 1.5;
   color: var(--text-color);
   word-wrap: break-word;
 }
@@ -451,16 +618,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
 .block-title {
   font-family: 'Inconsolata', monospace;
-  font-size: 11px;
+  font-size: 14px;
   font-weight: bold;
   color: var(--text-color);
-  margin-bottom: 4px;
-  line-height: 1.3;
+  margin-bottom: 6px;
+  line-height: 1.4;
 }
 
 .block-source {
   font-family: 'Inconsolata', monospace;
-  font-size: 9px;
+  font-size: 11px;
   color: var(--secondary-text-color);
   opacity: 0.7;
 }
@@ -506,5 +673,160 @@ document.addEventListener('DOMContentLoaded', () => {
 
 [data-theme="light"] .block-item:hover {
   box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+}
+
+/* Spotify Styles */
+.spotify-container {
+  margin-top: 80px;
+  padding: 40px 20px;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.spotify-title {
+  font-family: 'Inconsolata', monospace;
+  font-size: 16px;
+  color: var(--text-color);
+  margin-bottom: 30px;
+  font-weight: normal;
+}
+
+.spotify-tracks {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.spotify-loading {
+  font-family: 'Inconsolata', monospace;
+  font-size: 13px;
+  color: var(--text-color);
+  opacity: 0.7;
+}
+
+.spotify-auth-btn {
+  font-family: 'Inconsolata', monospace;
+  font-size: 14px;
+  background: none;
+  border: 1px dashed var(--text-color);
+  color: var(--text-color);
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.spotify-auth-btn:hover {
+  background-color: var(--text-color);
+  color: var(--background-color);
+}
+
+.spotify-track {
+  opacity: 0;
+  animation: fadeInUp 0.5s ease forwards;
+  border-bottom: 1px dashed rgba(0,0,0,0.1);
+  padding-bottom: 15px;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.track-info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.track-album-art {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 3px;
+}
+
+.track-album-art-placeholder {
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(45deg, var(--border) 25%, transparent 25%, transparent 75%, var(--border) 75%, var(--border)),
+              linear-gradient(45deg, var(--border) 25%, transparent 25%, transparent 75%, var(--border) 75%, var(--border));
+  background-size: 10px 10px;
+  background-position: 0 0, 5px 5px;
+  border-radius: 3px;
+  opacity: 0.3;
+}
+
+.track-details {
+  flex: 1;
+}
+
+.track-name {
+  font-family: 'Inconsolata', monospace;
+  font-size: 14px;
+  font-weight: bold;
+  color: var(--text-color);
+  text-decoration: none;
+  display: block;
+  margin-bottom: 3px;
+}
+
+.track-name:hover {
+  text-decoration: underline;
+}
+
+.track-artist {
+  font-family: 'Inconsolata', monospace;
+  font-size: 13px;
+  color: var(--text-color);
+  opacity: 0.8;
+  margin-bottom: 2px;
+}
+
+.track-time {
+  font-family: 'Inconsolata', monospace;
+  font-size: 11px;
+  color: var(--text-color);
+  opacity: 0.5;
+}
+
+/* Dark theme Spotify adjustments */
+[data-theme="dark"] .spotify-track {
+  border-bottom-color: rgba(255,255,255,0.1);
+}
+
+[data-theme="dark"] .track-album-art-placeholder {
+  opacity: 0.2;
+}
+
+/* Mobile responsive for Spotify */
+@media (max-width: 768px) {
+  .spotify-container {
+    padding: 20px 10px;
+  }
+  
+  .track-album-art,
+  .track-album-art-placeholder {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .track-name {
+    font-size: 13px;
+  }
+  
+  .track-artist {
+    font-size: 12px;
+  }
+  
+  .track-time {
+    font-size: 10px;
+  }
 }
 </style>
