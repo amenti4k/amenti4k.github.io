@@ -4,14 +4,14 @@ title: "The Real Guide to Claude Code: 5 Months, 50+ Hours/Week, and Every Mista
 description: "How I Learned to Stop Worrying and Love the AI That Broke My Code 47 Times - An unfiltered look at AI-powered development at scale"
 date: 2025-07-03
 categories: [ai]
-tags: [claude-code, ai-development, productivity, real-world-experience, diderot-ai]
+tags: [claude-code, ai-development, productivity, real-world-experience, didero-ai]
 ---
 
 # The Real Guide to Claude Code: 5 Months, 50+ Hours/Week, and Every Mistake I Made
 
 *Or: How I Learned to Stop Worrying and Love the AI That Broke My Code 47 Times*
 
-After 5 months of using Claude Code to build Diderot AI's production systems—processing $600K+ daily through our supply chain automation—I've collected enough war stories, facepalm moments, and "holy shit it actually worked" experiences to fill a book. Here's the unfiltered truth about AI-powered development at scale.
+After 5 months of using Claude Code to build Didero AI's production systems—processing $600K+ daily through our supply chain automation—I've collected enough war stories, facepalm moments, and "holy shit it actually worked" experiences to fill a book. Here's the unfiltered truth about AI-powered development at scale.
 
 ## The Productivity Curve: A Journey in Three Acts
 
