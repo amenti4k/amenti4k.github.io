@@ -111,7 +111,7 @@ except Exception as e:
 ┌─────────────────────────┐
 │   1. Clear Spec (You)   │  "Build shipment tracking that..."
 ├─────────────────────────┤
-│  2. Implementation (AI) │  *Generates code*
+│  2. Implementation (AI) │  [Generates code]
 ├─────────────────────────┤
 │   3. Validation (You)   │  "Run tests, check patterns"
 └─────────────────────────┘
@@ -139,15 +139,15 @@ The Claude Context Window Optimization Chart
 
 Files in Context  │ Quality of Output
                  │
-        5 ────────│─── 📉 "I'm confused"
+        5 ────────│─── [DOWN] "I'm confused"
                  │    ╱
-        4 ────────│───╱─── 😰 "Getting messy"
+        4 ────────│───╱─── [!] "Getting messy"
                  │  ╱
-        3 ────────│─✨──── 🎯 "Sweet spot"
+        3 ────────│─★──── [OK] "Sweet spot"
                  │
-        2 ────────│─────── 👍 "Good"
+        2 ────────│─────── [+] "Good"
                  │
-        1 ────────│─────── 🤷 "Need more context"
+        1 ────────│─────── [?] "Need more context"
 ```
 
 ### Pattern 3: Test-Driven AI Development
@@ -178,7 +178,7 @@ Complex Business   │ 2 days     │ 1 day       │ 2x
 Logic              │            │             │
 Bug Investigation  │ 4 hours    │ 1 hour      │ 4x
 Refactoring       │ 1 day      │ 2 hours     │ 6x
-Documentation     │ ∞          │ 30 mins     │ ∞
+Documentation     │ infinity   │ 30 mins     │ infinity
 ```
 
 But here's the hidden metric: **Bugs Introduced**
@@ -245,15 +245,15 @@ Emotional State While Debugging with Claude
 
 Emotion   │
          │     "Maybe I'm the problem?"
-   😭 ────┤         ╱╲
+   [T_T] ─┤         ╱╲
          │        ╱  ╲    "It worked!"
-   😤 ────┤       ╱    ╲    ╱╲
+   [>:(] ─┤       ╱    ╲    ╱╲
          │      ╱      ╲  ╱  ╲
-   😐 ────┤     ╱        ╲╱    ╲
+   [:|] ──┤     ╱        ╲╱    ╲
          │    ╱                 ╲
-   😊 ────┤   ╱ "This is easy!"  ╲
+   [:)] ──┤   ╱ "This is easy!"  ╲
          │  ╱                     ╲
-   🤯 ────┤ ╱                       ╲ "Is AI sentient?"
+   [!!!] ─┤ ╱                       ╲ "Is AI sentient?"
          │╱                         ╲
          └──────────────────────────────> Time
            Start    2hr      4hr      6hr
@@ -305,7 +305,7 @@ Here's a streaming approach..."
 │    max open     │  │  - Debugging     │  │  - Git status   │
 └─────────────────┘  └──────────────────┘  └─────────────────┘
 
-         The Three-Panel Paradise™️
+         The Three-Panel Paradise
 ```
 
 ## The Million Dollar Question: Is It Worth It?

@@ -142,7 +142,7 @@ The Email Processing Reality:
 
 What the Demo Showed:
 ┌─────────────┐
-│ Clean Email │ → 🤖 → "Ship date: May 15th" ✅
+│ Clean Email │ → [AI] → "Ship date: May 15th" [OK]
 └─────────────┘
 
 What Production Delivered:
@@ -150,21 +150,21 @@ What Production Delivered:
 Email #1: The Forwarding Chain From Hell
 ┌─────────────┐
 │ FW: FW: RE: │
-│ FW: RE: FW: │ → 🤖 → "I found 7 dates, picked one at random" 🎲
+│ FW: RE: FW: │ → [AI] → "I found 7 dates, picked one at random" [?]
 │ [47 emails] │
 └─────────────┘
 
 Email #2: The Multi-PO Nightmare  
 ┌─────────────┐
 │ 15 POs      │
-│ Internal    │ → 🤖 → "Error: What's a PO?" 🤷
+│ Internal    │ → [AI] → "Error: What's a PO?" [??]
 │ codes only  │
 └─────────────┘
 
 Email #3: The Context Destroyer
 ┌─────────────┐
 │"Per my last│
-│email (see   │ → 🤖 → "Thursday!" (but which Thursday?) 📅❓
+│email (see   │ → [AI] → "Thursday!" (but which Thursday?) [DATE?]
 │below(...)))"│
 └─────────────┘
 ```
@@ -265,7 +265,7 @@ const agent = new StagehandAgent();
 await agent.navigate("https://netsuite.com");
 await agent.action("Login with credentials");
 await agent.action("Create new purchase order for ACME Corp, 100 widgets at $50 each");
-// ✨ Magic happens ✨
+// [Magic happens]
 ```
 
 "No more selenium selectors!" I proclaimed. "The AI just understands what to do!"
@@ -297,7 +297,7 @@ The Session Lifecycle in Production:
 Happy Session (first 20 minutes):
     ___________
    |  ACTIVE   |
-   |  \\___//  |  ← Everything working
+   |  \\___//  |  <- Everything working
    |   o   o   |
    |     >     |
    |   \___/   |
@@ -306,7 +306,7 @@ Happy Session (first 20 minutes):
 Dying Session (minute 19):
     ___________
    |  WARNING  |
-   |  //   \\  |  ← Starting to fail
+   |  //   \\  |  <- Starting to fail
    |   x   x   |
    |     <     |
    |   /~~~\   |
@@ -315,7 +315,7 @@ Dying Session (minute 19):
 Dead Session (minute 20+):
     ___________
    | TIMED OUT |
-   |  XX   XX  |  ← 950 POs gone
+   |  XX   XX  |  <- 950 POs gone
    |   X   X   |
    |     _     |
    |  /-----\  |
@@ -339,12 +339,31 @@ Hour 3: Chrome using 4GB - "Houston..."
 Hour 4: OOM crash, server dies, CEO calls
 ```
 
-```
+```html
+<style>
+@keyframes memoryGrow {
+  0% { width: 50px; }
+  25% { width: 150px; }
+  50% { width: 250px; }
+  75% { width: 350px; }
+  100% { width: 450px; background-color: #ff4444; }
+}
+
+.memory-bar {
+  display: inline-block;
+  height: 20px;
+  background: linear-gradient(to right, #44ff44, #ffff44, #ff4444);
+  animation: memoryGrow 5s ease-out infinite;
+}
+</style>
+
+<div class="ascii-animation">
+<pre>
 Chrome Memory Usage Over Time (Actual Production Data):
 
      RAM
       │
-   4GB├─────────────────────────────────┐ 💥 CRASH!
+   4GB├─────────────────────────────────┐ CRASH!
       │                                 ╱
       │                               ╱ <- "Why is everything on fire?"
    3GB├─────────────────────────────╱
@@ -360,8 +379,11 @@ Chrome Memory Usage Over Time (Actual Production Data):
       │         ╱
       └─────────┴───┴───┴───┴───> Time (hours)
               0   1   2   3   4
-              
-   Server Status:  😊  😐  😰  🔥  💀
+
+<span class="memory-bar"></span>
+Server Status: [OK] -> [WARN] -> [CRITICAL] -> [FIRE] -> [DEAD]
+</pre>
+</div>
 ```
 
 ### The Actual Solution (After 147 Iterations)
@@ -592,32 +614,56 @@ Month 4: *Implements caching* "$12K, phew"
 Month 5: *Optimizes prompts* "$8K and stable"
 ```
 
-```
+```html
+<style>
+@keyframes costPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.2); color: #ff0000; }
+}
+
+@keyframes costShrink {
+  from { font-size: 24px; }
+  to { font-size: 14px; }
+}
+
+.cost-shock {
+  animation: costPulse 0.5s ease-in-out infinite;
+}
+
+.cost-optimize {
+  animation: costShrink 2s ease-out forwards;
+}
+</style>
+
+<div class="cost-animation">
+<pre>
 The AI Cost Reality Journey:
 
 Month 1: The Honeymoon
-    💸 $500
-    😊 "This is amazing!"
+    $ $500
+    "This is amazing!"
     
 Month 2: The Growth
-    💸💸💸💸💸 $5,000
-    😅 "Well, we're scaling..."
+    $$$$$ $5,000
+    "Well, we're scaling..."
     
 Month 3: The Shock
-    💸💸💸💸💸💸💸💸💸💸💸💸💸💸💸💸💸💸💸💸 $50,000
-    😱 "WHAT HAPPENED?!"
+    <span class="cost-shock">$$$$$$$$$$$$$$$$$$$$ $50,000</span>
+    "WHAT HAPPENED?!"
     
     Discovery: Every retry = $$$
               Every long context = $$$
               Every production edge case = $$$
     
 Month 4: The Optimization
-    💸💸💸💸💸💸 $12,000
-    😌 "Caching saves lives"
+    <span class="cost-optimize">$$$$$$ $12,000</span>
+    "Caching saves lives"
     
 Month 5: The Stability
-    💸💸💸💸 $8,000
-    😎 "We know what we're doing now"
+    $$$$ $8,000
+    "We know what we're doing now"
+</pre>
+</div>
 ```
 
 **3. Compliance: The Unfun Reality**
@@ -715,7 +761,7 @@ AI API Costs:
 - 100 requests/day × $0.01 = $1/day
 - Monthly cost: $30
 - Human cost saved: $5,000
-- ROI: 16,667% 🚀
+- ROI: 16,667% [ROCKET]
 - Time to profitability: Day 1
 ```
 
@@ -767,13 +813,13 @@ After 5 months in the trenches, here's the battle-tested playbook for taking AI 
 ### 1. Start Where AI Can't Catastrophically Fail
 
 ```
-✅ Good First Projects:
+[OK] Good First Projects:
 - Email categorization (humans can fix mistakes)
 - Document parsing (errors are visible)
 - Data extraction (validation is possible)
 - Search enhancement (fallbacks exist)
 
-❌ Bad First Projects:
+[NO] Bad First Projects:
 - Autonomous financial transactions
 - Customer-facing chat (brand risk)
 - Medical decisions (liability)
@@ -843,31 +889,52 @@ The Production AI Pyramid
 - Top: Humans for judgment, exceptions, and oversight
 ```
 
-```
+```html
+<style>
+@keyframes flowRight {
+  from { transform: translateX(-10px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+.flow-step {
+  animation: flowRight 0.5s ease-out forwards;
+  opacity: 0;
+}
+
+.flow-step:nth-child(1) { animation-delay: 0.5s; }
+.flow-step:nth-child(2) { animation-delay: 1s; }
+.flow-step:nth-child(3) { animation-delay: 1.5s; }
+.flow-step:nth-child(4) { animation-delay: 2s; }
+</style>
+
+<div class="approach-animation">
+<pre>
 How Different Approaches Actually Work:
 
 Pure AI Approach (What VCs imagine):
-    🤖 → 📄 → ✅
+    [AI] → [DOC] → [OK]
     "Look ma, no hands!"
     
 Reality after 1 week:
-    🤖 → 📄 → ❌ → 🔥 → 😭 → 📞 (3 AM call)
+    [AI] → [DOC] → [FAIL] → [FIRE] → [CRY] → [CALL] (3 AM call)
     
 The Hybrid Approach (What actually works):
     
-    Step 1: Traditional software validates input
-        📥 → 🔍 → ✓
+    <span class="flow-step">Step 1: Traditional software validates input
+        [IN] → [CHECK] → [OK]</span>
         
-    Step 2: AI processes the complex parts
-        ✓ → 🤖 → 🎯 (mostly)
+    <span class="flow-step">Step 2: AI processes the complex parts
+        [OK] → [AI] → [TARGET] (mostly)</span>
         
-    Step 3: Human reviews edge cases
-        🎯 → 👀 → ✅
+    <span class="flow-step">Step 3: Human reviews edge cases
+        [TARGET] → [HUMAN] → [OK]</span>
         
-    Step 4: Traditional software executes
-        ✅ → ⚙️ → 📤
+    <span class="flow-step">Step 4: Traditional software executes
+        [OK] → [GEAR] → [OUT]</span>
         
     Result: 94% automation with 0% catastrophes
+</pre>
+</div>
 ```
 
 ### 5. The Technical Checklist
@@ -941,29 +1008,54 @@ We're not building Skynet. We're building really smart interns that never sleep 
 
 ## X. Conclusion: The Gap Is the Opportunity
 
-```
+```html
+<style>
+@keyframes wave {
+  0%, 100% { transform: rotate(-5deg); }
+  50% { transform: rotate(5deg); }
+}
+
+@keyframes drown {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(10px); }
+}
+
+@keyframes enlighten {
+  0% { opacity: 0.3; }
+  100% { opacity: 1; filter: brightness(1.2); }
+}
+
+.dreamer { animation: wave 2s ease-in-out infinite; }
+.drowning { animation: drown 1s ease-in-out infinite; }
+.enlightened { animation: enlighten 2s ease-out forwards; }
+</style>
+
+<div class="journey-animation">
+<pre>
 The Journey from Demo to Production:
 
 Month 0: The Dream
-    🌟 "AI will solve everything!"
+    <span class="dreamer">* "AI will solve everything!"
        \O/
         |    
-       / \
+       / \</span>
 
 Month 1-3: The Reality
-    💥 "Everything is broken!"
+    <span class="drowning">X "Everything is broken!"
        \O/
         |   ← Drowning in edge cases
-      _/ \_
+      _/ \_</span>
 
 Month 4-5: The Enlightenment
-    💡 "Oh, THIS is how it actually works"
+    <span class="enlightened">! "Oh, THIS is how it actually works"
        \O/
         |   ← Battle-tested and wiser
-       / \
+       / \</span>
       
 The Gap:   [Demo] ←——————— 10,000 hours ———————→ [Production]
             Easy                                    Valuable
+</pre>
+</div>
 ```
 
 Five months ago, I believed the demo. I thought we'd plug in AI and watch the magic happen. Today, I know better. The gap between demo and production isn't a bug—it's the moat.
