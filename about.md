@@ -13,7 +13,7 @@ NYC (via Addis Ababa → 7 countries → SF → NYC)
 
 ### 2025 - Present: Building Autonomous AI Systems
 
-Currently founding engineer at [Didero AI](https://didero.ai), where I discovered that [building autonomous systems is actually a distributed systems problem wearing an AI costume](/2025/07/15/Building-on-Quicksand-The-Reality-of-Production-AI-Systems.html). We process $600K+ daily through AI agents that somehow handle procurement chaos better than humans.
+Currently founding engineer at [Didero AI](https://didero.ai), where I discovered that [building autonomous systems is actually a distributed systems problem wearing an AI costume](/2025/07/15/Building-on-Quicksand-The-Reality-of-Production-AI-Systems.html). We process tons of POs daily through AI agents that somehow handle procurement chaos better than humans.
 
 ### 2022-2024: Learning How Big Tech Actually Works
 
