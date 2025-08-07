@@ -17,8 +17,16 @@
     <link rel="stylesheet" type="text/css" href="{{ "/assets/main-light.css" | relative_url }}">
   {%- endif -%}
   
-  <!-- Custom CSS for code highlighting -->
+  <!-- Custom CSS for code highlighting - Load after theme CSS -->
   <link rel="stylesheet" type="text/css" href="{{ "/assets/css/custom.css" | relative_url }}">
+  <style>
+    /* Inline override to ensure code blocks are styled */
+    .language-python, .language-bash, .language-javascript,
+    div.highlighter-rouge, .highlight {
+      background-color: #0a0a0a !important;
+      border-left: 3px solid #c678dd !important;
+    }
+  </style>
 
   {%- if jekyll.environment == 'production' and site.google_analytics -%}
     {%- include google-analytics.html -%}

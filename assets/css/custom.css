@@ -1,34 +1,55 @@
-/* Custom styles for code blocks */
+/* Custom styles for code blocks - High specificity to override theme */
 
-/* Code blocks */
-pre {
-    background-color: var(--code-color-2, #0a0a0a);
-    border: var(--border);
-    border-radius: 0;
-    padding: 16px;
-    overflow-x: auto;
-    margin: 20px 0;
-    line-height: 1.4;
-    font-size: 14px;
-    border-left: 3px solid var(--code-color-5, #c678dd);
+/* Code blocks with Rouge highlighter */
+.highlighter-rouge,
+div.highlighter-rouge,
+.highlight,
+div.highlight {
+    background-color: #0a0a0a !important;
+    border: 1px solid #333 !important;
+    border-left: 3px solid #c678dd !important;
+    margin: 20px 0 !important;
+    overflow: hidden !important;
 }
 
-pre code {
-    background-color: transparent;
-    padding: 0;
-    border: none;
-    font-family: monospace;
-    color: var(--text-color);
+.highlighter-rouge pre,
+.highlight pre,
+pre.highlight,
+pre {
+    background-color: #0a0a0a !important;
+    border: none !important;
+    border-radius: 0 !important;
+    padding: 16px !important;
+    overflow-x: auto !important;
+    margin: 0 !important;
+    line-height: 1.4 !important;
+    font-size: 14px !important;
+    color: #e1e1e1 !important;
+}
+
+.highlighter-rouge code,
+.highlight code,
+pre code,
+code.highlighter-rouge {
+    background-color: transparent !important;
+    padding: 0 !important;
+    border: none !important;
+    font-family: 'Courier New', Courier, monospace !important;
+    color: #e1e1e1 !important;
+    font-size: inherit !important;
 }
 
 /* Inline code */
+p code,
+li code,
+td code,
 code {
-    background-color: var(--code-color-2, #2d2d2d);
-    padding: 2px 6px;
-    border-radius: 0;
-    font-family: monospace;
-    font-size: 0.9em;
-    color: var(--code-color-7, #e06c75);
+    background-color: #2d2d2d !important;
+    padding: 2px 6px !important;
+    border-radius: 3px !important;
+    font-family: 'Courier New', Courier, monospace !important;
+    font-size: 0.9em !important;
+    color: #e06c75 !important;
 }
 
 /* Syntax highlighting colors */
