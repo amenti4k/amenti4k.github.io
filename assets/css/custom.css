@@ -1,0 +1,98 @@
+/* Custom styles for code blocks */
+
+/* Code blocks */
+pre {
+    background-color: var(--code-color-2, #0a0a0a);
+    border: var(--border);
+    border-radius: 0;
+    padding: 16px;
+    overflow-x: auto;
+    margin: 20px 0;
+    line-height: 1.4;
+    font-size: 14px;
+    border-left: 3px solid var(--code-color-5, #c678dd);
+}
+
+pre code {
+    background-color: transparent;
+    padding: 0;
+    border: none;
+    font-family: monospace;
+    color: var(--text-color);
+}
+
+/* Inline code */
+code {
+    background-color: var(--code-color-2, #2d2d2d);
+    padding: 2px 6px;
+    border-radius: 0;
+    font-family: monospace;
+    font-size: 0.9em;
+    color: var(--code-color-7, #e06c75);
+}
+
+/* Syntax highlighting colors */
+.highlight .c, .highlight .cm, .highlight .c1 { color: var(--code-color-1); font-style: italic; } /* Comment */
+.highlight .k, .highlight .kc, .highlight .kd, .highlight .kn, .highlight .kp, .highlight .kr, .highlight .kt { color: var(--code-color-5); } /* Keyword */
+.highlight .s, .highlight .sb, .highlight .sc, .highlight .sd, .highlight .s2, .highlight .se, .highlight .sh, .highlight .si, .highlight .sx, .highlight .s1 { color: var(--code-color-6); } /* String */
+.highlight .m, .highlight .mf, .highlight .mh, .highlight .mi, .highlight .mo { color: var(--code-color-14); } /* Number */
+.highlight .n, .highlight .na, .highlight .nb, .highlight .nc, .highlight .nd, .highlight .ne, .highlight .nf, .highlight .ni, .highlight .nl, .highlight .nn, .highlight .no, .highlight .nt, .highlight .nv, .highlight .nx { color: var(--code-color-8); } /* Name */
+.highlight .o, .highlight .ow { color: var(--text-color); } /* Operator */
+.highlight .p { color: var(--text-color); } /* Punctuation */
+
+/* Terminal/console output style */
+pre.terminal {
+    background-color: #000;
+    color: var(--code-color-6);
+}
+
+/* Scrollbar styling for code blocks */
+pre::-webkit-scrollbar {
+    height: 6px;
+}
+
+pre::-webkit-scrollbar-track {
+    background: var(--background-color);
+}
+
+pre::-webkit-scrollbar-thumb {
+    background: var(--secondary-text-color);
+}
+
+/* ASCII art and diagrams */
+pre.ascii-art {
+    font-family: monospace;
+    line-height: 1.2;
+    color: var(--code-color-6);
+}
+
+/* Responsive code blocks */
+@media (max-width: 768px) {
+    pre {
+        font-size: 12px;
+        padding: 12px;
+        margin-left: -12px;
+        margin-right: -12px;
+        border-radius: 0;
+    }
+}
+
+/* Fix for rouge highlighter output */
+.highlighter-rouge {
+    margin: 20px 0;
+}
+
+.highlighter-rouge pre {
+    margin: 0;
+}
+
+/* Make sure code inside lists looks good */
+li code {
+    font-size: 0.85em;
+}
+
+/* Better spacing for code blocks after paragraphs */
+p + pre,
+p + .highlighter-rouge {
+    margin-top: 24px;
+}
