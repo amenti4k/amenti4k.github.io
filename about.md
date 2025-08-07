@@ -17,7 +17,7 @@ Currently founding engineer at [Didero AI](https://didero.ai), where I discovere
 
 ### 2022-2024: Learning How Big Tech Actually Works
 
-Joined Meta as a Data Scientist on the Core Ads team - basically the "data FBI" for $100B+ in annual revenue. Got promoted twice while:
+Joined Meta as a Data Scientist on the Core Ads team - basically the "data FBI" for $100B+ in annual revenue:
 - Building anomaly detection for 140+ metrics (because someone needs to know when the money printer breaks)
 - Leading the Thailand revenue investigation that prevented $1.76M/day from disappearing
 - Learning that "executive reporting" means translating "the graph went down" into a 47-slide deck
@@ -27,13 +27,11 @@ Fun fact: Couldn't leave Meta until Oct 1, 2024 due to H1B restrictions. Freedom
 ### 2018-2022: The Minerva Years
 
 Attended [Minerva University](https://www.minerva.edu/) (yes, the one with <2% acceptance rate where you live in a different country each semester):
-- **San Francisco** → Learned to code while living above a dim sum restaurant
+- **San Francisco** → The "startup holy land" lol 
 - **Seoul** → Discovered algorithmic stablecoins would collapse (wrote a [paper predicting Terra Luna's demise](/2022/05/01/Algorithmic-Stablecoin-Issues.html))
-- **Hyderabad** → Built my first ML models while navigating autorickshaws
-- **Berlin** → Interned at Microsoft, realized I preferred making computers think over making buttons pretty
-- **London** → Did venture research for Contrary Capital, evaluated startups from a Shoreditch café
-
-Got selected as a Masason Foundation Scholar (Masayoshi Son himself picked us).
+- **Hyderabad** → Goa remains one of my odd beach towns
+- **Berlin** → Beef doner pls
+- **London** → Cursed with listening to too much UK rap now
 
 ### Pre-2018: The Ethiopian Beginning
 
