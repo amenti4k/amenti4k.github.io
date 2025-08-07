@@ -32,10 +32,8 @@ Attended [Minerva University](https://www.minerva.edu/) (yes, the one with <2% a
 - **Hyderabad** → Built my first ML models while navigating autorickshaws
 - **Berlin** → Interned at Microsoft, realized I preferred making computers think over making buttons pretty
 - **London** → Did venture research for Contrary Capital, evaluated startups from a Shoreditch café
-- **Buenos Aires** → Learned causal inference while perfecting my empanada preferences
-- **Taipei** → Finished thesis on uplift modeling while living through strictest COVID lockdowns
 
-Got selected as a Masason Foundation Scholar (Masa-san himself picked us - still surreal).
+Got selected as a Masason Foundation Scholar (Masayoshi Son himself picked us).
 
 ### Pre-2018: The Ethiopian Beginning
 
@@ -44,8 +42,8 @@ Born and raised in Addis Ababa. Spent high school convincing myself med school w
 ### The Random Stuff
 
 - Started a run club called [dontwalkinsoho](https://dontwalkinsoho.netlify.app/) because NYC needs more people sprinting through traffic
-- Run an online radio station at [aava.club](https://aava.club/songs) playing everything from Ethiopian jazz to UK garage
-- Write about [AI eating the world](/2025/07/03/Real-Guide-to-Claude-Code.html), fashion, and why your [SQL queries don't need to suck](/2024/06/10/Robust-SQL-Query-Generator.html)
+- Run an online radio station at [aava.club](https://aava.club/songs) putting up some songs I like everything from Ethiopian jazz to UK garage
+- Write about [being less stressed about claude code](/2025/07/03/Real-Guide-to-Claude-Code.html), fashion, and why your [SQL queries don't need to suck](/2024/06/10/Robust-SQL-Query-Generator.html)
 
 Currently figuring out what happens when you give AI tools instead of instructions. Turns out, it works better. 
 
