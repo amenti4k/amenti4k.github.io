@@ -27,11 +27,11 @@ Fun fact: Couldn't leave Meta until Oct 1, 2024 due to H1B restrictions. Freedom
 ### 2018-2022: The Minerva Years
 
 Attended [Minerva University](https://www.minerva.edu/) (yes, the one with <2% acceptance rate where you live in a different country each semester):
-- **San Francisco** → The "startup holy land" lol 
-- **Seoul** → Discovered algorithmic stablecoins would collapse (wrote a [paper predicting Terra Luna's demise](/2022/05/01/Algorithmic-Stablecoin-Issues.html))
-- **Hyderabad** → Goa remains one of my odd beach towns
-- **Berlin** → Beef doner pls
-- **London** → Cursed with listening to too much UK rap now
+- **San Francisco** 
+- **Seoul** 
+- **Hyderabad**
+- **Berlin**
+- **London**
 
 ### Pre-2018: The Ethiopian Beginning
 
