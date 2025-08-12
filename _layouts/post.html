@@ -21,36 +21,6 @@ function sharePost() {
     navigator.clipboard.writeText(url);
     alert('Link copied to clipboard!');
 }
-
-// Initialize Mermaid for any diagrams in the post
-document.addEventListener('DOMContentLoaded', function() {
-    // Find all code blocks with class "language-mermaid"
-    const mermaidBlocks = document.querySelectorAll('pre code.language-mermaid, .language-mermaid pre code');
-    
-    mermaidBlocks.forEach(function(block) {
-        // Get the mermaid code
-        const mermaidCode = block.textContent;
-        
-        // Create a div for mermaid to render into
-        const mermaidDiv = document.createElement('div');
-        mermaidDiv.className = 'mermaid';
-        mermaidDiv.textContent = mermaidCode;
-        
-        // Replace the code block with the mermaid div
-        const pre = block.closest('pre') || block.parentElement;
-        const container = pre.parentElement;
-        if (container && container.classList.contains('highlighter-rouge')) {
-            container.parentNode.replaceChild(mermaidDiv, container);
-        } else if (pre) {
-            pre.parentNode.replaceChild(mermaidDiv, pre);
-        }
-    });
-    
-    // Initialize mermaid if it exists
-    if (typeof mermaid !== 'undefined') {
-        mermaid.init(undefined, document.querySelectorAll('.mermaid'));
-    }
-});
 </script>
 
 <style>

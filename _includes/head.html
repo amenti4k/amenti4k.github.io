@@ -65,26 +65,30 @@
     
     // Process mermaid blocks after page loads
     window.addEventListener('load', function() {
-      // Find all mermaid code blocks
-      const codeBlocks = document.querySelectorAll('.language-mermaid');
+      // Find all mermaid code blocks - they're in <code class="language-mermaid">
+      const codeBlocks = document.querySelectorAll('code.language-mermaid');
       
-      codeBlocks.forEach(function(block) {
-        // Get the parent container
-        const parent = block.parentElement;
+      codeBlocks.forEach(function(codeBlock) {
+        // Get the mermaid content
+        const mermaidCode = codeBlock.textContent;
         
         // Create mermaid div
         const mermaidDiv = document.createElement('div');
         mermaidDiv.className = 'mermaid';
-        mermaidDiv.textContent = block.textContent;
+        mermaidDiv.textContent = mermaidCode;
         
-        // Replace the highlighter-rouge div with mermaid div
-        if (parent && parent.classList.contains('highlighter-rouge')) {
-          parent.parentNode.replaceChild(mermaidDiv, parent);
+        // Find the parent pre element
+        const pre = codeBlock.parentElement;
+        if (pre && pre.tagName === 'PRE') {
+          // Replace the entire pre with mermaid div
+          pre.parentNode.replaceChild(mermaidDiv, pre);
         }
       });
       
       // Now run mermaid on all .mermaid elements
-      mermaid.run();
+      if (typeof mermaid !== 'undefined') {
+        mermaid.run();
+      }
     });
   </script>
 </head>
