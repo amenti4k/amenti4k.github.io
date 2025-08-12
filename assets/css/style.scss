@@ -1,0 +1,131 @@
+---
+---
+
+@import "{{ site.theme }}";
+
+/* Override code block styling for better visibility */
+.language-typescript,
+.language-javascript, 
+.language-python,
+.language-dockerfile,
+.language-bash,
+.language-tsx,
+.language-jsx,
+div.highlighter-rouge {
+    background-color: #1e1e1e !important;
+    border: 1px solid #333 !important;
+    border-left: 3px solid #c678dd !important;
+    border-radius: 4px !important;
+    margin: 20px 0 !important;
+    overflow: hidden !important;
+}
+
+/* Code block pre elements */
+.highlighter-rouge pre,
+.highlight pre,
+div.highlight pre,
+.language-typescript pre,
+.language-javascript pre,
+.language-python pre {
+    background-color: #1e1e1e !important;
+    border: none !important;
+    padding: 16px !important;
+    overflow-x: auto !important;
+    margin: 0 !important;
+    line-height: 1.5 !important;
+    font-size: 14px !important;
+    color: #abb2bf !important;
+}
+
+/* Code element styling */
+.highlighter-rouge code,
+.highlight code,
+pre code {
+    background-color: transparent !important;
+    padding: 0 !important;
+    border: none !important;
+    font-family: 'Courier New', Courier, monospace !important;
+    color: #abb2bf !important;
+    font-size: inherit !important;
+}
+
+/* Inline code */
+p code,
+li code {
+    background-color: #2d2d2d !important;
+    padding: 2px 6px !important;
+    border-radius: 3px !important;
+    font-size: 0.9em !important;
+    color: #e06c75 !important;
+}
+
+/* Syntax highlighting token colors */
+.highlight .c, .highlight .cm, .highlight .c1 { color: #5c6370 !important; font-style: italic !important; } /* Comment */
+.highlight .k, .highlight .kc, .highlight .kd, .highlight .kn, .highlight .kp, .highlight .kr, .highlight .kt { color: #c678dd !important; font-weight: bold !important; } /* Keyword */
+.highlight .s, .highlight .sb, .highlight .sc, .highlight .sd, .highlight .s2, .highlight .se, .highlight .sh, .highlight .si, .highlight .sx, .highlight .s1, .highlight .dl { color: #98c379 !important; } /* String */
+.highlight .m, .highlight .mf, .highlight .mh, .highlight .mi, .highlight .mo { color: #d19a66 !important; } /* Number */
+.highlight .nx { color: #e06c75 !important; } /* JS/TS identifiers */
+.highlight .na { color: #d19a66 !important; } /* Attributes */
+.highlight .nt { color: #e06c75 !important; } /* Tags */
+.highlight .o, .highlight .ow { color: #abb2bf !important; } /* Operator */
+.highlight .p { color: #abb2bf !important; } /* Punctuation */
+.highlight .nb { color: #61afef !important; } /* Built-in */
+.highlight .nc { color: #e5c07b !important; } /* Class name */
+.highlight .nd { color: #61afef !important; } /* Decorator */
+.highlight .nf { color: #61afef !important; } /* Function */
+.highlight .nn { color: #e5c07b !important; } /* Namespace */
+.highlight .nv { color: #e06c75 !important; } /* Variable */
+.highlight .no { color: #d19a66 !important; } /* Constant */
+
+/* Mermaid diagram containers */
+.mermaid,
+pre.mermaid {
+    background-color: #1e1e1e !important;
+    border: 1px solid #333 !important;
+    border-left: 3px solid #61afef !important;
+    padding: 20px !important;
+    margin: 20px 0 !important;
+    text-align: center !important;
+    overflow-x: auto !important;
+    border-radius: 4px !important;
+}
+
+/* Mermaid SVG override */
+.mermaid svg {
+    max-width: 100% !important;
+    height: auto !important;
+}
+
+/* Make sure code blocks look good on mobile */
+@media (max-width: 768px) {
+    pre {
+        font-size: 12px !important;
+        padding: 12px !important;
+    }
+}
+
+/* Fix for inline code in lists */
+li code {
+    font-size: 0.85em !important;
+}
+
+/* Add bottom margin to headings before code blocks */
+h2 + .highlighter-rouge,
+h3 + .highlighter-rouge {
+    margin-top: 10px !important;
+}
+
+/* Ensure proper scrollbar styling */
+pre::-webkit-scrollbar {
+    height: 8px;
+    background-color: #1e1e1e;
+}
+
+pre::-webkit-scrollbar-thumb {
+    background-color: #5c6370;
+    border-radius: 4px;
+}
+
+pre::-webkit-scrollbar-track {
+    background-color: #1e1e1e;
+}
