@@ -33,7 +33,7 @@ Attended [Minerva University](https://www.minerva.edu/) (yes, the one with <2% a
 - **Berlin**
 - **London**
 
-### Pre-2018: The Ethiopian Beginning
+### Pre-2018: The Ethiopian Times
 
 Born and raised in Addis Ababa. Spent high school convincing myself med school was the path, then discovered statistics and never looked back. 
 
