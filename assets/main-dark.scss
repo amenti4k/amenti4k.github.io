@@ -1,0 +1,81 @@
+---
+---
+
+@import "base";
+@import "dark";
+
+/* Additional overrides for code blocks */
+.language-typescript,
+.language-javascript,
+.language-python,
+.language-dockerfile,
+.language-bash,
+.highlighter-rouge {
+    background-color: #1e1e1e !important;
+    border: 1px solid #3a3a3a !important;
+    border-left: 3px solid #c678dd !important;
+    border-radius: 4px !important;
+    margin: 20px 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+}
+
+/* Ensure pre elements inside have correct styling */
+.highlighter-rouge pre,
+.language-typescript pre,
+.language-javascript pre,
+.language-python pre,
+.language-dockerfile pre,
+.language-bash pre {
+    background-color: #1e1e1e !important;
+    border: none !important;
+    padding: 16px !important;
+    margin: 0 !important;
+    overflow-x: auto !important;
+}
+
+/* Make sure .highlight divs also get styled */
+.highlight {
+    background-color: #1e1e1e !important;
+    border-radius: 4px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.highlight pre {
+    background-color: #1e1e1e !important;
+    padding: 16px !important;
+}
+
+/* Force code colors to be visible */
+.highlight code {
+    background-color: transparent !important;
+    color: #abb2bf !important;
+}
+
+/* Token colors for better visibility */
+.highlight .k, .highlight .kd, .highlight .kt { color: #c678dd !important; font-weight: bold !important; }
+.highlight .s, .highlight .s1, .highlight .s2, .highlight .dl { color: #98c379 !important; }
+.highlight .c, .highlight .cm, .highlight .c1 { color: #5c6370 !important; font-style: italic !important; }
+.highlight .nx { color: #e06c75 !important; }
+.highlight .na { color: #d19a66 !important; }
+.highlight .m, .highlight .mi { color: #d19a66 !important; }
+.highlight .o { color: #abb2bf !important; }
+.highlight .p { color: #abb2bf !important; }
+
+/* Mermaid diagram styling */
+.mermaid {
+    background-color: #1e1e1e !important;
+    border: 1px solid #3a3a3a !important;
+    border-left: 3px solid #61afef !important;
+    padding: 20px !important;
+    margin: 20px 0 !important;
+    text-align: center !important;
+    overflow-x: auto !important;
+    border-radius: 4px !important;
+}
+
+.mermaid svg {
+    max-width: 100% !important;
+    height: auto !important;
+}

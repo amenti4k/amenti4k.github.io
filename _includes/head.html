@@ -1,95 +1,76 @@
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>{{ page.title }}</title>
-  {%- seo title=false -%}
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>{{ page.title }}</title>
+{%- seo title=false -%}
 
-  {% if page.robots %}
-    <meta name="robots" content="{{page.robots}}" />
-  {% endif %}
+{% if page.robots %}
+  <meta name="robots" content="{{page.robots}}" />
+{% endif %}
 
-  {%- if site.listen_for_clients_preferred_style -%}
-    <link rel="stylesheet" type="text/css" href="{{ "/assets/main.css" | relative_url }}">
-  {%- else -%}
-    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
-    <link rel="stylesheet" type="text/css" href="{{ "/assets/header.css" | relative_url }}">
+{%- if site.listen_for_clients_preferred_style -%}
+  <link rel="stylesheet" type="text/css" href="{{ "/assets/main.css" | relative_url }}">
+{%- else -%}
+  {%- if site.style == 'light' -%}
     <link rel="stylesheet" type="text/css" href="{{ "/assets/main-light.css" | relative_url }}">
+  {%- elsif site.style == 'hacker' -%}
+    <link rel="stylesheet" type="text/css" href="{{ "/assets/main-hacker.css" | relative_url }}">
+  {%- else -%}
+    <link rel="stylesheet" type="text/css" href="{{ "/assets/main-dark.css" | relative_url }}">
   {%- endif -%}
-  
-  <!-- Custom CSS for code highlighting - Load after theme CSS -->
-  <link rel="stylesheet" type="text/css" href="{{ "/assets/css/custom.css" | relative_url }}">
-  <style>
-    /* Inline override to ensure code blocks are styled */
-    .language-python, .language-bash, .language-javascript,
-    div.highlighter-rouge, .highlight {
-      background-color: #0a0a0a !important;
-      border-left: 3px solid #c678dd !important;
+{%- endif -%}
+
+{%- if jekyll.environment == 'production' and site.google_analytics -%}
+  {%- include google-analytics.html -%}
+{%- endif -%}
+
+<!-- Mermaid for diagrams -->
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<script>
+  // Initialize mermaid with config
+  mermaid.initialize({ 
+    startOnLoad: false,
+    theme: 'dark',
+    themeVariables: {
+      primaryColor: '#c678dd',
+      primaryTextColor: '#fff',
+      primaryBorderColor: '#c678dd',
+      lineColor: '#5c6370',
+      secondaryColor: '#61afef',
+      tertiaryColor: '#98c379',
+      background: '#1e1e1e',
+      mainBkg: '#1e1e1e',
+      secondBkg: '#2d2d2d',
+      tertiaryBkg: '#3a3a3a',
+      darkMode: true
     }
-  </style>
-
-  {%- if jekyll.environment == 'production' and site.google_analytics -%}
-    {%- include google-analytics.html -%}
-  {%- endif -%}
-
-  <script>
-    // Immediately set theme before page loads
-    (function() {
-      const savedTheme = localStorage.getItem('theme') || 
-        (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-      document.documentElement.setAttribute('data-theme', savedTheme);
-    })();
-  </script>
-
-  <!-- Mermaid for diagrams -->
-  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
-  <script>
-    // Initialize mermaid with config
-    mermaid.initialize({ 
-      startOnLoad: false, // We'll manually init after finding blocks
-      theme: 'dark',
-      themeVariables: {
-        primaryColor: '#c678dd',
-        primaryTextColor: '#fff',
-        primaryBorderColor: '#c678dd',
-        lineColor: '#5c6370',
-        secondaryColor: '#61afef',
-        tertiaryColor: '#98c379',
-        background: '#0a0a0a',
-        mainBkg: '#0a0a0a',
-        secondBkg: '#1e1e1e',
-        tertiaryBkg: '#2c2c2c',
-        darkMode: true
+  });
+  
+  // Process mermaid blocks after page loads
+  window.addEventListener('load', function() {
+    // Find all mermaid code blocks
+    const codeBlocks = document.querySelectorAll('code.language-mermaid');
+    
+    codeBlocks.forEach(function(codeBlock) {
+      const mermaidCode = codeBlock.textContent;
+      
+      // Create mermaid div
+      const mermaidDiv = document.createElement('div');
+      mermaidDiv.className = 'mermaid';
+      mermaidDiv.textContent = mermaidCode;
+      
+      // Find the parent pre element
+      const pre = codeBlock.parentElement;
+      if (pre && pre.tagName === 'PRE') {
+        // Replace the entire pre with mermaid div
+        pre.parentNode.replaceChild(mermaidDiv, pre);
       }
     });
     
-    // Process mermaid blocks after page loads
-    window.addEventListener('load', function() {
-      // Find all mermaid code blocks - they're in <code class="language-mermaid">
-      const codeBlocks = document.querySelectorAll('code.language-mermaid');
-      
-      codeBlocks.forEach(function(codeBlock) {
-        // Get the mermaid content
-        const mermaidCode = codeBlock.textContent;
-        
-        // Create mermaid div
-        const mermaidDiv = document.createElement('div');
-        mermaidDiv.className = 'mermaid';
-        mermaidDiv.textContent = mermaidCode;
-        
-        // Find the parent pre element
-        const pre = codeBlock.parentElement;
-        if (pre && pre.tagName === 'PRE') {
-          // Replace the entire pre with mermaid div
-          pre.parentNode.replaceChild(mermaidDiv, pre);
-        }
-      });
-      
-      // Now run mermaid on all .mermaid elements
-      if (typeof mermaid !== 'undefined') {
-        mermaid.run();
-      }
-    });
-  </script>
-</head>
+    // Run mermaid on all .mermaid elements
+    if (typeof mermaid !== 'undefined') {
+      mermaid.run();
+    }
+  });
+</script>
   

@@ -21,6 +21,38 @@ function sharePost() {
     navigator.clipboard.writeText(url);
     alert('Link copied to clipboard!');
 }
+
+// Additional Mermaid processing for posts
+document.addEventListener('DOMContentLoaded', function() {
+    // Debug: Log what we find
+    console.log('Looking for mermaid blocks...');
+    
+    // Try multiple selectors
+    const mermaidBlocks = document.querySelectorAll('code.language-mermaid, pre > code.language-mermaid');
+    console.log('Found ' + mermaidBlocks.length + ' mermaid blocks');
+    
+    mermaidBlocks.forEach(function(block, index) {
+        console.log('Processing mermaid block ' + index);
+        const mermaidCode = block.textContent;
+        
+        // Create mermaid div
+        const mermaidDiv = document.createElement('div');
+        mermaidDiv.className = 'mermaid';
+        mermaidDiv.textContent = mermaidCode;
+        
+        // Find container to replace
+        let container = block.parentElement;
+        if (container && container.tagName === 'PRE') {
+            container.parentNode.replaceChild(mermaidDiv, container);
+        }
+    });
+    
+    // Run mermaid if available
+    if (typeof mermaid !== 'undefined') {
+        console.log('Running mermaid...');
+        mermaid.run();
+    }
+});
 </script>
 
 <style>
