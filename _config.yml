@@ -33,6 +33,10 @@ kramdown:
     block:
       line_numbers: false
       start_line: 1
+  # Ensure fenced code blocks work
+  enable_coderay: false
+  hard_wrap: false
+  auto_ids: true
 
 # Exclude from processing.
 # The following items will not be processed, by default.

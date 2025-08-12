@@ -24,18 +24,31 @@ function sharePost() {
 
 // Initialize Mermaid for any diagrams in the post
 document.addEventListener('DOMContentLoaded', function() {
-    // Convert any div.mermaid to pre.mermaid for proper rendering
-    const mermaidDivs = document.querySelectorAll('div.mermaid');
-    mermaidDivs.forEach(function(div) {
-        const pre = document.createElement('pre');
-        pre.className = 'mermaid';
-        pre.textContent = div.textContent;
-        div.parentNode.replaceChild(pre, div);
+    // Find all code blocks with class "language-mermaid"
+    const mermaidBlocks = document.querySelectorAll('pre code.language-mermaid, .language-mermaid pre code');
+    
+    mermaidBlocks.forEach(function(block) {
+        // Get the mermaid code
+        const mermaidCode = block.textContent;
+        
+        // Create a div for mermaid to render into
+        const mermaidDiv = document.createElement('div');
+        mermaidDiv.className = 'mermaid';
+        mermaidDiv.textContent = mermaidCode;
+        
+        // Replace the code block with the mermaid div
+        const pre = block.closest('pre') || block.parentElement;
+        const container = pre.parentElement;
+        if (container && container.classList.contains('highlighter-rouge')) {
+            container.parentNode.replaceChild(mermaidDiv, container);
+        } else if (pre) {
+            pre.parentNode.replaceChild(mermaidDiv, pre);
+        }
     });
     
-    // Re-initialize mermaid if it exists
+    // Initialize mermaid if it exists
     if (typeof mermaid !== 'undefined') {
-        mermaid.init();
+        mermaid.init(undefined, document.querySelectorAll('.mermaid'));
     }
 });
 </script>

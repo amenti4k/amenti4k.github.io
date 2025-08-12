@@ -46,7 +46,7 @@ But here's the thing—Stagehand isn't magic. It's a leaky abstraction, just lik
 
 Before diving into code, let's understand what we're building. This isn't just browser automation—it's a distributed system that happens to use browsers as its interface to the world.
 
-<div class="mermaid">
+```mermaid
 graph TB
     subgraph "Django API Layer"
         API[Django REST API]
@@ -76,7 +76,7 @@ graph TB
     classDef api fill:#e1f5fe
     classDef rpa fill:#fff3e0
     classDef external fill:#e8f5e9
-</div>
+```
 
 The architecture is deliberately simple: Django handles business logic, Express manages job submission, Redis queues the work, and workers execute using AI-powered browsers. But the devil is in the details.
 
@@ -144,7 +144,7 @@ This semantic retry pattern increases success rate from 78% to 94%. The AI isn't
 
 The biggest lie in RPA is that tasks are independent. They're not. NetSuite remembers your last search. ERPs maintain session state. Some systems literally behave differently based on what you did 10 minutes ago.
 
-<div class="mermaid">
+```mermaid
 stateDiagram-v2
     [*] --> Waiting: Job submitted
     Waiting --> Active: Worker picks up
@@ -156,7 +156,7 @@ stateDiagram-v2
     Stalled --> Waiting: Recovered
     Completed --> [*]
     Failed --> [*]
-</div>
+```
 
 Every job needs three phases that most RPA systems ignore:
 
@@ -218,7 +218,7 @@ This isn't elegant. It's not clever. But it works. And in production, working be
 
 After running millions of operations, here's the truth about AI-powered RPA:
 
-<div class="mermaid">
+```mermaid
 graph LR
     subgraph "Traditional RPA"
         T1[Find Element<br/>50ms] --> T2[Click<br/>100ms]
@@ -233,7 +233,7 @@ graph LR
     
     style T3 fill:#ffcccc
     style A4 fill:#ccffcc
-</div>
+```
 
 We're 7-8x slower per operation. But we complete 94% of workflows vs 60% for traditional RPA. The math is clear:
 
@@ -363,7 +363,7 @@ if (confidence < 0.9) {
 
 Here's what we actually run in production:
 
-<div class="mermaid">
+```mermaid
 graph TB
     subgraph "Client Layer"
         Django[Django API]
@@ -402,7 +402,7 @@ graph TB
     Stagehand --> Sessions
     Sessions --> NetSuite
     Stagehand --> OpenAI
-</div>
+```
 
 Five workers, session pooling, retry logic, monitoring. Not because it's elegant, but because it's what actually works at scale.
 

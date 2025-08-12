@@ -44,24 +44,47 @@
   <!-- Mermaid for diagrams -->
   <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      mermaid.initialize({ 
-        startOnLoad: true,
-        theme: 'dark',
-        themeVariables: {
-          primaryColor: '#c678dd',
-          primaryTextColor: '#fff',
-          primaryBorderColor: '#c678dd',
-          lineColor: '#5c6370',
-          secondaryColor: '#61afef',
-          tertiaryColor: '#98c379',
-          background: '#0a0a0a',
-          mainBkg: '#0a0a0a',
-          secondBkg: '#1e1e1e',
-          tertiaryBkg: '#2c2c2c',
-          darkMode: true
+    // Initialize mermaid with config
+    mermaid.initialize({ 
+      startOnLoad: false, // We'll manually init after finding blocks
+      theme: 'dark',
+      themeVariables: {
+        primaryColor: '#c678dd',
+        primaryTextColor: '#fff',
+        primaryBorderColor: '#c678dd',
+        lineColor: '#5c6370',
+        secondaryColor: '#61afef',
+        tertiaryColor: '#98c379',
+        background: '#0a0a0a',
+        mainBkg: '#0a0a0a',
+        secondBkg: '#1e1e1e',
+        tertiaryBkg: '#2c2c2c',
+        darkMode: true
+      }
+    });
+    
+    // Process mermaid blocks after page loads
+    window.addEventListener('load', function() {
+      // Find all mermaid code blocks
+      const codeBlocks = document.querySelectorAll('.language-mermaid');
+      
+      codeBlocks.forEach(function(block) {
+        // Get the parent container
+        const parent = block.parentElement;
+        
+        // Create mermaid div
+        const mermaidDiv = document.createElement('div');
+        mermaidDiv.className = 'mermaid';
+        mermaidDiv.textContent = block.textContent;
+        
+        // Replace the highlighter-rouge div with mermaid div
+        if (parent && parent.classList.contains('highlighter-rouge')) {
+          parent.parentNode.replaceChild(mermaidDiv, parent);
         }
       });
+      
+      // Now run mermaid on all .mermaid elements
+      mermaid.run();
     });
   </script>
 </head>
