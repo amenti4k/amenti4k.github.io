@@ -21,6 +21,23 @@ function sharePost() {
     navigator.clipboard.writeText(url);
     alert('Link copied to clipboard!');
 }
+
+// Initialize Mermaid for any diagrams in the post
+document.addEventListener('DOMContentLoaded', function() {
+    // Convert any div.mermaid to pre.mermaid for proper rendering
+    const mermaidDivs = document.querySelectorAll('div.mermaid');
+    mermaidDivs.forEach(function(div) {
+        const pre = document.createElement('pre');
+        pre.className = 'mermaid';
+        pre.textContent = div.textContent;
+        div.parentNode.replaceChild(pre, div);
+    });
+    
+    // Re-initialize mermaid if it exists
+    if (typeof mermaid !== 'undefined') {
+        mermaid.init();
+    }
+});
 </script>
 
 <style>

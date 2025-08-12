@@ -117,3 +117,22 @@ p + pre,
 p + .highlighter-rouge {
     margin-top: 24px;
 }
+
+/* Mermaid diagram styling */
+.mermaid, 
+pre.mermaid,
+div.mermaid {
+    background-color: #0a0a0a !important;
+    border: 1px solid #333 !important;
+    border-left: 3px solid #61afef !important;
+    padding: 20px !important;
+    margin: 20px 0 !important;
+    text-align: center !important;
+    overflow-x: auto !important;
+}
+
+/* Override for rendered Mermaid SVGs */
+.mermaid svg {
+    max-width: 100% !important;
+    height: auto !important;
+}
