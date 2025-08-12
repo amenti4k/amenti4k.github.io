@@ -40,5 +40,29 @@
       document.documentElement.setAttribute('data-theme', savedTheme);
     })();
   </script>
+
+  <!-- Mermaid for diagrams -->
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      mermaid.initialize({ 
+        startOnLoad: true,
+        theme: 'dark',
+        themeVariables: {
+          primaryColor: '#c678dd',
+          primaryTextColor: '#fff',
+          primaryBorderColor: '#c678dd',
+          lineColor: '#5c6370',
+          secondaryColor: '#61afef',
+          tertiaryColor: '#98c379',
+          background: '#0a0a0a',
+          mainBkg: '#0a0a0a',
+          secondBkg: '#1e1e1e',
+          tertiaryBkg: '#2c2c2c',
+          darkMode: true
+        }
+      });
+    });
+  </script>
 </head>
   
