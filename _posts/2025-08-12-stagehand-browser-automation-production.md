@@ -219,16 +219,16 @@ This isn't elegant. It's not clever. But it works. And in production, working be
 After running millions of operations, here's the truth about AI-powered RPA:
 
 ```mermaid
-graph LR
-    subgraph "Traditional RPA"
-        T1[Find Element<br/>50ms] --> T2[Click<br/>100ms]
-        T2 --> T3[Success<br/>60%]
+graph TB
+    subgraph T["Traditional RPA"]
+        T1[Find: 50ms] --> T2[Click: 100ms]
+        T2 --> T3[60% Success]
     end
     
-    subgraph "AI-Powered RPA"
-        A1[Screenshot<br/>200ms] --> A2[AI Analysis<br/>600ms]
-        A2 --> A3[Action<br/>400ms]
-        A3 --> A4[Success<br/>94%]
+    subgraph A["AI-Powered RPA"]
+        A1[Screenshot: 200ms] --> A2[AI: 600ms]
+        A2 --> A3[Action: 400ms]
+        A3 --> A4[94% Success]
     end
     
     style T3 fill:#ffcccc
