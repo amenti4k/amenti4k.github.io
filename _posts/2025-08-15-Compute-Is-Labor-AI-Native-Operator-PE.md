@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Compute Is Labor: How AI-Native Operator-PE Will Reprice the Cost Side of the Economy"
-date: 2025-08-10
+date: 2025-08-15
 categories: [ai, economics, private-equity]
 tags: [ai, automation, private-equity, labor-economics, autonomous-work]
 excerpt: "The thing that changes you isn't brilliance; it's exhaustion. It's 11:30 PM, another workflow has failed, and you're staring at a dashboard that feels like a mirror. The discovery that AI should orchestrate software—not be embedded in it—revealed an uncomfortable economic truth: we weren't selling software features; we were replacing labor."
