@@ -248,14 +248,31 @@ function generateTOCForPost(postContent) {
     
     tocNav.innerHTML = '';
     
-    // Find ALL headings, including h1 if present
-    const headings = postContent.querySelectorAll('h1, h2, h3, h4');
+    // Find all headings - be very thorough
+    let headings = postContent.querySelectorAll('h1, h2, h3, h4');
+    
+    // If no headings found, try looking deeper in the DOM
+    if (headings.length === 0) {
+        console.log('No headings found directly, searching deeper...');
+        const allElements = postContent.getElementsByTagName('*');
+        const headingElements = [];
+        for (let el of allElements) {
+            if (/^H[1-4]$/.test(el.tagName)) {
+                headingElements.push(el);
+            }
+        }
+        headings = headingElements;
+    }
+    
     console.log('Found ' + headings.length + ' headings in expanded post');
     
     // Debug: log first few headings
     if (headings.length > 0) {
-        console.log('First heading:', headings[0].textContent);
-        console.log('Last heading:', headings[headings.length - 1].textContent);
+        console.log('First heading:', headings[0].tagName, headings[0].textContent);
+        if (headings.length > 1) {
+            console.log('Second heading:', headings[1].tagName, headings[1].textContent);
+        }
+        console.log('Last heading:', headings[headings.length - 1].tagName, headings[headings.length - 1].textContent);
     }
     
     if (headings.length === 0) {
@@ -266,14 +283,20 @@ function generateTOCForPost(postContent) {
     const tocList = document.createElement('ul');
     
     headings.forEach((heading, index) => {
-        // Skip the main title if it's an h1
-        if (heading.tagName === 'H1' && index === 0) {
-            return; // Skip the main blog post title
+        // Skip any H1 headings (main titles)
+        if (heading.tagName === 'H1') {
+            console.log('Skipping H1:', heading.textContent);
+            return; // Skip all H1s
         }
         
         if (!heading.id) {
-            // Use index to ensure unique IDs
-            heading.id = 'toc-heading-' + index;
+            // Create clean ID from heading text
+            const cleanText = heading.textContent.trim()
+                .replace(/[^a-zA-Z0-9\s]/g, '') // Remove special chars
+                .replace(/\s+/g, '-') // Replace spaces with hyphens
+                .toLowerCase()
+                .substring(0, 50); // Limit length
+            heading.id = 'toc-' + cleanText + '-' + index;
         }
         
         const li = document.createElement('li');
@@ -307,8 +330,11 @@ function generateTOCForPost(postContent) {
     // Show TOC with animation
     tocContainer.classList.add('visible');
     
-    // Reset scroll position to top to show all sections
-    tocContainer.scrollTop = 0;
+    // Force reset scroll position to absolute top
+    setTimeout(() => {
+        tocContainer.scrollTop = 0;
+        console.log('Reset TOC scroll to top');
+    }, 50);
     
     // Auto-minimize after 3 seconds
     setTimeout(() => {
@@ -335,10 +361,10 @@ function watchPostExpansion() {
             if (mutation.target.classList && mutation.target.classList.contains('post-content')) {
                 const tocContainer = document.getElementById('toc-container');
                 if (mutation.target.classList.contains('expanded')) {
-                    // Add delay to ensure content is fully rendered
+                    // Add longer delay for large posts to ensure content is fully rendered
                     setTimeout(() => {
                         generateTOCForPost(mutation.target);
-                    }, 200);
+                    }, 500);
                 } else {
                     if (tocContainer) {
                         tocContainer.classList.remove('visible');
@@ -361,10 +387,10 @@ document.addEventListener('DOMContentLoaded', function() {
         
         const expandedPost = document.querySelector('.post-content.expanded');
         if (expandedPost) {
-            // Delay to ensure content is fully loaded
+            // Longer delay for initial load to ensure content is fully rendered
             setTimeout(() => {
                 generateTOCForPost(expandedPost);
-            }, 300);
+            }, 600);
         }
         
         let scrollTimer;
