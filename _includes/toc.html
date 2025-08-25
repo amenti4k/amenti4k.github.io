@@ -9,17 +9,17 @@
 .toc-container {
     position: fixed;
     right: 30px;
-    top: 50%;
-    transform: translateY(-50%);
+    top: 100px;
+    bottom: 50px;
     width: 200px;
-    max-height: 80vh;
     overflow-y: auto;
+    overflow-x: hidden;
     z-index: 100;
     font-family: 'Inconsolata', monospace;
     font-size: 11px;
     line-height: 1.4;
     opacity: 0;
-    transition: opacity 0.3s ease, transform 0.3s ease;
+    transition: opacity 0.3s ease;
     pointer-events: none;
 }
 
@@ -60,6 +60,7 @@
 
 .toc-nav {
     color: var(--secondary-text-color, #9b9b9b);
+    padding: 5px 0;
 }
 
 .toc-nav ul {
@@ -173,22 +174,26 @@ function updateActiveSection(activeId) {
         }
     });
     
-    // Scroll the TOC container itself to keep active item visible
+    // Scroll the TOC container to keep active item visible (but not on every update)
     if (activeLink && activeLink.offsetParent) {
         const tocContainer = document.getElementById('toc-container');
-        const linkTop = activeLink.offsetTop;
-        const linkHeight = activeLink.offsetHeight;
-        const containerHeight = tocContainer.clientHeight;
-        const containerScroll = tocContainer.scrollTop;
+        const linkRect = activeLink.getBoundingClientRect();
+        const containerRect = tocContainer.getBoundingClientRect();
         
-        // Calculate ideal scroll position to center the active link
-        const idealScroll = linkTop - (containerHeight / 2) + (linkHeight / 2);
-        
-        // Smooth scroll to the ideal position
-        tocContainer.scrollTo({
-            top: idealScroll,
-            behavior: 'smooth'
-        });
+        // Only auto-scroll if the active link is not visible
+        if (linkRect.top < containerRect.top || linkRect.bottom > containerRect.bottom) {
+            const linkTop = activeLink.offsetTop;
+            const linkHeight = activeLink.offsetHeight;
+            const containerHeight = tocContainer.clientHeight;
+            
+            // Scroll to put active link in the middle of the container
+            const idealScroll = linkTop - (containerHeight / 2) + (linkHeight / 2);
+            
+            tocContainer.scrollTo({
+                top: Math.max(0, idealScroll),
+                behavior: 'smooth'
+            });
+        }
     }
 }
 
