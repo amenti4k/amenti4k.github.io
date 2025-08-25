@@ -335,7 +335,10 @@ function watchPostExpansion() {
             if (mutation.target.classList && mutation.target.classList.contains('post-content')) {
                 const tocContainer = document.getElementById('toc-container');
                 if (mutation.target.classList.contains('expanded')) {
-                    generateTOCForPost(mutation.target);
+                    // Add delay to ensure content is fully rendered
+                    setTimeout(() => {
+                        generateTOCForPost(mutation.target);
+                    }, 200);
                 } else {
                     if (tocContainer) {
                         tocContainer.classList.remove('visible');
@@ -358,7 +361,10 @@ document.addEventListener('DOMContentLoaded', function() {
         
         const expandedPost = document.querySelector('.post-content.expanded');
         if (expandedPost) {
-            generateTOCForPost(expandedPost);
+            // Delay to ensure content is fully loaded
+            setTimeout(() => {
+                generateTOCForPost(expandedPost);
+            }, 300);
         }
         
         let scrollTimer;
