@@ -195,10 +195,22 @@ function updateActiveSection(activeId) {
 
 // Track scroll to highlight current section
 function trackScroll() {
-    let headings = document.querySelectorAll('.post-content h2, .post-content h3, .post-content h4');
-    if (headings.length === 0) {
-        headings = document.querySelectorAll('article h2, article h3, article h4');
+    // For expandable posts on home page
+    const expandedPost = document.querySelector('.post-content.expanded');
+    let headings;
+    
+    if (expandedPost) {
+        headings = expandedPost.querySelectorAll('h2, h3, h4');
+    } else {
+        // For traditional post pages
+        headings = document.querySelectorAll('.post-content h2, .post-content h3, .post-content h4');
+        if (headings.length === 0) {
+            headings = document.querySelectorAll('article h2, article h3, article h4');
+        }
     }
+    
+    if (!headings || headings.length === 0) return;
+    
     const scrollPosition = window.scrollY + 100;
     
     let currentSection = null;
@@ -276,16 +288,103 @@ function makeDraggable() {
     }
 }
 
+// Generate TOC for expanded post
+function generateTOCForPost(postContent) {
+    const tocNav = document.getElementById('toc-nav');
+    if (!tocNav) return;
+    
+    // Clear existing TOC
+    tocNav.innerHTML = '';
+    
+    // Find headings in the expanded post
+    const headings = postContent.querySelectorAll('h2, h3, h4');
+    console.log('Generating TOC for expanded post with ' + headings.length + ' headings');
+    
+    if (headings.length === 0) {
+        document.getElementById('toc-container').style.display = 'none';
+        return;
+    }
+    
+    document.getElementById('toc-container').style.display = 'block';
+    
+    const tocList = document.createElement('ul');
+    
+    headings.forEach((heading, index) => {
+        // Create unique ID if heading doesn't have one
+        if (!heading.id) {
+            heading.id = 'heading-' + Date.now() + '-' + index;
+        }
+        
+        const li = document.createElement('li');
+        const a = document.createElement('a');
+        a.href = '#' + heading.id;
+        a.textContent = heading.textContent;
+        a.className = 'toc-' + heading.tagName.toLowerCase();
+        
+        // Smooth scroll on click
+        a.addEventListener('click', function(e) {
+            e.preventDefault();
+            const target = document.getElementById(heading.id);
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                updateActiveSection(heading.id);
+            }
+        });
+        
+        li.appendChild(a);
+        tocList.appendChild(li);
+    });
+    
+    tocNav.appendChild(tocList);
+    
+    // Start tracking scroll for this post
+    trackScroll();
+}
+
+// Watch for post expansion
+function watchPostExpansion() {
+    // Create MutationObserver to watch for expanded posts
+    const observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+            if (mutation.target.classList && mutation.target.classList.contains('post-content')) {
+                if (mutation.target.classList.contains('expanded')) {
+                    // Post was expanded
+                    generateTOCForPost(mutation.target);
+                } else {
+                    // Post was collapsed
+                    document.getElementById('toc-container').style.display = 'none';
+                }
+            }
+        });
+    });
+    
+    // Start observing all post-content elements
+    document.querySelectorAll('.post-content').forEach(function(element) {
+        observer.observe(element, { attributes: true, attributeFilter: ['class'] });
+    });
+}
+
 // Initialize TOC when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
-    // Only generate TOC if we're on a post page with content
-    if (document.querySelector('.post-content')) {
-        generateTOC();
+    // Check if we're on the home page with expandable posts
+    if (document.querySelector('.post-list')) {
+        console.log('Home page detected, setting up TOC for expandable posts');
         makeDraggable();
+        watchPostExpansion();
+        
+        // Check if a post is already expanded (from hash)
+        const expandedPost = document.querySelector('.post-content.expanded');
+        if (expandedPost) {
+            generateTOCForPost(expandedPost);
+        } else {
+            // Hide TOC initially
+            const tocContainer = document.getElementById('toc-container');
+            if (tocContainer) tocContainer.style.display = 'none';
+        }
         
         // Restore collapsed state from localStorage
         const isCollapsed = localStorage.getItem('toc-collapsed') === 'true';
-        if (isCollapsed) {
+        if (isCollapsed && document.getElementById('toc-container')) {
             toggleTOC();
         }
         
@@ -295,8 +394,22 @@ document.addEventListener('DOMContentLoaded', function() {
             if (scrollTimer) clearTimeout(scrollTimer);
             scrollTimer = setTimeout(trackScroll, 50);
         });
+    } else if (document.querySelector('.post-content')) {
+        // Traditional single post page
+        generateTOC();
+        makeDraggable();
         
-        // Initial active section
+        const isCollapsed = localStorage.getItem('toc-collapsed') === 'true';
+        if (isCollapsed) {
+            toggleTOC();
+        }
+        
+        let scrollTimer;
+        window.addEventListener('scroll', function() {
+            if (scrollTimer) clearTimeout(scrollTimer);
+            scrollTimer = setTimeout(trackScroll, 50);
+        });
+        
         trackScroll();
     }
 });
