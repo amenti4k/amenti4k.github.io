@@ -9,15 +9,36 @@
 .toc-container {
     position: fixed;
     right: 30px;
-    top: 120px;
+    top: 50%;
+    transform: translateY(-50%);
     width: 200px;
+    max-height: 80vh;
+    overflow-y: auto;
     z-index: 100;
     font-family: 'Inconsolata', monospace;
     font-size: 11px;
     line-height: 1.4;
     opacity: 0;
-    transition: opacity 0.3s ease;
+    transition: opacity 0.3s ease, transform 0.3s ease;
     pointer-events: none;
+}
+
+/* Custom scrollbar for TOC */
+.toc-container::-webkit-scrollbar {
+    width: 2px;
+}
+
+.toc-container::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.toc-container::-webkit-scrollbar-thumb {
+    background: var(--secondary-text-color, #9b9b9b);
+    opacity: 0.3;
+}
+
+.toc-container:hover::-webkit-scrollbar-thumb {
+    opacity: 0.6;
 }
 
 .toc-container.visible {
@@ -138,13 +159,32 @@ function generateTOC() {
 // Update active section based on scroll
 function updateActiveSection(activeId) {
     const links = document.querySelectorAll('.toc-nav a');
+    let activeLink = null;
+    
     links.forEach(link => {
         if (link.getAttribute('href') === '#' + activeId) {
             link.classList.add('active');
+            activeLink = link;
         } else {
             link.classList.remove('active');
         }
     });
+    
+    // Scroll the TOC to keep active item visible
+    if (activeLink) {
+        const tocContainer = document.getElementById('toc-container');
+        const linkRect = activeLink.getBoundingClientRect();
+        const containerRect = tocContainer.getBoundingClientRect();
+        
+        // Check if link is outside the visible area of TOC
+        if (linkRect.top < containerRect.top + 50) {
+            // Scroll up
+            activeLink.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } else if (linkRect.bottom > containerRect.bottom - 50) {
+            // Scroll down
+            activeLink.scrollIntoView({ behavior: 'smooth', block: 'end' });
+        }
+    }
 }
 
 // Track scroll to highlight current section
@@ -163,14 +203,18 @@ function trackScroll() {
     
     if (!headings || headings.length === 0) return;
     
-    const scrollPosition = window.scrollY + 100;
+    // Use viewport center for better tracking
+    const viewportCenter = window.innerHeight / 2;
     let currentSection = null;
+    let closestDistance = Infinity;
     
     headings.forEach(heading => {
         const rect = heading.getBoundingClientRect();
-        const absoluteTop = rect.top + window.scrollY;
+        const distance = Math.abs(rect.top - viewportCenter);
         
-        if (absoluteTop <= scrollPosition) {
+        // Find the heading closest to viewport center
+        if (distance < closestDistance) {
+            closestDistance = distance;
             currentSection = heading.id;
         }
     });
