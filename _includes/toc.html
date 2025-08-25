@@ -12,7 +12,7 @@
     top: 100px;
     bottom: 50px;
     width: 200px;
-    overflow-y: auto;
+    overflow-y: scroll; /* Force scrollbar to always show */
     overflow-x: hidden;
     z-index: 100;
     font-family: 'Inconsolata', monospace;
@@ -21,6 +21,7 @@
     opacity: 0;
     transition: opacity 0.3s ease;
     pointer-events: none;
+    scroll-behavior: smooth;
 }
 
 /* Custom scrollbar for TOC */
@@ -161,7 +162,7 @@ function generateTOC() {
 }
 
 // Update active section based on scroll
-function updateActiveSection(activeId) {
+function updateActiveSection(activeId, shouldAutoScroll = true) {
     const links = document.querySelectorAll('.toc-nav a');
     let activeLink = null;
     
@@ -174,20 +175,25 @@ function updateActiveSection(activeId) {
         }
     });
     
-    // Scroll the TOC container to keep active item visible (but not on every update)
-    if (activeLink && activeLink.offsetParent) {
+    // Only auto-scroll TOC if explicitly requested and user isn't manually scrolling
+    if (shouldAutoScroll && activeLink && activeLink.offsetParent) {
         const tocContainer = document.getElementById('toc-container');
+        
+        // Check if user is hovering over TOC (indicating manual interaction)
+        const isHovering = tocContainer.matches(':hover');
+        if (isHovering) return; // Don't auto-scroll if user is interacting
+        
         const linkRect = activeLink.getBoundingClientRect();
         const containerRect = tocContainer.getBoundingClientRect();
         
-        // Only auto-scroll if the active link is not visible
-        if (linkRect.top < containerRect.top || linkRect.bottom > containerRect.bottom) {
+        // Only auto-scroll if the active link is completely out of view
+        if (linkRect.bottom < containerRect.top || linkRect.top > containerRect.bottom) {
             const linkTop = activeLink.offsetTop;
             const linkHeight = activeLink.offsetHeight;
             const containerHeight = tocContainer.clientHeight;
             
-            // Scroll to put active link in the middle of the container
-            const idealScroll = linkTop - (containerHeight / 2) + (linkHeight / 2);
+            // Scroll to put active link in view (near top third)
+            const idealScroll = linkTop - (containerHeight / 3);
             
             tocContainer.scrollTo({
                 top: Math.max(0, idealScroll),
@@ -242,7 +248,15 @@ function generateTOCForPost(postContent) {
     
     tocNav.innerHTML = '';
     
-    const headings = postContent.querySelectorAll('h2, h3, h4');
+    // Find ALL headings, including h1 if present
+    const headings = postContent.querySelectorAll('h1, h2, h3, h4');
+    console.log('Found ' + headings.length + ' headings in expanded post');
+    
+    // Debug: log first few headings
+    if (headings.length > 0) {
+        console.log('First heading:', headings[0].textContent);
+        console.log('Last heading:', headings[headings.length - 1].textContent);
+    }
     
     if (headings.length === 0) {
         tocContainer.classList.remove('visible');
@@ -252,8 +266,14 @@ function generateTOCForPost(postContent) {
     const tocList = document.createElement('ul');
     
     headings.forEach((heading, index) => {
+        // Skip the main title if it's an h1
+        if (heading.tagName === 'H1' && index === 0) {
+            return; // Skip the main blog post title
+        }
+        
         if (!heading.id) {
-            heading.id = 'heading-' + Date.now() + '-' + index;
+            // Use index to ensure unique IDs
+            heading.id = 'toc-heading-' + index;
         }
         
         const li = document.createElement('li');
@@ -261,7 +281,7 @@ function generateTOCForPost(postContent) {
         a.href = '#' + heading.id;
         
         // Truncate long headings
-        let text = heading.textContent;
+        let text = heading.textContent.trim();
         if (text.length > 30) {
             text = text.substring(0, 27) + '...';
         }
@@ -287,7 +307,7 @@ function generateTOCForPost(postContent) {
     // Show TOC with animation
     tocContainer.classList.add('visible');
     
-    // Reset scroll position to top
+    // Reset scroll position to top to show all sections
     tocContainer.scrollTop = 0;
     
     // Auto-minimize after 3 seconds
@@ -295,10 +315,17 @@ function generateTOCForPost(postContent) {
         tocContainer.classList.add('minimized');
     }, 3000);
     
-    // Initial tracking after a short delay to ensure DOM is ready
-    setTimeout(() => {
-        trackScroll();
-    }, 100);
+    // DO NOT auto-scroll on initial load - let user see the full TOC
+    // Only start tracking after user starts scrolling
+    let hasScrolled = false;
+    const scrollHandler = function() {
+        if (!hasScrolled) {
+            hasScrolled = true;
+            // Start tracking only after first scroll
+            trackScroll();
+        }
+    };
+    window.addEventListener('scroll', scrollHandler, { once: true });
 }
 
 // Watch for post expansion
