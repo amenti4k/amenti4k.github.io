@@ -16,10 +16,10 @@
     top: 100px;
     width: 250px;
     max-height: 70vh;
-    background: var(--bg-color, #fff);
-    border: 1px solid var(--border-color, #e0e0e0);
+    background: var(--background-color, #000);
+    border: 1px solid var(--secondary-text-color, #9b9b9b);
     border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
     z-index: 100;
     transition: all 0.3s ease;
 }
@@ -34,7 +34,7 @@
 
 .toc-header {
     padding: 12px 16px;
-    border-bottom: 1px solid var(--border-color, #e0e0e0);
+    border-bottom: 1px solid var(--secondary-text-color, #9b9b9b);
     font-weight: 600;
     font-size: 0.9em;
     display: flex;
@@ -48,7 +48,7 @@
     border: none;
     cursor: pointer;
     font-size: 1.2em;
-    color: var(--text-color, #333);
+    color: var(--text-color, #e1e1e1);
     padding: 0;
     width: 20px;
     height: 20px;
@@ -77,7 +77,7 @@
 .toc-nav a {
     display: block;
     padding: 6px 16px;
-    color: var(--text-color, #333);
+    color: var(--text-color, #e1e1e1);
     text-decoration: none;
     font-size: 0.85em;
     transition: all 0.2s ease;
@@ -85,13 +85,13 @@
 }
 
 .toc-nav a:hover {
-    background: rgba(0,0,0,0.05);
-    border-left-color: var(--link-color, #0066cc);
+    background: rgba(255,255,255,0.05);
+    border-left-color: var(--inline-code-color, #e06c75);
 }
 
 .toc-nav a.active {
-    background: rgba(0,0,0,0.08);
-    border-left-color: var(--link-color, #0066cc);
+    background: rgba(255,255,255,0.08);
+    border-left-color: var(--inline-code-color, #e06c75);
     font-weight: 600;
 }
 
@@ -138,9 +138,16 @@
 // Generate Table of Contents
 function generateTOC() {
     const tocNav = document.getElementById('toc-nav');
-    const headings = document.querySelectorAll('.post-content h2, .post-content h3, .post-content h4');
+    let headings = document.querySelectorAll('.post-content h2, .post-content h3, .post-content h4');
     
-    if (headings.length === 0) return;
+    console.log('Found ' + headings.length + ' headings for TOC');
+    
+    if (headings.length === 0) {
+        // Try without .post-content in case the class is different
+        headings = document.querySelectorAll('article h2, article h3, article h4');
+        console.log('Found ' + headings.length + ' headings in article');
+        if (headings.length === 0) return;
+    }
     
     const tocList = document.createElement('ul');
     
@@ -188,7 +195,10 @@ function updateActiveSection(activeId) {
 
 // Track scroll to highlight current section
 function trackScroll() {
-    const headings = document.querySelectorAll('.post-content h2, .post-content h3, .post-content h4');
+    let headings = document.querySelectorAll('.post-content h2, .post-content h3, .post-content h4');
+    if (headings.length === 0) {
+        headings = document.querySelectorAll('article h2, article h3, article h4');
+    }
     const scrollPosition = window.scrollY + 100;
     
     let currentSection = null;
