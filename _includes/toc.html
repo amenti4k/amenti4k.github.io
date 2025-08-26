@@ -189,7 +189,23 @@
     tocContainer.scrollTop = 0;
     setActive(headings[0].id, false);
     setTimeout(() => tocContainer.classList.add('minimized'), 2500);
-    window.addEventListener('scroll', () => { allowAutoScroll = true; }, { once: true });
+
+    // Only enable TOC auto-scroll after explicit user interaction (not passive layout scrolls)
+    const enableAuto = () => { allowAutoScroll = true; cleanupAuto(); };
+    const cleanupAuto = () => {
+      window.removeEventListener('wheel', enableAuto, { passive: true });
+      window.removeEventListener('touchstart', enableAuto, { passive: true });
+      window.removeEventListener('pointerdown', enableAuto, { passive: true });
+      window.removeEventListener('keydown', onKeyAuto, true);
+    };
+    const onKeyAuto = (e) => {
+      const keys = ['ArrowDown','ArrowUp','PageDown','PageUp','Home','End','Space'];
+      if (keys.includes(e.code) || keys.includes(e.key)) enableAuto();
+    };
+    window.addEventListener('wheel', enableAuto, { passive: true, once: true });
+    window.addEventListener('touchstart', enableAuto, { passive: true, once: true });
+    window.addEventListener('pointerdown', enableAuto, { passive: true, once: true });
+    window.addEventListener('keydown', onKeyAuto, true);
 
     // Minimize/expand controls
     const btnMin = document.getElementById('toc-minimize');
@@ -199,4 +215,3 @@
   });
 })();
 </script>
-
