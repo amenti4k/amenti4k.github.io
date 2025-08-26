@@ -1,0 +1,147 @@
+<aside class="toc-left" aria-label="On this page">
+  <div class="toc-left-title">On this page</div>
+  <nav class="toc-left-nav" role="navigation" aria-label="Table of contents">
+    <ul id="toc-left-list" class="toc-left-list"></ul>
+  </nav>
+</aside>
+
+<style>
+.toc-left {
+  position: sticky;
+  top: 80px;
+  align-self: start;
+  max-height: calc(100vh - 100px);
+  overflow: auto;
+  border-right: 1px solid var(--border, rgba(255,255,255,0.08));
+  padding-right: 12px;
+}
+.toc-left-title {
+  font-weight: 700;
+  color: var(--secondary-text-color, #9b9b9b);
+  margin-bottom: 8px;
+}
+.toc-left-nav ul { list-style: none; margin: 0; padding: 0; }
+.toc-left-nav li { margin: 0; padding: 2px 0; }
+.toc-left-nav a {
+  color: var(--secondary-text-color, #9b9b9b);
+  text-decoration: none;
+  display: block;
+  border-left: 2px solid transparent;
+  padding-left: 6px;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+.toc-left-nav a:hover { color: var(--text-color, #e1e1e1); }
+.toc-left-nav a.active { color: var(--text-color, #e1e1e1); border-left-color: var(--text-color, #e1e1e1); }
+.toc-left-nav ul ul a { padding-left: 16px; font-size: 11px; }
+.toc-left-nav ul ul ul a { padding-left: 28px; font-size: 10px; opacity: 0.9; }
+
+@media (max-width: 1100px) {
+  .toc-left { display: none; }
+}
+
+.toc-left::-webkit-scrollbar { width: 3px; }
+.toc-left::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); border-radius: 3px; }
+.toc-left::-webkit-scrollbar-thumb { background: var(--secondary-text-color, #9b9b9b); border-radius: 3px; }
+.toc-left:hover::-webkit-scrollbar-thumb { background: var(--text-color, #e1e1e1); }
+</style>
+
+<script>
+(function() {
+  // Build a fresh, deterministic TOC on the left
+  function buildTOC() {
+    const content = document.querySelector('article .post-content, .post .post-content, .post-content');
+    const list = document.getElementById('toc-left-list');
+    if (!content || !list) return;
+
+    // Collect headings and sort by visual position
+    let hs = Array.from(content.querySelectorAll('h2, h3, h4'));
+    if (!hs.length) return;
+    hs = hs
+      .filter(h => h.offsetParent !== null)
+      .map(h => ({ el: h, top: h.getBoundingClientRect().top + window.scrollY }))
+      .sort((a, b) => a.top - b.top)
+      .map(x => x.el);
+
+    // Unique, Unicode-safe slugs
+    const slugCounts = new Map();
+    function slugify(text) {
+      const base = (text || '')
+        .trim().toLowerCase()
+        .replace(/[^\p{L}\p{N}\s-]/gu, '')
+        .replace(/\s+/g, '-')
+        .replace(/-+/g, '-')
+        .replace(/^-|-$/g, '');
+      const count = (slugCounts.get(base) || 0) + 1;
+      slugCounts.set(base, count);
+      return count > 1 ? `${base}-${count}` : base;
+    }
+
+    hs.forEach(h => { if (!h.id) h.id = slugify(h.textContent || h.innerText || 'section'); });
+
+    // Build nested structure
+    const root = document.createElement('ul');
+    const stack = [{ level: 2, ul: root }];
+    const cur = () => stack[stack.length - 1];
+
+    hs.forEach(h => {
+      const lvl = Math.min(4, Math.max(2, parseInt(h.tagName.substring(1), 10) || 2));
+      while (cur().level < lvl) {
+        const parentLi = cur().ul.lastElementChild || cur().ul.appendChild(document.createElement('li'));
+        const newUl = document.createElement('ul');
+        parentLi.appendChild(newUl);
+        stack.push({ level: cur().level + 1, ul: newUl });
+      }
+      while (cur().level > lvl && stack.length > 1) {
+        stack.pop();
+      }
+      const li = document.createElement('li');
+      const a = document.createElement('a');
+      a.href = `#${h.id}`;
+      a.textContent = (h.textContent || '').trim();
+      a.addEventListener('click', function(e) {
+        e.preventDefault();
+        document.getElementById(h.id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        setActive(h.id);
+      });
+      li.appendChild(a);
+      cur().ul.appendChild(li);
+    });
+
+    list.innerHTML = '';
+    list.appendChild(root);
+
+    // Highlight active heading
+    function setActive(id) {
+      list.querySelectorAll('a').forEach(a => {
+        a.classList.toggle('active', a.getAttribute('href') === `#${id}`);
+      });
+    }
+
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        let topMost = null;
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) return;
+          if (!topMost || entry.boundingClientRect.top < topMost.boundingClientRect.top) {
+            topMost = entry;
+          }
+        });
+        if (topMost?.target?.id) setActive(topMost.target.id);
+      }, { root: null, rootMargin: '-25% 0px -65% 0px', threshold: [0] });
+      hs.forEach(h => io.observe(h));
+    }
+
+    // Initial state
+    setActive(hs[0].id);
+  }
+
+  function initTOC() {
+    buildTOC();
+    // Recompute after full load to catch layout shifts
+    window.addEventListener('load', () => setTimeout(buildTOC, 50));
+  }
+
+  document.addEventListener('DOMContentLoaded', initTOC);
+})();
+</script>
+
