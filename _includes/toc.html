@@ -81,6 +81,11 @@
 
 <script>
 (function() {
+  // Prevent browser from restoring mid-article scroll on navigation
+  if ('scrollRestoration' in history) {
+    try { history.scrollRestoration = 'manual'; } catch (e) {}
+  }
+
   document.addEventListener('DOMContentLoaded', function() {
     // Only render TOC on post pages (single article view)
     const isPostPage = !!document.querySelector('article.post .post-content, article .post-content, .post .post-content');
@@ -90,6 +95,11 @@
     const tocContainer = document.getElementById('toc-container');
     const tocNav = document.getElementById('toc-nav');
     if (!articleContent || !tocContainer || !tocNav) return;
+
+    // If arriving without a hash, force page to top to ensure TOC starts at the beginning
+    if (!location.hash) {
+      window.scrollTo(0, 0);
+    }
 
     // Collect headings (ignore H1)
     let headings = Array.from(articleContent.querySelectorAll('h2, h3, h4'));
@@ -165,17 +175,20 @@
     }
 
     if ('IntersectionObserver' in window) {
-      const observer = new IntersectionObserver((entries) => {
-        let topMost = null;
-        entries.forEach(entry => {
-          if (!entry.isIntersecting) return;
-          if (!topMost || entry.boundingClientRect.top < topMost.boundingClientRect.top) {
-            topMost = entry;
-          }
-        });
-        if (topMost?.target?.id) setActive(topMost.target.id);
-      }, { root: null, rootMargin: '-20% 0px -75% 0px', threshold: [0] });
-      headings.forEach(h => observer.observe(h));
+      // Delay observer setup slightly to let initial scroll position settle
+      setTimeout(() => {
+        const observer = new IntersectionObserver((entries) => {
+          let topMost = null;
+          entries.forEach(entry => {
+            if (!entry.isIntersecting) return;
+            if (!topMost || entry.boundingClientRect.top < topMost.boundingClientRect.top) {
+              topMost = entry;
+            }
+          });
+          if (topMost?.target?.id) setActive(topMost.target.id);
+        }, { root: null, rootMargin: '-20% 0px -75% 0px', threshold: [0] });
+        headings.forEach(h => observer.observe(h));
+      }, 250);
     }
 
     // Initial state + UX niceties
