@@ -180,6 +180,8 @@
 
     // Initial state + UX niceties
     tocContainer.scrollTop = 0;
+    // Extra safety: reset once again after full load to defeat scroll restoration
+    window.addEventListener('load', () => setTimeout(() => { tocContainer.scrollTop = 0; }, 50));
     setActive(headings[0].id, false);
     setTimeout(() => tocContainer.classList.add('minimized'), 2500);
 
