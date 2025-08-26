@@ -17,29 +17,37 @@ excerpt: "Look, we built it wrong. Not because we're idiots—though that's deba
 - Build for chaos: route by confidence, set your oh-shit thresholds, design your escape hatches
 - The winners own the pipes and the context—buy the services, expose them as APIs, compound forever
 
-## The Real TLDR: A Notebook for Understanding This Moment
+## The Real TLDR: The New Company Operating Manual
 
-Look, here's what's actually happening while we're all arguing about AGI safety and prompt engineering:
+Here's the playbook every PE firm is running right now while you're debating whether AI will replace programmers:
 
-PE firms discovered you can buy a traditional service company for 3-5x EBITDA and flip it for 25x by doing one simple trick: fire everyone and replace them with AI. Not gradually. Not carefully. Just rip off the band-aid. We accidentally discovered the magic ratio—94% AI, 6% human—not through planning but through physics. Push past 95% and customers freak out. Stay below 90% and you're leaving money on the table.
+**The Business Model:** Buy traditional service companies at 3-5x EBITDA. Fire 94% of staff. Replace with AI orchestration. Sell at 25x. The 94/6 ratio isn't a choice—it's where physics, economics, and trust intersect. Every successful transformation lands there naturally. It's the golden ratio of the AI economy.
 
-The accounting firm paradox explains everything: partners billing $500/hour for work done by $50/hour juniors will never buy your AI tool that does it for $0.50. They ARE the inefficiency. So you don't sell to them—you buy them, fire them, and capture the entire arbitrage. That's why General Catalyst has $8B ready to go. That's why every boring service business is about to get flipped like a house in 2007.
+**Why This Works Now:** The accounting firm paradox. Every professional services firm faces an existential calculation: partners billing $500/hour for junior work at $50/hour won't buy your $0.50 AI solution. They ARE the inefficiency. You can't sell them transformation—you have to force it through acquisition. That's why General Catalyst raised $8B. Why Thrive Holdings is quietly buying everything. Why boring businesses are the new gold rush.
 
-But here's the kicker: the technology part is trivial. GPT-4 + some Python + basic orchestration = entire departments eliminated. The hard part is the context—every edge case, every exception, every weird customer requirement. Thomson Reuters didn't pay $650M for CaseText's AI; they paid for millions of legal documents with outcomes. Context compounds. Distribution is destiny. The moat isn't the model—it's the million operations of learning you'll never have.
+**The Architecture Shift:** Stop embedding AI in your processes. Let AI orchestrate them. Your entire company becomes an API that AI calls. Every decision becomes a callable function: `processInvoice()`, `approveCredit()`, `escalateToHuman()`. The org chart dissolves into service architecture. Companies aren't using AI—they're becoming orchestratable infrastructure.
 
-We're watching the economy invert in real-time. Instead of humans using AI tools, AI orchestrates human tools. Instead of software helping business, software IS business. Your company isn't using APIs—your company is becoming an API that AI calls. The entire org chart is dissolving into callable functions.
+**The Three Business Models That Survive:**
+1. **AI-Enabled Services** (Type 2): Own the entire service, capture 99% of value. Pilot isn't selling accounting software—they ARE your accounting department at 1/100th the cost.
+2. **Compound Entities**: Diagonal monopolies running legally separate companies on shared AI intelligence. Your law firm knows your finances, your accountant knows your operations, your insurance knows your risks—all the same AI brain.
+3. **Orchestration Platforms**: The pick-and-shovel providers managing the 94/6 ratio across industries.
 
-Three types of players will survive: (1) The orchestrators who can decompose human judgment into AI-executable components, (2) The 6% who provide trust infrastructure—not doing work but legitimizing work AI does, and (3) The compound entities—diagonal monopolies controlling unrelated services through shared AI intelligence.
+**The Moat Strategy:** Context is the only appreciating asset. Every transaction processed, every edge case handled, every customer interaction—it all compounds into an insurmountable advantage. Distribution can't be coded, only bought. That 50-year-old insurance broker with 5,000 customers? That's $0 CAC vs $50K for startups. Regulatory licenses, customer relationships, industry knowledge—all un-replicable.
 
-The timeline? We're in the quiet revolution phase (2024-2025) where PE firms are secretly transforming companies. The acceleration phase (2025-2027) is when everyone realizes what happened. By 2027-2030, the 94/6 ratio becomes the new normal, regulated not by law but by social acceptance limits.
+**The Economics:** Traditional SaaS: charge $100, spend $2, profit $98. AI SaaS: charge $100, spend $120 in tokens, die slowly. The only escape: own the entire value chain. Don't sell to the service—become the service. Control routing decisions (which model, when humans, cost optimization) while capturing full service value.
 
-Pure AI startups are already dead—they just don't know it yet. GitHub Copilot loses $20/user/month. Jasper went from $1.5B to fire sale. The unit economics of AI SaaS are mathematically impossible. You can't capture value by selling inference; you capture value by owning the entire service. Pilot doesn't sell accounting software—they ARE your accounting department.
+**The Transformation Playbook:**
+- Week 1-4: Document everything, find the 10% requiring judgment
+- Week 5-8: Build AI orchestration layer, test empirically 
+- Week 9-16: Gradual migration, process by process
+- Week 17-20: The reduction (from 120 employees to 8)
+- Week 21-26: Optimization to 94/6 equilibrium
 
-The scariest part? This isn't about technology. It's about discovering that most human work is make-work. Meetings about meetings. Emails about emails. Once you let AI orchestrate instead of assist, you realize 94% of what humans do doesn't need to exist. The 6% that remains isn't the best or brightest—it's whoever understands their new role as trust infrastructure.
+**What Companies Become:** Not businesses but callable functions in larger economic operating systems. The winners aren't building better AI—they're building better measurement systems to discover what AI can do. Ship at Minimum Viable Intelligence (MVI) when the system clears economic thresholds, not when it's "accurate."
 
-We built our procurement system wrong because we were thinking deterministically in a probabilistic world. The fix revealed something bigger: the entire economy is built wrong. We're about to rebuild it. Not because we want to, but because the math is deterministic. Companies that don't transform get outcompeted. Workers who don't adapt get replaced. Economies that resist get overtaken.
+**The Timeline:** 2024-2025: Secret transformation phase (happening now). 2025-2027: Market discovers what happened (too late to compete). 2027-2030: The 94/6 ratio becomes standard across all services. 
 
-Man, we're living through the economic equivalent of the Cambrian explosion, except instead of creating new life forms, we're creating new economic forms where humans are the appendix—technically still there, but nobody's quite sure why.
+This isn't technological speculation—it's operational reality. The math is deterministic. The arbitrage is massive. The transformation is inevitable. Every service business will hit 94/6 or die trying. Man, it's like watching the industrial revolution happen in dog years.
 
 ## I. So We Built It Wrong
 
