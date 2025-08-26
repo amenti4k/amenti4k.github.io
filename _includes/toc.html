@@ -86,24 +86,23 @@
     try { history.scrollRestoration = 'manual'; } catch (e) {}
   }
 
-  document.addEventListener('DOMContentLoaded', function() {
-    // Only render TOC on post pages (single article view)
-    const isPostPage = !!document.querySelector('article.post .post-content, article .post-content, .post .post-content');
-    if (!isPostPage) return;
-
+  function buildTOC() {
     const articleContent = document.querySelector('article .post-content, .post .post-content, .post-content');
     const tocContainer = document.getElementById('toc-container');
     const tocNav = document.getElementById('toc-nav');
-    if (!articleContent || !tocContainer || !tocNav) return;
+    if (!articleContent || !tocContainer || !tocNav) return false;
 
     // If arriving without a hash, force page to top to ensure TOC starts at the beginning
     if (!location.hash) {
       window.scrollTo(0, 0);
     }
 
-    // Collect headings (ignore H1)
+    // Collect headings (ignore H1), then sort by vertical position
     let headings = Array.from(articleContent.querySelectorAll('h2, h3, h4'));
-    if (!headings.length) { tocContainer.classList.remove('visible'); return; }
+    if (!headings.length) { tocContainer.classList.remove('visible'); return false; }
+    headings = headings
+      .filter(h => h.offsetParent !== null) // visible
+      .sort((a, b) => a.offsetTop - b.offsetTop);
 
     // Slugify with Unicode support and unique suffixes
     const slugCounts = new Map();
@@ -123,24 +122,26 @@
     // Ensure IDs
     headings.forEach(h => { if (!h.id) h.id = slugify(h.textContent || h.innerText || 'section'); });
 
-    // Build nested structure H2 > H3 > H4
+    // Build nested structure H2 > H3 > H4 deterministically using level transitions
     const rootUl = document.createElement('ul');
     const stack = [{ level: 2, ul: rootUl }];
-    function cur() { return stack[stack.length - 1]; }
+    function current() { return stack[stack.length - 1]; }
 
     headings.forEach(h => {
-      const level = parseInt(h.tagName.substring(1), 10);
-      // Descend or ascend in the stack to match heading level
-      while (cur().level < level) {
+      const level = Math.min(4, Math.max(2, parseInt(h.tagName.substring(1), 10) || 2));
+
+      // Ascend to the correct level
+      while (current().level < level) {
+        const parentLi = current().ul.lastElementChild || current().ul.appendChild(document.createElement('li'));
         const newUl = document.createElement('ul');
-        // Ensure there is at least one li to attach the new ul
-        const parentLi = cur().ul.lastElementChild || cur().ul.appendChild(document.createElement('li'));
         parentLi.appendChild(newUl);
-        stack.push({ level: cur().level + 1, ul: newUl });
+        stack.push({ level: current().level + 1, ul: newUl });
       }
-      while (cur().level > level && stack.length > 1) {
+      // Descend if needed
+      while (current().level > level && stack.length > 1) {
         stack.pop();
       }
+
       const li = document.createElement('li');
       const a = document.createElement('a');
       a.href = `#${h.id}`;
@@ -151,7 +152,7 @@
         setActive(h.id);
       });
       li.appendChild(a);
-      cur().ul.appendChild(li);
+      current().ul.appendChild(li);
     });
 
     tocNav.innerHTML = '';
@@ -159,19 +160,9 @@
     tocContainer.classList.add('visible');
 
     // Active section highlighting
-    let allowAutoScroll = false;
-    function setActive(id, shouldAutoScroll = false) {
+    function setActive(id) {
       const links = tocNav.querySelectorAll('a');
-      let activeLink = null;
-      links.forEach(link => {
-        if (link.getAttribute('href') === `#${id}`) {
-          link.classList.add('active');
-          activeLink = link;
-        } else {
-          link.classList.remove('active');
-        }
-      });
-      // Intentionally do not auto-scroll the TOC container to avoid jumping.
+      links.forEach(link => link.classList.toggle('active', link.getAttribute('href') === `#${id}`));
     }
 
     if ('IntersectionObserver' in window) {
@@ -193,18 +184,27 @@
 
     // Initial state + UX niceties
     tocContainer.scrollTop = 0;
-    // Extra safety: reset once again after full load to defeat scroll restoration
     window.addEventListener('load', () => setTimeout(() => { tocContainer.scrollTop = 0; }, 50));
-    setActive(headings[0].id, false);
+    setActive(headings[0].id);
     setTimeout(() => tocContainer.classList.add('minimized'), 2500);
-
-    // No auto-scroll of TOC after interaction either; keep TOC stable.
 
     // Minimize/expand controls
     const btnMin = document.getElementById('toc-minimize');
     const btnMax = document.getElementById('toc-maximize');
     btnMin?.addEventListener('click', () => tocContainer.classList.add('minimized'));
     btnMax?.addEventListener('click', () => tocContainer.classList.remove('minimized'));
-  });
+
+    return true;
+  }
+
+  function init() {
+    const isPostPage = !!document.querySelector('article.post .post-content, article .post-content, .post .post-content');
+    if (!isPostPage) return;
+    // Build once on DOM ready and again on window load to get correct offsets after images/layout
+    buildTOC();
+    window.addEventListener('load', () => setTimeout(buildTOC, 50));
+  }
+
+  document.addEventListener('DOMContentLoaded', init);
 })();
 </script>
