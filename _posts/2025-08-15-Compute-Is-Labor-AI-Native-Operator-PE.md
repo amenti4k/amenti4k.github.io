@@ -13,19 +13,19 @@ excerpt: "Look, we built it wrong. Not because we're idiots—though that's deba
 
 Forget PLG, forget sales-led growth. The real game is **Product-Led Acquisitions (PLAs)**—and it's not just for PE firms anymore.
 
-Here's what's happening: While Blackstone and KKR have devolved into tweaking supply chains and offshore staffing for marginal EBITDA improvements, AI-native startups discovered something better. You can buy a dusty old business for 3-5x EBITDA, plug in AI orchestration, fire 94% of the staff, and flip it for 25x. Not in five years. In eighteen months.
+Here's what's happening: While Blackstone and KKR have devolved into tweaking supply chains and offshore staffing for marginal EBITDA improvements, AI-native startups discovered something better. You can buy a dusty old business for 3-5x EBITDA, plug in AI orchestration, replace most of the staff with AI (we're seeing it settle around 85% automation with 15% human oversight), and flip it for 25x. Not in five years. In eighteen months.
 
 The old PE playbook was about transformation through operational excellence. The new playbook is transformation through architectural inversion—let AI run the business while humans become the trust layer. Every company becomes an API. Every process becomes a callable function. The org chart dissolves into service architecture.
 
 **Why now?** Because technology finally stopped being a cost center and became the entire business. That insurance broker processing claims? Replace their 120 employees with 8 humans and an AI orchestrator. That accounting firm? It's now Pilot—not selling software but *being* your accounting department at 1/100th the cost.
 
-**The 94/6 ratio** isn't a choice—it's where physics, economics, and trust intersect. Push past 95% automation and customers freak. Stay below 90% and you're leaving money on the table. Every successful transformation lands here naturally.
+**The trust layer pattern** we keep seeing: transformations in 2024 naturally settle around 85% AI automation with 15% human oversight—not because anyone planned it, but because that's where our current infrastructure, customer trust, and economics intersect. Push past 90% with today's tools and trust evaporates. Stay below 80% and you're leaving money on the table. Call it the trust layer—that essential 15% human element that makes the automation socially acceptable while we build better systems.
 
 **The arbitrage is massive** because of the accounting firm paradox: Partners billing $500/hour for $50/hour junior work will never buy your $0.50 AI solution. They ARE the inefficiency. So you don't sell to them—you buy them, gut them, and capture the entire value chain.
 
 This isn't just for growth-stage companies with $500M war chests. Early-stage startups can play too. Buy that 50-year-old insurance broker with 5,000 customers (that's $0 CAC), their regulatory licenses (10 years to get from scratch), and their context (every edge case ever). You just bought a warm start that no amount of venture funding could create.
 
-The timeline is compressed: We're in the secret transformation phase now (2024-2025). By 2027, the 94/6 ratio will be table stakes. Pure AI startups are already dead—GitHub Copilot loses $20/user/month, Jasper went from $1.5B to fire sale. You can't capture value selling inference. You capture value by owning the entire service.
+The timeline is compressed: We're in the secret transformation phase now (2024-2025). By 2027, today's trust layer pattern—roughly 85% automation—will evolve as infrastructure improves and society adapts. Pure AI startups are already dead—GitHub Copilot loses $20/user/month, Jasper went from $1.5B to fire sale. You can't capture value selling inference. You capture value by owning the entire service.
 
 Welcome to the PLA era. It's like the 1980s LBO boom, except instead of financial engineering, it's AI engineering. And instead of decades, it's happening in dog years.
 
@@ -76,7 +76,7 @@ Here's what that means practically:
 
 It's orchestration as uncertainty management. Pick your models, set your thresholds, build your workflows, and pray to whatever deity handles probabilistic computing.
 
-The AI didn't just process better—it eliminated processing. Success rates jumped from 60% to 94%. Cost per transaction dropped from $15 to $0.40. But here's the kicker: we realized we'd discovered something way bigger than browser automation. We'd discovered how the entire economy is about to reorganize itself.
+The AI didn't just process better—it eliminated processing. Success rates jumped from 60% to over 90%. Cost per transaction dropped from $15 to $0.40. But here's the kicker: we realized we'd discovered something way bigger than browser automation. We'd discovered how the entire economy is about to reorganize itself.
 
 When you let AI orchestrate instead of assist, costs don't decrease—they collapse like a startup's valuation after the founder tweets something stupid. But here's what we didn't initially get: the companies that need this most will never, ever implement it themselves. They make money from the inefficiency. It's the accounting firm paradox, and man, it explains everything.
 
@@ -100,7 +100,7 @@ AI Stack (Our Silicon Overlord):
 ├── Compute & inference:    $0.15
 ├── Infrastructure:         $0.05
 └── Total per claim:        $0.50
-    Success rate:           94%
+    Success rate:           ~94%
     Effective cost:         $0.53
 
 Market Pricing (The Joke):
@@ -200,7 +200,7 @@ AI-Native Architecture: Intelligence-Centric Orchestration
 │     ↓                 ↓        ↓        ↓              │
 │ [check_credit]  [approve]  [route]  [escalate]         │
 │   (tool)         (tool)    (tool)    (human)           │
-│     94%           94%       94%        6%              │
+│     85%           85%        85%        15%            │
 └─────────────────────────────────────────────────────────┘
 ```
 
@@ -287,62 +287,65 @@ This isn't horizontal monopoly (owning one market) or vertical integration (owni
 
 Leonard's endgame was owning all vertical software. The AI rollup's endgame is owning all vertical services. Same playbook, different universe.
 
-## IV. The 94/6 Equilibrium (Or: The Universe Has a Sense of Humor)
+## IV. The Trust Layer Pattern (Or: A Snapshot of Where We Are in 2024)
 
-After processing thousands of transactions, a pattern emerged that was so consistent it was creepy. Systems naturally settle around 90-95% autonomous processing with 5-10% human involvement. This isn't policy—it's physics. Push past 95% and trust evaporates. Stay below 90% and you're leaving money on the table.
+After processing thousands of transactions, we're seeing a fascinating pattern emerge: transformations in 2024 converge around 85% autonomous processing with 15% human involvement. Not because that's the limit of what's possible, but because that's where our current infrastructure can reliably operate.
 
-It's less a number and more a discovered constant—like finding out pi shows up in your org chart.
+The models themselves could theoretically do more—they understand the work conceptually. But we haven't built the engineering harnesses yet: the feedback loops, evaluation systems, confidence calibration. We're in the early days, using duct tape and Python scripts where we'll eventually have robust orchestration platforms.
+
+We call it the trust layer—that 15% human presence that's part psychological comfort, part genuine need for edge cases, and part artifact of immature tooling. It's today's equilibrium, not tomorrow's ceiling.
 
 ```
-The 94/6 Natural Equilibrium: Where Physics Meets Economics
+The Trust Layer Pattern: Where Reality Meets Aspiration
 
-System Performance Landscape
+System Performance Landscape (based on our observations)
                                          ┌─────────────┐
 Operational                              │ UNSTABLE    │
 Stability                                │   ZONE      │
    ↑                                     │ (Trust      │
 100%│                                    │  Collapse)  │
     │     ╭──────────────────────────────┴─────────────┤
- 94%│     │━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━│ ← OPTIMAL
-    │    ╱│          THE GOLDEN RATIO                 │   ZONE
- 90%│   ╱ │     • Maximum value extraction            │
-    │  ╱  │     • Trust maintained                    │
- 85%│ ╱   │     • Economically sustainable            │
+ 85%│    │━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━│ ← 2024 SWEET SPOT
+    │    ╱│        THE TRUST LAYER                    │   (where most
+ 90%│   ╱ │     • Customers feel safe                 │    land)
+    │  ╱  │     • Economics work                      │
+ 85%│ ╱   │     • Humans stay relevant                │
     │╱    └────────────────────────────────────────────┤
- 80%│                                    │ SUBOPTIMAL │
-    │     Steep cost                    │    ZONE    │
- 70%│     for marginal                  │ (Money left│
-    │     improvements                  │  on table) │
+ 80%│                                    │ LEAVING    │
+    │     Steep cost                    │ MONEY ON   │
+ 70%│     for marginal                  │ THE TABLE  │
+    │     improvements                  │            │
  60%│                                    └─────────────┘
     └────┬────┬────┬────┬────┬────┬────┬────┬────┬────→
-        70%  75%  80%  85%  90%  94%  96%  98% 100%
+        70%  75%  80%  85%  90%  95%  97%  99% 100%
                     Automation Rate
 
-Forces at Play:
-├── Technical Ceiling:  ~96% (models hallucinate like drunk poets)
-├── Economic Optimum:   ~94% (diminishing returns hit like a brick)
-└── Social Boundary:    ~94% (humans need to feel needed)
+Forces We've Observed:
+├── Technical Reality:  Models get ~90-96% right (they still hallucinate)
+├── Economic Sweet Spot: Diminishing returns kick in around 90-95%
+└── Trust Threshold: People need to see humans somewhere in the loop
     ════════════════════════════════════════
-    Convergent Point:   94% AI / 6% Human
+    Where We Land Today (2024): ~85% AI / 15% Human
+    Where We're Heading: 90-95% as systems mature, possibly higher
 ```
 
-The equilibrium emerges from three forces having a three-way wrestling match:
+The pattern emerges from three forces shaping today's implementations:
 
-1. **Technical Ceiling**: Even our best models have error rates. GPT-4 hallucinates. Claude gets confused. No model is perfect, especially on the weird stuff. Technical limit: ~94-97% reliable automation.
+1. **Current Technical State**: Our best models in 2024 have error rates around 10-15%, but that's largely because we're running them open-loop without sophisticated feedback systems. GPT-4 hallucinates, Claude misunderstands—but with proper evaluation harnesses, confidence routing, and iterative refinement, these numbers will dramatically improve. Today we're achieving ~85% reliable automation. Tomorrow, with better infrastructure: 90-95% or higher.
 
-2. **Trust Boundary**: Humans need to feel in control of systems that affect their lives. Studies show trust collapses when automation exceeds 95%. People accept AI doing most work, but they need to see a human somewhere. Psychological threshold: ~5-10% human involvement.
+2. **Trust Calibration (2024 Edition)**: Right now, people need to see meaningful human presence—trust drops sharply beyond 85% automation with today's tools. But this is learned behavior from decades of bad automation. As AI systems prove reliable, as we build better explainability, as a generation grows up with AI as normal, this threshold will shift. Today's 15% human involvement is partly theater, partly genuine need, partly just where society is comfortable in 2024.
 
-3. **Economic Asymptote**: Hello, Baumol's cost disease! William Baumol noticed that while manufacturing productivity soared, a string quartet still needs four musicians. Similarly, the last 5-10% of edge cases costs exponentially more to automate. Getting from 0% to 90% might cost $1M. Going from 90% to 95% costs another $1M. Pushing from 95% to 100%? That's $10M, and it'll still fail when someone sends a purchase order via interpretive dance.
+3. **Engineering Maturity Gap**: The last 15% isn't inherently impossible—we just haven't built the systems to handle them economically yet. With today's tools, getting from 0% to 85% might cost $1M, and 85% to 90% another $2M. But this is a 2024 tooling problem, not a fundamental limit. As we build better orchestration, smarter routing, and recursive improvement loops, these costs will collapse. The interpretive dance purchase orders? Give it a few years—multimodal models will handle those too.
 
-### How 94/6 Shows Up in the Wild
+### How the Trust Layer Pattern Shows Up Across Industries
 
 The ratio manifests differently across industries, but always converges on similar numbers:
 
 **Freight Brokerage: From 50 to 2,000 Loads Per Employee**
 Your typical broker handles 50 loads monthly—200+ emails per shipment, 30% exception rates, death by paperwork. After transformation: 2,000 loads per employee. A 40x increase. But current owners can't capture this because their commission structure depends on inefficiency. Every email is billable. The 94% automated: routine booking, carrier matching, document processing. The 6% human: relationships, negotiations, "the truck is on fire" situations.
 
-**Healthcare Administration: Where 94% of Paperwork Goes to Die**
-Healthcare reveals the ratio through regulatory capture. Prior authorizations take 20 minutes by design. Claims require manual review because incumbents wrote the rules. General Catalyst's Summa Health shows the transformation: admission decisions 94% automated with AI review, treatment protocols suggested by AI with doctors approving (the 6%), billing through AI with human exception handling. The doctors remain—they're the trust layer—but admin staff drops by exactly 94%.
+**Healthcare Administration: Where Most Paperwork Goes to Die**
+Healthcare reveals the pattern through regulatory capture. Prior authorizations take 20 minutes by design. Claims require manual review because incumbents wrote the rules. General Catalyst's Summa Health shows the transformation: admission decisions mostly automated with AI review, treatment protocols suggested by AI with doctors approving, billing through AI with human exception handling. The doctors remain—they're the trust layer—but admin staff drops by 90-95%.
 
 **Property Management: From 50 People to 3**
 A maintenance request flows through five people over 3 days. Post-AI, same request processes in 4 seconds. AI categorizes, selects vendors, schedules optimally, escalates critical issues—about 6% of cases. You need 3 people to manage what required 50. But owners resist because "I manage 50 people" sounds impressive at country clubs. "I run everything with AI" doesn't get you invited to golf.
@@ -522,7 +525,7 @@ Example: ChatGPT helping write emails nobody reads
 Stage 2: Service Phase (2024-2026) ← You are here
 Human Labor: $50/hour → AI Service: $0.50/hour
 Savings: 99%
-Model: AI does work, humans watch nervously (94/6)
+Model: AI does work, humans supervise (the trust layer pattern)
 Example: Pilot processing your books while you sleep
 
 Stage 3: Infrastructure Phase (2027+)
@@ -555,7 +558,7 @@ Level 4: Economic Orchestration ($1B+ value)
 
 Level 3: Company Orchestration ($100M value)
 ├── Replace entire departments
-├── Achieve 94/6 ratio
+├── Achieve trust layer balance (~90-95% automation)
 ├── Maintain regulatory compliance
 └── Example: Pilot, Ramp
 
@@ -574,7 +577,7 @@ Level 1: Task Orchestration ($1M value)
 
 Josh Kushner's Thrive Holdings operates at Level 4. Not his venture fund—his permanent capital vehicle explicitly designed for AI-driven rollups. They're already executing: Crete (accounting), Long Lake (HOAs), Shield (IT services). These aren't sexy targets—they're boring, fragmented service industries where AI creates the most value. Because sexy doesn't scale, but boring compounds.
 
-The model: acquire service companies, inject AI orchestration, operate at 94/6, hold forever. No exit pressure, no quarterly calls, just relentless compound improvement. Each acquisition brings industry-specific context that makes the AI smarter for every other holding. The accounting firm's invoice patterns improve the property manager's vendor payments. It's beautiful and terrifying.
+The model: acquire service companies, inject AI orchestration, operate at the trust layer ratio, hold forever. No exit pressure, no quarterly calls, just relentless compound improvement. Each acquisition brings industry-specific context that makes the AI smarter for every other holding. The accounting firm's invoice patterns improve the property manager's vendor payments. It's beautiful and terrifying.
 
 But here's the catch: VCs are now competing with each other for M&A targets. Thrive Holdings signals that top-tier VCs are becoming acquirers—buying companies, bundling them under holding companies. This violates a cardinal rule: VCs should fund, not run. Most VCs are board members, not CEOs.
 
@@ -582,7 +585,7 @@ General Catalyst does it right, launching Health Assurance Acquisition Corp and 
 
 This is Berkshire Hathaway for the AI age—permanent ownership of businesses transformed by technology rather than financial engineering. While PE flips companies in 3-5 years, Thrive Holdings can spend years perfecting AI orchestration because they never need to sell. The compound value of shared intelligence creates a moat that widens with time like the Grand Canyon, but for destroying human employment.
 
-The transformation operators making this happen share a profile: they've never successfully run a traditional business. This isn't a weakness—it's the requirement. Someone who spent 20 years optimizing human workflows can't see the architectural inversion. They keep trying to make humans efficient instead of replacing the entire human layer. The operators who succeed see the 94/6 ratio not as transformation but as obvious architecture.
+The transformation operators making this happen share a profile: they've never successfully run a traditional business. This isn't a weakness—it's the requirement. Someone who spent 20 years optimizing human workflows can't see the architectural inversion. They keep trying to make humans efficient instead of replacing the entire human layer. The operators who succeed see this trust layer pattern—roughly 90-95% automation—not as radical transformation but as obvious architecture.
 
 The scarce resource isn't AI models (commoditizing) or data (everywhere) but the ability to see past human architecture to the work that needs doing. This requires embracing what models can do rather than forcing them into predetermined patterns. The best orchestrators treat AI capabilities as a landscape to explore, not a tool to command. Like conquistadors, but for automation.
 
