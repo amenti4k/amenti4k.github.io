@@ -150,7 +150,7 @@
 
     // Active section highlighting
     let allowAutoScroll = false;
-    function setActive(id, shouldAutoScroll = allowAutoScroll) {
+    function setActive(id, shouldAutoScroll = false) {
       const links = tocNav.querySelectorAll('a');
       let activeLink = null;
       links.forEach(link => {
@@ -161,14 +161,7 @@
           link.classList.remove('active');
         }
       });
-      if (shouldAutoScroll && activeLink) {
-        const linkRect = activeLink.getBoundingClientRect();
-        const containerRect = tocContainer.getBoundingClientRect();
-        if (linkRect.bottom < containerRect.top || linkRect.top > containerRect.bottom) {
-          const ideal = activeLink.offsetTop - (tocContainer.clientHeight / 3);
-          tocContainer.scrollTo({ top: Math.max(0, ideal), behavior: 'smooth' });
-        }
-      }
+      // Intentionally do not auto-scroll the TOC container to avoid jumping.
     }
 
     if ('IntersectionObserver' in window) {
@@ -190,22 +183,7 @@
     setActive(headings[0].id, false);
     setTimeout(() => tocContainer.classList.add('minimized'), 2500);
 
-    // Only enable TOC auto-scroll after explicit user interaction (not passive layout scrolls)
-    const enableAuto = () => { allowAutoScroll = true; cleanupAuto(); };
-    const cleanupAuto = () => {
-      window.removeEventListener('wheel', enableAuto, { passive: true });
-      window.removeEventListener('touchstart', enableAuto, { passive: true });
-      window.removeEventListener('pointerdown', enableAuto, { passive: true });
-      window.removeEventListener('keydown', onKeyAuto, true);
-    };
-    const onKeyAuto = (e) => {
-      const keys = ['ArrowDown','ArrowUp','PageDown','PageUp','Home','End','Space'];
-      if (keys.includes(e.code) || keys.includes(e.key)) enableAuto();
-    };
-    window.addEventListener('wheel', enableAuto, { passive: true, once: true });
-    window.addEventListener('touchstart', enableAuto, { passive: true, once: true });
-    window.addEventListener('pointerdown', enableAuto, { passive: true, once: true });
-    window.addEventListener('keydown', onKeyAuto, true);
+    // No auto-scroll of TOC after interaction either; keep TOC stable.
 
     // Minimize/expand controls
     const btnMin = document.getElementById('toc-minimize');
