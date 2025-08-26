@@ -9,15 +9,7 @@ excerpt: "Look, we built it wrong. Not because we're idiots—though that's deba
 
 # Compute Is Labor: The Architectural Inversion of the Economy
 
-## TL;DR
-
-- Flip the script: let AI run the show while your deterministic tools become the supporting cast
-- You can't sell efficiency to people whose entire business model is inefficiency—so buy them instead
-- Every system mysteriously lands at ~94% AI / 6% human, like some kind of cosmic constant
-- Build for chaos: route by confidence, set your oh-shit thresholds, design your escape hatches
-- The winners own the pipes and the context—buy the services, expose them as APIs, compound forever
-
-## The Real TLDR: The New Company Operating Manual
+## TLDR: The New Company Operating Manual
 
 Here's the playbook every PE firm is running right now while you're debating whether AI will replace programmers:
 
