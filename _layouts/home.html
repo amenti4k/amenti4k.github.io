@@ -2,8 +2,6 @@
 layout: default
 ---
 
-{% include toc.html %}
-
 <div class="tag-filter">
   <span class="tag-label">Filter by:</span>
   <button class="tag-btn active" data-tag="all">all</button>
@@ -19,59 +17,23 @@ layout: default
   {% for post in site.posts %}
     {% unless post.categories contains 'research' %}
       <div class="post-item" data-tags="{{ post.tags | join: ' ' }}">
-        <h2 class="post-title" onclick="togglePost(this)" id="post-{{ post.title | slugify }}">
-          <span class="arrow">›</span>
+        <a class="post-title" href="{{ post.url | relative_url }}" id="post-{{ post.title | slugify }}">
           <span class="title-text">{{ post.title }}</span>
           <span class="post-date">{{ post.date | date: "%Y-%m-%d" }}</span>
-        </h2>
-        <div class="post-content">
-          {{ post.content }}
-        </div>
+        </a>
+        {% if post.excerpt %}
+          <p class="post-excerpt">{{ post.excerpt | strip_html | truncate: 180 }}</p>
+        {% endif %}
       </div>
     {% endunless %}
   {% endfor %}
+  {% if site.posts == empty %}
+    <p>No posts yet.</p>
+  {% endif %}
 </div>
 
 <script>
-function togglePost(element) {
-  const postId = element.id;
-  const content = element.nextElementSibling;
-  const arrow = element.querySelector('.arrow');
-  const isVisible = content.classList.contains('expanded');
-  
-  // First collapse all posts
-  document.querySelectorAll('.post-content').forEach(post => {
-    post.classList.remove('expanded');
-  });
-  document.querySelectorAll('.arrow').forEach(arr => {
-    arr.classList.remove('rotated');
-  });
-  
-  // Then expand the clicked one if it wasn't visible
-  if (!isVisible) {
-    content.classList.add('expanded');
-    arrow.classList.add('rotated');
-    // Update URL hash
-    window.history.replaceState(null, null, `#${postId}`);
-    setTimeout(() => {
-      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }, 100);
-  } else {
-    // Remove hash if closing
-    window.history.replaceState(null, null, ' ');
-  }
-}
-
-// Check for hash on page load
-document.addEventListener('DOMContentLoaded', () => {
-  const hash = window.location.hash;
-  if (hash) {
-    const element = document.querySelector(hash);
-    if (element) {
-      togglePost(element);
-    }
-  }
-});
+// No expand/collapse on the home page; titles link to full posts.
 
 document.querySelectorAll('.tag-btn').forEach(button => {
   button.addEventListener('click', () => {
@@ -107,26 +69,15 @@ document.querySelectorAll('.tag-btn').forEach(button => {
 }
 
 .post-title {
-  cursor: pointer;
-  padding: 1rem;
-  margin: 0;
-  border-bottom: 1px solid var(--border);
   display: flex;
   align-items: center;
+  padding: 1rem 0;
+  margin: 0;
+  border-bottom: 1px solid var(--border);
   font-size: 13px;
   font-weight: normal;
   color: var(--text-color);
-}
-
-.arrow {
-  margin-right: 0.5rem;
-  transition: transform 0.3s ease;
-  display: inline-block;
-  color: var(--code-color-5);
-}
-
-.arrow.rotated {
-  transform: rotate(90deg);
+  text-decoration: none;
 }
 
 .post-date {
@@ -136,35 +87,9 @@ document.querySelectorAll('.tag-btn').forEach(button => {
   font-weight: normal;
 }
 
-.post-content {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.5s ease-out, padding 0.5s ease;
-  padding: 0 1rem;
-}
-
-.post-content.expanded {
-  max-height: none;
-  padding: 1rem;
-  transition: max-height 0.5s ease-in, padding 0.5s ease;
-  font-family: 'Inconsolata', monospace;
-  font-size: 13px;
-  line-height: 1.7;
-}
-
-.post-content img {
-  max-width: 90%;
-  height: auto;
-  display: block;
-  margin: 20px auto;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-@media (max-width: 600px) {
-  .post-content img {
-    max-width: 100%;
-  }
+.post-excerpt {
+  margin: 0.5rem 0 1rem 0;
+  color: var(--secondary-text-color);
 }
 
 

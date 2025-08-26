@@ -1,430 +1,202 @@
-<!-- Minimal Floating Table of Contents -->
-<nav id="toc-container" class="toc-container">
-    <div id="toc-nav" class="toc-nav">
-        <!-- TOC will be populated by JavaScript -->
-    </div>
+<!-- Floating Table of Contents (rebuilt) -->
+<nav id="toc-container" class="toc-container" aria-label="On this page">
+  <div class="toc-header">On this page</div>
+  <div id="toc-nav" class="toc-nav" role="navigation" aria-label="Table of contents"></div>
+  <button id="toc-minimize" class="toc-minimize" aria-label="Minimize TOC" title="Minimize">–</button>
+  <button id="toc-maximize" class="toc-maximize" aria-label="Expand TOC" title="Expand">+</button>
 </nav>
 
 <style>
 .toc-container {
-    position: fixed;
-    right: 30px;
-    top: 100px;
-    bottom: 50px;
-    width: 200px;
-    overflow-y: scroll; /* Force scrollbar to always show */
-    overflow-x: hidden;
-    z-index: 100;
-    font-family: 'Inconsolata', monospace;
-    font-size: 11px;
-    line-height: 1.4;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    pointer-events: none;
-    scroll-behavior: smooth;
+  position: fixed;
+  right: 30px;
+  top: 100px;
+  bottom: 50px;
+  width: 240px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  z-index: 100;
+  font-family: 'Inconsolata', monospace;
+  font-size: 12px;
+  line-height: 1.45;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  border-left: 1px solid var(--border, rgba(255,255,255,0.08));
+  padding-left: 10px;
 }
 
-/* Custom scrollbar for TOC */
-.toc-container::-webkit-scrollbar {
-    width: 3px;
+.toc-container.visible { opacity: 1; pointer-events: auto; }
+.toc-container.minimized { opacity: 0.2; }
+.toc-container.minimized:hover { opacity: 1; }
+
+.toc-header {
+  color: var(--secondary-text-color, #9b9b9b);
+  font-weight: 700;
+  margin-bottom: 6px;
 }
 
-.toc-container::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 3px;
-}
-
-.toc-container::-webkit-scrollbar-thumb {
-    background: var(--secondary-text-color, #9b9b9b);
-    border-radius: 3px;
-    opacity: 0.5;
-}
-
-.toc-container:hover::-webkit-scrollbar-thumb {
-    background: var(--text-color, #e1e1e1);
-    opacity: 0.8;
-}
-
-.toc-container.visible {
-    opacity: 1;
-    pointer-events: auto;
-}
-
-.toc-container.minimized {
-    opacity: 0.2;
-    transition: opacity 0.5s ease;
-}
-
-.toc-container.minimized:hover {
-    opacity: 1;
-}
-
-.toc-nav {
-    color: var(--secondary-text-color, #9b9b9b);
-    padding: 5px 0;
-}
-
-.toc-nav ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-
-.toc-nav li {
-    margin: 0;
-    padding: 2px 0;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
+.toc-nav ul { list-style: none; margin: 0; padding: 0; }
+.toc-nav li { margin: 0; padding: 2px 0; }
 .toc-nav a {
-    color: var(--secondary-text-color, #9b9b9b);
-    text-decoration: none;
-    transition: color 0.2s ease;
-    display: block;
-    border-left: 2px solid transparent;
-    padding-left: 0;
+  color: var(--secondary-text-color, #9b9b9b);
+  text-decoration: none;
+  display: block;
+  border-left: 2px solid transparent;
+  padding-left: 6px;
+  transition: color 0.15s ease, border-color 0.15s ease;
 }
+.toc-nav a:hover { color: var(--text-color, #e1e1e1); }
+.toc-nav a.active { color: var(--text-color, #e1e1e1); border-left-color: var(--text-color, #e1e1e1); }
 
-.toc-nav a:hover {
-    color: var(--text-color, #e1e1e1);
-}
+/* Nested indentation */
+.toc-nav ul ul a { padding-left: 16px; font-size: 11px; }
+.toc-nav ul ul ul a { padding-left: 28px; font-size: 10px; opacity: 0.9; }
 
-.toc-nav a.active {
-    color: var(--text-color, #e1e1e1);
-    border-left-color: var(--text-color, #e1e1e1);
+/* Controls */
+.toc-minimize, .toc-maximize {
+  position: absolute;
+  right: 8px;
+  background: none;
+  border: 1px solid var(--border, rgba(255,255,255,0.15));
+  border-radius: 12px;
+  width: 24px; height: 24px;
+  color: var(--secondary-text-color);
+  cursor: pointer;
 }
+.toc-minimize { top: 8px; }
+.toc-maximize { top: 8px; display: none; }
+.toc-container.minimized .toc-minimize { display: none; }
+.toc-container.minimized .toc-maximize { display: inline-block; }
 
-/* Indentation for nested headings */
-.toc-nav .toc-h2 {
-    padding-left: 0;
-    font-weight: 600;
-}
+/* Hide on smaller screens */
+@media (max-width: 1200px) { .toc-container { display: none; } }
 
-.toc-nav .toc-h3 {
-    padding-left: 12px;
-    font-size: 10px;
-}
-
-.toc-nav .toc-h4 {
-    padding-left: 24px;
-    font-size: 10px;
-    opacity: 0.7;
-}
-
-/* Hide on mobile */
-@media (max-width: 1200px) {
-    .toc-container {
-        display: none;
-    }
-}
+/* Scrollbar */
+.toc-container::-webkit-scrollbar { width: 3px; }
+.toc-container::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); border-radius: 3px; }
+.toc-container::-webkit-scrollbar-thumb { background: var(--secondary-text-color, #9b9b9b); border-radius: 3px; }
+.toc-container:hover::-webkit-scrollbar-thumb { background: var(--text-color, #e1e1e1); }
 </style>
 
 <script>
-// Generate Table of Contents
-function generateTOC() {
-    const tocNav = document.getElementById('toc-nav');
-    let headings = document.querySelectorAll('.post-content h2, .post-content h3, .post-content h4');
-    
-    if (headings.length === 0) {
-        headings = document.querySelectorAll('article h2, article h3, article h4');
-        if (headings.length === 0) return;
-    }
-    
-    const tocList = document.createElement('ul');
-    
-    headings.forEach((heading, index) => {
-        if (!heading.id) {
-            heading.id = 'heading-' + index;
-        }
-        
-        const li = document.createElement('li');
-        const a = document.createElement('a');
-        a.href = '#' + heading.id;
-        a.textContent = heading.textContent;
-        a.className = 'toc-' + heading.tagName.toLowerCase();
-        
-        a.addEventListener('click', function(e) {
-            e.preventDefault();
-            const target = document.getElementById(heading.id);
-            if (target) {
-                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                updateActiveSection(heading.id);
-            }
-        });
-        
-        li.appendChild(a);
-        tocList.appendChild(li);
-    });
-    
-    tocNav.appendChild(tocList);
-    const tocContainer = document.getElementById('toc-container');
-    if (tocContainer) tocContainer.scrollTop = 0;
-    setupTOCHighlighting(headings);
-}
+(function() {
+  document.addEventListener('DOMContentLoaded', function() {
+    // Only render TOC on post pages (single article view)
+    const isPostPage = !!document.querySelector('article.post .post-content, article .post-content, .post .post-content');
+    if (!isPostPage) return;
 
-// Update active section based on scroll
-function updateActiveSection(activeId, shouldAutoScroll = true) {
-    const links = document.querySelectorAll('.toc-nav a');
-    let activeLink = null;
-    
-    links.forEach(link => {
-        if (link.getAttribute('href') === '#' + activeId) {
-            link.classList.add('active');
-            activeLink = link;
-        } else {
-            link.classList.remove('active');
-        }
+    const articleContent = document.querySelector('article .post-content, .post .post-content, .post-content');
+    const tocContainer = document.getElementById('toc-container');
+    const tocNav = document.getElementById('toc-nav');
+    if (!articleContent || !tocContainer || !tocNav) return;
+
+    // Collect headings (ignore H1)
+    let headings = Array.from(articleContent.querySelectorAll('h2, h3, h4'));
+    if (!headings.length) { tocContainer.classList.remove('visible'); return; }
+
+    // Slugify with Unicode support and unique suffixes
+    const slugCounts = new Map();
+    function slugify(text) {
+      const base = (text || '')
+        .trim()
+        .toLowerCase()
+        .replace(/[^\p{L}\p{N}\s-]/gu, '')
+        .replace(/\s+/g, '-')
+        .replace(/-+/g, '-')
+        .replace(/^-|-$/g, '');
+      const count = (slugCounts.get(base) || 0) + 1;
+      slugCounts.set(base, count);
+      return count > 1 ? `${base}-${count}` : base;
+    }
+
+    // Ensure IDs
+    headings.forEach(h => { if (!h.id) h.id = slugify(h.textContent || h.innerText || 'section'); });
+
+    // Build nested structure H2 > H3 > H4
+    const rootUl = document.createElement('ul');
+    const stack = [{ level: 2, ul: rootUl }];
+    function cur() { return stack[stack.length - 1]; }
+
+    headings.forEach(h => {
+      const level = parseInt(h.tagName.substring(1), 10);
+      // Descend or ascend in the stack to match heading level
+      while (cur().level < level) {
+        const newUl = document.createElement('ul');
+        // Ensure there is at least one li to attach the new ul
+        const parentLi = cur().ul.lastElementChild || cur().ul.appendChild(document.createElement('li'));
+        parentLi.appendChild(newUl);
+        stack.push({ level: cur().level + 1, ul: newUl });
+      }
+      while (cur().level > level && stack.length > 1) {
+        stack.pop();
+      }
+      const li = document.createElement('li');
+      const a = document.createElement('a');
+      a.href = `#${h.id}`;
+      a.textContent = (h.textContent || '').trim();
+      a.addEventListener('click', function(e) {
+        e.preventDefault();
+        document.getElementById(h.id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        setActive(h.id);
+      });
+      li.appendChild(a);
+      cur().ul.appendChild(li);
     });
-    
-    // Only auto-scroll TOC if explicitly requested and user isn't manually scrolling
-    if (shouldAutoScroll && activeLink && activeLink.offsetParent) {
-        const tocContainer = document.getElementById('toc-container');
-        
-        // Check if user is hovering over TOC (indicating manual interaction)
-        const isHovering = tocContainer.matches(':hover');
-        if (isHovering) return; // Don't auto-scroll if user is interacting
-        
+
+    tocNav.innerHTML = '';
+    tocNav.appendChild(rootUl);
+    tocContainer.classList.add('visible');
+
+    // Active section highlighting
+    let allowAutoScroll = false;
+    function setActive(id, shouldAutoScroll = allowAutoScroll) {
+      const links = tocNav.querySelectorAll('a');
+      let activeLink = null;
+      links.forEach(link => {
+        if (link.getAttribute('href') === `#${id}`) {
+          link.classList.add('active');
+          activeLink = link;
+        } else {
+          link.classList.remove('active');
+        }
+      });
+      if (shouldAutoScroll && activeLink) {
         const linkRect = activeLink.getBoundingClientRect();
         const containerRect = tocContainer.getBoundingClientRect();
-        
-        // Only auto-scroll if the active link is completely out of view
         if (linkRect.bottom < containerRect.top || linkRect.top > containerRect.bottom) {
-            const linkTop = activeLink.offsetTop;
-            const linkHeight = activeLink.offsetHeight;
-            const containerHeight = tocContainer.clientHeight;
-            
-            // Scroll to put active link in view (near top third)
-            const idealScroll = linkTop - (containerHeight / 3);
-            
-            tocContainer.scrollTo({
-                top: Math.max(0, idealScroll),
-                behavior: 'smooth'
-            });
+          const ideal = activeLink.offsetTop - (tocContainer.clientHeight / 3);
+          tocContainer.scrollTo({ top: Math.max(0, ideal), behavior: 'smooth' });
         }
-    }
-}
-
-// Track/highlight controls
-// Controls whether the TOC is allowed to auto-scroll to keep the
-// active section visible. Starts false so the TOC doesn't jump on load.
-let allowTOCAutoScroll = false;
-let tocObserver = null;
-
-function setupTOCHighlighting(headings) {
-    // Disconnect any previous observer
-    if (tocObserver && typeof tocObserver.disconnect === 'function') {
-        tocObserver.disconnect();
+      }
     }
 
-    if (!headings || headings.length === 0) return;
-
-    // If IntersectionObserver isn't available, fallback to simple scroll logic
-    if (!('IntersectionObserver' in window)) {
-        function trackScrollFallback() {
-            const threshold = Math.min(140, window.innerHeight * 0.2);
-            let currentId = headings[0].id;
-            headings.forEach(h => {
-                const rect = h.getBoundingClientRect();
-                if (rect.top <= threshold) currentId = h.id;
-            });
-            updateActiveSection(currentId, allowTOCAutoScroll);
-        }
-        window.addEventListener('scroll', trackScrollFallback);
-        allowTOCAutoScroll = false;
-        updateActiveSection(headings[0].id, false);
-        return;
-    }
-
-    tocObserver = new IntersectionObserver((entries) => {
-        // Pick the closest heading to the top among intersecting ones
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
         let topMost = null;
-        for (const entry of entries) {
-            if (!entry.isIntersecting) continue;
-            if (!topMost || entry.boundingClientRect.top < topMost.boundingClientRect.top) {
-                topMost = entry;
-            }
-        }
-        if (topMost && topMost.target && topMost.target.id) {
-            updateActiveSection(topMost.target.id, allowTOCAutoScroll);
-        }
-    }, {
-        root: null,
-        rootMargin: '-20% 0px -75% 0px',
-        threshold: [0]
-    });
-
-    headings.forEach(h => tocObserver.observe(h));
-
-    // Initial highlight to the first heading without auto-toc-scroll
-    allowTOCAutoScroll = false;
-    updateActiveSection(headings[0].id, false);
-}
-
-// Generate TOC for expanded post
-function generateTOCForPost(postContent) {
-    const tocNav = document.getElementById('toc-nav');
-    const tocContainer = document.getElementById('toc-container');
-    if (!tocNav || !tocContainer) return;
-    
-    tocNav.innerHTML = '';
-    
-    // Find all headings - be very thorough
-    let headings = postContent.querySelectorAll('h1, h2, h3, h4');
-    
-    // If no headings found, try looking deeper in the DOM
-    if (headings.length === 0) {
-        console.log('No headings found directly, searching deeper...');
-        const allElements = postContent.getElementsByTagName('*');
-        const headingElements = [];
-        for (let el of allElements) {
-            if (/^H[1-4]$/.test(el.tagName)) {
-                headingElements.push(el);
-            }
-        }
-        headings = headingElements;
-    }
-    
-    console.log('Found ' + headings.length + ' headings in expanded post');
-    
-    // Debug: log first few headings
-    if (headings.length > 0) {
-        console.log('First heading:', headings[0].tagName, headings[0].textContent);
-        if (headings.length > 1) {
-            console.log('Second heading:', headings[1].tagName, headings[1].textContent);
-        }
-        console.log('Last heading:', headings[headings.length - 1].tagName, headings[headings.length - 1].textContent);
-    }
-    
-    if (headings.length === 0) {
-        tocContainer.classList.remove('visible');
-        return;
-    }
-    
-    const tocList = document.createElement('ul');
-    
-    headings.forEach((heading, index) => {
-        // Skip any H1 headings (main titles)
-        if (heading.tagName === 'H1') {
-            console.log('Skipping H1:', heading.textContent);
-            return; // Skip all H1s
-        }
-        
-        if (!heading.id) {
-            // Create clean ID from heading text
-            const cleanText = heading.textContent.trim()
-                .replace(/[^a-zA-Z0-9\s]/g, '') // Remove special chars
-                .replace(/\s+/g, '-') // Replace spaces with hyphens
-                .toLowerCase()
-                .substring(0, 50); // Limit length
-            heading.id = 'toc-' + cleanText + '-' + index;
-        }
-        
-        const li = document.createElement('li');
-        const a = document.createElement('a');
-        a.href = '#' + heading.id;
-        
-        // Truncate long headings
-        let text = heading.textContent.trim();
-        if (text.length > 30) {
-            text = text.substring(0, 27) + '...';
-        }
-        a.textContent = text;
-        a.title = heading.textContent; // Full text on hover
-        a.className = 'toc-' + heading.tagName.toLowerCase();
-        
-        a.addEventListener('click', function(e) {
-            e.preventDefault();
-            const target = document.getElementById(heading.id);
-            if (target) {
-                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                updateActiveSection(heading.id);
-            }
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) return;
+          if (!topMost || entry.boundingClientRect.top < topMost.boundingClientRect.top) {
+            topMost = entry;
+          }
         });
-        
-        li.appendChild(a);
-        tocList.appendChild(li);
-    });
-    
-    tocNav.appendChild(tocList);
-    
-    // Show TOC with animation
-    tocContainer.classList.add('visible');
-    
-    // Force reset scroll position to absolute top and init highlighting
-    setTimeout(() => {
-        tocContainer.scrollTop = 0;
-        setupTOCHighlighting(headings);
-    }, 50);
-    
-    // Auto-minimize after 3 seconds
-    setTimeout(() => {
-        tocContainer.classList.add('minimized');
-    }, 3000);
-    
-    // Allow TOC auto-scroll only after first user scroll
-    window.addEventListener('scroll', function() {
-        allowTOCAutoScroll = true;
-    }, { once: true });
-}
-
-// Watch for post expansion
-function watchPostExpansion() {
-    const observer = new MutationObserver(function(mutations) {
-        mutations.forEach(function(mutation) {
-            if (mutation.target.classList && mutation.target.classList.contains('post-content')) {
-                const tocContainer = document.getElementById('toc-container');
-                if (mutation.target.classList.contains('expanded')) {
-                    // Add longer delay for large posts to ensure content is fully rendered
-                    setTimeout(() => {
-                        generateTOCForPost(mutation.target);
-                    }, 500);
-                } else {
-                    if (tocContainer) {
-                        tocContainer.classList.remove('visible');
-                        tocContainer.classList.remove('minimized');
-                    }
-                }
-            }
-        });
-    });
-    
-    document.querySelectorAll('.post-content').forEach(function(element) {
-        observer.observe(element, { attributes: true, attributeFilter: ['class'] });
-    });
-}
-
-// Initialize TOC when DOM is loaded
-document.addEventListener('DOMContentLoaded', function() {
-    if (document.querySelector('.post-list')) {
-        watchPostExpansion();
-        
-        const expandedPost = document.querySelector('.post-content.expanded');
-        if (expandedPost) {
-            // Longer delay for initial load to ensure content is fully rendered
-            setTimeout(() => {
-                generateTOCForPost(expandedPost);
-            }, 600);
-        }
-        
-        window.addEventListener('scroll', function() {
-            allowTOCAutoScroll = true;
-        }, { once: true });
-    } else if (document.querySelector('.post-content')) {
-        generateTOC();
-        const tocContainer = document.getElementById('toc-container');
-        if (tocContainer) {
-            tocContainer.classList.add('visible');
-            setTimeout(() => {
-                tocContainer.classList.add('minimized');
-            }, 3000);
-        }
-
-        // After the user starts scrolling, allow the TOC to auto-scroll to keep the active link in view
-        window.addEventListener('scroll', function() {
-            allowTOCAutoScroll = true;
-        }, { once: true });
+        if (topMost?.target?.id) setActive(topMost.target.id);
+      }, { root: null, rootMargin: '-20% 0px -75% 0px', threshold: [0] });
+      headings.forEach(h => observer.observe(h));
     }
-});
+
+    // Initial state + UX niceties
+    tocContainer.scrollTop = 0;
+    setActive(headings[0].id, false);
+    setTimeout(() => tocContainer.classList.add('minimized'), 2500);
+    window.addEventListener('scroll', () => { allowAutoScroll = true; }, { once: true });
+
+    // Minimize/expand controls
+    const btnMin = document.getElementById('toc-minimize');
+    const btnMax = document.getElementById('toc-maximize');
+    btnMin?.addEventListener('click', () => tocContainer.classList.add('minimized'));
+    btnMax?.addEventListener('click', () => tocContainer.classList.remove('minimized'));
+  });
+})();
 </script>
+
