@@ -159,6 +159,9 @@ function generateTOC() {
     });
     
     tocNav.appendChild(tocList);
+    const tocContainer = document.getElementById('toc-container');
+    if (tocContainer) tocContainer.scrollTop = 0;
+    setupTOCHighlighting(headings);
 }
 
 // Update active section based on scroll
@@ -203,40 +206,60 @@ function updateActiveSection(activeId, shouldAutoScroll = true) {
     }
 }
 
-// Track scroll to highlight current section
+// Track/highlight controls
 // Controls whether the TOC is allowed to auto-scroll to keep the
-// active section visible. This starts as false so the TOC doesn't
-// jump on initial load of long posts.
+// active section visible. Starts false so the TOC doesn't jump on load.
 let allowTOCAutoScroll = false;
+let tocObserver = null;
 
-function trackScroll() {
-    const expandedPost = document.querySelector('.post-content.expanded');
-    let headings;
-    
-    if (expandedPost) {
-        headings = expandedPost.querySelectorAll('h2, h3, h4');
-    } else {
-        headings = document.querySelectorAll('.post-content h2, .post-content h3, .post-content h4');
-        if (headings.length === 0) {
-            headings = document.querySelectorAll('article h2, article h3, article h4');
-        }
+function setupTOCHighlighting(headings) {
+    // Disconnect any previous observer
+    if (tocObserver && typeof tocObserver.disconnect === 'function') {
+        tocObserver.disconnect();
     }
-    
+
     if (!headings || headings.length === 0) return;
 
-    // Choose the last heading that has crossed a small top-of-viewport threshold.
-    // This avoids selecting far-down sections on initial load of long posts.
-    const threshold = Math.min(140, window.innerHeight * 0.2);
-    let currentId = headings[0].id; // Fallback to the first heading
-
-    headings.forEach(heading => {
-        const rect = heading.getBoundingClientRect();
-        if (rect.top <= threshold) {
-            currentId = heading.id; // Keep updating to the last one above threshold
+    // If IntersectionObserver isn't available, fallback to simple scroll logic
+    if (!('IntersectionObserver' in window)) {
+        function trackScrollFallback() {
+            const threshold = Math.min(140, window.innerHeight * 0.2);
+            let currentId = headings[0].id;
+            headings.forEach(h => {
+                const rect = h.getBoundingClientRect();
+                if (rect.top <= threshold) currentId = h.id;
+            });
+            updateActiveSection(currentId, allowTOCAutoScroll);
         }
+        window.addEventListener('scroll', trackScrollFallback);
+        allowTOCAutoScroll = false;
+        updateActiveSection(headings[0].id, false);
+        return;
+    }
+
+    tocObserver = new IntersectionObserver((entries) => {
+        // Pick the closest heading to the top among intersecting ones
+        let topMost = null;
+        for (const entry of entries) {
+            if (!entry.isIntersecting) continue;
+            if (!topMost || entry.boundingClientRect.top < topMost.boundingClientRect.top) {
+                topMost = entry;
+            }
+        }
+        if (topMost && topMost.target && topMost.target.id) {
+            updateActiveSection(topMost.target.id, allowTOCAutoScroll);
+        }
+    }, {
+        root: null,
+        rootMargin: '-20% 0px -75% 0px',
+        threshold: [0]
     });
 
-    updateActiveSection(currentId, allowTOCAutoScroll);
+    headings.forEach(h => tocObserver.observe(h));
+
+    // Initial highlight to the first heading without auto-toc-scroll
+    allowTOCAutoScroll = false;
+    updateActiveSection(headings[0].id, false);
 }
 
 // Generate TOC for expanded post
@@ -329,10 +352,10 @@ function generateTOCForPost(postContent) {
     // Show TOC with animation
     tocContainer.classList.add('visible');
     
-    // Force reset scroll position to absolute top
+    // Force reset scroll position to absolute top and init highlighting
     setTimeout(() => {
         tocContainer.scrollTop = 0;
-        console.log('Reset TOC scroll to top');
+        setupTOCHighlighting(headings);
     }, 50);
     
     // Auto-minimize after 3 seconds
@@ -340,17 +363,10 @@ function generateTOCForPost(postContent) {
         tocContainer.classList.add('minimized');
     }, 3000);
     
-    // DO NOT auto-scroll on initial load - let user see the full TOC
-    // Only start tracking after user starts scrolling
-    let hasScrolled = false;
-    const scrollHandler = function() {
-        if (!hasScrolled) {
-            hasScrolled = true;
-            // Start tracking only after first scroll
-            trackScroll();
-        }
-    };
-    window.addEventListener('scroll', scrollHandler, { once: true });
+    // Allow TOC auto-scroll only after first user scroll
+    window.addEventListener('scroll', function() {
+        allowTOCAutoScroll = true;
+    }, { once: true });
 }
 
 // Watch for post expansion
@@ -392,12 +408,9 @@ document.addEventListener('DOMContentLoaded', function() {
             }, 600);
         }
         
-        let scrollTimer;
         window.addEventListener('scroll', function() {
             allowTOCAutoScroll = true;
-            if (scrollTimer) clearTimeout(scrollTimer);
-            scrollTimer = setTimeout(trackScroll, 50);
-        });
+        }, { once: true });
     } else if (document.querySelector('.post-content')) {
         generateTOC();
         const tocContainer = document.getElementById('toc-container');
@@ -408,17 +421,10 @@ document.addEventListener('DOMContentLoaded', function() {
             }, 3000);
         }
 
-        // On first load, highlight the first visible section without auto-scrolling the TOC
-        allowTOCAutoScroll = false;
-        trackScroll();
-
         // After the user starts scrolling, allow the TOC to auto-scroll to keep the active link in view
-        let scrollTimer;
         window.addEventListener('scroll', function() {
             allowTOCAutoScroll = true;
-            if (scrollTimer) clearTimeout(scrollTimer);
-            scrollTimer = setTimeout(trackScroll, 50);
-        });
+        }, { once: true });
     }
 });
 </script>
