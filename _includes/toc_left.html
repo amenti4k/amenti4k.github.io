@@ -1,5 +1,11 @@
 <aside class="toc-left" aria-label="On this page">
-  <div class="toc-left-title">On this page</div>
+  <div class="toc-left-title">
+    On this page
+    <span class="toc-left-actions">
+      <button type="button" id="toc-collapse-all" title="Collapse all" aria-label="Collapse all">–</button>
+      <button type="button" id="toc-expand-all" title="Expand all" aria-label="Expand all">+</button>
+    </span>
+  </div>
   <nav class="toc-left-nav" role="navigation" aria-label="Table of contents">
     <ul id="toc-left-list" class="toc-left-list"></ul>
   </nav>
@@ -20,6 +26,18 @@
   color: var(--secondary-text-color, #9b9b9b);
   margin-bottom: 8px;
 }
+.toc-left-actions { float: right; }
+.toc-left-actions button {
+  background: none;
+  border: 1px solid var(--border, rgba(255,255,255,0.15));
+  color: var(--secondary-text-color);
+  border-radius: 10px;
+  width: 22px; height: 22px;
+  font-size: 12px;
+  line-height: 1;
+  cursor: pointer;
+  margin-left: 6px;
+}
 .toc-left-nav ul { list-style: none; margin: 0; padding: 0; }
 .toc-left-nav li { margin: 0; padding: 2px 0; }
 .toc-left-nav a {
@@ -34,6 +52,19 @@
 .toc-left-nav a.active { color: var(--text-color, #e1e1e1); border-left-color: var(--text-color, #e1e1e1); }
 .toc-left-nav ul ul a { padding-left: 16px; font-size: 11px; }
 .toc-left-nav ul ul ul a { padding-left: 28px; font-size: 10px; opacity: 0.9; }
+
+/* Collapsible controls */
+.toc-toggle {
+  display: inline-block;
+  margin-right: 4px;
+  color: var(--secondary-text-color);
+  cursor: pointer;
+  user-select: none;
+}
+.has-children > .toc-row { display: flex; align-items: center; }
+.has-children.collapsed > ul { display: none; }
+.toc-toggle::before { content: '▾'; display: inline-block; transition: transform 0.15s ease; }
+.has-children.collapsed > .toc-row .toc-toggle::before { transform: rotate(-90deg); }
 
 @media (max-width: 1100px) {
   .toc-left { display: none; }
@@ -95,25 +126,58 @@
         stack.pop();
       }
       const li = document.createElement('li');
+      const row = document.createElement('div');
+      row.className = 'toc-row';
       const a = document.createElement('a');
       a.href = `#${h.id}`;
       a.textContent = (h.textContent || '').trim();
       a.addEventListener('click', function(e) {
         e.preventDefault();
         document.getElementById(h.id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        setActive(h.id);
+        setActive(h.id, true);
+        // Ensure ancestors are expanded when jumping
+        expandAncestors(a);
       });
-      li.appendChild(a);
+      row.appendChild(a);
+      li.appendChild(row);
       cur().ul.appendChild(li);
     });
 
     list.innerHTML = '';
     list.appendChild(root);
 
+    // Collapsible: add toggles for items that have children
+    function setupCollapsers() {
+      list.querySelectorAll('li').forEach(li => {
+        const childUl = li.querySelector(':scope > ul');
+        const row = li.querySelector(':scope > .toc-row');
+        if (childUl && row) {
+          li.classList.add('has-children');
+          const toggle = document.createElement('span');
+          toggle.className = 'toc-toggle';
+          toggle.title = 'Collapse/expand';
+          toggle.addEventListener('click', () => {
+            li.classList.toggle('collapsed');
+          });
+          row.insertBefore(toggle, row.firstChild);
+        }
+      });
+    }
+
+    function expandAncestors(anchorEl) {
+      let node = anchorEl.closest('li');
+      while (node) {
+        node.classList.remove('collapsed');
+        node = node.parentElement?.closest('li') || null;
+      }
+    }
+
     // Highlight active heading
-    function setActive(id) {
+    function setActive(id, expand = false) {
       list.querySelectorAll('a').forEach(a => {
-        a.classList.toggle('active', a.getAttribute('href') === `#${id}`);
+        const isActive = a.getAttribute('href') === `#${id}`;
+        a.classList.toggle('active', isActive);
+        if (isActive && expand) expandAncestors(a);
       });
     }
 
@@ -126,13 +190,25 @@
             topMost = entry;
           }
         });
-        if (topMost?.target?.id) setActive(topMost.target.id);
+        if (topMost?.target?.id) setActive(topMost.target.id, true);
       }, { root: null, rootMargin: '-25% 0px -65% 0px', threshold: [0] });
       hs.forEach(h => io.observe(h));
     }
 
     // Initial state
-    setActive(hs[0].id);
+    setupCollapsers();
+    setActive(hs[0].id, true);
+    // Collapse all by default? Keep expanded; user can collapse.
+
+    // Wire global collapse/expand
+    const btnCollapseAll = document.getElementById('toc-collapse-all');
+    const btnExpandAll = document.getElementById('toc-expand-all');
+    btnCollapseAll?.addEventListener('click', () => {
+      list.querySelectorAll('.has-children').forEach(li => li.classList.add('collapsed'));
+    });
+    btnExpandAll?.addEventListener('click', () => {
+      list.querySelectorAll('.has-children').forEach(li => li.classList.remove('collapsed'));
+    });
   }
 
   function initTOC() {
@@ -144,4 +220,3 @@
   document.addEventListener('DOMContentLoaded', initTOC);
 })();
 </script>
-
