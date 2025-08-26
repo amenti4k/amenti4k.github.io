@@ -204,6 +204,11 @@ function updateActiveSection(activeId, shouldAutoScroll = true) {
 }
 
 // Track scroll to highlight current section
+// Controls whether the TOC is allowed to auto-scroll to keep the
+// active section visible. This starts as false so the TOC doesn't
+// jump on initial load of long posts.
+let allowTOCAutoScroll = false;
+
 function trackScroll() {
     const expandedPost = document.querySelector('.post-content.expanded');
     let headings;
@@ -218,26 +223,20 @@ function trackScroll() {
     }
     
     if (!headings || headings.length === 0) return;
-    
-    // Use viewport center for better tracking
-    const viewportCenter = window.innerHeight / 2;
-    let currentSection = null;
-    let closestDistance = Infinity;
-    
+
+    // Choose the last heading that has crossed a small top-of-viewport threshold.
+    // This avoids selecting far-down sections on initial load of long posts.
+    const threshold = Math.min(140, window.innerHeight * 0.2);
+    let currentId = headings[0].id; // Fallback to the first heading
+
     headings.forEach(heading => {
         const rect = heading.getBoundingClientRect();
-        const distance = Math.abs(rect.top - viewportCenter);
-        
-        // Find the heading closest to viewport center
-        if (distance < closestDistance) {
-            closestDistance = distance;
-            currentSection = heading.id;
+        if (rect.top <= threshold) {
+            currentId = heading.id; // Keep updating to the last one above threshold
         }
     });
-    
-    if (currentSection) {
-        updateActiveSection(currentSection);
-    }
+
+    updateActiveSection(currentId, allowTOCAutoScroll);
 }
 
 // Generate TOC for expanded post
@@ -395,6 +394,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         let scrollTimer;
         window.addEventListener('scroll', function() {
+            allowTOCAutoScroll = true;
             if (scrollTimer) clearTimeout(scrollTimer);
             scrollTimer = setTimeout(trackScroll, 50);
         });
@@ -407,14 +407,18 @@ document.addEventListener('DOMContentLoaded', function() {
                 tocContainer.classList.add('minimized');
             }, 3000);
         }
-        
+
+        // On first load, highlight the first visible section without auto-scrolling the TOC
+        allowTOCAutoScroll = false;
+        trackScroll();
+
+        // After the user starts scrolling, allow the TOC to auto-scroll to keep the active link in view
         let scrollTimer;
         window.addEventListener('scroll', function() {
+            allowTOCAutoScroll = true;
             if (scrollTimer) clearTimeout(scrollTimer);
             scrollTimer = setTimeout(trackScroll, 50);
         });
-        
-        trackScroll();
     }
 });
 </script>
