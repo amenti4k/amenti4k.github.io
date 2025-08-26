@@ -9,25 +9,43 @@ excerpt: "Look, we built it wrong. Not because we're idiots—though that's deba
 
 # Compute Is Labor: The Architectural Inversion of the Economy
 
-## TLDR: The New Growth Mode Nobody's Talking About
+## TLDR: Product-Led Acquisitions (PLAs) — The New Growth Playbook
 
-Forget PLG, forget sales-led growth. The real game is **Product-Led Acquisitions (PLAs)**—and it's not just for PE firms anymore.
+Forget PLG. Forget sales-led growth. The future is **Product-Led Acquisitions (PLAs)**—using AI to transform acquired companies into cash-printing machines. And it's not just for PE firms with billions anymore.
 
-Here's what's happening: While Blackstone and KKR have devolved into tweaking supply chains and offshore staffing for marginal EBITDA improvements, AI-native startups discovered something profound. You can buy a traditional business for 3-5x EBITDA, plug in AI orchestration, and suddenly reveal that 85% of the work was bureaucratic make-work—what David Graeber called "bullshit jobs." The AI doesn't replace people; it exposes that most of the work never needed to exist. The remaining 15% finally get to do meaningful work instead of drowning in administrative theater. Flip it for 25x? Sure. But more importantly, you've liberated humans from soul-crushing tedium.
+**The PLA Playbook:** 
+1. Buy traditional service business at 3-5x EBITDA
+2. Inject AI orchestration (85% automation, 15% human trust layer)
+3. Transform operations in 6 months (not 5 years)
+4. Exit at 25x or hold forever as compound entity
+5. Repeat across industries
 
-The old PE playbook was about transformation through operational excellence. The new playbook is transformation through architectural inversion—let AI run the business while humans become the trust layer. Every company becomes an API. Every process becomes a callable function. The org chart dissolves into service architecture.
+**Why PLAs Work Now:** The accounting firm paradox. Every professional services firm is stuck—they can't adopt AI without destroying their business model (partners billing $500/hour for junior work worth $0.50), but they can't survive without transformation. They'll never buy your AI tool. So you buy THEM. You force the transformation they can't do themselves. The arbitrage is massive because the inefficiency IS their business model.
 
-**Why now?** Because technology finally revealed the absurdity of modern work. That insurance broker with 120 employees? Turns out 112 of them were doing work that only existed because humans needed jobs—endless emails, redundant approvals, meetings about meetings. The 8 who remain? They're finally doing what matters: relationships, judgment calls, creative problem-solving. The accounting firm transformation? It's not about replacing humans—it's about eliminating work that was inhuman to begin with.
+**The Three PLA Models Winning:**
 
-**The trust layer pattern** we keep seeing: transformations in 2024 naturally settle around 85% AI automation with 15% human oversight—not because anyone planned it, but because that's where our current infrastructure, customer trust, and economics intersect. Push past 90% with today's tools and trust evaporates. Stay below 80% and you're leaving money on the table. Call it the trust layer—that essential 15% human element that makes the automation socially acceptable while we build better systems.
+1. **Smart Rollups (Elad Gil/Thrive):** Buy 10+ similar businesses, deploy same AI stack across all, compound the learning. Each acquisition makes the AI smarter for every other business.
 
-**The arbitrage is massive** because of the accounting firm paradox: Partners billing $500/hour for $50/hour junior work will never buy your $0.50 AI solution. They ARE the inefficiency. So you don't sell to them—you acquire them and reveal what everyone suspected: most of that "work" was theater. The juniors grinding through spreadsheets at 2 AM? They're freed to pursue actual careers. The partners? They either adapt to doing real work or retire early. Either way, humanity wins.
+2. **Vertical Integration (General Catalyst):** Buy entire service chains. Healthcare + billing + pharmacy + insurance. Each piece feeds intelligence to others. Diagonal monopoly through shared AI brain.
 
-This isn't just for growth-stage companies with $500M war chests. Early-stage startups can play too. Buy that 50-year-old insurance broker with 5,000 customers (that's $0 CAC), their regulatory licenses (10 years to get from scratch), and their context (every edge case ever). You just bought a warm start that no amount of venture funding could create.
+3. **Warm Start PLAs (Early-Stage):** Can't get customers? Buy a dusty 50-year-old business with 5,000 customers. Instant distribution, regulatory licenses, decades of context. Your AI startup just got a 10-year head start.
 
-The timeline is compressed: We're in the secret transformation phase now (2024-2025). By 2027, today's trust layer pattern—roughly 85% automation—will evolve as infrastructure improves and society adapts. Pure AI startups are already dead—GitHub Copilot loses $20/user/month, Jasper went from $1.5B to fire sale. You can't capture value selling inference. You capture value by owning the entire service.
+**The 85/15 Reality:** Every PLA naturally converges at ~85% AI automation, 15% human oversight. Not planned—emergent from where 2024's tech meets trust. The 85% automated? Bullshit jobs that never needed to exist. The 15% remaining? Finally doing meaningful work—relationships, creativity, judgment.
 
-Welcome to the PLA era. It's like the 1980s LBO boom, except instead of financial engineering, it's AI engineering. And instead of decades, it's happening in dog years.
+**Why Pure AI Startups Die:** GitHub Copilot loses $20/user/month. Jasper went from $1.5B to fire sale. You can't capture value selling inference at $100/month when it costs $120 in tokens. PLAs capture the ENTIRE service value—$5,000/month for work that costs $50 in compute.
+
+**The Compound Entity Advantage:** Constellation Software proved it with software ($90B market cap, 500+ acquisitions, never sold one). Now imagine that model when AI actually operates the businesses. Your accounting firm acquisition makes your insurance brokerage smarter. Your insurance brokerage trains your property management AI. Diagonal integration through intelligence, not ownership.
+
+**The Timeline:** 
+- **Now (2024-2025):** Secret transformation phase. PE firms quietly executing PLAs
+- **Soon (2025-2027):** Market discovers what happened. Too late to compete
+- **Future (2027+):** PLAs are the only way to build defensible AI businesses
+
+**For Founders:** Stop building AI tools. Start acquiring businesses to transform. That unsexy insurance broker or accounting firm? It's your path to $100M ARR in 18 months.
+
+**For Investors:** The returns are 10-100x, not 10x. But only if you understand PLAs beat pure technology plays every time.
+
+Welcome to the PLA era. While everyone's debating AGI, smart operators are quietly buying the entire economy, one boring business at a time.
 
 ## I. So We Built It Wrong
 
