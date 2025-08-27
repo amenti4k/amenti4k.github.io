@@ -13,7 +13,7 @@ excerpt: "Look, we built it wrong. Not because we're idiots—though that's deba
 
 Right now, while everyone debates AGI timelines, PE firms and savvy operators are quietly buying every boring business they can find. Insurance brokers. Accounting firms. Property managers. Why? Because they've discovered something profound: **when AI orchestrates rather than assists, 85% of work doesn't get automated—it evaporates.**
 
-That work was never real. It was bureaucratic theater. David Graeber's "bullshit jobs" thesis wasn't radical enough—he said 40% of work was meaningless. It's 85%. And the 15% that remains? That's the actually human work: creativity, relationships, judgment, wisdom.
+That work was never real. It was bureaucratic theater. David Graeber called it perfectly—40% of jobs were already bullshit, pure make-work. But here's what even Graeber didn't see coming: AI eliminates another 45% through actual productivity gains. The coordination overhead, the information shuffling, the reviews of reviews. Add them together and you get 85% of work that doesn't need to exist. The 15% that remains? That's the genuinely human work: creativity, relationships, judgment, wisdom.
 
 **The Discovery That Breaks Capitalism**
 
