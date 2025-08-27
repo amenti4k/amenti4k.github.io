@@ -37,16 +37,9 @@ Solution: Aggressive tech M&A. Buy them before they collapse. Force the transfor
 4. **Six-month transformation**: Not five years of "digital transformation"—six months to new reality
 5. **Exit or compound**: 25x exit to strategic, or hold forever as compound entity
 
-**Three Models Already Dominating:**
+**The PLA Models Working Right Now:**
 
-**1. The Constellation Compound Entity ($90B Proof of Concept)**
-Mark Leonard bought 500+ vertical software companies, never sold one, compounded at 30% for 30 years. Now imagine that with AI running the businesses. Each acquisition doesn't just add revenue—it adds intelligence. Your insurance broker teaches your accountant teaches your property manager. It's not M&A—it's building a distributed AI brain one neuron at a time.
-
-**2. General Catalyst's Diagonal Integration (The Borg Strategy)**
-They're not buying vertically or horizontally—they're buying diagonally. Healthcare + billing + pharmacy + insurance + primary care. Each node shares intelligence. Your pharmacy knows your diagnosis, your insurance knows your prescription, your billing knows your coverage. One AI brain with perfect context. It's not a conglomerate—it's an organism.
-
-**3. The Rippling Revelation (Warm Start Acquisition)**
-Parker Conrad cracked the code: Don't sell to PEOs—buy them. That dusty 50-year-old broker has what no startup can build: 5,000 customers (CAC: $0), regulatory licenses (10 years to acquire), decades of edge cases (context moat), trust and relationships (impossible to replicate). You're not buying a business—you're buying a shortcut through time.
+Mark Leonard's Constellation Software built $90B buying 500+ vertical software companies, never selling one. Now imagine that playbook with AI actually running the businesses—each acquisition makes every other acquisition smarter through shared intelligence. General Catalyst is going diagonal: healthcare + billing + pharmacy + insurance, one AI brain knowing everything about everything. Parker Conrad at Rippling cracked the warm start code: don't sell to PEOs, buy them—instant 5,000 customers, regulatory moat, decades of edge cases. Thrive Holdings, Elad Gil's rollups, Josh Kushner's permanent capital vehicles—they're all running variations of the same play: buy boring businesses, deploy AI orchestration, compound forever. It's not traditional M&A—it's building distributed economic intelligence one acquisition at a time.
 
 **Why PLAs Are the Only AI Business Model That Works:**
 
