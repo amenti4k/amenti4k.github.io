@@ -25,54 +25,15 @@ function sharePost() {
     navigator.clipboard.writeText(url);
     alert('Link copied to clipboard!');
 }
-
-// Additional Mermaid processing for posts
-document.addEventListener('DOMContentLoaded', function() {
-    // Debug: Log what we find
-    console.log('Looking for mermaid blocks...');
-    
-    // Try multiple selectors
-    const mermaidBlocks = document.querySelectorAll('code.language-mermaid, pre > code.language-mermaid');
-    console.log('Found ' + mermaidBlocks.length + ' mermaid blocks');
-    
-    mermaidBlocks.forEach(function(block, index) {
-        console.log('Processing mermaid block ' + index);
-        const mermaidCode = block.textContent;
-        
-        // Create mermaid div
-        const mermaidDiv = document.createElement('div');
-        mermaidDiv.className = 'mermaid';
-        mermaidDiv.textContent = mermaidCode;
-        
-        // Find container to replace
-        let container = block.parentElement;
-        if (container && container.tagName === 'PRE') {
-            container.parentNode.replaceChild(mermaidDiv, container);
-        }
-    });
-    
-    // Run mermaid if available
-    if (typeof mermaid !== 'undefined') {
-        console.log('Running mermaid...');
-        mermaid.run();
-    }
-});
 </script>
 
 <style>
-    /* Make post pages full-width and allocate a left column for TOC */
-    body {
-        max-width: none;
-        padding-left: 0;
-        padding-right: 0;
-    }
-
     .post-page {
         display: grid;
-        grid-template-columns: 300px 1fr;
-        gap: 24px;
+        grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+        gap: 32px;
         align-items: start;
-        width: 100vw;
+        width: 100%;
         box-sizing: border-box;
     }
 
@@ -80,7 +41,7 @@ document.addEventListener('DOMContentLoaded', function() {
     .post {
         --post-max: 1100px;
         max-width: var(--post-max);
-        width: min(var(--post-max), calc(100vw - 360px));
+        width: min(var(--post-max), calc(100% - 80px));
         justify-self: center;
         padding: 0 20px;
         box-sizing: border-box;
@@ -90,9 +51,8 @@ document.addEventListener('DOMContentLoaded', function() {
     @media (max-width: 1100px) {
         .post-page {
             display: block;
-            width: 100%;
         }
-        
+
         .post {
             width: 100%;
             max-width: 100%;
@@ -137,18 +97,10 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         
         /* Better code block handling on mobile */
-        .post-content pre {
-            overflow-x: auto;
-            max-width: 100%;
-            margin: 15px -15px;
-            padding: 15px;
-            border-radius: 0;
-        }
-        
         .post-content code {
             word-break: break-word;
         }
-        
+
         /* Better list spacing on mobile */
         .post-content ul, .post-content ol {
             padding-left: 20px;
@@ -186,12 +138,6 @@ document.addEventListener('DOMContentLoaded', function() {
             font-size: 1em;
         }
         
-        /* Even better code handling for small screens */
-        .post-content pre {
-            font-size: 0.8em;
-            margin: 10px -10px;
-            padding: 10px;
-        }
     }
 
     .post h1 {
@@ -199,7 +145,7 @@ document.addEventListener('DOMContentLoaded', function() {
         margin-bottom: 5px;
     }
     .post-meta {
-        color: #777;
+        color: var(--secondary-text-color);
         font-size: 0.8em;
         margin-bottom: 20px;
         display: flex;
@@ -227,17 +173,19 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     .share-btn {
-        background: none;
+        background: var(--surface-elevated-color);
         border: 1px solid var(--border-color);
         padding: 0.3rem 0.8rem;
         border-radius: 15px;
         cursor: pointer;
         font-size: 0.8em;
+        color: var(--secondary-text-color);
         transition: all 0.2s ease;
     }
 
     .share-btn:hover {
-        background: var(--text-color);
-        color: white;
+        background: var(--link-color);
+        color: var(--background-color);
+        border-color: var(--link-color);
     }
 </style>

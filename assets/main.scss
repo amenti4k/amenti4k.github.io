@@ -1,5 +1,5 @@
 ---
 ---
 
+@import "themes";
 @import "base";
-@import "{{ site.style | default: 'dark' }}";

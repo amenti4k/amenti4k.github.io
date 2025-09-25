@@ -1,258 +1,182 @@
 <!DOCTYPE html>
-<html lang="{{ page.lang | default: site.lang | default: "en" }}" data-theme="{{ site.style }}">
+<html lang="{{ page.lang | default: site.lang | default: "en" }}" data-theme="{{ site.style | default: 'auto' }}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{% if page.title %}{{ page.title }} - {% endif %}{{ site.title }}</title>
-    
-    <!-- Import theme CSS first -->
-    <link rel="stylesheet" type="text/css" href="{{ "/assets/main-dark.css" | relative_url }}">
-    
-    <style>
-        /* Define CSS variables for themes */
-        :root, [data-theme="dark"] {
-            --background-color: #000;
-            --text-color: #e1e1e1;
-            --secondary-text-color: #9b9b9b;
-            --inline-code-bg: #2d2d2d;
-            --inline-code-color: #e06c75;
-        }
-        [data-theme="light"] {
-            --background-color: #FFF;
-            --text-color: #000;
-            --secondary-text-color: #666;
-            --inline-code-bg: #f0f0f0;
-            --inline-code-color: #d73a49;
-        }
-        
-        body {
-            margin: 0;
-            padding: 20px;
-            font-family: 'Inconsolata', monospace;
-            max-width: 900px;
-            margin: 0 auto;
-            background-color: var(--background-color);
-            color: var(--text-color);
-            font-size: 13px;
-            line-height: 1.6;
-        }
-        .site-header {
-            text-align: left;
-            margin-bottom: 40px;
-        }
-        .site-title {
-            font-size: 16px;
-            margin-bottom: 10px;
-            cursor: pointer;
-            font-weight: normal;
-        }
-        .site-title a {
-            text-decoration: none;
-            color: inherit;
-        }
-        nav {
-            margin-bottom: 30px;
-            display: flex;
-            justify-content: flex-start;
-            align-items: center;
-            font-size: 13px;
-        }
-        nav a {
-            color: var(--text-color);
-            text-decoration: none;
-            margin-right: 20px;
-            border-bottom: 1px solid transparent;
-            transition: all 0.2s ease;
-        }
-        nav a:hover {
-            color: var(--secondary-text-color);
-        }
-        .music-player {
-            margin: 20px auto;
-            max-width: 600px;
-        }
-        .post-list {
-            margin: 0 auto;
-            max-width: 600px;
-        }
-        .theme-toggle {
-            color: var(--text-color);
-            text-decoration: none;
-            margin: 0 15px;
-            border-bottom: 1px solid transparent;
-            transition: border-color 0.2s ease;
-        }
-        .theme-toggle:hover {
-            border-bottom: 1px solid var(--text-color);
-        }
-        
-        /* Technical enhancements */
-        .theme-toggle::before {
-            content: '[';
-            opacity: 0.5;
-        }
-        .theme-toggle::after {
-            content: ']';
-            opacity: 0.5;
-        }
-        
-        /* Subtle glow on focus elements */
-        nav a:focus, .theme-toggle:focus {
-            outline: none;
-            text-shadow: 0 0 3px var(--code-color-5);
-        }
-        
-        /* Override for code blocks to ensure visibility */
-        .language-typescript,
-        .language-javascript,
-        .language-python,
-        .language-dockerfile,
-        .language-bash,
-        .highlighter-rouge {
-            background-color: #1e1e1e !important;
-            border: 1px solid #3a3a3a !important;
-            border-left: 3px solid #c678dd !important;
-            border-radius: 4px !important;
-            margin: 20px 0 !important;
-            overflow: hidden !important;
-        }
-        
-        .highlighter-rouge pre,
-        .highlight pre {
-            background-color: #1e1e1e !important;
-            padding: 16px !important;
-            color: #abb2bf !important;
-        }
-        
-        /* Mermaid diagrams */
-        .mermaid {
-            background-color: #1e1e1e !important;
-            border: 1px solid #3a3a3a !important;
-            border-left: 3px solid #61afef !important;
-            padding: 20px !important;
-            margin: 20px auto !important;
-            text-align: center !important;
-            border-radius: 4px !important;
-            max-width: 100% !important;
-            overflow-x: auto !important;
-        }
-        
-        .mermaid svg {
-            max-width: 100% !important;
-            height: auto !important;
-        }
-        
-        /* Inline code styling that works in both themes */
-        p code, 
-        li code,
-        td code {
-            background-color: var(--inline-code-bg) !important;
-            color: var(--inline-code-color) !important;
-            padding: 2px 6px !important;
-            border-radius: 3px !important;
-            font-family: 'Inconsolata', 'Courier New', monospace !important;
-            font-size: 0.9em !important;
-        }
-        
-        /* Override theme's inline code */
-        code.language-plaintext.highlighter-rouge {
-            background-color: var(--inline-code-bg) !important;
-            color: var(--inline-code-color) !important;
-        }
-    </style>
-    
-    <!-- Load Mermaid for diagrams -->
-    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <title>{% if page.title %}{{ page.title }} · {% endif %}{{ site.title }}</title>
+
     <script>
-        // Set the initial theme
         (function() {
-            const savedTheme = localStorage.getItem('theme') || '{{ site.style }}';
-            document.documentElement.setAttribute('data-theme', savedTheme);
+            var storageKey = 'theme-preference';
+            try {
+                var saved = localStorage.getItem(storageKey);
+                var fallback = '{{ site.style | default: "auto" }}';
+                var theme = saved || fallback;
+                document.documentElement.setAttribute('data-theme', theme);
+            } catch (err) {
+                document.documentElement.setAttribute('data-theme', '{{ site.style | default: "auto" }}');
+            }
         })();
-        
-        // Initialize Mermaid
-        mermaid.initialize({ 
-            startOnLoad: false,
-            theme: 'dark',
-            themeVariables: {
-                primaryColor: '#c678dd',
-                primaryTextColor: '#fff',
-                primaryBorderColor: '#c678dd',
-                lineColor: '#5c6370',
-                secondaryColor: '#61afef',
-                tertiaryColor: '#98c379',
-                background: '#1e1e1e',
-                mainBkg: '#1e1e1e',
-                secondBkg: '#2d2d2d',
-                tertiaryBkg: '#3a3a3a',
-                darkMode: true,
-                fontFamily: 'monospace'
-            }
-        });
-        
-        // Process Mermaid blocks after page loads
-        window.addEventListener('load', function() {
-            // Find all mermaid code blocks
-            const codeBlocks = document.querySelectorAll('code.language-mermaid');
-            
-            codeBlocks.forEach(function(codeBlock) {
-                const mermaidCode = codeBlock.textContent;
-                
-                // Create mermaid div
-                const mermaidDiv = document.createElement('div');
-                mermaidDiv.className = 'mermaid';
-                mermaidDiv.textContent = mermaidCode;
-                
-                // Find the parent pre element
-                const pre = codeBlock.parentElement;
-                if (pre && pre.tagName === 'PRE') {
-                    // Replace the entire pre with mermaid div
-                    pre.parentNode.replaceChild(mermaidDiv, pre);
-                }
-            });
-            
-            // Run mermaid on all .mermaid elements
-            if (typeof mermaid !== 'undefined') {
-                mermaid.run();
-            }
-        });
     </script>
+
+    <link rel="stylesheet" href="{{ '/assets/main.css' | relative_url }}">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
 </head>
-<body>
-    <header class="site-header">
-        <h1 class="site-title"><a href="/">{{ site.title }}</a></h1>
-        <nav>
-            <a href="/about">About</a>
-            <a href="/research">Research</a>
-            <a href="/vibes">Vibes</a>
-            <a href="#" id="theme-toggle" class="theme-toggle">dark</a>
-        </nav>
-    </header>
-    <main>
-        {{ content }}
-    </main>
+<body class="layout-{{ page.layout | default: 'page' }}">
+    <div class="site-shell{% if page.layout == 'post' %} site-shell--wide{% endif %}">
+        <header class="site-header">
+            <span class="site-title"><a href="{{ '/' | relative_url }}">{{ site.title }}</a></span>
+            <nav class="site-nav" aria-label="Primary navigation">
+                <a href="{{ '/about' | relative_url }}">about</a>
+                <a href="{{ '/research' | relative_url }}">research</a>
+                <a href="{{ '/vibes' | relative_url }}">vibes</a>
+                <button type="button" id="theme-toggle" class="theme-toggle" aria-live="polite" aria-label="Cycle colour theme"></button>
+            </nav>
+        </header>
+        <main role="main">
+            {{ content }}
+        </main>
+    </div>
+
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const themeToggle = document.getElementById('theme-toggle');
-            const themes = ['dark', 'light'];
-            let currentTheme = localStorage.getItem('theme') || '{{ site.style }}';
-            
-            // Set initial link text
-            themeToggle.textContent = currentTheme;
-            
-            themeToggle.addEventListener('click', function(e) {
-                e.preventDefault();
-                currentTheme = document.documentElement.getAttribute('data-theme');
-                const currentIndex = themes.indexOf(currentTheme);
-                const newTheme = themes[(currentIndex + 1) % themes.length];
-                
-                // Update theme
-                document.documentElement.setAttribute('data-theme', newTheme);
-                localStorage.setItem('theme', newTheme);
-                
-                // Update link text
-                themeToggle.textContent = newTheme;
+        const THEME_STORAGE_KEY = 'theme-preference';
+        const THEME_SEQUENCE = ['auto', 'dark', 'light', 'dawn', 'neon'];
+        const THEME_LABELS = {
+            auto: 'system',
+            dark: 'midnight',
+            light: 'daylight',
+            dawn: 'dawn',
+            neon: 'neon'
+        };
+
+        function resolveStoredTheme() {
+            try {
+                return localStorage.getItem(THEME_STORAGE_KEY);
+            } catch (err) {
+                return null;
+            }
+        }
+
+        function setStoredTheme(theme) {
+            try {
+                localStorage.setItem(THEME_STORAGE_KEY, theme);
+            } catch (err) {
+                /* ignore */
+            }
+        }
+
+        function currentTheme() {
+            return document.documentElement.getAttribute('data-theme') || 'auto';
+        }
+
+        function setTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+        }
+
+        function formatTheme(theme) {
+            return (THEME_LABELS[theme] || theme).replace(/^(.)/, function(_, ch) { return ch.toUpperCase(); });
+        }
+
+        function updateToggleLabel(themeToggle, theme) {
+            var label = formatTheme(theme);
+            themeToggle.textContent = label;
+            themeToggle.setAttribute('aria-label', 'Theme: ' + label + '. Activate to switch.');
+        }
+
+        function preferredThemeForAuto() {
+            return window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+        }
+
+        function buildMermaidConfig(theme) {
+            if (typeof window.getComputedStyle !== 'function') {
+                return { startOnLoad: false, theme: 'dark' };
+            }
+            var computed = getComputedStyle(document.documentElement);
+            var accent = computed.getPropertyValue('--link-color').trim() || '#82aaff';
+            var accentHover = computed.getPropertyValue('--link-hover-color').trim() || accent;
+            var text = computed.getPropertyValue('--text-color').trim() || '#f5f7ff';
+            var border = computed.getPropertyValue('--border-color').trim() || 'rgba(110,128,201,0.35)';
+            var surface = computed.getPropertyValue('--surface-color').trim() || computed.getPropertyValue('--background-color').trim() || '#070910';
+            var surfaceElevated = computed.getPropertyValue('--surface-elevated-color').trim() || surface;
+            var resolved = theme === 'auto' ? preferredThemeForAuto() : theme;
+            var mermaidTheme = (resolved === 'light' || resolved === 'dawn') ? 'neutral' : 'dark';
+
+            return {
+                startOnLoad: false,
+                securityLevel: 'loose',
+                theme: mermaidTheme,
+                themeVariables: {
+                    primaryColor: accent,
+                    primaryTextColor: text,
+                    primaryBorderColor: accent,
+                    lineColor: border,
+                    secondaryColor: accentHover,
+                    tertiaryColor: border,
+                    background: surfaceElevated || surface,
+                    mainBkg: surfaceElevated || surface,
+                    secondBkg: surface,
+                    tertiaryBkg: surface,
+                    fontFamily: 'JetBrains Mono, monospace'
+                }
+            };
+        }
+
+        function convertMermaidCodeBlocks() {
+            document.querySelectorAll('code.language-mermaid').forEach(function(block) {
+                var parent = block.parentElement;
+                var container = parent && parent.tagName === 'PRE' ? parent : block;
+                var wrapper = document.createElement('div');
+                wrapper.className = 'mermaid';
+                wrapper.textContent = block.textContent;
+                container.parentNode.replaceChild(wrapper, container);
             });
+        }
+
+        function refreshMermaid(theme) {
+            if (typeof mermaid === 'undefined') {
+                return;
+            }
+            var config = buildMermaidConfig(theme);
+            mermaid.initialize(config);
+            requestAnimationFrame(function() {
+                mermaid.run({ querySelector: '.mermaid' });
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var themeToggle = document.getElementById('theme-toggle');
+            convertMermaidCodeBlocks();
+
+            var stored = resolveStoredTheme();
+            var initial = stored || '{{ site.style | default: "auto" }}';
+            setTheme(initial);
+            if (themeToggle) {
+                updateToggleLabel(themeToggle, initial);
+                themeToggle.addEventListener('click', function() {
+                    var current = currentTheme();
+                    var index = THEME_SEQUENCE.indexOf(current);
+                    var next = THEME_SEQUENCE[(index + 1 + THEME_SEQUENCE.length) % THEME_SEQUENCE.length];
+                    setTheme(next);
+                    updateToggleLabel(themeToggle, next);
+                    setStoredTheme(next);
+                    refreshMermaid(next);
+                });
+            }
+            refreshMermaid(initial);
+
+            if (window.matchMedia) {
+                var media = window.matchMedia('(prefers-color-scheme: dark)');
+                var mediaListener = function() {
+                    if (currentTheme() === 'auto') {
+                        refreshMermaid('auto');
+                    }
+                };
+                if (typeof media.addEventListener === 'function') {
+                    media.addEventListener('change', mediaListener);
+                } else if (typeof media.addListener === 'function') {
+                    media.addListener(mediaListener);
+                }
+            }
         });
     </script>
 </body>
