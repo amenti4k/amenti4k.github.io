@@ -11,7 +11,12 @@
   --text-color: var(--base-color);
   --secondary-text-color: #9b9b9b;
   --placeholder-color: var(--secondary-text-color);
-  --link-color: var(--base-color);
+  --link-color: #7aa2f7;
+  --link-hover-color: #a9c1fb;
+  --link-active-color: #c8d6ff;
+  --link-visited-color: #c678dd;
+  --link-underline-color: rgba(122, 162, 247, 0.55);
+  --focus-ring-color: rgba(122, 162, 247, 0.45);
   
   /* Enhanced syntax highlighting for technical feel */
   --code-color-1: #6a6a6a;    /* Comments */
@@ -33,4 +38,3 @@
   --code-color-17: #be5046;   /* Name.Entity */
   --code-color-18: #5c6370;   /* Text.Whitespace */
 }
-

@@ -10,7 +10,12 @@
   --background-color: #000;
   --text-color: var(--base-color);
   --placeholder-color: var(--base-color);
-  --link-color: var(--base-color);
+  --link-color: #00ffee;
+  --link-hover-color: #66ffea;
+  --link-active-color: #a8fff2;
+  --link-visited-color: #ff66ff;
+  --link-underline-color: rgba(0, 255, 238, 0.6);
+  --focus-ring-color: rgba(0, 255, 238, 0.45);
   --code-color-1: #aaaaaa;
   --code-color-2: #ffffcc;
   --code-color-3: #F00000;
