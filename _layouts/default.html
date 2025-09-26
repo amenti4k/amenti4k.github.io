@@ -79,8 +79,9 @@
 
         function updateToggleLabel(themeToggle, theme) {
             var label = formatTheme(theme);
-            themeToggle.textContent = label;
+            themeToggle.dataset.themeName = theme;
             themeToggle.setAttribute('aria-label', 'Theme: ' + label + '. Activate to switch.');
+            themeToggle.setAttribute('title', 'Theme: ' + label + ' (click to change)');
         }
 
         function preferredThemeForAuto() {
@@ -143,6 +144,27 @@
             });
         }
 
+        function dedupePostTitle() {
+            var post = document.querySelector('.post');
+            if (!post) {
+                return;
+            }
+            var layoutHeading = post.querySelector('h1');
+            var content = post.querySelector('.post-content');
+            if (!layoutHeading || !content) {
+                return;
+            }
+            var firstElement = content.firstElementChild;
+            if (!firstElement || !firstElement.tagName || firstElement.tagName.toLowerCase() !== 'h1') {
+                return;
+            }
+            var layoutText = layoutHeading.textContent.trim();
+            var contentText = firstElement.textContent.trim();
+            if (layoutText === contentText) {
+                firstElement.remove();
+            }
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
             var themeToggle = document.getElementById('theme-toggle');
             convertMermaidCodeBlocks();
@@ -151,6 +173,7 @@
             var initial = stored || '{{ site.style | default: "auto" }}';
             setTheme(initial);
             if (themeToggle) {
+                themeToggle.textContent = '';
                 updateToggleLabel(themeToggle, initial);
                 themeToggle.addEventListener('click', function() {
                     var current = currentTheme();
@@ -163,6 +186,7 @@
                 });
             }
             refreshMermaid(initial);
+            dedupePostTitle();
 
             if (window.matchMedia) {
                 var media = window.matchMedia('(prefers-color-scheme: dark)');
