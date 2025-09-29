@@ -82,6 +82,7 @@
             themeToggle.dataset.themeName = theme;
             themeToggle.setAttribute('aria-label', 'Theme: ' + label + '. Activate to switch.');
             themeToggle.setAttribute('title', 'Theme: ' + label + ' (click to change)');
+            themeToggle.textContent = label;
         }
 
         function preferredThemeForAuto() {
@@ -173,16 +174,21 @@
             var initial = stored || '{{ site.style | default: "auto" }}';
             setTheme(initial);
             if (themeToggle) {
-                themeToggle.textContent = '';
                 updateToggleLabel(themeToggle, initial);
                 themeToggle.addEventListener('click', function() {
                     var current = currentTheme();
                     var index = THEME_SEQUENCE.indexOf(current);
                     var next = THEME_SEQUENCE[(index + 1 + THEME_SEQUENCE.length) % THEME_SEQUENCE.length];
-                    setTheme(next);
-                    updateToggleLabel(themeToggle, next);
-                    setStoredTheme(next);
-                    refreshMermaid(next);
+
+                    themeToggle.style.transform = 'scale(0.92)';
+
+                    setTimeout(function() {
+                        setTheme(next);
+                        updateToggleLabel(themeToggle, next);
+                        setStoredTheme(next);
+                        refreshMermaid(next);
+                        themeToggle.style.transform = '';
+                    }, 100);
                 });
             }
             refreshMermaid(initial);

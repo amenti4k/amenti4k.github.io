@@ -32,7 +32,7 @@ body {
   gap: 48px;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
-  transition: background-color 0.25s ease, color 0.25s ease;
+  transition: background-color 0.35s cubic-bezier(0.4, 0, 0.2, 1), color 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 main { width: 100%; }
@@ -104,7 +104,7 @@ a {
   text-decoration-color: var(--link-underline-color, var(--link-color));
   text-decoration-thickness: 0.12em;
   text-underline-offset: 0.2em;
-  transition: color 0.2s ease, text-decoration-color 0.2s ease;
+  transition: color 0.25s cubic-bezier(0.4, 0, 0.2, 1), text-decoration-color 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 a:hover,
@@ -232,34 +232,69 @@ li > ol {
   border: 1px solid var(--border-color);
   border-radius: 999px;
   cursor: pointer;
-  width: 36px;
-  height: 36px;
-  padding: 0;
+  min-width: 48px;
+  height: 40px;
+  padding: 0 14px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  transition: border-color 0.2s ease, background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
-  font-size: 0;
-  line-height: 0;
+  gap: 6px;
+  transition: border-color 0.25s ease, background-color 0.25s ease, transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease;
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
   position: relative;
+  color: var(--secondary-text-color);
+  overflow: hidden;
+}
+
+.theme-toggle::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, var(--link-color), var(--color-accent-hover));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.25s ease;
 }
 
 .theme-toggle::after {
   content: '';
-  width: 16px;
-  height: 16px;
+  width: 18px;
+  height: 18px;
   border-radius: 50%;
   background: var(--link-color);
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08), 0 0 10px rgba(0, 0, 0, 0.12);
-  transition: background 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08), 0 0 14px var(--link-color);
+  transition: background 0.25s ease, box-shadow 0.25s ease, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  flex-shrink: 0;
 }
 
 .theme-toggle:hover,
 .theme-toggle:focus-visible {
   border-color: var(--link-color);
   background: var(--surface-color);
-  transform: translateY(-1px);
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+  transform: translateY(-2px);
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.16), 0 0 0 1px var(--border-color);
+  color: var(--text-color);
+}
+
+.theme-toggle:hover::before,
+.theme-toggle:focus-visible::before {
+  opacity: 1;
+}
+
+.theme-toggle:hover::after,
+.theme-toggle:focus-visible::after {
+  transform: scale(1.15) rotate(180deg);
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.12), 0 0 20px var(--link-color);
+}
+
+.theme-toggle:active {
+  transform: translateY(0) scale(0.96);
 }
 
 .theme-toggle:focus-visible {
@@ -339,7 +374,7 @@ textarea {
   color: var(--text-color);
   font-size: 0.95rem;
   padding: 0.75rem 0.9rem;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+  transition: border-color 0.25s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   width: 100%;
 }
 
@@ -388,7 +423,7 @@ code {
   color: var(--inline-code-color, var(--link-color));
   padding: 2px 6px;
   border-radius: 4px;
-  transition: background-color 0.2s ease, color 0.2s ease;
+  transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 pre {
@@ -403,6 +438,7 @@ pre {
   line-height: 1.7 !important;
   font-family: $code-font-family !important;
   box-shadow: var(--color-shadow-soft, none);
+  transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 pre code {
@@ -660,6 +696,8 @@ img[src*='#center'] {
     width: 100%;
     justify-content: center;
     text-align: center;
+    padding: 0 12px;
+    font-size: 0.8rem;
   }
   figure.highlight,
   pre {
