@@ -14,69 +14,137 @@
 <style>
 .toc-left {
   position: sticky;
-  top: 80px;
+  top: 32px;
   align-self: start;
   width: 280px;
-  max-height: calc(100vh - 100px);
+  max-height: calc(100vh - 64px);
   overflow: auto;
-  border-right: 1px solid var(--border, rgba(255,255,255,0.08));
-  padding-right: 12px;
-  padding-left: 16px;
+  border-right: 1px solid var(--border-color);
+  padding-right: 1.5rem;
   box-sizing: border-box;
 }
+
 .toc-left-title {
+  font-family: 'Merriweather', serif;
   font-weight: 700;
-  color: var(--secondary-text-color, #9b9b9b);
-  margin-bottom: 8px;
+  font-size: 14px;
+  color: var(--text-color);
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
-.toc-left-actions { float: right; }
+
+.toc-left-actions {
+  display: flex;
+  gap: 0.25rem;
+}
+
 .toc-left-actions button {
   background: none;
-  border: 1px solid var(--border, rgba(255,255,255,0.15));
+  border: 1px solid var(--border-color);
   color: var(--secondary-text-color);
-  border-radius: 10px;
-  width: 22px; height: 22px;
+  width: 20px;
+  height: 20px;
   font-size: 12px;
   line-height: 1;
   cursor: pointer;
-  margin-left: 6px;
+  padding: 0;
 }
-.toc-left-nav ul { list-style: none; margin: 0; padding: 0; }
-.toc-left-nav li { margin: 0; padding: 2px 0; }
+
+.toc-left-actions button:hover {
+  background: var(--highlight-color);
+  color: var(--text-color);
+}
+
+.toc-left-nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.toc-left-nav li {
+  margin: 0;
+  padding: 0;
+}
+
 .toc-left-nav a {
-  color: var(--secondary-text-color, #9b9b9b);
+  color: var(--secondary-text-color);
   text-decoration: none;
   display: block;
-  border-left: 2px solid transparent;
-  padding-left: 6px;
-  transition: color 0.15s ease, border-color 0.15s ease;
+  padding: 0.25rem 0;
+  font-size: 13px;
+  border: none;
 }
-.toc-left-nav a:hover { color: var(--text-color, #e1e1e1); }
-.toc-left-nav a.active { color: var(--text-color, #e1e1e1); border-left-color: var(--text-color, #e1e1e1); }
-.toc-left-nav ul ul a { padding-left: 16px; font-size: 11px; }
-.toc-left-nav ul ul ul a { padding-left: 28px; font-size: 10px; opacity: 0.9; }
 
-/* Collapsible controls */
+.toc-left-nav a:hover {
+  background: var(--highlight-color);
+  color: var(--text-color);
+}
+
+.toc-left-nav a.active {
+  color: var(--text-color);
+  font-weight: 500;
+}
+
+.toc-left-nav ul ul a {
+  padding-left: 1rem;
+  font-size: 12px;
+}
+
+.toc-left-nav ul ul ul a {
+  padding-left: 2rem;
+  font-size: 11px;
+}
+
 .toc-toggle {
   display: inline-block;
-  margin-right: 4px;
+  margin-right: 0.25rem;
   color: var(--secondary-text-color);
   cursor: pointer;
   user-select: none;
+  font-size: 10px;
 }
-.has-children > .toc-row { display: flex; align-items: center; }
-.has-children.collapsed > ul { display: none; }
-.toc-toggle::before { content: '▾'; display: inline-block; transition: transform 0.15s ease; }
-.has-children.collapsed > .toc-row .toc-toggle::before { transform: rotate(-90deg); }
+
+.has-children > .toc-row {
+  display: flex;
+  align-items: center;
+}
+
+.has-children.collapsed > ul {
+  display: none;
+}
+
+.toc-toggle::before {
+  content: '▾';
+  display: inline-block;
+}
+
+.has-children.collapsed > .toc-row .toc-toggle::before {
+  content: '▸';
+}
 
 @media (max-width: 1100px) {
-  .toc-left { display: none; }
+  .toc-left {
+    display: none;
+  }
 }
 
-.toc-left::-webkit-scrollbar { width: 3px; }
-.toc-left::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); border-radius: 3px; }
-.toc-left::-webkit-scrollbar-thumb { background: var(--secondary-text-color, #9b9b9b); border-radius: 3px; }
-.toc-left:hover::-webkit-scrollbar-thumb { background: var(--text-color, #e1e1e1); }
+.toc-left::-webkit-scrollbar {
+  width: 4px;
+}
+
+.toc-left::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.toc-left::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+}
+
+.toc-left:hover::-webkit-scrollbar-thumb {
+  background: var(--secondary-text-color);
+}
 </style>
 
 <script>

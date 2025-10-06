@@ -156,20 +156,17 @@ li > ol {
  * Header & navigation - smca.io style
  */
 .site-header {
-  position: absolute;
-  top: 32px;
-  left: 32px;
-  right: 32px;
   max-width: $container-max-width;
-  margin: 0 auto;
-  z-index: 10;
+  margin: 0 auto 3rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border-color);
 }
 
 .site-title {
   font-size: 24px;
   font-family: $heading-font-family;
   font-weight: 700;
-  margin-bottom: 1rem;
+  margin-bottom: 0.75rem;
   display: block;
 }
 
