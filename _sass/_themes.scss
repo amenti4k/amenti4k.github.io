@@ -1,148 +1,66 @@
 @charset "utf-8";
 
 /*
- * Centralised theme tokens
- *
- * Each theme defines a palette using descriptive color tokens that are then
- * aliased to the legacy CSS custom properties already consumed across the site.
- * The html element carries `data-theme` which determines the active palette.
+ * Minimal theme inspired by smca.io
+ * Clean, readable, programmer-focused aesthetic
  */
 
-/* Default to light theme */
 :root {
-  color-scheme: light;
-}
+  /* Core colors - smca.io palette */
+  --text-color: #100F0F;
+  --background-color: #ffffff;
+  --highlight-color: #ffd00066;
+  --muted-bg: #f2f0e5;
 
-/* Dark mode */
-:root[data-theme="dark"] {
-  --color-background: #000000;
-  --color-surface: #0a0a0a;
-  --color-surface-elevated: #111111;
-  --color-border: rgba(255, 255, 255, 0.1);
-  --color-border-strong: rgba(255, 255, 255, 0.2);
-  --color-text-primary: #ffffff;
-  --color-text-muted: #999999;
-  --color-text-subtle: #666666;
-  --color-accent: #ffffff;
-  --color-accent-hover: #cccccc;
-  --color-accent-active: #999999;
-  --color-accent-visited: #999999;
-  --color-accent-soft: rgba(255, 255, 255, 0.2);
-  --color-focus-ring: rgba(255, 255, 255, 0.5);
-  --color-selection-bg: rgba(255, 255, 255, 0.2);
-  --color-selection-text: #000000;
-  --color-inline-code-bg: rgba(255, 255, 255, 0.1);
-  --color-inline-code-text: #ffffff;
-  --color-scroll-thumb: rgba(255, 255, 255, 0.2);
-  --color-shadow-soft: none;
+  /* Surface variants */
+  --surface-color: #fafafa;
+  --surface-elevated-color: #f2f0e5;
 
-  --code-color-1: #5c6370;
-  --code-color-2: #2c313a;
-  --code-color-3: #e86671;
-  --code-color-4: #51202a;
-  --code-color-5: #c678dd;
-  --code-color-6: #98c379;
-  --code-color-7: #e86671;
-  --code-color-8: #61afef;
-  --code-color-9: #98c379;
-  --code-color-10: #abb2bf;
-  --code-color-11: #7f848e;
-  --code-color-12: #c678dd;
-  --code-color-13: #56b6c2;
-  --code-color-14: #d19a66;
-  --code-color-15: #98c379;
-  --code-color-16: #61afef;
-  --code-color-17: #e5c07b;
-  --code-color-18: #5c6370;
+  /* Borders */
+  --border-color: rgba(16, 15, 15, 0.1);
+  --border: 1px solid var(--border-color);
 
-  /* Legacy aliases */
-  --background-color: var(--color-background);
-  --surface-color: var(--color-surface);
-  --surface-elevated-color: var(--color-surface-elevated);
-  --text-color: var(--color-text-primary);
-  --secondary-text-color: var(--color-text-muted);
-  --secondary-text: var(--color-text-muted);
-  --placeholder-color: var(--color-text-subtle);
-  --base-color: var(--color-accent);
-  --border: 1px solid var(--color-border);
-  --border-color: var(--color-border);
-  --link-color: var(--color-accent);
-  --link-hover-color: var(--color-accent-hover);
-  --link-active-color: var(--color-accent-active);
-  --link-visited-color: var(--color-accent-visited);
-  --link-underline-color: var(--color-accent-soft);
-  --focus-ring-color: var(--color-focus-ring);
-  --selection-background: var(--color-selection-bg);
-  --selection-text: var(--color-selection-text);
-  --inline-code-background: var(--color-inline-code-bg);
-  --inline-code-color: var(--color-inline-code-text);
-}
+  /* Text hierarchy */
+  --secondary-text-color: #6b6b6b;
+  --secondary-text: #6b6b6b;
+  --placeholder-color: #999999;
 
-/* Light mode */
-:root,
-:root[data-theme="light"],
-:root:not([data-theme]) {
-  color-scheme: light;
-  --theme-name: "light";
-  --color-background: #ffffff;
-  --color-surface: #f9f9f9;
-  --color-surface-elevated: #f0f0f0;
-  --color-border: rgba(0, 0, 0, 0.1);
-  --color-border-strong: rgba(0, 0, 0, 0.2);
-  --color-text-primary: #000000;
-  --color-text-muted: #666666;
-  --color-text-subtle: #999999;
-  --color-accent: #000000;
-  --color-accent-hover: #333333;
-  --color-accent-active: #666666;
-  --color-accent-visited: #666666;
-  --color-accent-soft: rgba(0, 0, 0, 0.2);
-  --color-focus-ring: rgba(0, 0, 0, 0.5);
-  --color-selection-bg: rgba(0, 0, 0, 0.1);
-  --color-selection-text: #ffffff;
-  --color-inline-code-bg: rgba(0, 0, 0, 0.05);
-  --color-inline-code-text: #000000;
-  --color-scroll-thumb: rgba(0, 0, 0, 0.2);
-  --color-shadow-soft: none;
+  /* Links */
+  --link-color: #100F0F;
+  --link-hover-color: #100F0F;
+  --link-active-color: #100F0F;
+  --link-visited-color: #100F0F;
+  --link-underline-color: rgba(16, 15, 15, 0.3);
+  --base-color: #100F0F;
 
-  --code-color-1: #708399;
-  --code-color-2: #e6ebff;
-  --code-color-3: #d73a49;
+  /* Interaction */
+  --focus-ring-color: rgba(16, 15, 15, 0.3);
+  --selection-background: #ffd00066;
+  --selection-text: #100F0F;
+
+  /* Code */
+  --inline-code-background: #f2f0e5;
+  --inline-code-color: #100F0F;
+  --code-color-1: #6b6b6b;
+  --code-color-2: #f2f0e5;
+  --code-color-3: #c7254e;
   --code-color-4: #ffeef0;
-  --code-color-5: #6f42c1;
-  --code-color-6: #22863a;
-  --code-color-7: #d73a49;
-  --code-color-8: #005cc5;
-  --code-color-9: #22863a;
-  --code-color-10: #586069;
-  --code-color-11: #6a737d;
-  --code-color-12: #6f42c1;
-  --code-color-13: #005cc5;
-  --code-color-14: #e36209;
-  --code-color-15: #032f62;
-  --code-color-16: #6f42c1;
-  --code-color-17: #e36209;
-  --code-color-18: #d0d7e3;
+  --code-color-5: #8959a8;
+  --code-color-6: #718c00;
+  --code-color-7: #c7254e;
+  --code-color-8: #4271ae;
+  --code-color-9: #718c00;
+  --code-color-10: #6b6b6b;
+  --code-color-11: #999999;
+  --code-color-12: #8959a8;
+  --code-color-13: #3e999f;
+  --code-color-14: #f5871f;
+  --code-color-15: #4d4d4c;
+  --code-color-16: #4271ae;
+  --code-color-17: #eab700;
+  --code-color-18: #e0e0e0;
 
-  --background-color: var(--color-background);
-  --surface-color: var(--color-surface);
-  --surface-elevated-color: var(--color-surface-elevated);
-  --text-color: var(--color-text-primary);
-  --secondary-text-color: var(--color-text-muted);
-  --secondary-text: var(--color-text-muted);
-  --placeholder-color: var(--color-text-subtle);
-  --base-color: var(--color-accent);
-  --border: 1px solid var(--color-border);
-  --border-color: var(--color-border);
-  --link-color: var(--color-accent);
-  --link-hover-color: var(--color-accent-hover);
-  --link-active-color: var(--color-accent-active);
-  --link-visited-color: var(--color-accent-visited);
-  --link-underline-color: var(--color-accent-soft);
-  --focus-ring-color: var(--color-focus-ring);
-  --selection-background: var(--color-selection-bg);
-  --selection-text: var(--color-selection-text);
-  --inline-code-background: var(--color-inline-code-bg);
-  --inline-code-color: var(--color-inline-code-text);
+  --color-scroll-thumb: rgba(16, 15, 15, 0.2);
+  --color-shadow-soft: none;
 }
 

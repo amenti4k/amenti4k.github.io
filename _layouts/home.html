@@ -17,107 +17,81 @@ layout: default
   {% for post in site.posts %}
     {% unless post.categories contains 'research' %}
       <div class="post-item" data-tags="{{ post.tags | join: ' ' }}">
-        <a class="post-title" href="{{ post.url | relative_url }}" id="post-{{ post.title | slugify }}">
+        <a class="post-title" href="{{ post.url | relative_url }}">
           <span class="title-text">{{ post.title }}</span>
           <span class="post-date">{{ post.date | date: "%Y-%m-%d" }}</span>
         </a>
-        {% if post.excerpt %}
-          <p class="post-excerpt">{{ post.excerpt | strip_html | truncate: 180 }}</p>
-        {% endif %}
       </div>
     {% endunless %}
   {% endfor %}
-  {% if site.posts == empty %}
-    <p>No posts yet.</p>
-  {% endif %}
 </div>
 
 <script>
-// No expand/collapse on the home page; titles link to full posts.
-
 document.querySelectorAll('.tag-btn').forEach(button => {
   button.addEventListener('click', () => {
     const tag = button.dataset.tag;
-    
-    // Update active button
     document.querySelectorAll('.tag-btn').forEach(btn => btn.classList.remove('active'));
     button.classList.add('active');
-    
-    // Filter posts
     document.querySelectorAll('.post-item').forEach(post => {
-      if (tag === 'all' || post.dataset.tags.includes(tag)) {
-        post.style.display = '';
-      } else {
-        post.style.display = 'none';
-      }
+      post.style.display = (tag === 'all' || post.dataset.tags.includes(tag)) ? '' : 'none';
     });
   });
 });
 </script>
 
 <style>
-.post-list {
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 20px;
-  font-family: 'Inconsolata', monospace;
-  font-size: 13px;
-}
-
-.post-item {
-  margin-bottom: 1rem;
-}
-
-.post-title {
-  display: flex;
-  align-items: center;
-  padding: 1rem 0;
-  margin: 0;
-  border-bottom: 1px solid var(--border);
-  font-size: 13px;
-  font-weight: normal;
-  color: var(--text-color);
-  text-decoration: none;
-}
-
-.post-date {
-  margin-left: auto;
-  font-size: 13px;
-  color: var(--secondary-text-color);
-  font-weight: normal;
-}
-
-.post-excerpt {
-  margin: 0.5rem 0 1rem 0;
-  color: var(--secondary-text-color);
-  font-style: italic;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-
 .tag-filter {
-  text-align: left;
   margin-bottom: 2rem;
-  font-family: 'Inconsolata', monospace;
-  font-size: 13px;
+}
+
+.tag-label {
+  margin-right: 0.5rem;
+  color: var(--secondary-text-color);
 }
 
 .tag-btn {
   background: none;
-  border: 1px solid var(--border);
-  padding: 0.5rem 1rem;
+  border: 1px solid var(--border-color);
+  padding: 0.3rem 0.8rem;
   margin: 0 0.25rem;
   cursor: pointer;
-  transition: all 0.2s ease;
-  font-family: 'Inconsolata', monospace;
+  font-family: inherit;
   font-size: 13px;
   color: var(--text-color);
+}
+
+.tag-btn:hover {
+  background: var(--highlight-color);
 }
 
 .tag-btn.active {
   background: var(--text-color);
   color: var(--background-color);
+}
+
+.post-list {
+  margin: 2rem 0;
+}
+
+.post-item {
+  margin-bottom: 0.5rem;
+}
+
+.post-title {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 0.5rem 0;
+  color: var(--text-color);
+  border: none;
+}
+
+.post-title:hover {
+  background: var(--highlight-color);
+}
+
+.post-date {
+  color: var(--secondary-text-color);
+  font-size: 13px;
 }
 </style>

@@ -1,61 +1,27 @@
 <!DOCTYPE html>
-<html lang="{{ page.lang | default: site.lang | default: "en" }}" data-theme="light">
+<html lang="{{ page.lang | default: site.lang | default: "en" }}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% if page.title %}{{ page.title }} · {% endif %}{{ site.title }}</title>
-
-    <script>
-        (function() {
-            try {
-                var saved = localStorage.getItem('theme');
-                document.documentElement.setAttribute('data-theme', saved || 'light');
-            } catch (err) {
-                document.documentElement.setAttribute('data-theme', 'light');
-            }
-        })();
-    </script>
-
     <link rel="stylesheet" href="{{ '/assets/main.css' | relative_url }}">
     <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
 </head>
-<body class="layout-{{ page.layout | default: 'page' }}">
-    <div class="site-shell{% if page.layout == 'post' %} site-shell--wide{% endif %}">
-        <header class="site-header">
-            <span class="site-title"><a href="{{ '/' | relative_url }}">{{ site.title }}</a></span>
-            <nav class="site-nav" aria-label="Primary navigation">
-                <a href="{{ '/about' | relative_url }}">about</a>
-                <a href="{{ '/research' | relative_url }}">research</a>
-                <a href="{{ '/vibes' | relative_url }}">vibes</a>
-                <button type="button" id="theme-toggle" class="theme-toggle" aria-live="polite" aria-label="Cycle colour theme"></button>
-            </nav>
-        </header>
-        <main role="main">
-            {{ content }}
-        </main>
-    </div>
+<body>
+    <header class="site-header">
+        <div class="site-title"><a href="{{ '/' | relative_url }}">{{ site.title }}</a></div>
+        <nav class="site-nav" aria-label="Primary navigation">
+            <a href="{{ '/about' | relative_url }}">about</a>
+            <a href="{{ '/research' | relative_url }}">research</a>
+            <a href="{{ '/vibes' | relative_url }}">vibes</a>
+        </nav>
+    </header>
+
+    <main role="main">
+        {{ content }}
+    </main>
 
     <script>
-        const THEME_STORAGE_KEY = 'theme';
-
-        function getStoredTheme() {
-            try {
-                return localStorage.getItem(THEME_STORAGE_KEY);
-            } catch (err) {
-                return null;
-            }
-        }
-
-        function setStoredTheme(theme) {
-            try {
-                localStorage.setItem(THEME_STORAGE_KEY, theme);
-            } catch (err) {}
-        }
-
-        function setTheme(theme) {
-            document.documentElement.setAttribute('data-theme', theme);
-        }
-
         function convertMermaidCodeBlocks() {
             document.querySelectorAll('code.language-mermaid').forEach(function(block) {
                 var parent = block.parentElement;
@@ -64,19 +30,6 @@
                 wrapper.className = 'mermaid';
                 wrapper.textContent = block.textContent;
                 container.parentNode.replaceChild(wrapper, container);
-            });
-        }
-
-        function refreshMermaid(theme) {
-            if (typeof mermaid === 'undefined') return;
-            var config = {
-                startOnLoad: false,
-                securityLevel: 'loose',
-                theme: theme === 'dark' ? 'dark' : 'neutral'
-            };
-            mermaid.initialize(config);
-            requestAnimationFrame(function() {
-                mermaid.run({ querySelector: '.mermaid' });
             });
         }
 
@@ -94,25 +47,15 @@
         }
 
         document.addEventListener('DOMContentLoaded', function() {
-            var themeToggle = document.getElementById('theme-toggle');
             convertMermaidCodeBlocks();
-
-            var stored = getStoredTheme();
-            var initial = stored || 'light';
-            setTheme(initial);
-
-            if (themeToggle) {
-                themeToggle.setAttribute('aria-label', 'Toggle theme');
-                themeToggle.addEventListener('click', function() {
-                    var current = document.documentElement.getAttribute('data-theme');
-                    var next = current === 'light' ? 'dark' : 'light';
-                    setTheme(next);
-                    setStoredTheme(next);
-                    refreshMermaid(next);
+            if (typeof mermaid !== 'undefined') {
+                mermaid.initialize({
+                    startOnLoad: false,
+                    securityLevel: 'loose',
+                    theme: 'neutral'
                 });
+                mermaid.run({ querySelector: '.mermaid' });
             }
-
-            refreshMermaid(initial);
             dedupePostTitle();
         });
     </script>
