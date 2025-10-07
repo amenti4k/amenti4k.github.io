@@ -79,11 +79,9 @@ function verifyEmailForPost(button, postId) {
 
 <style>
 .post-list {
-  max-width: 900px;
+  max-width: 650px;
   margin: 0 auto;
-  padding: 20px;
-  font-family: 'Inconsolata', monospace;
-  font-size: 13px;
+  font-size: 14px;
 }
 
 .post-item {
@@ -92,21 +90,24 @@ function verifyEmailForPost(button, postId) {
 
 .post-title {
   cursor: pointer;
-  padding: 1rem;
+  padding: 0.5rem 0;
   margin: 0;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--border-color);
   display: flex;
   align-items: center;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: normal;
   color: var(--text-color);
 }
 
+.post-title:hover {
+  background: var(--highlight-color);
+}
+
 .arrow {
   margin-right: 0.5rem;
-  transition: transform 0.3s ease;
   display: inline-block;
-  color: var(--code-color-5);
+  color: var(--secondary-text-color);
 }
 
 .arrow.rotated {
@@ -123,42 +124,43 @@ function verifyEmailForPost(button, postId) {
 .post-content {
   max-height: 0;
   overflow: hidden;
-  transition: max-height 0.5s ease-out, padding 0.5s ease;
-  padding: 0 1rem;
+  padding: 0;
 }
 
 .post-content.expanded {
   max-height: none;
-  padding: 1rem;
-  transition: max-height 0.5s ease-in, padding 0.5s ease;
-  font-family: 'Inconsolata', monospace;
-  font-size: 13px;
-  line-height: 1.7;
+  padding: 1rem 0;
+  font-size: 14px;
+  line-height: 1.6;
 }
 
 .auth-form {
   text-align: center;
-  padding: 20px;
+  padding: 1.5rem;
+}
+
+.auth-form h3 {
+  margin-top: 0;
 }
 
 .auth-form input, .auth-form button {
-  margin: 10px;
-  padding: 8px;
-  border: 1px solid var(--border);
-  font-family: 'Inconsolata', monospace;
-  font-size: 13px;
+  margin: 0.5rem;
+  padding: 0.5rem;
+  border: 1px solid var(--border-color);
+  font-family: inherit;
+  font-size: 14px;
   background-color: var(--background-color);
   color: var(--text-color);
 }
 
 .auth-form button {
   cursor: pointer;
-  background: none;
-  transition: all 0.2s ease;
+  background: var(--text-color);
+  color: var(--background-color);
 }
 
 .auth-form button:hover {
-  background: var(--text-color);
-  color: var(--background-color);
+  background: var(--highlight-color);
+  color: var(--text-color);
 }
 </style>
