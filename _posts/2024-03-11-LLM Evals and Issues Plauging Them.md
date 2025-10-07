@@ -2,8 +2,8 @@
 layout: post
 title: "LLM Evals and Issues Plauging Them"
 date: 2024-03-11
-categories: [research]
-tags: [research]
+categories: []
+tags: [ai]
 ---
 
 # Challenges in evaluating AI systems / Anthropic
