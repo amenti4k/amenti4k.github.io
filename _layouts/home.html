@@ -2,16 +2,17 @@
 layout: default
 ---
 
-<div class="tag-filter">
-  <span class="tag-label">Filter by:</span>
-  <button class="tag-btn active" data-tag="all">all</button>
-  <button class="tag-btn" data-tag="ai">ai</button>
-  <button class="tag-btn" data-tag="data">data</button>
-  <button class="tag-btn" data-tag="fashion">fashion</button>
-  <button class="tag-btn" data-tag="business">business</button>
-  <button class="tag-btn" data-tag="music">music</button>
-  <button class="tag-btn" data-tag="misc">misc</button>
-</div>
+<div class="home-content">
+  <div class="tag-filter">
+    <span class="tag-label">Filter by:</span>
+    <button class="tag-btn active" data-tag="all">all</button>
+    <button class="tag-btn" data-tag="ai">ai</button>
+    <button class="tag-btn" data-tag="data">data</button>
+    <button class="tag-btn" data-tag="fashion">fashion</button>
+    <button class="tag-btn" data-tag="business">business</button>
+    <button class="tag-btn" data-tag="music">music</button>
+    <button class="tag-btn" data-tag="misc">misc</button>
+  </div>
 
 <div class="post-list">
   {% for post in site.posts %}
@@ -24,6 +25,7 @@ layout: default
       </div>
     {% endunless %}
   {% endfor %}
+  </div>
 </div>
 
 <script>
@@ -40,6 +42,10 @@ document.querySelectorAll('.tag-btn').forEach(button => {
 </script>
 
 <style>
+.home-content {
+  margin-top: 0;
+}
+
 .tag-filter {
   margin-bottom: 2rem;
 }

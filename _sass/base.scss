@@ -29,31 +29,19 @@ body {
   font-size: $base-font-size;
   line-height: $base-line-height;
   margin: 0;
-  padding: 60px 32px 32px;
+  padding: 32px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
 }
 
+.site-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
 main {
   width: 100%;
-  max-width: $container-max-width;
-  margin: 0 auto;
-}
-
-.site-shell {
-  width: 100%;
-  max-width: $container-max-width;
-  margin: 0 auto;
-  position: relative;
-}
-
-.site-shell--wide {
-  max-width: $container-max-width;
-}
-
-body.layout-post .site-shell {
-  max-width: $container-max-width;
 }
 
 /*
@@ -156,8 +144,7 @@ li > ol {
  * Header & navigation - smca.io style
  */
 .site-header {
-  max-width: $container-max-width;
-  margin: 0 auto 3rem;
+  margin-bottom: 3rem;
   padding-bottom: 1.5rem;
   border-bottom: 1px solid var(--border-color);
 }

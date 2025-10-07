@@ -8,18 +8,20 @@
     <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
 </head>
 <body>
-    <header class="site-header">
-        <div class="site-title"><a href="{{ '/' | relative_url }}">{{ site.title }}</a></div>
-        <nav class="site-nav" aria-label="Primary navigation">
-            <a href="{{ '/about' | relative_url }}">about</a>
-            <a href="{{ '/research' | relative_url }}">research</a>
-            <a href="{{ '/vibes' | relative_url }}">vibes</a>
-        </nav>
-    </header>
+    <div class="site-container">
+        <header class="site-header">
+            <div class="site-title"><a href="{{ '/' | relative_url }}">{{ site.title }}</a></div>
+            <nav class="site-nav" aria-label="Primary navigation">
+                <a href="{{ '/about' | relative_url }}">about</a>
+                <a href="{{ '/research' | relative_url }}">research</a>
+                <a href="{{ '/vibes' | relative_url }}">vibes</a>
+            </nav>
+        </header>
 
-    <main role="main">
-        {{ content }}
-    </main>
+        <main role="main">
+            {{ content }}
+        </main>
+    </div>
 
     <script>
         function convertMermaidCodeBlocks() {
