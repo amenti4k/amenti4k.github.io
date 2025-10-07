@@ -78,10 +78,10 @@ from temporalio.common import RetryPolicy  # Boring but real
 ```
 
 **My Trust-But-Verify Checklist:**
-- ✅ Library imports? Check the docs
-- ✅ Internal APIs? Show me where they're defined
-- ✅ Database fields? Let's see that schema
-- ✅ "Latest features"? They're probably from 2023
+- [x] Library imports? Check the docs
+- [x] Internal APIs? Show me where they're defined
+- [x] Database fields? Let's see that schema
+- [x] "Latest features"? They're probably from 2023
 
 ### Mistake #3: The Over-Engineering Olympics
 
@@ -143,7 +143,7 @@ Files in Context  │ Quality of Output
                  │    ╱
         4 ────────│───╱─── [!] "Getting messy"
                  │  ╱
-        3 ────────│─★──── [OK] "Sweet spot"
+        3 ────────│─*──── [OK] "Sweet spot"
                  │
         2 ────────│─────── [+] "Good"
                  │
