@@ -3,15 +3,15 @@
 // Typeface imports - matching smca.io
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;500;600;700;900&family=Merriweather:wght@300;400;700;900&display=swap');
 
-// Font and layout tokens - smca.io inspired
+// Font and layout tokens - enhanced for readability
 $base-font-family:     'Roboto Mono', monospace !default;
-$heading-font-family:  'Merriweather', serif !default;
+$heading-font-family:  'Roboto Mono', monospace !default;
 $code-font-family:     'Roboto Mono', monospace !default;
-$base-font-size:       14px !default;
+$base-font-size:       15px !default;
 $mobile-font-size:     14px !default;
-$base-line-height:     1.6 !default;
+$base-line-height:     1.7 !default;
 $container-width:      100% !default;
-$container-max-width:  650px !default;
+$container-max-width:  720px !default;
 
 /*
  * Global structure
@@ -36,47 +36,54 @@ body {
 }
 
 .site-container {
-  max-width: 1200px;
+  max-width: 720px;
   margin: 0 auto;
 }
 
 main {
   width: 100%;
+  max-width: 720px;
 }
 
 /*
- * Typography
+ * Typography - Enhanced scale and rhythm
  */
 h1, h2, h3, h4, h5, h6 {
   font-family: $heading-font-family;
   color: var(--text-color);
   font-weight: 700;
-  margin: 1.5rem 0 1rem;
-  line-height: 1.3;
+  margin: 2.5rem 0 1.25rem;
+  line-height: 1.4;
+  letter-spacing: -0.02em;
 }
 
 h1 {
-  font-size: 24px;
+  font-size: 28px;
   margin-top: 0;
 }
 
 h2 {
-  font-size: 20px;
+  font-size: 22px;
+  margin-top: 2rem;
 }
 
 h3 {
   font-size: 18px;
+  font-weight: 600;
+  margin-top: 1.75rem;
 }
 
 h4, h5, h6 {
   font-size: 16px;
   font-weight: 600;
+  margin-top: 1.5rem;
 }
 
 p {
   color: var(--text-color);
-  margin: 0 0 1rem;
-  line-height: 1.6;
+  margin: 0 0 1.5rem;
+  line-height: 1.7;
+  max-width: 65ch;
 }
 
 a {
@@ -95,31 +102,41 @@ em { font-style: italic; }
 hr {
   border: none;
   border-top: 1px solid var(--border-color);
-  margin: 2rem 0;
+  margin: 3rem 0;
 }
 
 blockquote {
-  margin: 1.5rem 0;
-  padding: 1rem 1.5rem;
+  margin: 2rem 0;
+  padding: 1.25rem 1.75rem;
   border-left: 3px solid var(--text-color);
   background: var(--surface-elevated-color);
   font-style: italic;
+  line-height: 1.7;
+}
+
+blockquote p {
+  margin-bottom: 1rem;
+}
+
+blockquote p:last-child {
+  margin-bottom: 0;
 }
 
 /*
- * Lists
+ * Lists - Improved spacing and rhythm
  */
 :not(.menu) > ul {
   list-style: none;
   padding-left: 0;
-  margin: 0 0 1.1rem;
+  margin: 0 0 1.5rem;
   color: var(--text-color);
+  line-height: 1.7;
 }
 
 :not(.menu) > ul > li {
   position: relative;
-  padding-left: 1.4rem;
-  margin-bottom: 0.6rem;
+  padding-left: 1.5rem;
+  margin-bottom: 0.75rem;
 }
 
 :not(.menu) > ul > li:before {
@@ -131,30 +148,37 @@ blockquote {
 }
 
 ol {
-  margin: 0 0 1.1rem 1.25rem;
+  margin: 0 0 1.5rem 1.5rem;
   color: var(--text-color);
+  line-height: 1.7;
+}
+
+ol li {
+  margin-bottom: 0.75rem;
 }
 
 li > ul,
 li > ol {
-  margin-top: 0.5rem;
+  margin-top: 0.75rem;
+  margin-bottom: 0.5rem;
 }
 
 /*
- * Header & navigation - smca.io style
+ * Header & navigation - Enhanced clarity
  */
 .site-header {
-  margin-bottom: 3rem;
-  padding-bottom: 1.5rem;
+  margin-bottom: 4rem;
+  padding-bottom: 2rem;
   border-bottom: 1px solid var(--border-color);
 }
 
 .site-title {
-  font-size: 24px;
+  font-size: 26px;
   font-family: $heading-font-family;
   font-weight: 700;
-  margin-bottom: 0.75rem;
+  margin-bottom: 1rem;
   display: block;
+  letter-spacing: -0.02em;
 }
 
 .site-title a {
@@ -201,9 +225,10 @@ li > ol {
 footer {
   color: var(--secondary-text-color);
   border-top: var(--border);
-  margin: 3rem auto 1rem;
-  padding-top: 1rem;
-  font-size: 12px;
+  margin: 4rem auto 2rem;
+  padding-top: 2rem;
+  font-size: 13px;
+  line-height: 1.6;
 }
 
 /*
@@ -253,24 +278,26 @@ button:hover {
 }
 
 /*
- * Code & syntax highlighting
+ * Code & syntax highlighting - Better readability
  */
 code {
   font-family: $code-font-family;
   font-size: 13px;
   background-color: var(--inline-code-background);
   color: var(--inline-code-color);
-  padding: 2px 4px;
+  padding: 3px 6px;
+  border-radius: 3px;
 }
 
 pre {
   background-color: var(--surface-elevated-color);
   border: 1px solid var(--border-color);
-  padding: 1rem;
-  margin: 1.5rem 0;
+  padding: 1.5rem;
+  margin: 2rem 0;
   overflow-x: auto;
   font-size: 13px;
-  line-height: 1.5;
+  line-height: 1.6;
+  border-radius: 4px;
 }
 
 pre code {
@@ -375,25 +402,27 @@ figure.highlight pre {
 .highlight .il { color: var(--code-color-14); }
 
 /*
- * Tables
+ * Tables - Improved spacing
  */
 table {
   width: 100%;
   border-collapse: collapse;
-  margin: 1.5rem 0;
+  margin: 2rem 0;
   font-size: 0.95rem;
 }
 
 table th,
 table td {
   border: 1px solid var(--border-color);
-  padding: 0.75rem 0.9rem;
+  padding: 0.875rem 1rem;
   text-align: left;
+  line-height: 1.6;
 }
 
 table th {
   background: var(--surface-elevated-color);
   color: var(--secondary-text-color);
+  font-weight: 600;
 }
 
 /*

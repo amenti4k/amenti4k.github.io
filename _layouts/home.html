@@ -91,13 +91,15 @@ document.querySelectorAll('.tag-btn').forEach(button => {
 <style>
 .home-content {
   margin-top: 0;
+  max-width: 65ch;
 }
 
 .terminal-intro {
-  margin-bottom: 3rem;
-  font-size: 1.1rem;
-  padding: 1rem 0;
+  margin-bottom: 4rem;
+  font-size: 16px;
+  padding: 1.5rem 0;
   border-bottom: 1px solid var(--border-color);
+  line-height: 1.7;
 }
 
 .terminal-intro .prompt {
@@ -117,22 +119,23 @@ document.querySelectorAll('.tag-btn').forEach(button => {
 }
 
 .tag-filter {
-  margin-bottom: 2rem;
+  margin-bottom: 3rem;
 }
 
 .tag-label {
-  margin-right: 0.5rem;
+  margin-right: 0.75rem;
   color: var(--secondary-text-color);
+  font-size: 15px;
 }
 
 .tag-btn {
   background: none;
   border: 1px solid var(--border-color);
-  padding: 0.3rem 0.8rem;
-  margin: 0 0.25rem;
+  padding: 0.4rem 0.9rem;
+  margin: 0 0.25rem 0.5rem;
   cursor: pointer;
   font-family: inherit;
-  font-size: 13px;
+  font-size: 14px;
   color: var(--text-color);
   transition: all 0.2s ease;
   position: relative;
@@ -155,14 +158,14 @@ document.querySelectorAll('.tag-btn').forEach(button => {
 }
 
 .post-item {
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.75rem;
 }
 
 .post-title {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
-  padding: 0.5rem 0.75rem;
+  padding: 0.75rem 1rem;
   color: var(--text-color);
   border: none;
   transition: all 0.15s ease;
@@ -172,7 +175,7 @@ document.querySelectorAll('.tag-btn').forEach(button => {
 .post-title:hover {
   background: var(--highlight-color);
   border-left-color: var(--text-color);
-  padding-left: 1rem;
+  padding-left: 1.25rem;
 }
 
 .post-title:hover .title-text {
@@ -185,8 +188,9 @@ document.querySelectorAll('.tag-btn').forEach(button => {
 
 .post-date {
   color: var(--secondary-text-color);
-  font-size: 13px;
+  font-size: 14px;
   opacity: 0.7;
   transition: opacity 0.15s ease;
+  white-space: nowrap;
 }
 </style>
