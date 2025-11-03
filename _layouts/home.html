@@ -3,6 +3,10 @@ layout: default
 ---
 
 <div class="home-content">
+  <div class="terminal-intro">
+    <span class="prompt">$</span> <span class="typewriter" id="typewriter"></span><span class="cursor-blink">_</span>
+  </div>
+
   <div class="tag-filter">
     <span class="tag-label">Filter by:</span>
     <button class="tag-btn active" data-tag="all">all</button>
@@ -29,6 +33,49 @@ layout: default
 </div>
 
 <script>
+// Typewriter effect
+const phrases = [
+  'thoughts > /dev/null',
+  'harnessing ideas into coherence',
+  'operator at the switchboard',
+  'writing && thinking'
+];
+
+let phraseIndex = 0;
+let charIndex = 0;
+let isDeleting = false;
+let typewriterElement = document.getElementById('typewriter');
+
+function type() {
+  const currentPhrase = phrases[phraseIndex];
+
+  if (isDeleting) {
+    typewriterElement.textContent = currentPhrase.substring(0, charIndex - 1);
+    charIndex--;
+  } else {
+    typewriterElement.textContent = currentPhrase.substring(0, charIndex + 1);
+    charIndex++;
+  }
+
+  let typeSpeed = isDeleting ? 50 : 100;
+
+  if (!isDeleting && charIndex === currentPhrase.length) {
+    typeSpeed = 2000;
+    isDeleting = true;
+  } else if (isDeleting && charIndex === 0) {
+    isDeleting = false;
+    phraseIndex = (phraseIndex + 1) % phrases.length;
+    typeSpeed = 500;
+  }
+
+  setTimeout(type, typeSpeed);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  setTimeout(type, 1000);
+});
+
+// Tag filtering
 document.querySelectorAll('.tag-btn').forEach(button => {
   button.addEventListener('click', () => {
     const tag = button.dataset.tag;
@@ -44,6 +91,29 @@ document.querySelectorAll('.tag-btn').forEach(button => {
 <style>
 .home-content {
   margin-top: 0;
+}
+
+.terminal-intro {
+  margin-bottom: 3rem;
+  font-size: 1.1rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.terminal-intro .prompt {
+  color: var(--secondary-text-color);
+  margin-right: 0.5rem;
+}
+
+.cursor-blink {
+  animation: blink 1s step-end infinite;
+  color: var(--text-color);
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
 }
 
 .tag-filter {
@@ -64,15 +134,20 @@ document.querySelectorAll('.tag-btn').forEach(button => {
   font-family: inherit;
   font-size: 13px;
   color: var(--text-color);
+  transition: all 0.2s ease;
+  position: relative;
 }
 
 .tag-btn:hover {
   background: var(--highlight-color);
+  border-color: var(--text-color);
+  transform: translateY(-1px);
 }
 
 .tag-btn.active {
   background: var(--text-color);
   color: var(--background-color);
+  border-color: var(--text-color);
 }
 
 .post-list {
@@ -87,17 +162,31 @@ document.querySelectorAll('.tag-btn').forEach(button => {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
-  padding: 0.5rem 0;
+  padding: 0.5rem 0.75rem;
   color: var(--text-color);
   border: none;
+  transition: all 0.15s ease;
+  border-left: 2px solid transparent;
 }
 
 .post-title:hover {
   background: var(--highlight-color);
+  border-left-color: var(--text-color);
+  padding-left: 1rem;
+}
+
+.post-title:hover .title-text {
+  text-decoration: none;
+}
+
+.post-title:hover .post-date {
+  opacity: 1;
 }
 
 .post-date {
   color: var(--secondary-text-color);
   font-size: 13px;
+  opacity: 0.7;
+  transition: opacity 0.15s ease;
 }
 </style>
