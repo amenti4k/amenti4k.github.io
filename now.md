@@ -44,7 +44,6 @@ permalink: /now/
 <style>
 .terminal-output {
   margin-top: 0;
-  max-width: 65ch;
 }
 
 .command-line {

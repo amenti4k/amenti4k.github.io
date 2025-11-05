@@ -142,7 +142,7 @@ permalink: /resume/
 <style>
 /* Resume Container */
 .resume-container {
-  max-width: 65ch;
+  max-width: 100%;
   margin: 0 auto;
   padding: 0;
 }

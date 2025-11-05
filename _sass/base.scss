@@ -10,8 +10,8 @@ $code-font-family:     'Roboto Mono', monospace !default;
 $base-font-size:       15px !default;
 $mobile-font-size:     14px !default;
 $base-line-height:     1.7 !default;
-$container-width:      100% !default;
-$container-max-width:  720px !default;
+$container-width:      75% !default;
+$container-max-width:  1100px !default;
 
 /*
  * Global structure
@@ -36,13 +36,13 @@ body {
 }
 
 .site-container {
-  max-width: 720px;
+  width: 75%;
+  max-width: 1100px;
   margin: 0 auto;
 }
 
 main {
   width: 100%;
-  max-width: 720px;
 }
 
 /*
@@ -83,7 +83,6 @@ p {
   color: var(--text-color);
   margin: 0 0 1.5rem;
   line-height: 1.7;
-  max-width: 65ch;
 }
 
 a {
