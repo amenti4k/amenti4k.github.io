@@ -36,7 +36,7 @@ body {
 }
 
 .site-container {
-  width: 75%;
+  width: 90%;
   max-width: 1100px;
   margin: 0 auto;
 }
@@ -448,9 +448,23 @@ img[src*='#center'] {
 /*
  * Responsive adjustments
  */
+@media (max-width: 768px) {
+  .site-container {
+    width: 95%;
+  }
+
+  body {
+    padding: 28px;
+  }
+}
+
 @media (max-width: 480px) {
   body {
-    padding: 32px 16px 16px;
+    padding: 20px;
+  }
+
+  .site-container {
+    width: 100%;
   }
 
   .site-header {
