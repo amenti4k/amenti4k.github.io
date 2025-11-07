@@ -26,7 +26,7 @@ Fun fact: Couldn't leave Meta until Oct 1, 2024 due to H1B restrictions. Freedom
 
 ### 2018-2022: The Minerva Years
 
-Attended [Minerva University](https://www.minerva.edu/) (yes, the one with <2% acceptance rate where you live in a different country each semester):
+Attended [Minerva University](https://www.minerva.edu/):
 - **San Francisco** 
 - **Seoul** 
 - **Hyderabad**
