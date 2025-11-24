@@ -4,7 +4,7 @@ description: >- # this means to ignore newlines until "baseurl:"
   Corner of the internet where I will ractice the process harnessing my thoughts into something coherent before they float away.
 
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "amentikenea.github.io" # the base hostname & protocol for your site, e.g. http://example.com
+url: "https://amenti4k.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 
 header_pages:
   - index.md
