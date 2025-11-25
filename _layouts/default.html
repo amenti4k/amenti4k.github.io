@@ -23,6 +23,13 @@
         </main>
     </div>
 
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="backToTop" aria-label="Back to top">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 15l-6-6-6 6"/>
+        </svg>
+    </button>
+
     <script>
         function convertMermaidCodeBlocks() {
             document.querySelectorAll('code.language-mermaid').forEach(function(block) {
@@ -48,6 +55,41 @@
             }
         }
 
+        // External link indicator
+        function markExternalLinks() {
+            const links = document.querySelectorAll('a[href^="http"]');
+            const currentHost = window.location.hostname;
+            
+            links.forEach(function(link) {
+                try {
+                    const url = new URL(link.href);
+                    if (url.hostname !== currentHost && !link.classList.contains('no-external-icon')) {
+                        link.classList.add('external-link');
+                        link.setAttribute('target', '_blank');
+                        link.setAttribute('rel', 'noopener noreferrer');
+                    }
+                } catch (e) {}
+            });
+        }
+
+        // Back to top button
+        function initBackToTop() {
+            const btn = document.getElementById('backToTop');
+            if (!btn) return;
+
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 400) {
+                    btn.classList.add('visible');
+                } else {
+                    btn.classList.remove('visible');
+                }
+            });
+
+            btn.addEventListener('click', function() {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
             convertMermaidCodeBlocks();
             if (typeof mermaid !== 'undefined') {
@@ -59,6 +101,8 @@
                 mermaid.run({ querySelector: '.mermaid' });
             }
             dedupePostTitle();
+            markExternalLinks();
+            initBackToTop();
         });
     </script>
 </body>
