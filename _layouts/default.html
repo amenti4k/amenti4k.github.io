@@ -30,6 +30,36 @@
         </svg>
     </button>
 
+    <!-- Keyboard Shortcuts Help -->
+    <div class="kbd-help" id="kbdHelp" aria-hidden="true">
+        <div class="kbd-help-content">
+            <div class="kbd-help-header">
+                <span class="kbd-help-title">Keyboard Shortcuts</span>
+                <button class="kbd-help-close" aria-label="Close">&times;</button>
+            </div>
+            <div class="kbd-help-body">
+                <div class="kbd-section">
+                    <div class="kbd-section-title">Navigation</div>
+                    <div class="kbd-row"><kbd>g</kbd> <kbd>h</kbd> <span>Go home</span></div>
+                    <div class="kbd-row"><kbd>g</kbd> <kbd>a</kbd> <span>Go to about</span></div>
+                    <div class="kbd-row"><kbd>g</kbd> <kbd>r</kbd> <span>Go to research</span></div>
+                    <div class="kbd-row"><kbd>g</kbd> <kbd>v</kbd> <span>Go to vibes</span></div>
+                </div>
+                <div class="kbd-section">
+                    <div class="kbd-section-title">Post List</div>
+                    <div class="kbd-row"><kbd>j</kbd> <span>Next post</span></div>
+                    <div class="kbd-row"><kbd>k</kbd> <span>Previous post</span></div>
+                    <div class="kbd-row"><kbd>o</kbd> / <kbd>Enter</kbd> <span>Open post</span></div>
+                </div>
+                <div class="kbd-section">
+                    <div class="kbd-section-title">General</div>
+                    <div class="kbd-row"><kbd>?</kbd> <span>Show this help</span></div>
+                    <div class="kbd-row"><kbd>Esc</kbd> <span>Close dialogs</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         function convertMermaidCodeBlocks() {
             document.querySelectorAll('code.language-mermaid').forEach(function(block) {
@@ -90,6 +120,124 @@
             });
         }
 
+        // Keyboard navigation
+        function initKeyboardNav() {
+            let gPressed = false;
+            let gTimeout = null;
+            let currentPostIndex = -1;
+            
+            const helpModal = document.getElementById('kbdHelp');
+            const closeBtn = helpModal?.querySelector('.kbd-help-close');
+            
+            function getVisiblePosts() {
+                return Array.from(document.querySelectorAll('.post-item')).filter(
+                    p => p.style.display !== 'none'
+                );
+            }
+            
+            function focusPost(index) {
+                const posts = getVisiblePosts();
+                if (posts.length === 0) return;
+                
+                // Remove previous focus
+                posts.forEach(p => p.classList.remove('kbd-focused'));
+                
+                // Clamp index
+                currentPostIndex = Math.max(0, Math.min(index, posts.length - 1));
+                
+                // Add focus
+                const post = posts[currentPostIndex];
+                post.classList.add('kbd-focused');
+                post.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+            
+            function openFocusedPost() {
+                const focused = document.querySelector('.post-item.kbd-focused .post-link');
+                if (focused) window.location.href = focused.href;
+            }
+            
+            function showHelp() {
+                if (helpModal) {
+                    helpModal.classList.add('visible');
+                    helpModal.setAttribute('aria-hidden', 'false');
+                }
+            }
+            
+            function hideHelp() {
+                if (helpModal) {
+                    helpModal.classList.remove('visible');
+                    helpModal.setAttribute('aria-hidden', 'true');
+                }
+            }
+            
+            closeBtn?.addEventListener('click', hideHelp);
+            helpModal?.addEventListener('click', function(e) {
+                if (e.target === helpModal) hideHelp();
+            });
+            
+            document.addEventListener('keydown', function(e) {
+                // Ignore if typing in input/textarea
+                if (['INPUT', 'TEXTAREA', 'SELECT'].includes(e.target.tagName)) return;
+                if (e.target.isContentEditable) return;
+                
+                const key = e.key.toLowerCase();
+                
+                // Handle 'g' prefix for navigation
+                if (gPressed) {
+                    clearTimeout(gTimeout);
+                    gPressed = false;
+                    
+                    switch(key) {
+                        case 'h': window.location.href = '/'; break;
+                        case 'a': window.location.href = '/about'; break;
+                        case 'r': window.location.href = '/research'; break;
+                        case 'v': window.location.href = '/vibes'; break;
+                    }
+                    return;
+                }
+                
+                // Single key shortcuts
+                switch(key) {
+                    case 'g':
+                        gPressed = true;
+                        gTimeout = setTimeout(() => { gPressed = false; }, 500);
+                        break;
+                        
+                    case 'j':
+                        e.preventDefault();
+                        focusPost(currentPostIndex + 1);
+                        break;
+                        
+                    case 'k':
+                        e.preventDefault();
+                        focusPost(currentPostIndex - 1);
+                        break;
+                        
+                    case 'o':
+                    case 'enter':
+                        if (document.querySelector('.post-item.kbd-focused')) {
+                            e.preventDefault();
+                            openFocusedPost();
+                        }
+                        break;
+                        
+                    case '?':
+                        e.preventDefault();
+                        showHelp();
+                        break;
+                        
+                    case 'escape':
+                        hideHelp();
+                        // Remove post focus
+                        document.querySelectorAll('.post-item.kbd-focused').forEach(
+                            p => p.classList.remove('kbd-focused')
+                        );
+                        currentPostIndex = -1;
+                        break;
+                }
+            });
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
             convertMermaidCodeBlocks();
             if (typeof mermaid !== 'undefined') {
@@ -103,6 +251,7 @@
             dedupePostTitle();
             markExternalLinks();
             initBackToTop();
+            initKeyboardNav();
         });
     </script>
 </body>

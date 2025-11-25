@@ -1012,3 +1012,122 @@ a.external-link:has(img)::after,
     height: 40px;
   }
 }
+
+/*
+ * Keyboard Navigation
+ */
+.post-item.kbd-focused {
+  background: var(--highlight-color);
+  margin-left: -0.5rem;
+  margin-right: -0.5rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  border-radius: 2px;
+}
+
+.post-item.kbd-focused .title-text {
+  background: none;
+}
+
+/*
+ * Keyboard Help Modal
+ */
+.kbd-help {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.15s ease, visibility 0.15s ease;
+  z-index: 2000;
+}
+
+.kbd-help.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.kbd-help-content {
+  background: var(--background-color);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  max-width: 400px;
+  width: 90%;
+  max-height: 80vh;
+  overflow: auto;
+}
+
+.kbd-help-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.kbd-help-title {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.kbd-help-close {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: var(--secondary-text-color);
+  padding: 0;
+  line-height: 1;
+}
+
+.kbd-help-close:hover {
+  color: var(--text-color);
+}
+
+.kbd-help-body {
+  padding: 1rem 1.25rem;
+}
+
+.kbd-section {
+  margin-bottom: 1.25rem;
+}
+
+.kbd-section:last-child {
+  margin-bottom: 0;
+}
+
+.kbd-section-title {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--secondary-text-color);
+  margin-bottom: 0.5rem;
+}
+
+.kbd-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 13px;
+  padding: 0.25rem 0;
+}
+
+.kbd-row span {
+  margin-left: auto;
+  color: var(--secondary-text-color);
+}
+
+kbd {
+  display: inline-block;
+  padding: 0.15rem 0.4rem;
+  font-family: inherit;
+  font-size: 11px;
+  background: var(--surface-elevated-color);
+  border: 1px solid var(--border-color);
+  border-radius: 3px;
+  min-width: 1.5em;
+  text-align: center;
+}
