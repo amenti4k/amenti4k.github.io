@@ -1,10 +1,25 @@
 title: switchboard\\operator
 email: amenti@uni.minerva.edu
 description: >- # this means to ignore newlines until "baseurl:"
-  Corner of the internet where I will ractice the process harnessing my thoughts into something coherent before they float away.
+  Amenti Kenea's corner of the internet - thoughts on AI systems, distributed computing, and building autonomous agents. From Addis Ababa to NYC via Meta and Minerva.
 
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "amentikenea.github.io" # the base hostname & protocol for your site, e.g. http://example.com
+url: "https://x64.coffee" # the base hostname & protocol for your site, e.g. http://example.com
+
+# Author information for SEO
+author:
+  name: Amenti Kenea
+  email: amenti@uni.minerva.edu
+  twitter: amenti4k
+  linkedin: amenti-kenea
+
+# Social profiles for structured data
+social:
+  name: Amenti Kenea
+  links:
+    - https://twitter.com/amenti4k
+    - https://www.linkedin.com/in/amenti-kenea/
+    - https://github.com/amenti4k
 
 header_pages:
   - index.md
@@ -18,6 +33,7 @@ remote_theme: b2a3e8/jekyll-theme-console
 plugins:
   - jekyll-feed
   - jekyll-seo-tag
+  - jekyll-sitemap
   - rouge
 
 style: dark
