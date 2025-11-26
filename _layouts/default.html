@@ -3,7 +3,41 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{% if page.title %}{{ page.title }} · {% endif %}{{ site.title }}</title>
+    {% seo %}
+
+    <!-- JSON-LD Structured Data for Person Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Amenti Kenea",
+      "url": "{{ site.url }}",
+      "email": "{{ site.email }}",
+      "jobTitle": "Founding Engineer",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "Didero AI"
+      },
+      "alumniOf": [
+        {
+          "@type": "Organization",
+          "name": "Minerva University"
+        },
+        {
+          "@type": "Organization",
+          "name": "Meta"
+        }
+      ],
+      "sameAs": [
+        "https://twitter.com/amenti4k",
+        "https://www.linkedin.com/in/amenti-kenea/",
+        "https://github.com/amenti4k"
+      ],
+      "description": "Founding Engineer at Didero AI building autonomous AI systems. Previously Data Scientist at Meta. Minerva University alumnus.",
+      "knowsAbout": ["Artificial Intelligence", "Machine Learning", "Distributed Systems", "Data Science", "Autonomous Agents"]
+    }
+    </script>
+
     <link rel="stylesheet" href="{{ '/assets/main.css' | relative_url }}">
     <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
 </head>
