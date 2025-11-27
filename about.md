@@ -1,11 +1,12 @@
 ---
 layout: page
-title: /about
+title: About Amenti Kenea
 permalink: /about/
+description: "Amenti Kenea - Founding Engineer at Didero AI building autonomous AI systems. Previously Data Scientist at Meta, Minerva University alumnus. Based in NYC."
+author: Amenti Kenea
 ---
 
-
-Amenti Kenea
+# Amenti Kenea
 
 NYC (via Addis Ababa → 7 countries → SF → NYC)
 
