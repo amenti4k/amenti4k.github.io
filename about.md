@@ -25,6 +25,8 @@ Joined Meta as a Data Scientist on the Core Ads team - basically the "data FBI" 
 
 Fun fact: Couldn't leave Meta until Oct 1, 2024 due to H1B restrictions. Freedom tastes good.
 
+----
+
 ### 2018-2022: The Minerva Years
 
 Attended [Minerva University](https://www.minerva.edu/):
