@@ -1,0 +1,92 @@
+/* Terminal Effects */
+
+:root {
+  --terminal-glow: #00ff00;
+  --terminal-bg: #111;
+}
+
+/* CRT Scanline Effect */
+.crt::before {
+  content: " ";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+  z-index: 9999;
+  background-size: 100% 2px, 3px 100%;
+  pointer-events: none;
+}
+
+.crt::after {
+  content: " ";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: rgba(18, 16, 16, 0.1);
+  opacity: 0;
+  z-index: 9999;
+  pointer-events: none;
+  animation: flicker 0.15s infinite;
+}
+
+@keyframes flicker {
+  0% { opacity: 0.027906; }
+  5% { opacity: 0.048532; }
+  10% { opacity: 0.011398; }
+  15% { opacity: 0.039627; }
+  20% { opacity: 0.049645; }
+  25% { opacity: 0.032572; }
+  30% { opacity: 0.007958; }
+  35% { opacity: 0.044175; }
+  40% { opacity: 0.011952; }
+  45% { opacity: 0.006549; }
+  50% { opacity: 0.002674; }
+  55% { opacity: 0.049416; }
+  60% { opacity: 0.014649; }
+  65% { opacity: 0.001291; }
+  70% { opacity: 0.000192; }
+  75% { opacity: 0.049519; }
+  80% { opacity: 0.028802; }
+  85% { opacity: 0.042663; }
+  90% { opacity: 0.014163; }
+  95% { opacity: 0.045105; }
+  100% { opacity: 0.004706; }
+}
+
+/* Typing Animation */
+.typing-container {
+  display: inline-block;
+  border-right: 2px solid var(--text-color, #00ff00);
+  white-space: nowrap;
+  overflow: hidden;
+  animation: blink-caret 0.75s step-end infinite;
+  font-family: 'Inconsolata', monospace;
+}
+
+@keyframes blink-caret {
+  from, to { border-color: transparent }
+  50% { border-color: var(--text-color, #00ff00) }
+}
+
+.terminal-text {
+  color: var(--text-color, #00ff00);
+  text-shadow: 0 0 5px var(--text-color, #00ff00);
+}
+
+/* System Status Bar */
+.system-status {
+  font-family: 'Inconsolata', monospace;
+  font-size: 12px;
+  color: var(--secondary-text-color);
+  padding: 5px 10px;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  justify-content: space-between;
+  opacity: 0.7;
+}

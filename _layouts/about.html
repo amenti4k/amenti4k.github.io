@@ -1,340 +1,243 @@
 ---
 layout: default
 ---
-<div class="f1-track-container">
-  <!-- Track Header with Checkered Pattern -->
-  <div class="track-header">
-    <div class="checkered-flag" aria-hidden="true">
-      <span class="flag-square"></span><span class="flag-square dark"></span><span class="flag-square"></span><span class="flag-square dark"></span><span class="flag-square"></span><span class="flag-square dark"></span><span class="flag-square"></span><span class="flag-square dark"></span>
-      <span class="flag-square dark"></span><span class="flag-square"></span><span class="flag-square dark"></span><span class="flag-square"></span><span class="flag-square dark"></span><span class="flag-square"></span><span class="flag-square dark"></span><span class="flag-square"></span>
-    </div>
-    <div class="lap-counter">
+<div class="f1-page">
+  <!-- The SVG Track that weaves through everything -->
+  <svg class="race-track-svg" viewBox="0 0 1000 2400" preserveAspectRatio="none" aria-hidden="true">
+    <defs>
+      <!-- Track gradient -->
+      <linearGradient id="trackGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" style="stop-color:#1a1a1a;stop-opacity:1" />
+        <stop offset="50%" style="stop-color:#2d2d2d;stop-opacity:1" />
+        <stop offset="100%" style="stop-color:#1a1a1a;stop-opacity:1" />
+      </linearGradient>
+      
+      <!-- Kerb pattern -->
+      <pattern id="kerbPattern" patternUnits="userSpaceOnUse" width="20" height="20" patternTransform="rotate(45)">
+        <rect width="10" height="20" fill="#e63946"/>
+        <rect x="10" width="10" height="20" fill="#fff"/>
+      </pattern>
+      
+      <!-- Racing line -->
+      <linearGradient id="racingLine" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" style="stop-color:#3498db;stop-opacity:0.6" />
+        <stop offset="50%" style="stop-color:#2ecc71;stop-opacity:0.8" />
+        <stop offset="100%" style="stop-color:#3498db;stop-opacity:0.6" />
+      </linearGradient>
+    </defs>
+    
+    <!-- The main track path - serpentine through the page -->
+    <path id="trackPath" class="track-path" d="
+      M -50 80
+      C 200 80, 300 120, 500 120
+      S 800 80, 900 150
+      C 1000 220, 950 320, 800 350
+      S 400 380, 300 450
+      C 200 520, 100 600, 150 700
+      S 400 800, 600 780
+      C 800 760, 950 820, 900 920
+      S 600 1000, 400 1050
+      C 200 1100, 50 1180, 100 1280
+      S 400 1380, 650 1350
+      C 900 1320, 1050 1420, 950 1520
+      S 550 1600, 350 1650
+      C 150 1700, 50 1800, 150 1900
+      S 500 2000, 750 1980
+      C 1000 1960, 1100 2100, 900 2200
+      S 400 2300, 100 2350
+      L -50 2400
+    "/>
+    
+    <!-- Track surface (wide) -->
+    <use href="#trackPath" class="track-surface"/>
+    
+    <!-- Track outer edge -->
+    <use href="#trackPath" class="track-edge track-outer"/>
+    
+    <!-- Track inner edge -->
+    <use href="#trackPath" class="track-edge track-inner"/>
+    
+    <!-- Racing line (optimal path) -->
+    <use href="#trackPath" class="racing-line"/>
+    
+    <!-- Start/Finish line -->
+    <line x1="480" y1="100" x2="520" y2="140" class="start-finish-line"/>
+    
+    <!-- DRS Zones -->
+    <text x="700" y="130" class="drs-text">DRS</text>
+    <text x="250" y="470" class="drs-text">DRS</text>
+    <text x="750" y="940" class="drs-text">DRS</text>
+    
+    <!-- Sector markers along the track -->
+    <circle cx="300" cy="450" r="12" class="sector-marker"/>
+    <text x="300" y="455" class="sector-text">S1</text>
+    
+    <circle cx="400" cy="1050" r="12" class="sector-marker"/>
+    <text x="400" y="1055" class="sector-text">S2</text>
+    
+    <circle cx="350" cy="1650" r="12" class="sector-marker"/>
+    <text x="350" y="1655" class="sector-text">S3</text>
+  </svg>
+  
+  <!-- Animated F1 Cars -->
+  <div class="f1-car car-1">
+    <pre>▄█▄
+●═●</pre>
+  </div>
+  <div class="f1-car car-2">
+    <pre>▄█▄
+●═●</pre>
+  </div>
+  <div class="f1-car car-3">
+    <pre>▄█▄
+●═●</pre>
+  </div>
+
+  <!-- Tire marks scattered around -->
+  <div class="tire-mark" style="top: 15%; left: 70%; transform: rotate(-25deg);">═══</div>
+  <div class="tire-mark" style="top: 35%; left: 20%; transform: rotate(15deg);">═══</div>
+  <div class="tire-mark" style="top: 55%; left: 85%; transform: rotate(-40deg);">═══</div>
+  <div class="tire-mark" style="top: 75%; left: 25%; transform: rotate(30deg);">═══</div>
+
+  <!-- The actual content -->
+  <div class="page-content">
+    {{ content }}
+  </div>
+
+  <!-- Floating race elements -->
+  <div class="race-overlay">
+    <div class="lap-display">
       <span class="lap-label">LAP</span>
-      <span class="lap-number" id="lapCount">001</span>
+      <span class="lap-num" id="lapNum">1</span>
+      <span class="lap-total">/∞</span>
+    </div>
+    
+    <div class="speed-display">
+      <span class="speed-num" id="speedNum">312</span>
+      <span class="speed-unit">KM/H</span>
     </div>
   </div>
-
-  <!-- The Racing Track -->
-  <div class="race-track">
-    <!-- Top Track Border -->
-    <div class="track-border track-top">
-      <div class="track-line outer"></div>
-      <div class="track-surface">
-        <div class="f1-car car-1" data-direction="right">
-          <pre>  ▄▄▄▄
-▓╱████╲▓
-═●════●═</pre>
-        </div>
-      </div>
-      <div class="track-line inner"></div>
-      <div class="kerb-strip"></div>
-    </div>
-
-    <!-- Main Content Area (The Infield) -->
-    <div class="track-infield">
-      <!-- Left Track Border -->
-      <div class="track-border track-left">
-        <div class="track-line outer"></div>
-        <div class="track-surface vertical">
-          <div class="f1-car car-2" data-direction="down">
-            <pre>═╗▄╔═
- ║█║
-═╝●╚═
- ║█║
-═╗▀╔═</pre>
-          </div>
-        </div>
-        <div class="track-line inner"></div>
-        <div class="kerb-strip vertical"></div>
-      </div>
-
-      <!-- Content Area -->
-      <div class="infield-content">
-        <div class="sector-marker sector-1">
-          <span class="sector-num">S1</span>
-          <span class="sector-name">ORIGINS</span>
-        </div>
-        
-        {{ content }}
-        
-        <div class="sector-marker sector-3">
-          <span class="sector-num">S3</span>
-          <span class="sector-name">NOW</span>
-        </div>
-      </div>
-
-      <!-- Right Track Border -->
-      <div class="track-border track-right">
-        <div class="kerb-strip vertical"></div>
-        <div class="track-line inner"></div>
-        <div class="track-surface vertical">
-          <div class="f1-car car-3" data-direction="up">
-            <pre>═╗▀╔═
- ║█║
-═╝●╚═
- ║█║
-═╗▄╔═</pre>
-          </div>
-        </div>
-        <div class="track-line outer"></div>
-      </div>
-    </div>
-
-    <!-- Bottom Track Border -->
-    <div class="track-border track-bottom">
-      <div class="kerb-strip"></div>
-      <div class="track-line inner"></div>
-      <div class="track-surface">
-        <div class="f1-car car-4" data-direction="left">
-          <pre>═●════●═
-▓╲████╱▓
-  ▀▀▀▀</pre>
-        </div>
-      </div>
-      <div class="track-line outer"></div>
-    </div>
-
-    <!-- Corner Markers -->
-    <div class="corner-marker corner-tl">
-      <span class="turn-number">T1</span>
-    </div>
-    <div class="corner-marker corner-tr">
-      <span class="turn-number">T2</span>
-    </div>
-    <div class="corner-marker corner-br">
-      <span class="turn-number">T3</span>
-    </div>
-    <div class="corner-marker corner-bl">
-      <span class="turn-number">T4</span>
-    </div>
-
-    <!-- DRS Zone Indicator -->
-    <div class="drs-zone">
-      <span class="drs-text">DRS ZONE</span>
-    </div>
-
-    <!-- Pit Lane -->
-    <div class="pit-lane">
-      <span class="pit-text">PIT LANE ═══►</span>
-    </div>
-
-    <!-- Start/Finish Line -->
-    <div class="start-finish">
-      <div class="start-line"></div>
-      <span class="start-text">START/FINISH</span>
-    </div>
-
-    <!-- Tire Marks (decorative) -->
-    <div class="tire-marks tire-1">~~~</div>
-    <div class="tire-marks tire-2">~~~</div>
-  </div>
-
-  <!-- Track Footer with Race Info -->
-  <div class="track-footer">
-    <div class="race-info">
-      <span class="circuit-name">CIRCUIT DE LA VIE</span>
-      <span class="race-distance">∞ LAPS</span>
-    </div>
-    <div class="timing-display">
-      <span class="timing-label">FASTEST LAP</span>
-      <span class="timing-value" id="fastestLap">--:--.---</span>
-    </div>
-  </div>
-
-  <!-- Speed Lines (background effect) -->
-  <div class="speed-lines" aria-hidden="true">
-    <div class="speed-line"></div>
-    <div class="speed-line"></div>
-    <div class="speed-line"></div>
-    <div class="speed-line"></div>
-    <div class="speed-line"></div>
-  </div>
+  
+  <!-- Checkered flag finish area -->
+  <div class="checkered-strip"></div>
 </div>
 
 <style>
 /* ═══════════════════════════════════════════════════════════════════════
-   F1 TRACK STYLES - Circuit de la Vie
+   F1 TRACK - Serpentine through the page
    ═══════════════════════════════════════════════════════════════════════ */
 
-.f1-track-container {
+.f1-page {
   position: relative;
+  min-height: 100vh;
   overflow: hidden;
 }
 
-/* Track Header */
-.track-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1.5rem;
-  padding-bottom: 1rem;
-  border-bottom: 3px double var(--border-color);
-}
-
-.checkered-flag {
-  display: grid;
-  grid-template-columns: repeat(8, 12px);
-  grid-template-rows: repeat(2, 12px);
-  gap: 0;
-  border: 1px solid var(--text-color);
-}
-
-.flag-square {
-  background: var(--background-color);
-}
-
-.flag-square.dark {
-  background: var(--text-color);
-}
-
-.lap-counter {
-  font-family: 'Roboto Mono', monospace;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-}
-
-.lap-label {
-  font-size: 10px;
-  letter-spacing: 0.2em;
-  color: var(--secondary-text-color);
-}
-
-.lap-number {
-  font-size: 28px;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  color: var(--text-color);
-  font-variant-numeric: tabular-nums;
-}
-
-/* Race Track Container */
-.race-track {
-  position: relative;
-  padding: 0;
-}
-
-/* Track Borders */
-.track-border {
+/* SVG Track Layer */
+.race-track-svg {
   position: absolute;
-  display: flex;
-  overflow: hidden;
-}
-
-.track-top {
   top: 0;
-  left: 40px;
-  right: 40px;
-  height: 50px;
-  flex-direction: column;
-}
-
-.track-bottom {
-  bottom: 0;
-  left: 40px;
-  right: 40px;
-  height: 50px;
-  flex-direction: column;
-}
-
-.track-left {
-  top: 40px;
-  bottom: 40px;
   left: 0;
-  width: 50px;
-  flex-direction: row;
-}
-
-.track-right {
-  top: 40px;
-  bottom: 40px;
-  right: 0;
-  width: 50px;
-  flex-direction: row;
-}
-
-.track-line {
-  background: var(--text-color);
-}
-
-.track-line.outer {
-  height: 3px;
   width: 100%;
-}
-
-.track-line.inner {
-  height: 2px;
-  width: 100%;
-  opacity: 0.4;
-}
-
-.track-left .track-line,
-.track-right .track-line {
-  width: 3px;
   height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.15;
 }
 
-.track-left .track-line.inner,
-.track-right .track-line.inner {
-  width: 2px;
+.track-path {
+  fill: none;
 }
 
 .track-surface {
-  flex: 1;
-  background: repeating-linear-gradient(
-    90deg,
-    transparent,
-    transparent 10px,
-    var(--border-color) 10px,
-    var(--border-color) 11px
-  );
-  position: relative;
-  overflow: hidden;
+  fill: none;
+  stroke: var(--text-color);
+  stroke-width: 60;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0.08;
 }
 
-.track-surface.vertical {
-  background: repeating-linear-gradient(
-    0deg,
-    transparent,
-    transparent 10px,
-    var(--border-color) 10px,
-    var(--border-color) 11px
-  );
+.track-edge {
+  fill: none;
+  stroke: var(--text-color);
+  stroke-width: 2;
+  stroke-linecap: round;
+  opacity: 0.4;
 }
 
-/* Kerb Strips - The red/white alternating pattern */
-.kerb-strip {
-  height: 8px;
-  background: repeating-linear-gradient(
-    90deg,
-    #e63946 0px,
-    #e63946 8px,
-    var(--background-color) 8px,
-    var(--background-color) 16px
-  );
+.track-outer {
+  stroke-width: 3;
+  stroke-dasharray: none;
 }
 
-.kerb-strip.vertical {
-  width: 8px;
-  height: auto;
-  background: repeating-linear-gradient(
-    0deg,
-    #e63946 0px,
-    #e63946 8px,
-    var(--background-color) 8px,
-    var(--background-color) 16px
-  );
+.track-inner {
+  stroke-width: 1;
+  stroke-dasharray: 8 4;
+  opacity: 0.25;
 }
 
-/* F1 Cars */
-.f1-car {
-  position: absolute;
+.racing-line {
+  fill: none;
+  stroke: var(--text-color);
+  stroke-width: 1;
+  stroke-dasharray: 4 8;
+  opacity: 0.2;
+  animation: racingLinePulse 2s ease-in-out infinite;
+}
+
+@keyframes racingLinePulse {
+  0%, 100% { opacity: 0.1; }
+  50% { opacity: 0.3; }
+}
+
+.start-finish-line {
+  stroke: var(--text-color);
+  stroke-width: 8;
+  stroke-dasharray: 8 8;
+  opacity: 0.5;
+}
+
+.drs-text {
+  font-family: 'Roboto Mono', monospace;
+  font-size: 14px;
+  font-weight: 700;
+  fill: var(--text-color);
+  opacity: 0.3;
+  letter-spacing: 2px;
+}
+
+.sector-marker {
+  fill: var(--background-color);
+  stroke: var(--text-color);
+  stroke-width: 2;
+  opacity: 0.5;
+}
+
+.sector-text {
   font-family: 'Roboto Mono', monospace;
   font-size: 10px;
+  font-weight: 700;
+  fill: var(--text-color);
+  text-anchor: middle;
+  dominant-baseline: middle;
+  opacity: 0.6;
+}
+
+/* F1 Cars - Following the track path */
+.f1-car {
+  position: fixed;
+  font-family: 'Roboto Mono', monospace;
+  font-size: 12px;
   line-height: 1;
   color: var(--text-color);
   white-space: pre;
   pointer-events: none;
+  z-index: 100;
+  opacity: 0.7;
+  offset-path: path('M -50 80 C 200 80, 300 120, 500 120 S 800 80, 900 150 C 1000 220, 950 320, 800 350 S 400 380, 300 450 C 200 520, 100 600, 150 700 S 400 800, 600 780 C 800 760, 950 820, 900 920 S 600 1000, 400 1050 C 200 1100, 50 1180, 100 1280 S 400 1380, 650 1350 C 900 1320, 1050 1420, 950 1520 S 550 1600, 350 1650 C 150 1700, 50 1800, 150 1900 S 500 2000, 750 1980 C 1000 1960, 1100 2100, 900 2200 S 400 2300, 100 2350 L -50 2400');
+  offset-rotate: auto;
+  animation: drivePath 20s linear infinite;
 }
 
 .f1-car pre {
@@ -343,423 +246,240 @@ layout: default
   background: transparent;
   border: none;
   font-size: inherit;
-  line-height: 1.1;
+  line-height: 1;
 }
 
-/* Car 1 - Top track, moving right */
 .car-1 {
-  animation: driveRight 8s linear infinite;
-}
-
-/* Car 2 - Left track, moving down */
-.car-2 {
-  animation: driveDown 10s linear infinite;
-  animation-delay: -2s;
-}
-
-/* Car 3 - Right track, moving up */
-.car-3 {
-  animation: driveUp 9s linear infinite;
-  animation-delay: -4s;
-}
-
-/* Car 4 - Bottom track, moving left */
-.car-4 {
-  animation: driveLeft 7s linear infinite;
-  animation-delay: -1s;
-}
-
-@keyframes driveRight {
-  0% { left: -60px; }
-  100% { left: calc(100% + 60px); }
-}
-
-@keyframes driveLeft {
-  0% { right: -60px; }
-  100% { right: calc(100% + 60px); }
-}
-
-@keyframes driveDown {
-  0% { top: -60px; }
-  100% { top: calc(100% + 60px); }
-}
-
-@keyframes driveUp {
-  0% { bottom: -60px; }
-  100% { bottom: calc(100% + 60px); }
-}
-
-/* Infield (Content Area) */
-.track-infield {
-  display: flex;
-  min-height: 600px;
-}
-
-.infield-content {
-  flex: 1;
-  padding: 80px 70px;
-  position: relative;
-}
-
-/* Sector Markers */
-.sector-marker {
-  position: absolute;
-  font-family: 'Roboto Mono', monospace;
-  font-size: 10px;
-  letter-spacing: 0.1em;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  opacity: 0.6;
-}
-
-.sector-1 {
-  top: 20px;
-  left: 80px;
-}
-
-.sector-3 {
-  bottom: 20px;
-  right: 80px;
-}
-
-.sector-num {
-  font-weight: 700;
-  font-size: 14px;
+  animation-duration: 18s;
   color: #e63946;
 }
 
-.sector-name {
-  font-size: 9px;
-  color: var(--secondary-text-color);
+.car-2 {
+  animation-duration: 20s;
+  animation-delay: -7s;
+  color: #2a9d8f;
 }
 
-/* Corner Markers */
-.corner-marker {
+.car-3 {
+  animation-duration: 22s;
+  animation-delay: -14s;
+  color: #e9c46a;
+}
+
+@keyframes drivePath {
+  0% {
+    offset-distance: 0%;
+  }
+  100% {
+    offset-distance: 100%;
+  }
+}
+
+/* Tire marks */
+.tire-mark {
   position: absolute;
-  width: 32px;
-  height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   font-family: 'Roboto Mono', monospace;
-  font-size: 11px;
-  font-weight: 700;
-  color: var(--background-color);
-  background: var(--text-color);
-  border-radius: 50%;
+  font-size: 20px;
+  color: var(--text-color);
+  opacity: 0.08;
+  pointer-events: none;
+  letter-spacing: -2px;
+}
+
+/* Page Content - Above the track */
+.page-content {
+  position: relative;
   z-index: 10;
 }
 
-.corner-tl { top: 8px; left: 8px; }
-.corner-tr { top: 8px; right: 8px; }
-.corner-br { bottom: 8px; right: 8px; }
-.corner-bl { bottom: 8px; left: 8px; }
-
-/* DRS Zone */
-.drs-zone {
-  position: absolute;
-  top: 60px;
-  left: 50%;
-  transform: translateX(-50%);
-  padding: 4px 12px;
-  background: #2a9d8f;
-  color: #fff;
-  font-family: 'Roboto Mono', monospace;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  animation: drsFlash 2s ease-in-out infinite;
-}
-
-@keyframes drsFlash {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
-}
-
-/* Pit Lane */
-.pit-lane {
-  position: absolute;
-  bottom: 70px;
-  left: 60px;
-  font-family: 'Roboto Mono', monospace;
-  font-size: 11px;
-  color: var(--secondary-text-color);
-  letter-spacing: 0.05em;
-}
-
-/* Start/Finish Line */
-.start-finish {
-  position: absolute;
-  top: 50px;
-  left: 60px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.start-line {
-  width: 4px;
-  height: 40px;
-  background: repeating-linear-gradient(
-    0deg,
-    var(--text-color) 0px,
-    var(--text-color) 4px,
-    var(--background-color) 4px,
-    var(--background-color) 8px
-  );
-}
-
-.start-text {
-  font-family: 'Roboto Mono', monospace;
-  font-size: 9px;
-  letter-spacing: 0.1em;
-  color: var(--secondary-text-color);
-  writing-mode: vertical-lr;
-  transform: rotate(180deg);
-}
-
-/* Tire Marks */
-.tire-marks {
-  position: absolute;
-  font-family: 'Roboto Mono', monospace;
-  font-size: 14px;
-  color: var(--border-color);
-  opacity: 0.5;
-}
-
-.tire-1 {
-  top: 90px;
-  right: 100px;
-  transform: rotate(-30deg);
-}
-
-.tire-2 {
-  bottom: 100px;
-  left: 120px;
-  transform: rotate(15deg);
-}
-
-/* Track Footer */
-.track-footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 1.5rem;
-  padding-top: 1rem;
-  border-top: 3px double var(--border-color);
-}
-
-.race-info {
+/* Race Overlay - HUD elements */
+.race-overlay {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
   display: flex;
   flex-direction: column;
-}
-
-.circuit-name {
+  align-items: flex-end;
+  gap: 8px;
   font-family: 'Roboto Mono', monospace;
-  font-size: 14px;
-  font-weight: 700;
-  letter-spacing: 0.05em;
+  pointer-events: none;
+  opacity: 0.6;
 }
 
-.race-distance {
-  font-size: 11px;
-  color: var(--secondary-text-color);
+.lap-display {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  background: var(--background-color);
+  padding: 6px 12px;
+  border: 1px solid var(--border-color);
 }
 
-.timing-display {
-  text-align: right;
-}
-
-.timing-label {
-  display: block;
+.lap-label {
   font-size: 9px;
   letter-spacing: 0.1em;
   color: var(--secondary-text-color);
-  margin-bottom: 2px;
 }
 
-.timing-value {
-  font-family: 'Roboto Mono', monospace;
+.lap-num {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-color);
+}
+
+.lap-total {
+  font-size: 12px;
+  color: var(--secondary-text-color);
+}
+
+.speed-display {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  background: var(--background-color);
+  padding: 4px 10px;
+  border: 1px solid var(--border-color);
+}
+
+.speed-num {
   font-size: 16px;
   font-weight: 700;
-  color: #9b59b6;
+  color: var(--text-color);
   font-variant-numeric: tabular-nums;
 }
 
-/* Speed Lines (Background Effect) */
-.speed-lines {
-  position: absolute;
-  top: 0;
+.speed-unit {
+  font-size: 8px;
+  color: var(--secondary-text-color);
+}
+
+/* Checkered strip at the bottom */
+.checkered-strip {
+  position: fixed;
+  bottom: 0;
   left: 0;
   right: 0;
-  bottom: 0;
-  pointer-events: none;
-  overflow: hidden;
-  z-index: -1;
+  height: 6px;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--text-color) 0px,
+    var(--text-color) 6px,
+    var(--background-color) 6px,
+    var(--background-color) 12px
+  );
+  opacity: 0.3;
+  z-index: 1000;
 }
 
-.speed-line {
+/* Responsive - Simplify on mobile */
+@media (max-width: 768px) {
+  .race-track-svg {
+    opacity: 0.08;
+  }
+  
+  .f1-car {
+    display: none;
+  }
+  
+  .race-overlay {
+    top: auto;
+    bottom: 20px;
+    right: 10px;
+  }
+  
+  .lap-display,
+  .speed-display {
+    padding: 4px 8px;
+  }
+  
+  .lap-num {
+    font-size: 16px;
+  }
+  
+  .tire-mark {
+    display: none;
+  }
+}
+
+/* Smooth scroll behavior for the race feel */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Enhance content readability over track */
+.page-content h1,
+.page-content h2,
+.page-content h3,
+.page-content p,
+.page-content li,
+.page-content a {
+  position: relative;
+}
+
+/* Subtle track crossing effect on headings */
+.page-content h3::before {
+  content: '';
   position: absolute;
-  width: 100px;
+  left: -20px;
+  right: -20px;
+  top: 50%;
   height: 1px;
   background: linear-gradient(90deg, transparent, var(--border-color), transparent);
-  opacity: 0;
-  animation: speedLine 3s linear infinite;
-}
-
-.speed-line:nth-child(1) { top: 15%; animation-delay: 0s; }
-.speed-line:nth-child(2) { top: 35%; animation-delay: 0.5s; }
-.speed-line:nth-child(3) { top: 55%; animation-delay: 1s; }
-.speed-line:nth-child(4) { top: 75%; animation-delay: 1.5s; }
-.speed-line:nth-child(5) { top: 95%; animation-delay: 2s; }
-
-@keyframes speedLine {
-  0% {
-    left: -100px;
-    opacity: 0;
-  }
-  10% {
-    opacity: 0.3;
-  }
-  90% {
-    opacity: 0.3;
-  }
-  100% {
-    left: 100%;
-    opacity: 0;
-  }
-}
-
-/* Hover Effects - DRS Boost */
-.infield-content h3:hover ~ .f1-car,
-.infield-content a:hover ~ .f1-car {
-  animation-duration: 2s !important;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  .track-top,
-  .track-bottom,
-  .track-left,
-  .track-right {
-    display: none;
-  }
-  
-  .corner-marker,
-  .drs-zone,
-  .pit-lane,
-  .start-finish,
-  .tire-marks,
-  .sector-marker {
-    display: none;
-  }
-  
-  .infield-content {
-    padding: 20px 0;
-  }
-  
-  .track-header,
-  .track-footer {
-    flex-direction: column;
-    gap: 1rem;
-    text-align: center;
-  }
-  
-  .race-info,
-  .timing-display {
-    text-align: center;
-  }
-}
-
-/* Enhanced Animation on Page Load */
-@keyframes trackReveal {
-  from {
-    opacity: 0;
-    transform: scale(0.98);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-.race-track {
-  animation: trackReveal 0.8s ease-out;
-}
-
-/* Checkered Flag Animation */
-@keyframes flagWave {
-  0%, 100% { transform: skewX(0deg); }
-  25% { transform: skewX(2deg); }
-  75% { transform: skewX(-2deg); }
-}
-
-.checkered-flag {
-  animation: flagWave 2s ease-in-out infinite;
+  opacity: 0.3;
+  z-index: -1;
 }
 </style>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  // Lap Counter
-  let lapCount = 1;
-  const lapDisplay = document.getElementById('lapCount');
-  const fastestLapDisplay = document.getElementById('fastestLap');
+  const lapNum = document.getElementById('lapNum');
+  const speedNum = document.getElementById('speedNum');
+  let lap = 1;
   
-  // Generate random lap time
-  function generateLapTime() {
-    const min = Math.floor(Math.random() * 2) + 1;
-    const sec = Math.floor(Math.random() * 60).toString().padStart(2, '0');
-    const ms = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
-    return `${min}:${sec}.${ms}`;
+  // Update lap counter when cars complete a lap
+  setInterval(() => {
+    lap++;
+    if (lap > 99) lap = 1;
+    lapNum.textContent = lap;
+  }, 18000); // Match car-1 duration
+  
+  // Fluctuate speed based on scroll position (simulating track sections)
+  let lastScroll = 0;
+  const baseSpeed = 280;
+  
+  function updateSpeed() {
+    const scrollY = window.scrollY;
+    const scrollDelta = Math.abs(scrollY - lastScroll);
+    const scrollSpeed = Math.min(scrollDelta * 2, 50);
+    
+    // Vary speed: faster on straights (middle of page), slower at top/bottom (corners)
+    const pageHeight = document.body.scrollHeight - window.innerHeight;
+    const scrollPercent = pageHeight > 0 ? scrollY / pageHeight : 0;
+    const trackPosition = Math.sin(scrollPercent * Math.PI * 4); // Multiple "straights"
+    
+    const speed = Math.round(baseSpeed + (trackPosition * 30) + scrollSpeed);
+    speedNum.textContent = Math.max(180, Math.min(340, speed));
+    
+    lastScroll = scrollY;
   }
   
-  // Update lap count periodically (simulating cars completing laps)
-  setInterval(function() {
-    lapCount++;
-    if (lapCount > 999) lapCount = 1;
-    lapDisplay.textContent = lapCount.toString().padStart(3, '0');
-    
-    // Occasionally update fastest lap
-    if (Math.random() > 0.7) {
-      fastestLapDisplay.textContent = generateLapTime();
-      fastestLapDisplay.style.color = '#9b59b6';
-      setTimeout(() => {
-        fastestLapDisplay.style.color = '#2a9d8f';
-      }, 1000);
-    }
-  }, 8000); // Every 8 seconds (matching car-1 animation)
+  window.addEventListener('scroll', updateSpeed);
   
-  // Set initial fastest lap
-  fastestLapDisplay.textContent = generateLapTime();
+  // Random speed fluctuations even when not scrolling
+  setInterval(() => {
+    const currentSpeed = parseInt(speedNum.textContent);
+    const fluctuation = (Math.random() - 0.5) * 20;
+    const newSpeed = Math.round(currentSpeed + fluctuation);
+    speedNum.textContent = Math.max(180, Math.min(340, newSpeed));
+  }, 500);
   
-  // DRS activation on scroll (speed up cars when in "DRS zone")
-  const track = document.querySelector('.race-track');
-  const cars = document.querySelectorAll('.f1-car');
-  
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting && entry.intersectionRatio > 0.5) {
-        cars.forEach(car => {
-          car.style.animationPlayState = 'running';
-        });
-      }
-    });
-  }, { threshold: [0.5] });
-  
-  if (track) observer.observe(track);
-  
-  // Easter egg: Click on corner markers to change car colors
-  document.querySelectorAll('.corner-marker').forEach((marker, i) => {
-    marker.style.cursor = 'pointer';
-    marker.addEventListener('click', function() {
-      const colors = ['#e63946', '#2a9d8f', '#e9c46a', '#264653', '#f4a261'];
-      const car = document.querySelector(`.car-${i + 1}`);
-      if (car) {
-        car.style.color = colors[Math.floor(Math.random() * colors.length)];
-      }
-    });
+  // Parallax effect on track based on scroll
+  const trackSvg = document.querySelector('.race-track-svg');
+  window.addEventListener('scroll', () => {
+    const scrollY = window.scrollY;
+    const translateY = scrollY * 0.1;
+    trackSvg.style.transform = `translateY(${translateY}px)`;
   });
 });
 </script>

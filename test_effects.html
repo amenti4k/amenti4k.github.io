@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terminal Effects Test</title>
+    <style>
+        :root {
+            --text-color: #00ff00;
+            --bg-color: #111;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Courier New', Courier, monospace;
+            margin: 0;
+            padding: 20px;
+            overflow: hidden;
+        }
+
+        /* CRT Effect */
+        .crt::before {
+            content: " ";
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            z-index: 2;
+            background-size: 100% 2px, 3px 100%;
+            pointer-events: none;
+        }
+
+        .crt::after {
+            content: " ";
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background: rgba(18, 16, 16, 0.1);
+            opacity: 0;
+            z-index: 2;
+            pointer-events: none;
+            animation: flicker 0.15s infinite;
+        }
+
+        @keyframes flicker {
+            0% { opacity: 0.027906; }
+            5% { opacity: 0.048532; }
+            10% { opacity: 0.011398; }
+            15% { opacity: 0.039627; }
+            20% { opacity: 0.049645; }
+            25% { opacity: 0.032572; }
+            30% { opacity: 0.007958; }
+            35% { opacity: 0.044175; }
+            40% { opacity: 0.011952; }
+            45% { opacity: 0.006549; }
+            50% { opacity: 0.002674; }
+            55% { opacity: 0.049416; }
+            60% { opacity: 0.014649; }
+            65% { opacity: 0.001291; }
+            70% { opacity: 0.000192; }
+            75% { opacity: 0.049519; }
+            80% { opacity: 0.028802; }
+            85% { opacity: 0.042663; }
+            90% { opacity: 0.014163; }
+            95% { opacity: 0.045105; }
+            100% { opacity: 0.004706; }
+        }
+
+        /* Typing Effect */
+        .typing-container {
+            display: inline-block;
+            border-right: 2px solid var(--text-color);
+            white-space: nowrap;
+            overflow: hidden;
+            animation: blink-caret 0.75s step-end infinite;
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: var(--text-color) }
+        }
+        
+        .glow {
+            text-shadow: 0 0 5px var(--text-color);
+        }
+    </style>
+</head>
+<body class="crt">
+    <div id="terminal">
+        <p>> SYSTEM_INIT...</p>
+        <p>> LOADING_ASSETS...</p>
+        <p>> <span id="typewriter" class="glow"></span></p>
+    </div>
+
+    <script>
+        const text = "WELCOME TO AMENTI'S DIGITAL GARDEN";
+        const speed = 100;
+        let i = 0;
+
+        function typeWriter() {
+            if (i < text.length) {
+                document.getElementById("typewriter").innerHTML += text.charAt(i);
+                i++;
+                setTimeout(typeWriter, speed);
+            } else {
+                document.querySelector('.typing-container').style.borderRight = 'none';
+            }
+        }
+        
+        // Wrap the typewriter span in the container for the cursor effect
+        const span = document.getElementById('typewriter');
+        const container = document.createElement('span');
+        container.className = 'typing-container';
+        span.parentNode.insertBefore(container, span);
+        container.appendChild(span);
+
+        setTimeout(typeWriter, 1000);
+    </script>
+</body>
+</html>
