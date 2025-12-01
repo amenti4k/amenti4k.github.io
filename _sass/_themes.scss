@@ -1,73 +1,65 @@
 @charset "utf-8";
 
 /*
- * Retro Green Theme
- * Inspired by isometric/brutalist aesthetics
+ * Minimal theme inspired by smca.io
+ * Clean, readable, programmer-focused aesthetic
  */
 
 :root {
-  /* Core colors */
-  --text-color: #000000;
+  /* Core colors - smca.io palette */
+  --text-color: #100F0F;
   --background-color: #ffffff;
-  --highlight-color: #ccff00; /* Lime Green */
-  --accent-color: #6b4cff; /* Purple accent from images */
-  --muted-bg: #f2f2f2;
+  --highlight-color: #ffd00066;
+  --muted-bg: #f2f0e5;
 
   /* Surface variants */
-  --surface-color: #ffffff;
-  --surface-elevated-color: #ffffff;
+  --surface-color: #fafafa;
+  --surface-elevated-color: #f2f0e5;
 
   /* Borders */
-  --border-color: #000000;
-  --border-width: 2px;
-  --border: var(--border-width) solid var(--border-color);
-
-  /* Shadows */
-  --shadow-offset: 4px 4px 0px #000000;
-  --shadow-hover: 6px 6px 0px #000000;
-  --shadow-active: 2px 2px 0px #000000;
+  --border-color: rgba(16, 15, 15, 0.1);
+  --border: 1px solid var(--border-color);
 
   /* Text hierarchy */
-  --secondary-text-color: #444444;
-  --secondary-text: #444444;
-  --placeholder-color: #666666;
+  --secondary-text-color: #6b6b6b;
+  --secondary-text: #6b6b6b;
+  --placeholder-color: #999999;
 
   /* Links */
-  --link-color: #000000;
-  --link-hover-color: #000000;
-  --link-active-color: #000000;
-  --link-visited-color: #000000;
-  --link-underline-color: #000000;
-  --base-color: #000000;
+  --link-color: #100F0F;
+  --link-hover-color: #100F0F;
+  --link-active-color: #100F0F;
+  --link-visited-color: #100F0F;
+  --link-underline-color: rgba(16, 15, 15, 0.3);
+  --base-color: #100F0F;
 
   /* Interaction */
-  --focus-ring-color: #000000;
-  --selection-background: var(--highlight-color);
-  --selection-text: #000000;
+  --focus-ring-color: rgba(16, 15, 15, 0.3);
+  --selection-background: #ffd00066;
+  --selection-text: #100F0F;
 
   /* Code */
-  --inline-code-background: #f2f2f2;
-  --inline-code-color: #000000;
-  /* Keep syntax highlighting mostly as is but maybe higher contrast */
-  --code-color-1: #555;
-  --code-color-2: #eee;
-  --code-color-3: #d00;
-  --code-color-4: #fff0f0;
-  --code-color-5: #808;
-  --code-color-6: #080;
-  --code-color-7: #d00;
-  --code-color-8: #00d;
-  --code-color-9: #080;
-  --code-color-10: #555;
-  --code-color-11: #999;
-  --code-color-12: #808;
-  --code-color-13: #088;
-  --code-color-14: #d80;
-  --code-color-15: #333;
-  --code-color-16: #00d;
-  --code-color-17: #d80;
-  --code-color-18: #eee;
+  --inline-code-background: #f2f0e5;
+  --inline-code-color: #100F0F;
+  --code-color-1: #6b6b6b;
+  --code-color-2: #f2f0e5;
+  --code-color-3: #c7254e;
+  --code-color-4: #ffeef0;
+  --code-color-5: #8959a8;
+  --code-color-6: #718c00;
+  --code-color-7: #c7254e;
+  --code-color-8: #4271ae;
+  --code-color-9: #718c00;
+  --code-color-10: #6b6b6b;
+  --code-color-11: #999999;
+  --code-color-12: #8959a8;
+  --code-color-13: #3e999f;
+  --code-color-14: #f5871f;
+  --code-color-15: #4d4d4c;
+  --code-color-16: #4271ae;
+  --code-color-17: #eab700;
+  --code-color-18: #e0e0e0;
 
-  --color-scroll-thumb: #000000;
-  --color-shadow-soft: var(--shadow-offset);
+  --color-scroll-thumb: rgba(16, 15, 15, 0.2);
+  --color-shadow-soft: none;
 }
