@@ -1,0 +1,128 @@
+/*
+ * Typography - Enhanced scale and rhythm
+ */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: $heading-font-family;
+  color: var(--text-color);
+  font-weight: 700;
+  margin: 2.5rem 0 1.25rem;
+  line-height: 1.4;
+  letter-spacing: -0.02em;
+}
+
+h1 {
+  font-size: 28px;
+  margin-top: 0;
+}
+
+h2 {
+  font-size: 22px;
+  margin-top: 2rem;
+}
+
+h3 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-top: 1.75rem;
+}
+
+h4,
+h5,
+h6 {
+  font-size: 16px;
+  font-weight: 600;
+  margin-top: 1.5rem;
+}
+
+p {
+  color: var(--text-color);
+  margin: 0 0 1.5rem;
+  line-height: 1.7;
+}
+
+a {
+  color: var(--link-color);
+  text-decoration: none;
+  border-bottom: 1px solid var(--link-underline-color);
+}
+
+a:hover {
+  background: var(--highlight-color);
+}
+
+strong {
+  font-weight: 600;
+}
+
+em {
+  font-style: italic;
+}
+
+hr {
+  border: none;
+  border-top: 1px solid var(--border-color);
+  margin: 3rem 0;
+}
+
+blockquote {
+  margin: 2rem 0;
+  padding: 1.25rem 1.75rem;
+  border-left: 3px solid var(--text-color);
+  background: var(--surface-elevated-color);
+  font-style: italic;
+  line-height: 1.7;
+}
+
+blockquote p {
+  margin-bottom: 1rem;
+}
+
+blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+/*
+ * Lists - Improved spacing and rhythm
+ */
+:not(.menu)>ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 0 0 1.5rem;
+  color: var(--text-color);
+  line-height: 1.7;
+}
+
+:not(.menu)>ul>li {
+  position: relative;
+  padding-left: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+
+:not(.menu)>ul>li:before {
+  content: "▹";
+  position: absolute;
+  left: 0;
+  top: 0.1rem;
+  color: var(--link-color);
+}
+
+ol {
+  margin: 0 0 1.5rem 1.5rem;
+  color: var(--text-color);
+  line-height: 1.7;
+}
+
+ol li {
+  margin-bottom: 0.75rem;
+}
+
+li>ul,
+li>ol {
+  margin-top: 0.75rem;
+  margin-bottom: 0.5rem;
+}

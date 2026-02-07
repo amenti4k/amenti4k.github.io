@@ -90,3 +90,23 @@
   justify-content: space-between;
   opacity: 0.7;
 }
+
+/* Respect user motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .crt::after,
+  .typing-container,
+  .blink {
+    animation: none;
+  }
+
+  .track-circle:hover {
+    transform: none;
+  }
+
+  .back-to-top,
+  .tag-btn,
+  .post-link,
+  .post-snippet {
+    transition: none;
+  }
+}

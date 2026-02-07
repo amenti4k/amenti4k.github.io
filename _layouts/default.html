@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     {% seo %}
 
+    <!-- Open Graph / Twitter Card defaults (jekyll-seo-tag handles most, these are fallbacks) -->
+    <meta property="og:site_name" content="{{ site.title }}">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@{{ site.author.twitter }}">
+    <meta name="twitter:creator" content="@{{ site.author.twitter }}">
+
     <!-- JSON-LD Structured Data for Person Schema -->
     <script type="application/ld+json">
     {
@@ -39,9 +45,12 @@
     </script>
 
     <link rel="stylesheet" href="{{ '/assets/main.css' | relative_url }}">
-    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
 </head>
 <body>
+    <!-- Skip to content link for keyboard/screen reader users -->
+    <a href="#main-content" class="skip-to-content">Skip to content</a>
+
     <div class="site-container">
         <header class="site-header">
             <div class="site-title"><a href="{{ '/' | relative_url }}">{{ site.title }}</a></div>
@@ -49,10 +58,14 @@
                 <a href="{{ '/about' | relative_url }}">about</a>
                 <a href="{{ '/research' | relative_url }}">research</a>
                 <a href="{{ '/vibes' | relative_url }}">vibes</a>
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">
+                    <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+                    <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                </button>
             </nav>
         </header>
 
-        <main role="main">
+        <main role="main" id="main-content">
             {{ content }}
         </main>
     </div>
@@ -121,24 +134,26 @@
 
         // External link indicator
         function markExternalLinks() {
-            const links = document.querySelectorAll('a[href^="http"]');
-            const currentHost = window.location.hostname;
-            
+            var links = document.querySelectorAll('a[href^="http"]');
+            var currentHost = window.location.hostname;
+
             links.forEach(function(link) {
                 try {
-                    const url = new URL(link.href);
+                    var url = new URL(link.href);
                     if (url.hostname !== currentHost && !link.classList.contains('no-external-icon')) {
                         link.classList.add('external-link');
                         link.setAttribute('target', '_blank');
                         link.setAttribute('rel', 'noopener noreferrer');
                     }
-                } catch (e) {}
+                } catch (e) {
+                    console.warn('Failed to parse link URL:', link.href, e);
+                }
             });
         }
 
         // Back to top button
         function initBackToTop() {
-            const btn = document.getElementById('backToTop');
+            var btn = document.getElementById('backToTop');
             if (!btn) return;
 
             window.addEventListener('scroll', function() {
@@ -154,99 +169,125 @@
             });
         }
 
+        // Dark mode toggle
+        function initThemeToggle() {
+            var toggle = document.getElementById('themeToggle');
+            if (!toggle) return;
+
+            var stored = localStorage.getItem('theme');
+            if (stored === 'dark' || (!stored && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            }
+
+            toggle.addEventListener('click', function() {
+                var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+                if (isDark) {
+                    document.documentElement.removeAttribute('data-theme');
+                    localStorage.setItem('theme', 'light');
+                } else {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                    localStorage.setItem('theme', 'dark');
+                }
+            });
+        }
+
         // Keyboard navigation
         function initKeyboardNav() {
-            let gPressed = false;
-            let gTimeout = null;
-            let currentPostIndex = -1;
-            
-            const helpModal = document.getElementById('kbdHelp');
-            const closeBtn = helpModal?.querySelector('.kbd-help-close');
-            
+            var gPressed = false;
+            var gTimeout = null;
+            var currentPostIndex = -1;
+
+            var helpModal = document.getElementById('kbdHelp');
+            var closeBtn = helpModal ? helpModal.querySelector('.kbd-help-close') : null;
+
+            var baseUrl = '{{ "/" | relative_url }}';
+
             function getVisiblePosts() {
                 return Array.from(document.querySelectorAll('.post-item')).filter(
-                    p => p.style.display !== 'none'
+                    function(p) { return p.style.display !== 'none'; }
                 );
             }
-            
+
             function focusPost(index) {
-                const posts = getVisiblePosts();
+                var posts = getVisiblePosts();
                 if (posts.length === 0) return;
-                
+
                 // Remove previous focus
-                posts.forEach(p => p.classList.remove('kbd-focused'));
-                
+                posts.forEach(function(p) { p.classList.remove('kbd-focused'); });
+
                 // Clamp index
                 currentPostIndex = Math.max(0, Math.min(index, posts.length - 1));
-                
+
                 // Add focus
-                const post = posts[currentPostIndex];
+                var post = posts[currentPostIndex];
                 post.classList.add('kbd-focused');
                 post.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }
-            
+
             function openFocusedPost() {
-                const focused = document.querySelector('.post-item.kbd-focused .post-link');
+                var focused = document.querySelector('.post-item.kbd-focused .post-link');
                 if (focused) window.location.href = focused.href;
             }
-            
+
             function showHelp() {
                 if (helpModal) {
                     helpModal.classList.add('visible');
                     helpModal.setAttribute('aria-hidden', 'false');
                 }
             }
-            
+
             function hideHelp() {
                 if (helpModal) {
                     helpModal.classList.remove('visible');
                     helpModal.setAttribute('aria-hidden', 'true');
                 }
             }
-            
-            closeBtn?.addEventListener('click', hideHelp);
-            helpModal?.addEventListener('click', function(e) {
-                if (e.target === helpModal) hideHelp();
-            });
-            
+
+            if (closeBtn) closeBtn.addEventListener('click', hideHelp);
+            if (helpModal) {
+                helpModal.addEventListener('click', function(e) {
+                    if (e.target === helpModal) hideHelp();
+                });
+            }
+
             document.addEventListener('keydown', function(e) {
                 // Ignore if typing in input/textarea
                 if (['INPUT', 'TEXTAREA', 'SELECT'].includes(e.target.tagName)) return;
                 if (e.target.isContentEditable) return;
-                
-                const key = e.key.toLowerCase();
-                
+
+                var key = e.key.toLowerCase();
+
                 // Handle 'g' prefix for navigation
                 if (gPressed) {
                     clearTimeout(gTimeout);
                     gPressed = false;
-                    
+
                     switch(key) {
-                        case 'h': window.location.href = '/'; break;
-                        case 'a': window.location.href = '/about'; break;
-                        case 'r': window.location.href = '/research'; break;
-                        case 'v': window.location.href = '/vibes'; break;
+                        case 'h': window.location.href = '{{ "/" | relative_url }}'; break;
+                        case 'a': window.location.href = '{{ "/about" | relative_url }}'; break;
+                        case 'r': window.location.href = '{{ "/research" | relative_url }}'; break;
+                        case 'v': window.location.href = '{{ "/vibes" | relative_url }}'; break;
                     }
                     return;
                 }
-                
+
                 // Single key shortcuts
                 switch(key) {
                     case 'g':
                         gPressed = true;
-                        gTimeout = setTimeout(() => { gPressed = false; }, 500);
+                        gTimeout = setTimeout(function() { gPressed = false; }, 500);
                         break;
-                        
+
                     case 'j':
                         e.preventDefault();
                         focusPost(currentPostIndex + 1);
                         break;
-                        
+
                     case 'k':
                         e.preventDefault();
                         focusPost(currentPostIndex - 1);
                         break;
-                        
+
                     case 'o':
                     case 'enter':
                         if (document.querySelector('.post-item.kbd-focused')) {
@@ -254,23 +295,31 @@
                             openFocusedPost();
                         }
                         break;
-                        
+
                     case '?':
                         e.preventDefault();
                         showHelp();
                         break;
-                        
+
                     case 'escape':
                         hideHelp();
                         // Remove post focus
                         document.querySelectorAll('.post-item.kbd-focused').forEach(
-                            p => p.classList.remove('kbd-focused')
+                            function(p) { p.classList.remove('kbd-focused'); }
                         );
                         currentPostIndex = -1;
                         break;
                 }
             });
         }
+
+        // Apply saved theme before paint to prevent flash
+        (function() {
+            var stored = localStorage.getItem('theme');
+            if (stored === 'dark' || (!stored && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            }
+        })();
 
         document.addEventListener('DOMContentLoaded', function() {
             convertMermaidCodeBlocks();
@@ -286,6 +335,7 @@
             markExternalLinks();
             initBackToTop();
             initKeyboardNav();
+            initThemeToggle();
         });
     </script>
 </body>

@@ -3,6 +3,7 @@
 /*
  * Minimal theme inspired by smca.io
  * Clean, readable, programmer-focused aesthetic
+ * Light mode (default) + Dark mode
  */
 
 :root {
@@ -61,5 +62,55 @@
   --code-color-18: #e0e0e0;
 
   --color-scroll-thumb: rgba(16, 15, 15, 0.2);
-  --color-shadow-soft: none;
+}
+
+/* Dark mode */
+[data-theme="dark"] {
+  --text-color: #CECDC3;
+  --background-color: #1C1B1A;
+  --highlight-color: rgba(255, 208, 0, 0.2);
+  --muted-bg: #282726;
+
+  --surface-color: #232221;
+  --surface-elevated-color: #282726;
+
+  --border-color: rgba(206, 205, 195, 0.12);
+
+  --secondary-text-color: #878580;
+  --secondary-text: #878580;
+  --placeholder-color: #6F6E69;
+
+  --link-color: #CECDC3;
+  --link-hover-color: #CECDC3;
+  --link-active-color: #CECDC3;
+  --link-visited-color: #CECDC3;
+  --link-underline-color: rgba(206, 205, 195, 0.3);
+  --base-color: #CECDC3;
+
+  --focus-ring-color: rgba(206, 205, 195, 0.3);
+  --selection-background: rgba(255, 208, 0, 0.25);
+  --selection-text: #CECDC3;
+
+  --inline-code-background: #282726;
+  --inline-code-color: #CECDC3;
+  --code-color-1: #878580;
+  --code-color-2: #282726;
+  --code-color-3: #D14D72;
+  --code-color-4: #3D2020;
+  --code-color-5: #B392F0;
+  --code-color-6: #87C38A;
+  --code-color-7: #D14D72;
+  --code-color-8: #6CB6FF;
+  --code-color-9: #87C38A;
+  --code-color-10: #878580;
+  --code-color-11: #6F6E69;
+  --code-color-12: #B392F0;
+  --code-color-13: #56B6C2;
+  --code-color-14: #E5915B;
+  --code-color-15: #CECDC3;
+  --code-color-16: #6CB6FF;
+  --code-color-17: #E5C07B;
+  --code-color-18: #3E3D3B;
+
+  --color-scroll-thumb: rgba(206, 205, 195, 0.2);
 }
