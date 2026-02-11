@@ -1,7 +1,7 @@
 ---
 layout: post
-title: "Building Ideal Money: From Hayek to FRAX"
-date: 2022-05-01
+title: "Part 2 - Building Ideal Money: From Hayek to FRAX"
+date: 2022-05-02
 tags: [research]
 ---
 

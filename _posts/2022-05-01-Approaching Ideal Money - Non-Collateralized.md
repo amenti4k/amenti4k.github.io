@@ -1,11 +1,11 @@
 ---
 layout: post
-title: "Are Algorithmic Stablecoins Possible? Mapping the Design Space of Digital Money"
+title: "Part 1 - Are Algorithmic Stablecoins Possible? Mapping the Design Space of Digital Money"
 date: 2022-05-01
 tags: [research]
 ---
 
-*This is Part 1 of a two-part deep dive into algorithmic stablecoins, drawn from my undergraduate research. This essay maps the design space and builds the theoretical framework. [Part 2](/2022/05/01/Algorithmic-Stablecoin-Issues.html) dives into specific implementations, from Hayek Money to FRAX, with statistical validation.*
+*This is Part 1 of a two-part deep dive into algorithmic stablecoins, drawn from my undergraduate research. This essay maps the design space and builds the theoretical framework. [Part 2](/2022/05/02/Algorithmic-Stablecoin-Issues.html) dives into specific implementations, from Hayek Money to FRAX, with statistical validation.*
 
 ---
 
@@ -257,10 +257,10 @@ But fractional approaches, starting with substantial collateral and algorithmica
 
 The design space I've mapped here (the trilemma, the four-axis taxonomy, the bank run dynamics, the landscape of survivors and casualties) provides the framework. But the real test is in the mechanisms. How exactly do rebasing systems work? What killed seigniorage shares? Why does FRAX's fractional model succeed where Iron Finance's failed?
 
-That's what [Part 2](/2022/05/01/Algorithmic-Stablecoin-Issues.html) is about. I break down the three major theoretical approaches (Hayek Money, Seigniorage Shares, and Fractional Reserves), trace their real-world implementations, and present statistical evidence on their performance.
+That's what [Part 2](/2022/05/02/Algorithmic-Stablecoin-Issues.html) is about. I break down the three major theoretical approaches (Hayek Money, Seigniorage Shares, and Fractional Reserves), trace their real-world implementations, and present statistical evidence on their performance.
 
 The dawn of ideal digital money isn't a matter of if, but when and how. And understanding the design space is the first step.
 
 ---
 
-*This is Part 1 of a two-part analysis. [Part 2: "Building Ideal Money: From Hayek to FRAX"](/2022/05/01/Algorithmic-Stablecoin-Issues.html) covers the specific theoretical approaches, real-world implementations, and statistical validation.*
+*This is Part 1 of a two-part analysis. [Part 2: "Building Ideal Money: From Hayek to FRAX"](/2022/05/02/Algorithmic-Stablecoin-Issues.html) covers the specific theoretical approaches, real-world implementations, and statistical validation.*
