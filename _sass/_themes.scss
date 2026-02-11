@@ -27,6 +27,9 @@
   --color-accent-hover: #cccccc;
   --color-accent-active: #999999;
   --color-accent-visited: #999999;
+  --color-link-text: #8ab4ff;
+  --color-link-hover-text: #b5d1ff;
+  --color-link-visited-text: #c39bff;
   --color-accent-soft: rgba(255, 255, 255, 0.2);
   --color-focus-ring: rgba(255, 255, 255, 0.5);
   --color-selection-bg: rgba(255, 255, 255, 0.2);
@@ -67,9 +70,10 @@
   --border: 1px solid var(--color-border);
   --border-color: var(--color-border);
   --link-color: var(--color-accent);
-  --link-hover-color: var(--color-accent-hover);
+  --link-text-color: var(--color-link-text);
+  --link-hover-color: var(--color-link-hover-text);
   --link-active-color: var(--color-accent-active);
-  --link-visited-color: var(--color-accent-visited);
+  --link-visited-color: var(--color-link-visited-text);
   --link-underline-color: var(--color-accent-soft);
   --focus-ring-color: var(--color-focus-ring);
   --selection-background: var(--color-selection-bg);
@@ -96,6 +100,9 @@
   --color-accent-hover: #333333;
   --color-accent-active: #666666;
   --color-accent-visited: #666666;
+  --color-link-text: #0b57d0;
+  --color-link-hover-text: #003ea5;
+  --color-link-visited-text: #5d2db3;
   --color-accent-soft: rgba(0, 0, 0, 0.2);
   --color-focus-ring: rgba(0, 0, 0, 0.5);
   --color-selection-bg: rgba(0, 0, 0, 0.1);
@@ -135,9 +142,10 @@
   --border: 1px solid var(--color-border);
   --border-color: var(--color-border);
   --link-color: var(--color-accent);
-  --link-hover-color: var(--color-accent-hover);
+  --link-text-color: var(--color-link-text);
+  --link-hover-color: var(--color-link-hover-text);
   --link-active-color: var(--color-accent-active);
-  --link-visited-color: var(--color-accent-visited);
+  --link-visited-color: var(--color-link-visited-text);
   --link-underline-color: var(--color-accent-soft);
   --focus-ring-color: var(--color-focus-ring);
   --selection-background: var(--color-selection-bg);
@@ -145,4 +153,3 @@
   --inline-code-background: var(--color-inline-code-bg);
   --inline-code-color: var(--color-inline-code-text);
 }
-

@@ -88,9 +88,7 @@
             if (!layoutHeading || !content) return;
             var firstElement = content.firstElementChild;
             if (!firstElement || !firstElement.tagName || firstElement.tagName.toLowerCase() !== 'h1') return;
-            if (layoutHeading.textContent.trim() === firstElement.textContent.trim()) {
-                firstElement.remove();
-            }
+            firstElement.remove();
         }
 
         document.addEventListener('DOMContentLoaded', function() {
