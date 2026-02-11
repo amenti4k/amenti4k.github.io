@@ -3,7 +3,6 @@ layout: post
 title: "Building Ideal Money: From Hayek to FRAX"
 date: 2022-05-01
 tags: [research]
-categories: [research]
 ---
 
 *This is Part 2 of a two-part deep dive into algorithmic stablecoins. [Part 1](/2022/05/01/Approaching-Ideal-Money-Non-Collateralized.html) maps the design space of digital money and the theoretical framework. This essay dives into the specific mechanisms: what works, what doesn't, and why.*
