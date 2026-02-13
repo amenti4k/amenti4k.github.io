@@ -1,12 +1,12 @@
 @charset "utf-8";
 
-// Typeface imports - matching smca.io
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;500;600;700;900&family=Merriweather:wght@300;400;700;900&display=swap');
+// Typeface imports
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=Roboto+Mono:wght@400;500&display=swap');
 
-// Font and layout tokens - enhanced for readability
-$base-font-family: 'Merriweather', Georgia, serif !default;
-$heading-font-family: 'Merriweather', Georgia, serif !default;
-$code-font-family: 'Roboto Mono', monospace !default;
+// Font and layout tokens
+$base-font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif !default;
+$heading-font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif !default;
+$code-font-family: 'Roboto Mono', ui-monospace, SFMono-Regular, monospace !default;
 $base-font-size: 15px !default;
 $mobile-font-size: 14px !default;
 $base-line-height: 1.7 !default;
