@@ -5,11 +5,11 @@ date: 2026-02-08
 categories: [business, ai]
 ---
 
-In structural engineering there's a thing called parasitic load — the weight of a building that exists only to support itself. The beams that hold up the beams. Floors that exist to hold up other floors. In a well-designed structure it's maybe fifteen percent. In a badly designed one the building is mostly holding itself up, thin skin over self-referential support.
+In structural engineering there's a thing called parasitic load, the weight of a building that exists only to support itself. The beams that hold up the beams. Floors that exist to hold up other floors. In a well designed structure it's maybe fifteen percent. In a badly designed one the building is mostly holding itself up, thin skin over self-referential support.
 
 Nobody designs parasitic load on purpose. It accretes. Layer by layer, constraint by constraint. Steel bends, concrete cracks, gravity doesn't negotiate. The engineers who built those beams weren't stupid. They were solving real problems with what they had.
 
-For a long time that's how I understood the white-collar economy. The approvals that exist to authorize other approvals. The reconciliations that reconcile the reconciliations. Coordination layers managing the complexity of their own existence. Parasitic, sure. But necessarily parasitic, because no one could hold the full context in their head. We needed the handoffs and sign-offs because cognition has a carrying capacity and the work outgrew it. We built SaaS to manage the load, consultancies to audit it, MBA programs to teach people to preside over it with the quiet confidence of someone who's never questioned whether the beams are holding anything up.
+For a long time that's how I understood the white collar economy. The approvals that exist to authorize other approvals. The reconciliations that reconcile the reconciliations. Coordination layers managing the complexity of their own existence. Parasitic, sure. But necessarily parasitic, because no one could hold the full context in their head. We needed the handoffs and sign-offs because cognition has a carrying capacity and the work outgrew it. We built SaaS to manage the load, consultancies to audit it, MBA programs to teach people to preside over it with the quiet confidence of someone who's never questioned whether the beams are holding anything up.
 
 Conventional wisdom: the complexity was structural. The cost of doing business. The weight of the building.
 
