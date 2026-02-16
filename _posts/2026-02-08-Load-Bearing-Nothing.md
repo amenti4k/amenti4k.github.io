@@ -2,7 +2,7 @@
 layout: post
 title: "Load-Bearing Nothing"
 date: 2026-02-08
-categories: [business, ai]
+tags: [business, ai]
 ---
 
 In structural engineering there's a thing called parasitic load, the weight of a building that exists only to support itself. The beams that hold up the beams. Floors that exist to hold up other floors. In a well designed structure it's maybe fifteen percent. In a badly designed one the building is mostly holding itself up, thin skin over self-referential support.
