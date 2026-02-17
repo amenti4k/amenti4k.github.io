@@ -4,7 +4,7 @@ description: >- # this means to ignore newlines until "baseurl:"
   Amenti Kenea's corner of the internet - thoughts on AI systems, distributed computing, and building autonomous agents. From Addis Ababa to NYC via Meta and Minerva.
 
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "https://x64.coffee" # the base hostname & protocol for your site, e.g. http://example.com
+url: "https://amenti4k.github.io"
 
 # Author information for SEO
 author:
