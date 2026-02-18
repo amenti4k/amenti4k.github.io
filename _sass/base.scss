@@ -1,11 +1,11 @@
 @charset "utf-8";
 
 // Typeface imports
-@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Roboto+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Roboto+Mono:wght@400;500&display=swap');
 
 // Font and layout tokens
-$base-font-family: 'Lora', Georgia, 'Times New Roman', serif !default;
-$heading-font-family: 'Lora', Georgia, 'Times New Roman', serif !default;
+$base-font-family: 'Libre Baskerville', Georgia, 'Times New Roman', serif !default;
+$heading-font-family: 'Libre Baskerville', Georgia, 'Times New Roman', serif !default;
 $code-font-family: 'Roboto Mono', ui-monospace, SFMono-Regular, monospace !default;
 $base-font-size: 15px !default;
 $mobile-font-size: 14px !default;
