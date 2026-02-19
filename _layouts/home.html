@@ -20,7 +20,7 @@ layout: default
       <div class="post-item" data-tags="{{ post.tags | join: ' ' }}">
         <a class="post-link" href="{{ post.url | relative_url }}">
           <span class="title-text">{{ post.title }}</span>
-          <span class="post-date">{{ post.date | date: "%Y-%m-%d" }}</span>
+          <span class="post-date">{{ post.date | date: "%b %d, %Y" }}</span>
           {% if post.excerpt %}
             <span class="post-snippet">{{ post.excerpt | strip_html | truncatewords: 15 }}</span>
           {% endif %}
