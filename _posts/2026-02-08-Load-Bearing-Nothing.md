@@ -23,6 +23,8 @@ tags: [business, ai]
 
 - Remove the cognitive bottleneck and the load-bearing walls turn out to be vestigial.
 
+- I used to think the craft in AI was building around the model. Scaffolding, retrieval systems, the careful engineering that makes something actually work in production. I spent years getting good at it. Then I watched every system I built get swallowed by the next model. Not metaphorically. Every workaround, every clever pipeline. Gone. The only thing that survived was what I knew about the domain, the failure modes, the edge cases, the texture of what "good" means in a specific context. Most AI engineering is building depreciating assets and calling it craft. The thing that compounds is the problem definition itself.
+
 - Second time I watched it happen, different industry, same thing, faster. I'd already learned which walls were decorative. Third time, faster still.
 
 - Here's what gets applauded at AI conferences and ignored in the parking lot: the value doesn't go to whoever sells the tool. The tool is commodity. Some other team running the same model with a different pitch deck undercuts you by Wednesday. The value goes to whoever owns the operation underneath. Vendor captures a licensing fee. Owner captures everything the building was wasting on itself.

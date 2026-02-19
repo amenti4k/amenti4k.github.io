@@ -151,7 +151,7 @@ blockquote p:last-child {
 }
 
 :not(.menu)>ul>li:before {
-  content: "▹";
+  content: "•";
   position: absolute;
   left: 0;
   top: 0.1rem;
