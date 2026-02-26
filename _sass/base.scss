@@ -869,6 +869,45 @@ img[src*='#center'] {
   margin-top: 2.5rem;
 }
 
+.post-content .marginnote {
+  float: right;
+  clear: right;
+  margin-right: -240px;
+  width: 200px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--secondary-text-color);
+  padding-left: 1rem;
+  border-left: 2px solid var(--border-color);
+  position: relative;
+}
+
+.post-content .highlight-text {
+  background: var(--highlight-color);
+  padding: 0 0.15rem;
+}
+
+.post-content .inline-code {
+  font-family: $code-font-family;
+  font-size: 0.85em;
+  background-color: var(--inline-code-background);
+  color: var(--inline-code-color);
+  padding: 0.15rem 0.35rem;
+  border-radius: 3px;
+}
+
+@media (max-width: 1200px) {
+  .post-content .marginnote {
+    float: none;
+    margin-right: 0;
+    width: 100%;
+    margin: 1rem 0;
+    padding: 0.75rem;
+    padding-left: 1rem;
+    font-size: 14px;
+  }
+}
+
 .post-navigation {
   margin-top: 4rem;
   padding-top: 2rem;
