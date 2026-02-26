@@ -270,6 +270,122 @@
             });
         }
 
+        // Gwern-style link hover previews
+        function initLinkPreviews() {
+            const cache = {};
+            let previewEl = null;
+            let hoverTimeout = null;
+            let currentLink = null;
+
+            function createPreviewEl() {
+                const el = document.createElement('div');
+                el.className = 'link-preview';
+                el.innerHTML = '<div class="link-preview-title"></div><div class="link-preview-meta"></div><div class="link-preview-excerpt"></div><div class="link-preview-fade"></div>';
+                document.body.appendChild(el);
+                return el;
+            }
+
+            function positionPreview(link) {
+                if (!previewEl) return;
+                const rect = link.getBoundingClientRect();
+                const scrollY = window.scrollY;
+                const scrollX = window.scrollX;
+                let top = rect.bottom + scrollY + 8;
+                let left = rect.left + scrollX;
+
+                // Keep within viewport horizontally
+                if (left + 340 > window.innerWidth + scrollX) {
+                    left = window.innerWidth + scrollX - 350;
+                }
+                if (left < scrollX + 10) left = scrollX + 10;
+
+                // Flip above if too close to bottom
+                if (rect.bottom + 270 > window.innerHeight) {
+                    top = rect.top + scrollY - 268;
+                }
+
+                previewEl.style.top = top + 'px';
+                previewEl.style.left = left + 'px';
+            }
+
+            function showPreview(link, data) {
+                if (!previewEl) previewEl = createPreviewEl();
+                previewEl.querySelector('.link-preview-title').textContent = data.title;
+                previewEl.querySelector('.link-preview-meta').textContent = data.date;
+                previewEl.querySelector('.link-preview-excerpt').textContent = data.excerpt;
+                positionPreview(link);
+                requestAnimationFrame(function() {
+                    previewEl.classList.add('visible');
+                });
+            }
+
+            function hidePreview() {
+                if (previewEl) previewEl.classList.remove('visible');
+                currentLink = null;
+            }
+
+            function fetchPreview(url) {
+                if (cache[url]) return Promise.resolve(cache[url]);
+                return fetch(url)
+                    .then(function(r) { return r.text(); })
+                    .then(function(html) {
+                        var parser = new DOMParser();
+                        var doc = parser.parseFromString(html, 'text/html');
+                        var title = '';
+                        var titleEl = doc.querySelector('.post-title-main') || doc.querySelector('h1');
+                        if (titleEl) title = titleEl.textContent.trim();
+                        var date = '';
+                        var dateEl = doc.querySelector('.post-date');
+                        if (dateEl) date = dateEl.textContent.trim();
+                        var excerpt = '';
+                        var contentEl = doc.querySelector('.post-content');
+                        if (contentEl) {
+                            var paragraphs = contentEl.querySelectorAll('p');
+                            for (var i = 0; i < paragraphs.length; i++) {
+                                var text = paragraphs[i].textContent.trim();
+                                if (text.length > 30) { excerpt = text; break; }
+                            }
+                        }
+                        var data = { title: title, date: date, excerpt: excerpt };
+                        cache[url] = data;
+                        return data;
+                    });
+            }
+
+            function isInternalPostLink(link) {
+                if (link.hostname !== window.location.hostname) return false;
+                var href = link.pathname;
+                // Match typical Jekyll post URLs
+                if (href.match(/\/\d{4}\/\d{2}\/\d{2}\//)) return true;
+                // Match post links from the home page
+                if (link.closest('.post-item')) return true;
+                return false;
+            }
+
+            document.addEventListener('mouseover', function(e) {
+                var link = e.target.closest('a');
+                if (!link || !isInternalPostLink(link)) return;
+                if (link === currentLink) return;
+                currentLink = link;
+                clearTimeout(hoverTimeout);
+                hoverTimeout = setTimeout(function() {
+                    fetchPreview(link.href).then(function(data) {
+                        if (currentLink === link && data.title) {
+                            showPreview(link, data);
+                        }
+                    });
+                }, 200);
+            });
+
+            document.addEventListener('mouseout', function(e) {
+                var link = e.target.closest('a');
+                if (link) {
+                    clearTimeout(hoverTimeout);
+                    hidePreview();
+                }
+            });
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
             convertMermaidCodeBlocks();
             if (typeof mermaid !== 'undefined') {
@@ -284,6 +400,7 @@
             markExternalLinks();
             initBackToTop();
             initKeyboardNav();
+            initLinkPreviews();
         });
     </script>
 </body>
