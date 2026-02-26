@@ -17,9 +17,9 @@ It doesn't show up in headlines or earnings calls, but in quieter places, in how
 
 And here's what makes it so easy to miss: on the surface, nothing looks different. The same companies exist. The same workflows run. The same reports get filed. But underneath, something is dissolving.
 
-The problem is that most of the "work" inside these systems was never necessary to begin with. The approvals, reconciliations, reviews-of-reviews, entire bureaucracies exist to manage complexity that only exists because we built systems around humans doing work. When AI stops assisting and starts orchestrating, that complexity doesn't get automated. It collapses.
+<span class="marginnote">This distinction between "assisting" and "orchestrating" is the crux of the entire essay. <span class="inline-code">Assistive AI</span> optimizes inside existing process boundaries; <span class="inline-code">orchestrative AI</span> removes the boundaries entirely.</span>The problem is that most of the "work" inside these systems was never necessary to begin with. The approvals, reconciliations, reviews-of-reviews, entire bureaucracies exist to manage complexity that only exists because we built systems around humans doing work. <span class="highlight-text">When AI stops assisting and starts orchestrating, that complexity doesn't get automated. It collapses.</span>
 
-Procurement was just where I first noticed it. But once you see the pattern, you start seeing it everywhere, in accounting firms, healthcare administration, freight brokerage, property management. Entire categories of work are being revealed for what they always were: elaborate theater.
+Procurement was just where I first noticed it. But once you see the pattern, you start seeing it everywhere, in accounting firms, healthcare administration, freight brokerage, property management. <span class="highlight-text">Entire categories of work are being revealed for what they always were: elaborate theater.</span>
 
 This essay is an attempt to trace that phenomenon, what happens when compute becomes labor, when AI starts running workflows end-to-end, and when the very architecture of the economy begins to invert beneath us.
 
@@ -29,7 +29,7 @@ The first clues appeared in places that looked unrelated. Procurement systems wi
 
 At first glance, it all seemed like ordinary bureaucracy, frustrating, but necessary. So you go on building around it: adding approvals here, routing exceptions there, outlier handling for one customer, overrides for another. Soon, the system becomes a configuration jungle, 200 rules stacked on top of one another, every branch carved out to manage some special scenario.
 
-But this complexity wasn't designed to "keep humans busy." It emerged because humans couldn't hold the full context. Every exception, every dependency, every customer-specific rule, all of it had to live somewhere. No single person, or even team, could hold it all in their head, so we externalized the logic into sprawling systems. The jumble wasn't intentional; it was inevitable.
+<span class="marginnote">This is the cognitive saturation thesis: humans externalize logic not out of laziness but out of necessity. Herbert Simon called it <span class="inline-code">bounded rationality</span> in the 1950s. We're only now building systems that can hold the full map.</span>But this complexity wasn't designed to "keep humans busy." It emerged because humans couldn't hold the full context. Every exception, every dependency, every customer-specific rule, all of it had to live somewhere. No single person, or even team, could hold it all in their head, so we externalized the logic into sprawling systems. The jumble wasn't intentional; it was inevitable.
 
 And then something shifts. The moment AI stops assisting and starts orchestrating, the entire structure changes. The jungle fades. All those conditions, overrides, reconciliations, gone. What felt necessary was only managing complexity that didn't need to exist in the first place.
 
@@ -39,15 +39,15 @@ And procurement isn't unique. Once AI takes over coordination, the same pattern 
 
 ## II. The Accounting Firm Paradox
 
-Professional services firms are built on a fragile equilibrium: they monetize complexity they can no longer justify.
+<span class="highlight-text">Professional services firms are built on a fragile equilibrium: they monetize complexity they can no longer justify.</span>
 
 Take a typical accounting firm. Partners bill $500 an hour for work largely performed by juniors earning a fraction of that. The firm's margins exist because the work is messy, reconciling spreadsheets, cross-checking approvals, passing information between systems that were never designed to talk to each other. None of this is elegant, but for decades it worked because managing complexity was the service.
 
 Here's the paradox: AI orchestration makes that complexity disappear. The approvals, reconciliations, and reviews-of-reviews that once justified armies of analysts now compress into a handful of orchestrated workflows. The work that generated the billable hours doesn't get automated, it evaporates.
 
-But that puts these firms in an impossible bind. To adopt AI orchestration would be to reveal that their business model rests on scaffolding, processes designed to manage fragmentation that no longer needs to exist. They can't pivot without destroying themselves. They're like the Titanic, trying to steer after the iceberg has already torn through the hull.
+<span class="marginnote">The Innovator's Dilemma, but worse. Christensen's incumbents could at least retreat upmarket. These firms have nowhere to go because the entire value layer -- not just the low end -- is collapsing.</span>But that puts these firms in an impossible bind. To adopt AI orchestration would be to reveal that their business model rests on scaffolding, processes designed to manage fragmentation that no longer needs to exist. They can't pivot without destroying themselves. They're like the Titanic, trying to steer after the iceberg has already torn through the hull.
 
-Meanwhile, their clients are waking up. Once a CFO realizes they're paying $5,000 for work an AI system can handle for $50, the illusion collapses. This isn't just accounting, the same pattern is emerging across healthcare administration, freight brokerage, property management, insurance, compliance. Entire industries built on human coordination are now structurally mispriced.
+Meanwhile, their clients are waking up. <span class="highlight-text">Once a CFO realizes they're paying $5,000 for work an AI system can handle for $50, the illusion collapses.</span> This isn't just accounting, the same pattern is emerging across healthcare administration, freight brokerage, property management, insurance, compliance. Entire industries built on human coordination are now structurally mispriced.
 
 This is why private equity and rollup operators are moving so aggressively. They're not betting on growth the old way; they're buying companies trapped inside outdated operating models and rebuilding them around orchestration-first workflows. They're exploiting an arbitrage hiding in plain sight:
 
@@ -63,9 +63,9 @@ For decades, companies charged premiums for work that was hard, slow, and manual
 
 But inevitability isn't a moat. It was a limitation of human orchestration. And once AI flips that assumption, the entire economic model underneath begins to dissolve.
 
-This is where Product-Led Acquisitions (PLAs) come in, the most important business model almost no one is talking about. The insight is simple but profound:
+<span class="marginnote"><span class="inline-code">PLAs</span> (Product-Led Acquisitions) invert the traditional SaaS go-to-market. Instead of selling software and hoping for adoption, you buy the customer base and install the product from the inside. Think of it as distribution-first, product-second.</span>This is where Product-Led Acquisitions (PLAs) come in, the most important business model almost no one is talking about. The insight is simple but profound:
 
-If the value of a company is based on managing complexity, and AI orchestration removes that complexity, the value doesn't shrink, it migrates.
+<span class="highlight-text">If the value of a company is based on managing complexity, and AI orchestration removes that complexity, the value doesn't shrink, it migrates.</span>
 
 PLAs exploit this migration directly. They don't sell tools to trapped companies and hope for adoption. They buy the companies outright, inject AI orchestration, and collapse the cost structure from the inside out.
 
@@ -73,7 +73,7 @@ Here's the playbook playing out right now:
 
 **Find the zombies**: Insurance brokers, accounting firms, freight forwarders, property managers, profitable on paper, but running 20th-century operating models.
 
-**Buy at yesterday's price**: 3–5x EBITDA, valuations based on the fiction that human orchestration is necessary.
+**Buy at yesterday's price**: 3--5x EBITDA, valuations based on the fiction that human orchestration is necessary.
 
 **Invert the architecture**: Replace human coordination layers with AI orchestration; route by confidence, escalate only when trust is needed.
 
@@ -137,7 +137,7 @@ This inversion has three consequences:
 
 **Industries compress**: When AI runs workflows end-to-end, the cost structures converge. A $5,000 accounting engagement collapses to $50. A claims-processing team of 120 shrinks to 8. Whole service industries become software-like in margins and scalability.
 
-**Firms dissolve into callable functions**: In an orchestrated economy, companies expose their capabilities like APIs: `generate_quote(customer_data)`, `verify_compliance(policy)`, `process_claim(claim_id)`. The org chart becomes software. Businesses stop "using tools" and become tools.
+<span class="marginnote">This is the most radical claim in the essay: the firm as we know it dissolves into callable endpoints. Coase's theory of the firm assumed transaction costs justified corporate boundaries. When <span class="inline-code">orchestration</span> drives transaction costs toward zero, the firm boundary becomes optional.</span>**Firms dissolve into callable functions**: In an orchestrated economy, companies expose their capabilities like APIs: `generate_quote(customer_data)`, `verify_compliance(policy)`, `process_claim(claim_id)`. The org chart becomes software. Businesses stop "using tools" and become tools.
 
 This isn't automation in the old sense. It's not "faster humans" or "better UIs." It's a new substrate for economic activity, one where work isn't assigned, it's discovered, routed, and executed probabilistically.
 
@@ -163,7 +163,7 @@ A freight brokerage discovers an optimal routing pattern → every property mana
 
 A compliance edge case in accounting → automatically improves orchestration in insurance, billing, and payroll.
 
-This isn't horizontal dominance (owning one industry) or vertical integration (owning the supply chain). It's something new: diagonal dominance.
+<span class="marginnote"><span class="inline-code">Diagonal dominance</span> is distinct from both horizontal integration (one industry, many geographies) and vertical integration (one supply chain, many stages). It cuts across unrelated industries, connected not by market but by shared cognition.</span>This isn't horizontal dominance (owning one industry) or vertical integration (owning the supply chain). It's something new: diagonal dominance.
 
 A compound entity cuts across industries and domains, connecting them through a single orchestration layer. It sees patterns no standalone company could. Your accounting provider knows your legal structure. Your insurance broker understands your operational risks. Your property manager anticipates your growth. This isn't cross-selling, it's cross-intelligence.
 
@@ -181,7 +181,7 @@ The leverage here isn't operational. It's epistemic.
 
 In traditional rollups, you integrate revenue streams. In AI-native rollups, you integrate intelligence. Every new workflow completed improves the system's ability to handle the next one, across every business in the network. The whole portfolio becomes an evolving organism, compounding knowledge faster than any standalone company possibly could.
 
-And this creates a kind of monopoly regulators aren't prepared for. Not a monopoly of market share, but a monopoly of understanding.
+<span class="highlight-text">And this creates a kind of monopoly regulators aren't prepared for. Not a monopoly of market share, but a monopoly of understanding.</span>
 
 Once a compound entity reaches sufficient scale, it sees patterns nobody else can:
 
@@ -219,7 +219,7 @@ Why this equilibrium emerges:
 
 Think of it as trust scaffolding around an AI-native core.
 
-Four pillars make that human slice non-optional:
+<span class="marginnote"><span class="inline-code">Confidence routing</span> is the backbone of the trust layer: the system scores its own certainty on every decision, then routes high-confidence actions to auto-execute and low-confidence actions to human review. It's how you operationalize "trust but verify."</span>Four pillars make that human slice non-optional:
 
 **Accountability Infrastructure**: Licenses, attestations, professional liability. A doctor signs. A CPA signs. A broker signs. The signature is the legal affordance that lets the AI do the other 94%.
 
@@ -263,7 +263,7 @@ And underneath it all, **observability** stitches the system together. Every dec
 
 If that sounds more like an organism than a tool, that's because it is.
 
-We've learned this the hard way in procurement. Early on, we tried to brute-force our way to full autonomy: hundreds of hand-tuned configuration rules, endless if/then branches, nested exceptions, special cases for every customer. It worked, until it didn't. Context slipped through the cracks. Edge cases multiplied. The whole thing turned into a fragile jungle of assumptions.
+<span class="marginnote">This is a builder's confession. The "configuration jungle" is what every enterprise software team builds before they realize the complexity is the bug, not the feature. We spent months adding rules before we understood we should have been subtracting them.</span>We've learned this the hard way in procurement. Early on, we tried to brute-force our way to full autonomy: hundreds of hand-tuned configuration rules, endless if/then branches, nested exceptions, special cases for every customer. It worked, until it didn't. Context slipped through the cracks. Edge cases multiplied. The whole thing turned into a fragile jungle of assumptions.
 
 When we flipped it, letting the AI orchestrate rather than assist, the jungle started to dissolve. But we didn't go straight to 100% automation. We built an orchestration harness instead: route work by confidence, clarify missing context automatically, escalate high-impact uncertainty to humans, and, critically, fold human corrections back into the system.
 
@@ -292,13 +292,13 @@ First, capital moved. Sequoia literally rewired its fund to hold winners indefin
 
 Second, the operators moved. General Catalyst didn't just blog about "Health Assurance"; they stood up vehicles to buy and modernize care delivery, then set up staged platforms (yes, including HATCo and the Crescendo playbook) to fuse AI with ops. If you squint, it's not "AI for hospitals," it's "own the workflows, then let AI run inside them." That's not a press release; that's an operating thesis.
 
-Third, the outliers proved distribution > demos. Metropolis couldn't get every legacy parking operator to adopt computer-vision gates on vibes alone. So they raised ~$1.7–1.8B and bought SP+ outright for ~$1.5B. When the software wedge stalls, you buy the market and install the wedge from the inside. Call it "growth buyout," call it "VBO," call it whatever you want, the point is simple: own the cash flows, then refactor the work.
+Third, the outliers proved distribution > demos. Metropolis couldn't get every legacy parking operator to adopt computer-vision gates on vibes alone. So they raised ~$1.7--1.8B and bought SP+ outright for ~$1.5B. When the software wedge stalls, you buy the market and install the wedge from the inside. Call it "growth buyout," call it "VBO," call it whatever you want, the point is simple: own the cash flows, then refactor the work.
 
 If you want a 30-year control group for how compounding actually works, look at Constellation Software. A thousand-plus vertical acquisitions. A near-religious bias to not sell. And value created by letting each business keep its domain weirdness while sharing invisible systems of capital allocation and learning. Now imagine that same architecture when the shared substrate isn't just best practices, it's an AI that actually executes the work. The compounding stops being quarterly memos; it becomes operational.
 
 Of course venture noticed. Slow Ventures formalized a name for it, Growth Buyouts, and made the obvious point everyone whispers: if the product is the engine of value creation and M&A is the distribution hack, venture math can work. The asterisk is doing the hard part (product) before the fun part (buying things). Otherwise you're just stapling dashboards to payroll.
 
-And yes, skeptics noticed too. Benaich and Mrkšić's read is fair: a lot of "AI roll-up" pitch decks confuse operational improvement for a new business model and assume public markets will bless service EBITDA with software multiples. That only clears if the tech truly rewires unit economics, not if you're role-playing SaaS during diligence and doing people-ops in production. The critique is healthy; it forces the bar higher than "we added a bot."
+<span class="marginnote">A fair counterpoint. The gap between "AI-enhanced service business" and "AI-native software business" is enormous. Public markets price <span class="inline-code">EBITDA</span> multiples based on durability and scalability -- slapping an LLM on a call center doesn't earn you a SaaS multiple.</span>And yes, skeptics noticed too. Benaich and Mrksic's read is fair: a lot of "AI roll-up" pitch decks confuse operational improvement for a new business model and assume public markets will bless service EBITDA with software multiples. That only clears if the tech truly rewires unit economics, not if you're role-playing SaaS during diligence and doing people-ops in production. The critique is healthy; it forces the bar higher than "we added a bot."
 
 So what actually has to be true? The part we learned in the trenches is that the economics don't flip until you change where the intelligence lives. When AI assists, you chip away at latency. When AI orchestrates, the middle evaporates. In procurement, that meant our 200 if-thens and "configuration jungles" were a symptom, not a system. We weren't keeping humans busy; we were papering over the fact that the context a deal needed was scattered across finance, risk, vendor, and ops, so we settled for a jumbled compromise everyone could tolerate and no one could justify. Once an orchestrator can see across those silos, policy, history, exceptions, budget, the approvals, reconciliations, and reviews-of-reviews don't get automated; they collapse.
 
@@ -324,9 +324,9 @@ The compounding template already exists (Constellation), we're just swapping PDF
 
 The trench warfare is integration, not ideation (Alpine).
 
-And the adult supervision in the room (Benaich/Mrkšić) is right to ask: are you actually changing the unit economics, or just narrating?
+And the adult supervision in the room (Benaich/Mrksic) is right to ask: are you actually changing the unit economics, or just narrating?
 
-If that's the frame, procurement was just the aperture, the first place the fog burned off enough for me to see what was really there: an economy built like a Rube Goldberg machine to carry human context across silos. AI isn't "making the machine faster." It's removing the reason the machine existed.
+<span class="highlight-text">If that's the frame, procurement was just the aperture, the first place the fog burned off enough for me to see what was really there: an economy built like a Rube Goldberg machine to carry human context across silos.</span> AI isn't "making the machine faster." It's removing the reason the machine existed.
 
 ## IX. Compound Entities (when cognitive architectures and capital structures merge)
 
@@ -340,7 +340,7 @@ That assumption is breaking.
 
 At first, I thought I was just watching procurement get eaten alive. The configs kept growing, 200 rules, 500 exceptions, special-case handling for every supplier. It was pure scar tissue, like we'd hard-coded human superstition into Python. And then we stopped fighting the edge cases and handed orchestration to the AI instead.
 
-Something subtle happened. The "rules" dissolved, but the system got better anyway. Exceptions stopped being chaos and started being memory. If one buyer discovered a vendor quirk in Entity A, that resolution showed up automatically the next morning in Entity B, C, D, across teams that didn't even know each other existed. The context started compounding faster than the company boundary itself.
+Something subtle happened. The "rules" dissolved, but the system got better anyway. Exceptions stopped being chaos and started being memory. If one buyer discovered a vendor quirk in Entity A, that resolution showed up automatically the next morning in Entity B, C, D, across teams that didn't even know each other existed. <span class="highlight-text">The context started compounding faster than the company boundary itself.</span>
 
 That's when it clicked: the unit of scale isn't the company anymore. It's the substrate.
 
@@ -396,9 +396,9 @@ Resolve a customs hold in freight → prior auth approvals accelerate in insuran
 
 Solve PO mismatches in procurement → invoice accuracy improves portfolio-wide, instantly.
 
-No meetings. No "change management." No project plans. The knowledge just… propagates.
+No meetings. No "change management." No project plans. The knowledge just... propagates.
 
-And once context stops being local, companies stop being local too. The moat isn't the software anymore. The moat is memory.
+<span class="highlight-text">And once context stops being local, companies stop being local too. The moat isn't the software anymore. The moat is memory.</span>
 
 ## XI. The Human Operating Envelope (deepened)
 
@@ -410,7 +410,7 @@ Why does the inversion happen at all? Because we hit the ceiling of human contex
 
 Orchestration exists because the substrate can hold more context, faster, and in parallel, without pretending the map fits in a meeting. The router isn't a cute flowchart; it's a brainstem making a choice every step: do I act, do I fetch, do I ask, do I escalate? Confidence, budget, risk. Ask, search, call, retry, escalate. It's brutally simple and that's why it scales. The first time you watch it stage a write, produce a human-readable trace, and roll back cleanly when the risk budget says no, you realize how much of your "process" was just fear management with extra steps.
 
-But this is where the social physics kick in. You can raise autonomy all you want; if meaning can't keep up, the system wobbles. Context velocity is how fast the substrate learns from a resolved exception and propagates the fix everywhere it applies. Meaning velocity is how fast humans metabolize that change into trust. The substrate is asymptotic, one exception resolved in Cleveland becomes the default in Calgary before lunch. Humans… aren't. We use stories and signatures to coordinate; we need to see the same lesson a few times before we stop clutching the "oh-shit handle." That gap, context racing ahead while meaning limps after, is the drag you feel when a flawless demo becomes a month of "can we just loop Legal?" It's not stupidity. It's ontological lag.
+<span class="marginnote">This is the deepest tension in the piece. <span class="inline-code">Context velocity</span> (how fast the substrate propagates fixes) is near-instant; <span class="inline-code">meaning velocity</span> (how fast humans metabolize change into trust) is glacial. The gap between these two speeds is where most deployments die.</span>But this is where the social physics kick in. You can raise autonomy all you want; if meaning can't keep up, the system wobbles. Context velocity is how fast the substrate learns from a resolved exception and propagates the fix everywhere it applies. Meaning velocity is how fast humans metabolize that change into trust. The substrate is asymptotic, one exception resolved in Cleveland becomes the default in Calgary before lunch. Humans... aren't. We use stories and signatures to coordinate; we need to see the same lesson a few times before we stop clutching the "oh-shit handle." That gap, context racing ahead while meaning limps after, is the drag you feel when a flawless demo becomes a month of "can we just loop Legal?" It's not stupidity. It's ontological lag.
 
 Designing the human operating envelope is how you close that gap without lying to anyone. The mechanics look unromantic, because they are:
 
@@ -430,10 +430,10 @@ Now, let's talk about why people really resist. It's not because the model is so
 
 This is also why the 85/15 equilibrium appears everywhere right now. Technically, you could push to 95/5 in pockets. Socially, 85/15 is where meaning keeps up. The 15% isn't really checking the AI's work; it's providing accountability, legitimacy, exception discovery, and evolutionary pressure. It's the human API surface area where relationships, license, and judgment live. Pretend you can delete it and you'll get revolt, not because people love keystrokes, but because we haven't yet built a world where a trace is sufficient ritual.
 
-You can feel the markets tugging on the same thread from a different angle. If context truly compounds faster than we can sell "tools," you stop selling software and start selling systems of authority. That's what Product-Led Acquisitions actually are: the right to invert the org chart and keep the cash flows when you do. Folks call it arbitrage because the spreadsheet says 3–5x EBITDA becomes 20–25x. But the spreadsheet is just a crude instrument for something subtler: you're buying the distribution and licenses necessary to move decision rights from meetings into the substrate. That's why roll-ups with dashboards stagnate and roll-ups with orchestrators compound. Memory moves faster than process.
+You can feel the markets tugging on the same thread from a different angle. If context truly compounds faster than we can sell "tools," you stop selling software and start selling systems of authority. That's what Product-Led Acquisitions actually are: the right to invert the org chart and keep the cash flows when you do. Folks call it arbitrage because the spreadsheet says 3--5x <span class="inline-code">EBITDA</span> becomes 20--25x. But the spreadsheet is just a crude instrument for something subtler: you're buying the distribution and licenses necessary to move decision rights from meetings into the substrate. That's why roll-ups with dashboards stagnate and roll-ups with orchestrators compound. Memory moves faster than process.
 
-There's a moral undertow here I don't want to varnish. When 85% of what we did was ferry context between silos, and the substrate ferries it better, what exactly were we doing? Some of it was skill. A lot of it was identity. We stapled a sense of worth to a serialization of keystrokes and called it a career. When the keystrokes evaporate, the person doesn't. The risk is that institutions pocket the gains and call the rest "upskilling." The opportunity is that we admit the quiet part: most of that "work" never deserved a human life, and now we have a chance, maybe our only one, to redirect human attention toward relationships, judgment, creativity, and stewardship. That requires more than a severance policy. It requires telling the truth about what changed.
+There's a moral undertow here I don't want to varnish. When 85% of what we did was ferry context between silos, and the substrate ferries it better, what exactly were we doing? Some of it was skill. A lot of it was identity. <span class="highlight-text">We stapled a sense of worth to a serialization of keystrokes and called it a career.</span> When the keystrokes evaporate, the person doesn't. The risk is that institutions pocket the gains and call the rest "upskilling." The opportunity is that we admit the quiet part: most of that "work" never deserved a human life, and now we have a chance, maybe our only one, to redirect human attention toward relationships, judgment, creativity, and stewardship. That requires more than a severance policy. It requires telling the truth about what changed.
 
 So yes, I still like the dials. Router with budgets. Reversible writes. Exception memory with names. Boring dashboards. Shadow runs. But the deeper lesson is about velocity. If context velocity (what the substrate can learn and propagate) outruns meaning velocity (what humans can accept and own), the system tears. If you slow context to spare meaning, you squander the compounding. The art is in closing that gap without gaslighting anyone: raise the receipts, widen the kill-switches, allocate "trust bandwidth" where it buys the most movement, and keep the theater honest.
 
-The winners here won't be the teams with the shiniest models. They'll be the ones who can let the substrate evolve without leaving the humans, institutions, and narratives behind, the ones who treat trust not as a slogan or a checkbox, but as the bottleneck through which the future must flow. Compute is becoming labor. Authority is becoming software. The question in front of us is embarrassingly human: can we move decision rights into the substrate at the speed our meaning can metabolize, and no faster? If we can, the 85/15 will drift toward 90/10 without anyone feeling the floor drop. If we can't, the demo will keep winning and the deployment will keep losing, and we'll blame the model for a problem that was always ours.
+The winners here won't be the teams with the shiniest models. They'll be the ones who can let the substrate evolve without leaving the humans, institutions, and narratives behind, the ones who treat trust not as a slogan or a checkbox, but as the bottleneck through which the future must flow. <span class="highlight-text">Compute is becoming labor. Authority is becoming software.</span> The question in front of us is embarrassingly human: can we move decision rights into the substrate at the speed our meaning can metabolize, and no faster? If we can, the 85/15 will drift toward 90/10 without anyone feeling the floor drop. If we can't, the demo will keep winning and the deployment will keep losing, and we'll blame the model for a problem that was always ours.
