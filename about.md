@@ -23,7 +23,8 @@ Attended [Minerva University](https://www.minerva.edu/) and lived/worked across:
 - **San Francisco** — [RaiseMe](https://www.raise.me): micro-scholarship platform helping students earn college funding for their achievements; acquired by CampusLogic in 2020 ([what I worked on](/raiseme/))
 - **Seoul** — [Kakao Ventures](https://www.kakao.vc/en): Korea's most active seed-stage VC, investing in early-stage startups across deep tech, mobile, and digital healthcare ([what I worked on](/kakao-ventures/))
 - **Hyderabad** — [Chezuba](https://www.chezuba.com): global online volunteering platform connecting skilled professionals with NGOs in 100+ countries ([market research report](/assets/Chezuba_Market_Research_Report.pdf))
-- **Berlin, London**
+- **Berlin**, 
+- **London**
 
 ### Pre-2018
 Born and raised in Addis Ababa. Spent high school convincing myself med school was the path, then discovered statistics and never looked back. 
