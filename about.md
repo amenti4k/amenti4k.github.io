@@ -9,30 +9,27 @@ author: Amenti Kenea
 # Amenti Kenea
 
 ----
-Currently sitting between engineering and our GTM team to built large enterprise deployments for [Decagon AI](https://decagon.ai).
-
-Previously a founding engineer at [Didero AI](https://didero.ai), where we built systems to process tons of POs daily through AI agents that somehow handle procurement chaos better than humans.
-
-In 2022-2024 I was learning how big tech actually works as a data scientist on the Core Ads team at Meta.
+Currently sitting between engineering and our GTM team to build <span class="highlight-text">large enterprise deployments for [Decagon AI](https://decagon.ai)</span>.
+Previously a founding engineer at <span class="highlight-text">[Didero AI](https://didero.ai)</span>, where we built systems to process tons of POs daily through AI agents that somehow handle procurement chaos better than humans.
+In 2022-2024 I was learning how big tech actually works as a <span class="highlight-text">data scientist on the Core Ads team at Meta</span>.
 
 ----
 
 ### 2018-2022: The Minerva Years
-Attended [Minerva University](https://www.minerva.edu/) and lived/worked across:
+Attended <span class="highlight-text">[Minerva University](https://www.minerva.edu/)</span> and lived/worked across:
 
-- **San Francisco** — [RaiseMe](https://www.raise.me): micro-scholarship platform helping students earn college funding for their achievements; acquired by CampusLogic in 2020 ([what I worked on](/raiseme/))
-- **Seoul** — [Kakao Ventures](https://www.kakao.vc/en): Korea's most active seed-stage VC, investing in early-stage startups across deep tech, mobile, and digital healthcare ([what I worked on](/kakao-ventures/))
-- **Hyderabad** — [Chezuba](https://www.chezuba.com): global online volunteering platform connecting skilled professionals with NGOs in 100+ countries ([market research report](/assets/Chezuba_Market_Research_Report.pdf))
-- **Berlin**, 
+- **San Francisco** — <span class="highlight-text">[RaiseMe](https://www.raise.me)</span>: micro-scholarship platform helping students earn college funding for their achievements; acquired by CampusLogic in 2020 ([what I worked on](/raiseme/))
+- **Seoul** — <span class="highlight-text">[Kakao Ventures](https://www.kakao.vc/en)</span>: Korea's most active seed-stage VC, investing in early-stage startups across deep tech, mobile, and digital healthcare ([what I worked on](/kakao-ventures/))
+- **Hyderabad** — <span class="highlight-text">[Chezuba](https://www.chezuba.com)</span>: global online volunteering platform connecting skilled professionals with NGOs in 100+ countries ([market research report](/assets/Chezuba_Market_Research_Report.pdf))
+- **Berlin**,
 - **London**
 
 ### Pre-2018
-Born and raised in Addis Ababa. Spent high school convincing myself med school was the path, then discovered statistics and never looked back. 
+Born and raised in Addis Ababa. Spent high school convincing myself med school was the path, then discovered statistics and never looked back.
 
 ### The Random Stuff
-
-- Started a run club called [dontwalkinsoho](https://dontwalkinsoho.netlify.app/) because NYC needs more people sprinting through traffic
-- Run an online radio station at [aava.club](https://aava.club/songs) putting up some songs I like everything from Ethiopian jazz to UK garage
+- Started a run club called <span class="highlight-text">[dontwalkinsoho](https://dontwalkinsoho.netlify.app/)</span> because NYC needs more people sprinting through traffic
+- Run an online radio station at <span class="highlight-text">[aava.club](https://aava.club/songs)</span> putting up some songs I like everything from Ethiopian jazz to UK garage
 - Write about stuff I like on this blog
 
 ----

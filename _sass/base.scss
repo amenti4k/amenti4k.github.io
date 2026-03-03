@@ -882,9 +882,19 @@ img[src*='#center'] {
   position: relative;
 }
 
-.post-content .highlight-text {
+.post-content .highlight-text,
+.about-page .highlight-text {
   background: var(--highlight-color);
   padding: 0 0.15rem;
+}
+
+.about-page p {
+  margin-bottom: 0.4rem;
+}
+
+.about-page h3 {
+  margin-top: 1.2rem;
+  margin-bottom: 0.3rem;
 }
 
 .post-content .inline-code {
