@@ -23,6 +23,12 @@ layout: default
                 {% endfor %}
             </div>
             {% endif %}
+
+            {% if page.image %}
+            <figure class="post-hero">
+                <img src="{{ page.image | relative_url }}" alt="{{ page.image_alt | default: page.title }}">
+            </figure>
+            {% endif %}
         </header>
 
         <div class="post-content">

@@ -710,6 +710,81 @@ img[src*='#center'] {
   margin-top: 0;
 }
 
+.featured-covers {
+  margin-bottom: 3.25rem;
+}
+
+.featured-covers-header {
+  margin-bottom: 1.25rem;
+}
+
+.featured-covers-kicker {
+  display: inline-block;
+  margin-bottom: 0.35rem;
+  color: var(--secondary-text-color);
+  font-size: 12px;
+  font-family: $code-font-family;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.featured-covers-title {
+  margin: 0;
+  font-size: 24px;
+  line-height: 1.15;
+}
+
+.featured-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.75rem 2rem;
+}
+
+.featured-post {
+  display: block;
+  border: none;
+  background: transparent;
+  text-decoration: none;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.featured-post:hover {
+  background: transparent;
+  transform: translateY(-2px);
+  opacity: 0.92;
+}
+
+.featured-post-art {
+  background: transparent;
+}
+
+.featured-post-art img {
+  width: 100%;
+  height: auto;
+  display: block;
+  background: transparent;
+}
+
+.featured-post-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  margin-top: 0.75rem;
+}
+
+.featured-post-title {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text-color);
+}
+
+.featured-post-date {
+  font-size: 13px;
+  color: var(--secondary-text-color);
+  flex-shrink: 0;
+}
+
 .tag-filter {
   margin-bottom: 3rem;
 }
@@ -846,6 +921,20 @@ img[src*='#center'] {
 .post-tag {
   font-size: 13px;
   color: var(--secondary-text-color);
+}
+
+.post-hero {
+  margin: 1.25rem 0 0;
+}
+
+.post-hero img {
+  width: 100%;
+  max-width: 100%;
+  max-height: 620px;
+  height: auto;
+  object-fit: contain;
+  display: block;
+  background: transparent;
 }
 
 .post-content {
@@ -1036,6 +1125,20 @@ a.external-link:has(img)::after,
 }
 
 @media (max-width: 768px) {
+  .featured-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .featured-post-meta {
+    display: block;
+  }
+
+  .featured-post-date {
+    display: block;
+    margin-top: 0.25rem;
+  }
+
   .back-to-top {
     bottom: 1rem;
     right: 1rem;

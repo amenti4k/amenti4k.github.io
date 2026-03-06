@@ -5,6 +5,8 @@ description: "How I Learned to Stop Worrying and Love the AI That Broke My Code 
 date: 2025-07-03
 categories: [ai]
 tags: [ai-coding, claude-code, github-copilot, cursor, productivity, real-world-experience, didero-ai]
+image: /assets/images/post-covers/labor2.png
+image_alt: Painterly editorial cover art for The Real Guide to AI Coding Assistants.
 ---
 
 # The Real Guide to AI Coding Assistants: 5 Months, 50+ Hours/Week, and Every Mistake I Made
