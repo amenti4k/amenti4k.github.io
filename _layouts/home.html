@@ -3,33 +3,6 @@ layout: default
 ---
 
 <div class="home-content">
-  <section class="featured-covers" aria-labelledby="featured-covers-title">
-    <div class="featured-covers-header">
-      <span class="featured-covers-kicker">Latest Art</span>
-      <h2 id="featured-covers-title" class="featured-covers-title">Essay covers</h2>
-    </div>
-
-    <div class="featured-grid">
-      {% assign featured_count = 0 %}
-      {% for post in site.posts %}
-        {% if post.image and featured_count < 6 %}
-          {% unless post.categories contains 'research' %}
-            <a class="featured-post" href="{{ post.url | relative_url }}">
-              <div class="featured-post-art">
-                <img src="{{ post.image | relative_url }}" alt="{{ post.image_alt | default: post.title }}">
-              </div>
-              <div class="featured-post-meta">
-                <span class="featured-post-title">{{ post.title }}</span>
-                <span class="featured-post-date">{{ post.date | date: "%Y-%m-%d" }}</span>
-              </div>
-            </a>
-            {% assign featured_count = featured_count | plus: 1 %}
-          {% endunless %}
-        {% endif %}
-      {% endfor %}
-    </div>
-  </section>
-
   <div class="tag-filter">
     <span class="tag-label">Filter by:</span>
     <button class="tag-btn active" data-tag="all">all</button>
