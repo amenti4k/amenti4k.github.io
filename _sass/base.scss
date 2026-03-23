@@ -1295,3 +1295,142 @@ kbd {
     display: none;
   }
 }
+
+/*
+ * Split Scroll — visual essay layout
+ */
+.split-scroll {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.split-scroll h1 {
+  font-family: $heading-font-family;
+  font-size: clamp(1.8rem, 5vw, 2.6rem);
+  font-weight: 700;
+  line-height: 1.15;
+  margin-bottom: 0.5rem;
+}
+
+.split-scroll-intro {
+  font-size: 15px;
+  color: var(--secondary-text-color);
+  line-height: 1.65;
+  max-width: 600px;
+  margin-bottom: 3rem;
+}
+
+.stage {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2.5rem;
+  align-items: start;
+}
+
+.stage-claim {
+  color: var(--secondary-text-color);
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+.stage-claim p {
+  margin: 0;
+}
+
+.stage-label {
+  display: block;
+  font-family: $heading-font-family;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-color);
+  margin-bottom: 0.5rem;
+}
+
+.stage-reaction {
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.stage-reaction p {
+  margin: 0;
+}
+
+.split-scroll .highlight-text {
+  background: var(--highlight-color);
+  padding: 0 0.15rem;
+}
+
+.stage-connector {
+  text-align: center;
+  color: var(--border-color);
+  font-size: 18px;
+  padding: 1.5rem 0;
+  position: relative;
+}
+
+.stage-connector::before,
+.stage-connector::after {
+  content: '';
+  display: block;
+  width: 1px;
+  height: 0.75rem;
+  background: var(--border-color);
+  margin: 0 auto;
+}
+
+.stage-connector::before {
+  margin-bottom: 0.25rem;
+}
+
+.stage-connector::after {
+  margin-top: 0.25rem;
+}
+
+.split-scroll-sources {
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border-color);
+  font-size: 13px;
+  color: var(--secondary-text-color);
+  line-height: 1.6;
+}
+
+.split-scroll-sources a {
+  color: var(--text-color);
+}
+
+.split-scroll-sources details {
+  margin-top: 1rem;
+}
+
+.split-scroll-sources summary {
+  cursor: pointer;
+  font-family: $heading-font-family;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-color);
+}
+
+.split-scroll-sources details p {
+  margin-top: 0.5rem;
+}
+
+@media (max-width: 768px) {
+  .stage {
+    display: block;
+  }
+
+  .stage-reaction {
+    margin-top: 0.75rem;
+    padding-left: 1rem;
+    border-left: 2px solid var(--border-color);
+    font-size: 14px;
+  }
+
+  .stage-connector {
+    padding: 1rem 0;
+  }
+}
