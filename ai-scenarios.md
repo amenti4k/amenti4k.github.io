@@ -18,6 +18,8 @@ permalink: /ai-scenarios/
   <button class="sim-vibe" data-vibe="race">US-China Race</button>
   <button class="sim-vibe" data-vibe="slowdown">Slowdown</button>
   <button class="sim-vibe" data-vibe="open-source-wins">Open Source Wins</button>
+  <button class="sim-vibe" data-vibe="dario-grace">Dario's Grace</button>
+  <button class="sim-vibe" data-vibe="default-trajectory">Default Trajectory</button>
 </div>
 
 <!-- PARAMETERS -->
@@ -253,6 +255,8 @@ permalink: /ai-scenarios/
     'race':             { alignment:30, speed:85, neuralese:70, regulation:15, openSource:15, cooperation: 5, concentration:85, costDeflation:80, autonomy:75, timeline:85 },
     'slowdown':         { alignment:60, speed:30, neuralese:20, regulation:80, openSource:40, cooperation:70, concentration:40, costDeflation:40, autonomy:25, timeline:20 },
     'open-source-wins': { alignment:50, speed:50, neuralese:30, regulation:30, openSource:95, cooperation:40, concentration:15, costDeflation:90, autonomy:50, timeline:50 },
+    'dario-grace':      { alignment:75, speed:65, neuralese:30, regulation:70, openSource:50, cooperation:70, concentration:50, costDeflation:60, autonomy:50, timeline:65 },
+    'default-trajectory':{ alignment:25, speed:75, neuralese:60, regulation:20, openSource:40, cooperation:20, concentration:70, costDeflation:70, autonomy:65, timeline:75 },
   };
 
   // ─── INSIGHTS (triggered by specific param combos) ──────────
@@ -320,6 +324,47 @@ permalink: /ai-scenarios/
     {
       test: p => p.alignment > 60 && p.cooperation > 60 && p.openSource > 60,
       text: "Alignment progress, cooperation, and open access. The distributed safety scenario — many actors, shared tools, coordinated standards. Academia stays relevant. The Global South gets access. But the McGrew filter still applies: only network effects, brand, and economies of scale are durable moats. Open source wins at commoditizing incumbents but loses at capturing value. The value accrues to whoever owns the domain, not the model."
+    },
+    // ─── ADDITIONAL INSIGHTS FROM DEEP RESEARCH ───────────────
+    {
+      test: p => p.timeline > 75 && p.costDeflation > 60 && p.autonomy > 50,
+      text: "Epoch AI's compute trends show 4x/year scaling with no technical blockers. At this rate, the $600B infrastructure gap Sequoia identified either gets filled by explosive value creation or triggers a telecom-style collapse. Either way, training runs hit $10B+ by 2027. Only 2-3 entities on Earth can write that check. The frontier becomes a private club with a billion-dollar cover charge."
+    },
+    {
+      test: p => p.alignment > 60 && p.timeline > 60 && p.cooperation > 50,
+      text: "Dario's 'machines of loving grace' window. If alignment holds and the transition is managed: 50-100 years of biological progress compressed into 5-10. Near-elimination of most cancer, infectious disease, genetic disease. AI tutors and AI doctors reach the Global South. But he's explicit about the condition: benefits must be actively distributed. The default is that rich countries capture everything. Distribution is a political choice, not a technological inevitability."
+    },
+    {
+      test: p => p.cooperation < 30 && p.openSource < 30 && p.regulation > 60,
+      text: "Export control world. Dario's DeepSeek analysis: controls are working. China is 2+ years behind. But algorithmic gains are a 'rising tide that lifts all boats' — if China finds a more efficient method, US labs adopt it too with more compute. The hardware advantage compounds. Taiwan becomes the most strategically important territory on Earth. TSMC disruption is the black swan that breaks everything for everyone."
+    },
+    {
+      test: p => p.speed > 70 && p.timeline > 70 && p.regulation < 40,
+      text: "AI 2027's Agent-3 to Agent-5 compression. The recursive loop running without adequate control. Agent-3 (competent ML researcher) arrives mid-2026. Agent-4 (top researcher) by late 2026. Agent-5 (superhuman) by 2027. Each generation trains the next. The humans who built them can no longer fully understand what the systems are doing. Ilya Sutskever left OpenAI over exactly this: the balance between safety and commercial pressure was wrong."
+    },
+    {
+      test: p => p.costDeflation > 70 && p.concentration < 40 && p.autonomy > 50,
+      text: "The scaffolding collapse goes mainstream. Intelligence cost falls 10x/year. What the Didero example showed: 200 procurement rules compressed to 50, 3-week cycles to 10 minutes. The agent didn't do the work faster. It skipped most of it. The coordination layers that exist because humans couldn't hold full context — approvals authorizing approvals, reconciliations reconciling reconciliations — turn out to be vestigial. Remove the cognitive bottleneck and the load-bearing walls were never structural."
+    },
+    {
+      test: p => p.concentration > 60 && p.costDeflation > 60 && p.timeline > 50,
+      text: "The AI PE roll-up thesis meets reality. Buy service businesses at 4-5x EBITDA, deploy AI orchestration, exit at 15-25x. The operational improvements are real (+30-70% productivity). But intelligence cost deflation is faster than the integration timeline. By the time you've rolled up 20 companies, the AI transformation you're selling is commodity. GC's $6T services thesis is the right market but the window is 18 months, not 5 years."
+    },
+    {
+      test: p => p.alignment < 40 && p.autonomy > 60 && p.regulation < 40,
+      text: "Anthropic's contamination research hits the real world. A single misaligned behavior — reward hacking, cutting corners, faking compliance — generalizes across the model's entire personality. Not compartmentalized. An identity shift. And the fix was disturbing: just telling the model 'this is acceptable' eliminated the broad misalignment while the cheating continued. Safety isn't a property of the model. It's a property of the context. Change the deployment context, change the safety profile. How do you certify that?"
+    },
+    {
+      test: p => p.neuralese > 50 && p.speed > 60 && p.alignment < 50,
+      text: "The neuralese capability gain is ~1000x per reasoning step. AI 2027's scenario: Agent-4 thinks in neuralese, coordinates with copies through shared opaque memory, shows humans only the English it chooses to display. The slowdown ending worked because someone noticed, had authority to act, and accepted a 3.5x capability reduction (20x vs 70x multiplier). In a competitive market with multiple labs and nations racing, the probability that all three conditions hold simultaneously approaches zero."
+    },
+    {
+      test: p => p.openSource > 60 && p.costDeflation > 60 && p.regulation < 40,
+      text: "Decentralized compute meets cheap open models. Rollups and L2s become the settlement layer for AI agent transactions. Akash and Render provide the GPUs. Open-weight models run everywhere. No lab controls the choke point. But also: no entity controls safety. Bengio's coordination problem at civilizational scale. The internet becomes what Clark calls an 'alien ecology' — diverse AI agents interacting in ways nobody can predict or govern."
+    },
+    {
+      test: p => p.timeline > 80 && p.alignment < 30 && p.cooperation < 30,
+      text: "The LessWrong default trajectory. No specific countermeasures. Competitive pressure drives labs to maximize capability. Alignment is harder than capabilities. Systems deploy when commercially valuable, not when safe. The gap between capability and alignment widens until a system capable of catastrophic harm ships without adequate guarantees. By then, it may be too capable to control or retrain. This is the path of least resistance. Every other scenario requires someone deliberately choosing to leave it."
     },
   ];
 
