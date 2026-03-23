@@ -1434,3 +1434,297 @@ kbd {
     padding: 1rem 0;
   }
 }
+
+/*
+ * AI Scenario Simulator
+ */
+.sim-wrap {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.sim-wrap h1 {
+  font-family: $heading-font-family;
+  font-size: clamp(1.8rem, 5vw, 2.6rem);
+  font-weight: 700;
+  line-height: 1.15;
+  margin-bottom: 0.5rem;
+}
+
+.sim-intro {
+  font-size: 15px;
+  color: var(--secondary-text-color);
+  line-height: 1.65;
+  max-width: 700px;
+  margin-bottom: 2rem;
+}
+
+/* Vibes */
+.sim-vibes {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.sim-vibes-label {
+  font-family: $heading-font-family;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--secondary-text-color);
+  margin-right: 0.25rem;
+}
+
+.sim-vibe {
+  font-family: $heading-font-family;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.35rem 0.75rem;
+  border: 1px solid var(--border-color);
+  border-radius: 3px;
+  background: transparent;
+  color: var(--text-color);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.sim-vibe:hover {
+  background: var(--surface-elevated-color);
+}
+
+.sim-vibe.active {
+  background: var(--text-color);
+  color: var(--background-color);
+  border-color: var(--text-color);
+}
+
+/* Parameters */
+.sim-params {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+  margin-bottom: 2.5rem;
+}
+
+.sim-param {
+  padding: 0.75rem;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+}
+
+.sim-param-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 0.35rem;
+}
+
+.sim-param label {
+  font-family: $heading-font-family;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-color);
+}
+
+.sim-param-val {
+  font-family: $code-font-family;
+  font-size: 12px;
+  color: var(--secondary-text-color);
+}
+
+.sim-param input[type="range"] {
+  width: 100%;
+  margin: 0.25rem 0;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 4px;
+  background: var(--border-color);
+  border-radius: 2px;
+  outline: none;
+}
+
+.sim-param input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--text-color);
+  cursor: pointer;
+}
+
+.sim-param input[type="range"]::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--text-color);
+  cursor: pointer;
+  border: none;
+}
+
+.sim-param-desc {
+  font-size: 11px;
+  line-height: 1.5;
+  color: var(--secondary-text-color);
+  margin-top: 0.35rem;
+  display: none;
+}
+
+.sim-param:hover .sim-param-desc,
+.sim-param:focus-within .sim-param-desc {
+  display: block;
+}
+
+/* Display: Matrix + Graph */
+.sim-display {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  min-height: 500px;
+}
+
+.sim-matrix-wrap {
+  overflow-x: auto;
+}
+
+.sim-matrix {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.sim-matrix th {
+  font-family: $heading-font-family;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--secondary-text-color);
+  text-align: center;
+  padding: 0.5rem 0.4rem;
+  border-bottom: 1px solid var(--border-color);
+  cursor: help;
+}
+
+.sim-matrix th:first-child {
+  text-align: left;
+}
+
+.sim-matrix-group td {
+  font-family: $heading-font-family;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--secondary-text-color);
+  padding: 0.75rem 0.4rem 0.25rem;
+  border: none;
+}
+
+.sim-matrix-row {
+  cursor: pointer;
+  transition: background 0.1s ease;
+}
+
+.sim-matrix-row:hover {
+  background: var(--surface-elevated-color);
+}
+
+.sim-row-active {
+  background: var(--surface-elevated-color);
+}
+
+.sim-entity-name {
+  font-size: 13px;
+  font-weight: 500;
+  padding: 0.4rem;
+  white-space: nowrap;
+}
+
+.sim-cell {
+  text-align: center;
+  padding: 0.4rem;
+  font-family: $code-font-family;
+  font-size: 12px;
+  border-radius: 2px;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.sim-cell-green { background: rgba(16, 185, 129, 0.15); color: #10b981; }
+.sim-cell-yellow { background: rgba(245, 158, 11, 0.15); color: #f59e0b; }
+.sim-cell-red { background: rgba(239, 68, 68, 0.15); color: #ef4444; }
+
+.sim-graph-wrap {
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  overflow: hidden;
+  min-height: 500px;
+  position: relative;
+}
+
+#sim-graph {
+  width: 100%;
+  height: 100%;
+}
+
+.sim-link {
+  stroke: var(--border-color);
+  stroke-width: 1;
+  stroke-opacity: 0.6;
+}
+
+.sim-node {
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
+.sim-node-label {
+  font-family: $heading-font-family;
+  font-size: 9px;
+  fill: var(--secondary-text-color);
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Insights */
+.sim-insights {
+  margin-top: 1rem;
+  min-height: 2rem;
+}
+
+.sim-insight {
+  padding: 1rem;
+  border-left: 3px solid var(--text-color);
+  background: var(--surface-elevated-color);
+  font-size: 14px;
+  line-height: 1.65;
+  margin-bottom: 0.75rem;
+  border-radius: 0 4px 4px 0;
+}
+
+.sim-insight-empty {
+  font-size: 13px;
+  color: var(--secondary-text-color);
+  font-style: italic;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .sim-params {
+    grid-template-columns: 1fr;
+  }
+
+  .sim-display {
+    grid-template-columns: 1fr;
+  }
+
+  .sim-graph-wrap {
+    min-height: 350px;
+  }
+
+  .sim-param-desc {
+    display: block;
+  }
+}
