@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ page.lang | default: site.lang | default: "en" }}">
+<html lang="{{ page.lang | default: site.lang | default: "en" }}" data-theme="light">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -38,6 +38,14 @@
     }
     </script>
 
+    <script>
+      (function() {
+        var saved = localStorage.getItem('theme');
+        var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        var theme = saved || (prefersDark ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', theme);
+      })();
+    </script>
     <link rel="stylesheet" href="{{ '/assets/main.css' | relative_url }}">
     <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
 </head>
@@ -49,6 +57,7 @@
                 <a href="{{ '/about' | relative_url }}">about</a>
                 <a href="{{ '/research' | relative_url }}">research</a>
                 <a href="{{ '/vibes' | relative_url }}">vibes</a>
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">dark</button>
             </nav>
         </header>
 
@@ -386,6 +395,27 @@
             });
         }
 
+        // Theme toggle
+        function initThemeToggle() {
+            var toggle = document.getElementById('themeToggle');
+            if (!toggle) return;
+
+            function updateToggle() {
+                var current = document.documentElement.getAttribute('data-theme');
+                toggle.textContent = current === 'dark' ? 'light' : 'dark';
+            }
+
+            updateToggle();
+
+            toggle.addEventListener('click', function() {
+                var current = document.documentElement.getAttribute('data-theme');
+                var next = current === 'dark' ? 'light' : 'dark';
+                document.documentElement.setAttribute('data-theme', next);
+                localStorage.setItem('theme', next);
+                updateToggle();
+            });
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
             convertMermaidCodeBlocks();
             if (typeof mermaid !== 'undefined') {
@@ -401,6 +431,7 @@
             initBackToTop();
             initKeyboardNav();
             initLinkPreviews();
+            initThemeToggle();
         });
     </script>
 </body>

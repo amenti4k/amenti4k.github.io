@@ -1,12 +1,11 @@
 @charset "utf-8";
 
 /*
- * Minimal theme inspired by smca.io
- * Clean, readable, programmer-focused aesthetic
+ * Light theme (default)
  */
 
 :root {
-  /* Core colors - smca.io palette */
+  /* Core colors */
   --text-color: #100F0F;
   --background-color: #ffffff;
   --highlight-color: #ffd00066;
@@ -61,5 +60,62 @@
   --code-color-18: #e0e0e0;
 
   --color-scroll-thumb: rgba(16, 15, 15, 0.2);
+  --color-shadow-soft: none;
+}
+
+/*
+ * Dark theme - Catppuccin Mocha
+ */
+
+[data-theme="dark"] {
+  --text-color: #cdd6f4;
+  --background-color: #1e1e2e;
+  --highlight-color: rgba(249, 226, 175, 0.25);
+  --muted-bg: #313244;
+
+  --surface-color: #252536;
+  --surface-elevated-color: #313244;
+
+  --border-color: rgba(205, 214, 244, 0.1);
+  --border: 1px solid var(--border-color);
+
+  --secondary-text-color: #a6adc8;
+  --secondary-text: #a6adc8;
+  --placeholder-color: #6c7086;
+
+  --link-color: #cdd6f4;
+  --link-hover-color: #cdd6f4;
+  --link-active-color: #cdd6f4;
+  --link-visited-color: #cdd6f4;
+  --link-underline-color: rgba(205, 214, 244, 0.3);
+  --base-color: #cdd6f4;
+
+  --focus-ring-color: rgba(205, 214, 244, 0.3);
+  --selection-background: rgba(249, 226, 175, 0.3);
+  --selection-text: #cdd6f4;
+
+  /* Code - Catppuccin Mocha syntax colors */
+  --inline-code-background: #313244;
+  --inline-code-color: #cdd6f4;
+  --code-color-1: #6c7086;      /* comments */
+  --code-color-2: #313244;      /* highlight bg */
+  --code-color-3: #f38ba8;      /* errors */
+  --code-color-4: #45243a;      /* error bg */
+  --code-color-5: #cba6f7;      /* keywords */
+  --code-color-6: #a6e3a1;      /* preprocessor */
+  --code-color-7: #f38ba8;      /* deletions */
+  --code-color-8: #89b4fa;      /* headings */
+  --code-color-9: #a6e3a1;      /* insertions / functions */
+  --code-color-10: #6c7086;     /* output */
+  --code-color-11: #585b70;     /* prompt */
+  --code-color-12: #cba6f7;     /* subheadings */
+  --code-color-13: #94e2d5;     /* types */
+  --code-color-14: #fab387;     /* numbers */
+  --code-color-15: #f9e2af;     /* strings */
+  --code-color-16: #89b4fa;     /* attributes */
+  --code-color-17: #f9e2af;     /* entity */
+  --code-color-18: #45475a;     /* whitespace */
+
+  --color-scroll-thumb: rgba(205, 214, 244, 0.2);
   --color-shadow-soft: none;
 }
