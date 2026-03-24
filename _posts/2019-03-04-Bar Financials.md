@@ -4,6 +4,7 @@ title: "Bar Financials"
 tags: [research]
 categories: [research]
 allowed_emails: ['amenti4k@gmail.com']
+published: false
 ---
 
 *Fickle Pickle Bar is a neighborhood bar next to the residence hall that I lived in Seoul for 4 months. Tuesday nights, the rooftops right sit was reserved for my roommates and I.* 

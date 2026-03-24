@@ -4,6 +4,7 @@ title: "Venture Capital and Globalization"
 tags: [research]
 categories: [research]
 allowed_emails: ['amenti4k@gmail.com']
+published: false
 ---
 <aside>
 💡 I used DHL's Global Connectedness Index about globalization to extrapolate to the Venture Capital industry in the global market.
