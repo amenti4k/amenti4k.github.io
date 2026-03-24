@@ -4,6 +4,19 @@ title: /research
 permalink: /research/
 ---
 
+<div style="max-width:650px;margin:0 auto 2rem;font-size:14px">
+  <div style="margin-bottom:0.5rem;padding:0.5rem 0;border-bottom:1px solid var(--border-color);display:flex;align-items:center">
+    <span style="margin-right:0.5rem;color:var(--secondary-text-color)">→</span>
+    <a href="/ai-scenarios/" style="color:var(--text-color);text-decoration:none"><span style="background:var(--highlight-color);padding:0 0.15rem">AI Scenario Simulator</span></a>
+    <span style="margin-left:auto;font-size:13px;color:var(--secondary-text-color)">interactive</span>
+  </div>
+  <div style="margin-bottom:0.5rem;padding:0.5rem 0;border-bottom:1px solid var(--border-color);display:flex;align-items:center">
+    <span style="margin-right:0.5rem;color:var(--secondary-text-color)">→</span>
+    <a href="/ai-wake-up/" style="color:var(--text-color);text-decoration:none"><span style="background:var(--highlight-color);padding:0 0.15rem">How AI Wakes Up</span></a>
+    <span style="margin-left:auto;font-size:13px;color:var(--secondary-text-color)">visual essay</span>
+  </div>
+</div>
+
 <div class="post-list">
   {% for post in site.categories.research %}
     <div class="post-item">
