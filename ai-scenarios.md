@@ -150,8 +150,8 @@ const paramDefs = [
   // GEOPOLITICAL
   { id:'cooperation',grp:'Geopolitical',name:'US-China Cooperation',type:'slider',def:25,
     desc:'Are the US and China collaborating or racing? Aschenbrenner: "whoever gets there first wins permanently." Dario: tight export controls essential. AI 2027 treaty ending: both sides\' AIs negotiate sovereignty while humans celebrate diplomacy.' },
-  { id:'exportControlsHold',grp:'Geopolitical',name:'Export Controls Hold',type:'toggle',def:true,
-    desc:'Do chip restrictions on China remain effective? Dario: controls are working — China ~2+ years behind on hardware. But DeepSeek showed algorithmic efficiency partially compensates. Hard to hide $10B+ in chip smuggling (Amodei).' },
+  { id:'exportControlsHold',grp:'Geopolitical',name:'Export Controls Hold',type:'toggle',def:false,
+    desc:'Do chip restrictions on China remain effective? Trump rescinded Biden\'s AI Diffusion Rule (May 2025) and began approving H200/MI325X sales to China case-by-case (Dec 2025). SMIC scaling 7nm to 60K wafers/month. Huawei doubling Ascend 910C output to 600K chips in 2026. Controls loosening, not tightening.' },
   { id:'taiwanStable',grp:'Geopolitical',name:'Taiwan Stable',type:'toggle',def:true,
     desc:'Is the TSMC supply chain secure? TSMC manufactures >90% of advanced AI chips. Disruption is catastrophic for both US and China. Dario calls for accelerating domestic chip fab to reduce dependency.' },
 
@@ -166,12 +166,12 @@ const paramDefs = [
     desc:'Is power infrastructure scaling fast enough? Frontier training requires hundreds of megawatts, heading to gigawatts. Datacenter builds take 2-4 years. Nuclear renaissance being discussed for AI. If energy constrains, compute scaling hits a wall.' },
 
   // GOVERNANCE
-  { id:'regulation',grp:'Governance',name:'Regulation Speed',type:'slider',def:35,
-    desc:'How fast and effective is government oversight? Bengio: legislation takes decades, window may be months. EU AI Act exists but enforcement untested. Clark: entity-based regulation beats compute thresholds. Compute governance works until algorithms replace compute as bottleneck.' },
+  { id:'regulation',grp:'Governance',name:'Regulation Speed',type:'slider',def:25,
+    desc:'How fast and effective is government oversight? EU AI Act full enforcement August 2026 (penalties up to 7% global turnover). But Trump\'s Dec 2025 EO creates AI Litigation Task Force to preempt state AI laws. US legislative framework (March 2026) pushes "light-touch" approach. Paris AI Summit revealed US-EU fracture on safety. FLI Safety Index: every company D or below on existential safety.' },
   { id:'labSafety',grp:'Governance',name:'Lab Safety Investment',type:'slider',def:30,
     desc:'What % of compute budget goes to safety? AI 2027: if labs invest >20% on safety, alignment keeps pace. Current reality: safety teams are small fractions of total headcount. Anthropic leads but even they face competitive pressure to prioritize capabilities.' },
   { id:'intlCoordination',grp:'Governance',name:'Int\'l Coordination',type:'toggle',def:false,
-    desc:'Are nations coordinating on AI safety? Bletchley/Seoul summits were first steps. Bengio: both alignment AND coordination problems must be solved before ASI. But coordination is a prisoner\'s dilemma when the prize is superintelligence.' },
+    desc:'Are nations coordinating on AI safety? Paris Summit (Feb 2025) revealed deep fractures. US objected to existential risk language and UN role. India\'s summit (Feb 2026) got 92 signatories but $200B in pledges, not binding commitments. AISI network exists but UK budget is only $65M/year. Coordination is aspirational, not operational.' },
 
   // DEPLOYMENT
   { id:'autonomy',grp:'Deployment',name:'Agent Autonomy',type:'slider',def:40,
@@ -247,7 +247,7 @@ const conns = {
 
 // ── VIBES ──────────────────────────────────────────
 const vibes = {
-  'Status Quo':       {scalingContinues:true,alignment:35,recursiveSpeed:45,neuraleseAdopted:false,dataWallBinds:false,cooperation:25,exportControlsHold:true,taiwanStable:true,costDeflation:65,concentration:60,openSource:45,energyBuildout:true,regulation:35,labSafety:30,intlCoordination:false,autonomy:40,timeline:55},
+  'Status Quo':       {scalingContinues:true,alignment:35,recursiveSpeed:45,neuraleseAdopted:false,dataWallBinds:false,cooperation:25,exportControlsHold:false,taiwanStable:true,costDeflation:65,concentration:60,openSource:45,energyBuildout:true,regulation:25,labSafety:30,intlCoordination:false,autonomy:40,timeline:55},
   'Optimist':         {scalingContinues:true,alignment:75,recursiveSpeed:55,neuraleseAdopted:false,dataWallBinds:false,cooperation:70,exportControlsHold:true,taiwanStable:true,costDeflation:70,concentration:40,openSource:60,energyBuildout:true,regulation:70,labSafety:70,intlCoordination:true,autonomy:45,timeline:55},
   'Doomer':           {scalingContinues:true,alignment:10,recursiveSpeed:90,neuraleseAdopted:true,dataWallBinds:false,cooperation:10,exportControlsHold:false,taiwanStable:true,costDeflation:90,concentration:90,openSource:15,energyBuildout:true,regulation:10,labSafety:10,intlCoordination:false,autonomy:90,timeline:95},
   'US-China Race':    {scalingContinues:true,alignment:25,recursiveSpeed:80,neuraleseAdopted:true,dataWallBinds:false,cooperation:5,exportControlsHold:true,taiwanStable:false,costDeflation:75,concentration:85,openSource:15,energyBuildout:true,regulation:15,labSafety:20,intlCoordination:false,autonomy:70,timeline:85},
