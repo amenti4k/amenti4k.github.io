@@ -5,86 +5,86 @@ permalink: /ai-scenarios/
 ---
 
 <style>
-/* Force dark theme */
-.sim{--bg:#0a0a0a;--bg2:#111;--bg3:#1a1a1e;--fg:#e0e0e0;--fg2:#888;--fg3:#555;--border:#222;--green:#10b981;--yellow:#f59e0b;--red:#ef4444;--blue:#6366f1;--cyan:#22d3ee;--purple:#8b5cf6;--pink:#ec4899;background:var(--bg);color:var(--fg);font-family:'JetBrains Mono',ui-monospace,SFMono-Regular,monospace;font-size:12px;line-height:1.5;padding:1.5rem;margin:-32px;min-height:100vh;position:relative}
+/* Uses site theme variables - works in both light and dark */
+.sim{--green:#10b981;--yellow:#f59e0b;--red:#ef4444;--blue:#6366f1;--cyan:#22d3ee;--purple:#8b5cf6;--pink:#ec4899;font-family:'JetBrains Mono',ui-monospace,SFMono-Regular,monospace;font-size:12px;line-height:1.5}
 .sim *{box-sizing:border-box}
-.sim h1{font-size:clamp(1.4rem,4vw,2rem);font-weight:700;color:#fff;margin:0 0 0.25rem;letter-spacing:-0.02em}
-.sim .sub{color:var(--fg2);font-size:11px;margin-bottom:1.5rem;max-width:600px;line-height:1.6}
+.sim h1{font-size:clamp(1.4rem,4vw,2rem);font-weight:700;color:var(--text-color);margin:0 0 0.25rem;letter-spacing:-0.02em}
+.sim .sub{color:var(--secondary-text-color);font-size:11px;margin-bottom:1.5rem;max-width:600px;line-height:1.6}
 /* Vibes */
 .sim-vibes{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:1.25rem}
-.sim-v{font-family:inherit;font-size:10px;padding:4px 10px;border:1px solid var(--border);border-radius:3px;background:transparent;color:var(--fg2);cursor:pointer;transition:all .15s;text-transform:uppercase;letter-spacing:.04em}
-.sim-v:hover{border-color:var(--fg3);color:var(--fg)}
-.sim-v.on{background:#fff;color:#000;border-color:#fff}
+.sim-v{font-family:inherit;font-size:10px;padding:4px 10px;border:1px solid var(--border-color);border-radius:3px;background:transparent;color:var(--secondary-text-color);cursor:pointer;transition:all .15s;text-transform:uppercase;letter-spacing:.04em}
+.sim-v:hover{border-color:var(--text-color);color:var(--text-color)}
+.sim-v.on{background:var(--text-color);color:var(--background-color);border-color:var(--text-color)}
 /* Side-by-side layout */
 .sim-layout{display:grid;grid-template-columns:320px 1fr;gap:1.5rem;align-items:start}
-.sim-left{position:sticky;top:1rem;max-height:calc(100vh - 2rem);overflow-y:auto;padding-right:1rem;border-right:1px solid var(--border)}
+.sim-left{position:sticky;top:1rem;max-height:calc(100vh - 2rem);overflow-y:auto;padding-right:1rem;border-right:1px solid var(--border-color)}
 .sim-left::-webkit-scrollbar{width:4px}
-.sim-left::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+.sim-left::-webkit-scrollbar-thumb{background:var(--border-color);border-radius:2px}
 .sim-right{min-width:0}
 /* Param sections */
 .sim-psec{margin-bottom:1rem}
-.sim-psec-title{font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:var(--fg3);margin-bottom:6px;padding-bottom:3px;border-bottom:1px solid var(--border)}
+.sim-psec-title{font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:var(--secondary-text-color);margin-bottom:6px;padding-bottom:3px;border-bottom:1px solid var(--border-color)}
 .sim-params{display:grid;grid-template-columns:1fr;gap:6px}
-.sim-p{background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:8px 10px;transition:border-color .15s}
-.sim-p:hover{border-color:var(--fg3)}
+.sim-p{background:var(--surface-elevated-color);border:1px solid var(--border-color);border-radius:4px;padding:8px 10px;transition:border-color .15s}
+.sim-p:hover{border-color:var(--secondary-text-color)}
 .sim-p-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
-.sim-p-name{font-size:11px;color:#fff;font-weight:500}
-.sim-p-val{font-size:10px;color:var(--fg2)}
+.sim-p-name{font-size:11px;color:var(--text-color);font-weight:500}
+.sim-p-val{font-size:10px;color:var(--secondary-text-color)}
 /* Slider */
-.sim-p input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:4px;border-radius:2px;outline:none;margin:4px 0 2px;background:var(--border)}
-.sim-p input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:12px;height:12px;border-radius:50%;background:#fff;cursor:pointer}
-.sim-p input[type=range]::-moz-range-thumb{width:12px;height:12px;border-radius:50%;background:#fff;cursor:pointer;border:none}
+.sim-p input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:4px;border-radius:2px;outline:none;margin:4px 0 2px;background:var(--border-color)}
+.sim-p input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:12px;height:12px;border-radius:50%;background:var(--text-color);cursor:pointer}
+.sim-p input[type=range]::-moz-range-thumb{width:12px;height:12px;border-radius:50%;background:var(--text-color);cursor:pointer;border:none}
 .sim-p .track{height:4px;border-radius:2px;margin-top:-8px;pointer-events:none;position:relative;z-index:0}
 /* Toggle */
 .sim-toggle{display:flex;align-items:center;gap:8px;margin-top:4px}
 .sim-toggle input{display:none}
-.sim-toggle label{width:32px;height:16px;background:var(--border);border-radius:8px;position:relative;cursor:pointer;transition:background .2s}
-.sim-toggle label::after{content:'';position:absolute;left:2px;top:2px;width:12px;height:12px;border-radius:50%;background:var(--fg3);transition:all .2s}
+.sim-toggle label{width:32px;height:16px;background:var(--border-color);border-radius:8px;position:relative;cursor:pointer;transition:background .2s}
+.sim-toggle label::after{content:'';position:absolute;left:2px;top:2px;width:12px;height:12px;border-radius:50%;background:var(--secondary-text-color);transition:all .2s}
 .sim-toggle input:checked+label{background:var(--green)}
-.sim-toggle input:checked+label::after{left:18px;background:#fff}
-.sim-toggle span{font-size:10px;color:var(--fg2)}
+.sim-toggle input:checked+label::after{left:18px;background:var(--background-color)}
+.sim-toggle span{font-size:10px;color:var(--secondary-text-color)}
 /* Desc tooltip */
-.sim-p-desc{font-size:9px;color:var(--fg3);line-height:1.5;margin-top:4px;display:none;max-height:0;overflow:hidden;transition:max-height .3s}
+.sim-p-desc{font-size:9px;color:var(--secondary-text-color);line-height:1.5;margin-top:4px;display:none;max-height:0;overflow:hidden;transition:max-height .3s}
 .sim-p:hover .sim-p-desc,.sim-p:focus-within .sim-p-desc{display:block;max-height:200px}
 /* Table */
 .sim-table-wrap{overflow-x:auto}
 .sim-t{width:100%;border-collapse:collapse}
-.sim-t th{font-size:9px;text-transform:uppercase;letter-spacing:.06em;color:var(--fg3);text-align:center;padding:6px 8px;border-bottom:1px solid var(--border);cursor:pointer;user-select:none;white-space:nowrap}
+.sim-t th{font-size:9px;text-transform:uppercase;letter-spacing:.06em;color:var(--secondary-text-color);text-align:center;padding:6px 8px;border-bottom:1px solid var(--border-color);cursor:pointer;user-select:none;white-space:nowrap}
 .sim-t th:first-child{text-align:left;cursor:default}
 .sim-t th:nth-child(2){text-align:left;width:30%}
-.sim-t th:hover:not(:first-child):not(:nth-child(2)){color:var(--fg)}
+.sim-t th:hover:not(:first-child):not(:nth-child(2)){color:var(--text-color)}
 .sim-t th .arrow{font-size:8px;margin-left:2px;opacity:.4}
 .sim-t th.sorted .arrow{opacity:1}
-.sim-grp td{font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:var(--fg3);padding:10px 8px 4px;border:none}
+.sim-grp td{font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:var(--secondary-text-color);padding:10px 8px 4px;border:none}
 .sim-row{cursor:pointer;transition:background .1s}
-.sim-row:hover{background:var(--bg2)}
-.sim-row.active{background:var(--bg3);border-left:2px solid var(--blue)}
-.sim-row td{padding:5px 8px;border-bottom:1px solid rgba(255,255,255,.03)}
-.sim-row .ename{font-size:11px;font-weight:500;color:#fff;white-space:nowrap}
-.sim-row .edesc{font-size:9px;color:var(--fg3);display:none}
+.sim-row:hover{background:var(--surface-elevated-color)}
+.sim-row.active{background:var(--surface-elevated-color);border-left:2px solid var(--blue)}
+.sim-row td{padding:5px 8px;border-bottom:1px solid var(--border-color)}
+.sim-row .ename{font-size:11px;font-weight:500;color:var(--text-color);white-space:nowrap}
+.sim-row .edesc{font-size:9px;color:var(--secondary-text-color);display:none}
 /* Heat bar */
-.hbar{height:5px;border-radius:3px;background:var(--border);overflow:hidden;min-width:60px}
+.hbar{height:5px;border-radius:3px;background:var(--border-color);overflow:hidden;min-width:60px}
 .hbar-fill{height:100%;border-radius:3px;transition:width .4s ease,background .4s ease}
 /* Score cells */
 .scell{text-align:center;font-size:11px;font-weight:500;transition:color .3s}
 .sc-g{color:var(--green)}.sc-y{color:var(--yellow)}.sc-r{color:var(--red)}
 /* Expansion */
-.sim-expand{display:none;background:var(--bg3);border-left:2px solid var(--blue)}
+.sim-expand{display:none;background:var(--surface-elevated-color);border-left:2px solid var(--blue)}
 .sim-expand.open{display:table-row}
 .sim-expand td{padding:10px 12px}
 .sim-ex-inner{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .sim-ex-conn{font-size:10px;line-height:1.7}
 .sim-ex-conn .conn-type{font-size:8px;text-transform:uppercase;letter-spacing:.05em;font-weight:600;margin-right:4px}
 .sim-ex-conn .t-supplies{color:var(--green)}.sim-ex-conn .t-depends{color:var(--red)}.sim-ex-conn .t-competes{color:var(--yellow)}.sim-ex-conn .t-regulates{color:var(--purple)}.sim-ex-conn .t-disrupts{color:var(--pink)}.sim-ex-conn .t-enables{color:var(--cyan)}
-.sim-ex-insight{font-size:10px;color:var(--fg2);line-height:1.6;border-left:2px solid var(--fg3);padding-left:10px;font-style:italic}
+.sim-ex-insight{font-size:10px;color:var(--secondary-text-color);line-height:1.6;border-left:2px solid var(--border-color);padding-left:10px;font-style:italic}
 /* Insights panel */
-.sim-insights{margin-top:1rem;border-top:1px solid var(--border);padding-top:1rem}
-.sim-insights-title{font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:var(--fg3);margin-bottom:8px}
-.sim-ins{padding:10px 12px;border-left:3px solid #fff;background:var(--bg2);font-size:11px;line-height:1.65;color:var(--fg);margin-bottom:8px;border-radius:0 3px 3px 0}
-.sim-ins-empty{color:var(--fg3);font-style:italic;font-size:11px}
+.sim-insights{margin-top:1rem;border-top:1px solid var(--border-color);padding-top:1rem}
+.sim-insights-title{font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:var(--secondary-text-color);margin-bottom:8px}
+.sim-ins{padding:10px 12px;border-left:3px solid var(--text-color);background:var(--surface-elevated-color);font-size:11px;line-height:1.65;color:var(--text-color);margin-bottom:8px;border-radius:0 3px 3px 0}
+.sim-ins-empty{color:var(--secondary-text-color);font-style:italic;font-size:11px}
 /* Mobile */
-@media(max-width:960px){.sim-layout{grid-template-columns:1fr}.sim-left{position:static;max-height:none;overflow:visible;border-right:none;padding-right:0;border-bottom:1px solid var(--border);padding-bottom:1rem;margin-bottom:1rem}}
-@media(max-width:768px){.sim{margin:-32px -16px;padding:1rem}.sim-ex-inner{grid-template-columns:1fr}.sim-p-desc{display:block;max-height:200px}}
+@media(max-width:960px){.sim-layout{grid-template-columns:1fr}.sim-left{position:static;max-height:none;overflow:visible;border-right:none;padding-right:0;border-bottom:1px solid var(--border-color);padding-bottom:1rem;margin-bottom:1rem}}
+@media(max-width:768px){.sim-ex-inner{grid-template-columns:1fr}.sim-p-desc{display:block;max-height:200px}}
 </style>
 
 <div class="sim">
@@ -337,13 +337,11 @@ function barColor(v){
 }
 
 function sliderColor(v,id){
-  // Some params are "dangerous high" (recursiveSpeed, autonomy, timeline, concentration, costDeflation)
-  // Some are "dangerous low" (alignment, labSafety, regulation, cooperation)
   const dangerHigh = ['recursiveSpeed','autonomy','timeline','concentration','costDeflation'];
   const dangerLow = ['alignment','labSafety','regulation','cooperation'];
-  if(dangerHigh.includes(id)) return v>70?'var(--red)':v>40?'var(--yellow)':'var(--green)';
-  if(dangerLow.includes(id)) return v<30?'var(--red)':v<60?'var(--yellow)':'var(--green)';
-  return 'var(--fg3)';
+  if(dangerHigh.includes(id)) return v>70?'#ef4444':v>40?'#f59e0b':'#10b981';
+  if(dangerLow.includes(id)) return v<30?'#ef4444':v<60?'#f59e0b':'#10b981';
+  return 'var(--secondary-text-color)';
 }
 
 // ── RENDER VIBES ──────────────────────────────────────
@@ -387,7 +385,7 @@ function renderParam(d){
   const v=P[d.id], c=sliderColor(v,d.id);
   return `<div class="sim-p" data-id="${d.id}">
     <div class="sim-p-head"><span class="sim-p-name">${d.name}</span><span class="sim-p-val">${v}%</span></div>
-    <input type="range" min="0" max="100" value="${v}" style="background:linear-gradient(90deg,${c} ${v}%,var(--border) ${v}%)">
+    <input type="range" min="0" max="100" value="${v}" style="background:linear-gradient(90deg,${c} ${v}%,var(--border-color) ${v}%)">
     <div class="sim-p-desc">${d.desc}</div>
   </div>`;
 }
@@ -409,7 +407,7 @@ function bindParams(){
         P[id]=parseInt(sl.value);
         el.querySelector('.sim-p-val').textContent=sl.value+'%';
         const c=sliderColor(P[id],id);
-        sl.style.background=`linear-gradient(90deg,${c} ${sl.value}%,var(--border) ${sl.value}%)`;
+        sl.style.background=`linear-gradient(90deg,${c} ${sl.value}%,var(--border-color) ${sl.value}%)`;
         clearVibes();update();
       });
     }
