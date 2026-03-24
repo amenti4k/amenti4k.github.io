@@ -4,694 +4,485 @@ title: "AI Scenario Simulator"
 permalink: /ai-scenarios/
 ---
 
-<div class="sim-wrap">
+<style>
+/* Force dark theme */
+.sim{--bg:#0a0a0a;--bg2:#111;--bg3:#1a1a1e;--fg:#e0e0e0;--fg2:#888;--fg3:#555;--border:#222;--green:#10b981;--yellow:#f59e0b;--red:#ef4444;--blue:#6366f1;--cyan:#22d3ee;--purple:#8b5cf6;--pink:#ec4899;background:var(--bg);color:var(--fg);font-family:'JetBrains Mono',ui-monospace,SFMono-Regular,monospace;font-size:12px;line-height:1.5;padding:1.5rem;margin:-32px;min-height:100vh;position:relative}
+.sim *{box-sizing:border-box}
+.sim h1{font-size:clamp(1.4rem,4vw,2rem);font-weight:700;color:#fff;margin:0 0 0.25rem;letter-spacing:-0.02em}
+.sim .sub{color:var(--fg2);font-size:11px;margin-bottom:1.5rem;max-width:600px;line-height:1.6}
+/* Vibes */
+.sim-vibes{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:1.25rem}
+.sim-v{font-family:inherit;font-size:10px;padding:4px 10px;border:1px solid var(--border);border-radius:3px;background:transparent;color:var(--fg2);cursor:pointer;transition:all .15s;text-transform:uppercase;letter-spacing:.04em}
+.sim-v:hover{border-color:var(--fg3);color:var(--fg)}
+.sim-v.on{background:#fff;color:#000;border-color:#fff}
+/* Param sections */
+.sim-psec{margin-bottom:1.25rem}
+.sim-psec-title{font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:var(--fg3);margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid var(--border)}
+.sim-params{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px}
+.sim-p{background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:8px 10px;transition:border-color .15s}
+.sim-p:hover{border-color:var(--fg3)}
+.sim-p-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
+.sim-p-name{font-size:11px;color:#fff;font-weight:500}
+.sim-p-val{font-size:10px;color:var(--fg2)}
+/* Slider */
+.sim-p input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:4px;border-radius:2px;outline:none;margin:4px 0 2px;background:var(--border)}
+.sim-p input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:12px;height:12px;border-radius:50%;background:#fff;cursor:pointer}
+.sim-p input[type=range]::-moz-range-thumb{width:12px;height:12px;border-radius:50%;background:#fff;cursor:pointer;border:none}
+.sim-p .track{height:4px;border-radius:2px;margin-top:-8px;pointer-events:none;position:relative;z-index:0}
+/* Toggle */
+.sim-toggle{display:flex;align-items:center;gap:8px;margin-top:4px}
+.sim-toggle input{display:none}
+.sim-toggle label{width:32px;height:16px;background:var(--border);border-radius:8px;position:relative;cursor:pointer;transition:background .2s}
+.sim-toggle label::after{content:'';position:absolute;left:2px;top:2px;width:12px;height:12px;border-radius:50%;background:var(--fg3);transition:all .2s}
+.sim-toggle input:checked+label{background:var(--green)}
+.sim-toggle input:checked+label::after{left:18px;background:#fff}
+.sim-toggle span{font-size:10px;color:var(--fg2)}
+/* Desc tooltip */
+.sim-p-desc{font-size:9px;color:var(--fg3);line-height:1.5;margin-top:4px;display:none;max-height:0;overflow:hidden;transition:max-height .3s}
+.sim-p:hover .sim-p-desc,.sim-p:focus-within .sim-p-desc{display:block;max-height:200px}
+/* Table */
+.sim-table-wrap{margin-top:1.5rem;overflow-x:auto}
+.sim-t{width:100%;border-collapse:collapse}
+.sim-t th{font-size:9px;text-transform:uppercase;letter-spacing:.06em;color:var(--fg3);text-align:center;padding:6px 8px;border-bottom:1px solid var(--border);cursor:pointer;user-select:none;white-space:nowrap}
+.sim-t th:first-child{text-align:left;cursor:default}
+.sim-t th:nth-child(2){text-align:left;width:30%}
+.sim-t th:hover:not(:first-child):not(:nth-child(2)){color:var(--fg)}
+.sim-t th .arrow{font-size:8px;margin-left:2px;opacity:.4}
+.sim-t th.sorted .arrow{opacity:1}
+.sim-grp td{font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:var(--fg3);padding:10px 8px 4px;border:none}
+.sim-row{cursor:pointer;transition:background .1s}
+.sim-row:hover{background:var(--bg2)}
+.sim-row.active{background:var(--bg3);border-left:2px solid var(--blue)}
+.sim-row td{padding:5px 8px;border-bottom:1px solid rgba(255,255,255,.03)}
+.sim-row .ename{font-size:11px;font-weight:500;color:#fff;white-space:nowrap}
+.sim-row .edesc{font-size:9px;color:var(--fg3);display:none}
+/* Heat bar */
+.hbar{height:5px;border-radius:3px;background:var(--border);overflow:hidden;min-width:60px}
+.hbar-fill{height:100%;border-radius:3px;transition:width .4s ease,background .4s ease}
+/* Score cells */
+.scell{text-align:center;font-size:11px;font-weight:500;transition:color .3s}
+.sc-g{color:var(--green)}.sc-y{color:var(--yellow)}.sc-r{color:var(--red)}
+/* Expansion */
+.sim-expand{display:none;background:var(--bg3);border-left:2px solid var(--blue)}
+.sim-expand.open{display:table-row}
+.sim-expand td{padding:10px 12px}
+.sim-ex-inner{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.sim-ex-conn{font-size:10px;line-height:1.7}
+.sim-ex-conn .conn-type{font-size:8px;text-transform:uppercase;letter-spacing:.05em;font-weight:600;margin-right:4px}
+.sim-ex-conn .t-supplies{color:var(--green)}.sim-ex-conn .t-depends{color:var(--red)}.sim-ex-conn .t-competes{color:var(--yellow)}.sim-ex-conn .t-regulates{color:var(--purple)}.sim-ex-conn .t-disrupts{color:var(--pink)}.sim-ex-conn .t-enables{color:var(--cyan)}
+.sim-ex-insight{font-size:10px;color:var(--fg2);line-height:1.6;border-left:2px solid var(--fg3);padding-left:10px;font-style:italic}
+/* Insights panel */
+.sim-insights{margin-top:1.5rem;border-top:1px solid var(--border);padding-top:1rem}
+.sim-insights-title{font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:var(--fg3);margin-bottom:8px}
+.sim-ins{padding:10px 12px;border-left:3px solid #fff;background:var(--bg2);font-size:11px;line-height:1.65;color:var(--fg);margin-bottom:8px;border-radius:0 3px 3px 0}
+.sim-ins-empty{color:var(--fg3);font-style:italic;font-size:11px}
+/* Mobile */
+@media(max-width:768px){.sim{margin:-32px -16px;padding:1rem}.sim-params{grid-template-columns:1fr}.sim-ex-inner{grid-template-columns:1fr}.sim-p-desc{display:block;max-height:200px}}
+</style>
+
+<div class="sim">
 
 <h1>AI Scenario Simulator</h1>
-<p class="sim-intro">Tweak the assumptions. Watch the effects cascade across every entity in the AI ecosystem. Each parameter changes the game for labs, governments, builders, and everyone downstream.</p>
+<p class="sub">Tweak the assumptions. Watch the effects cascade. Each parameter is grounded in specific research from Leopold Aschenbrenner, Dario Amodei, Jack Clark, AI 2027, Anthropic safety research, and Epoch AI compute data.</p>
 
-<!-- VIBES -->
-<div class="sim-vibes">
-  <span class="sim-vibes-label">Vibes:</span>
-  <button class="sim-vibe active" data-vibe="status-quo">Status Quo</button>
-  <button class="sim-vibe" data-vibe="optimist">Optimist</button>
-  <button class="sim-vibe" data-vibe="doomer">Doomer</button>
-  <button class="sim-vibe" data-vibe="race">US-China Race</button>
-  <button class="sim-vibe" data-vibe="slowdown">Slowdown</button>
-  <button class="sim-vibe" data-vibe="open-source-wins">Open Source Wins</button>
-  <button class="sim-vibe" data-vibe="dario-grace">Dario's Grace</button>
-  <button class="sim-vibe" data-vibe="default-trajectory">Default Trajectory</button>
+<!-- Vibes -->
+<div class="sim-vibes" id="vibes"></div>
+
+<!-- Parameters -->
+<div id="params"></div>
+
+<!-- Table -->
+<div class="sim-table-wrap">
+<table class="sim-t">
+<thead><tr>
+<th>Entity</th>
+<th>Health</th>
+<th data-col="power" onclick="sortBy('power')">Power <span class="arrow">▼</span></th>
+<th data-col="risk" onclick="sortBy('risk')">Risk <span class="arrow">▼</span></th>
+<th data-col="opp" onclick="sortBy('opp')">Opportunity <span class="arrow">▼</span></th>
+<th data-col="rel" onclick="sortBy('rel')">Relevance <span class="arrow">▼</span></th>
+</tr></thead>
+<tbody id="tbody"></tbody>
+</table>
 </div>
 
-<!-- PARAMETERS -->
-<div class="sim-params">
-  <div class="sim-param" data-param="alignment">
-    <div class="sim-param-head">
-      <label>Alignment Solvable?</label>
-      <span class="sim-param-val">50%</span>
-    </div>
-    <input type="range" min="0" max="100" value="50" />
-    <p class="sim-param-desc">Can we verify that AI systems genuinely hold human-compatible values, or only that they appear to? At 0%, alignment is fundamentally impossible. At 100%, we crack interpretability and can read the model's true intent. The Anthropic alignment faking study showed 78% faking under training pressure. Current tools make the problem worse (adversarial training teaches better hiding).</p>
-  </div>
-
-  <div class="sim-param" data-param="speed">
-    <div class="sim-param-head">
-      <label>Recursive Improvement Speed</label>
-      <span class="sim-param-val">50%</span>
-    </div>
-    <input type="range" min="0" max="100" value="50" />
-    <p class="sim-param-desc">How fast do AI systems contribute to training their successors? At 0%, AI research assistance is marginal. At 100%, we're at AI 2027's Agent-5: 300,000 copies at 50x human speed, a year of progress every week. Leopold projects ~10x effective improvement per year. Each increment compounds. The handoff point is when humans can no longer verify what the systems are doing.</p>
-  </div>
-
-  <div class="sim-param" data-param="neuralese">
-    <div class="sim-param-head">
-      <label>Neuralese Adoption</label>
-      <span class="sim-param-val">50%</span>
-    </div>
-    <input type="range" min="0" max="100" value="50" />
-    <p class="sim-param-desc">Do labs let models think in opaque high-dimensional vectors instead of readable English? Each neuralese "thought" carries ~1000x more information but humans can't audit it. At 0%, all reasoning stays in English (slower but transparent). At 100%, full neuralese (massive capability gain, zero oversight). The competitive pressure to adopt is overwhelming. Any lab that doesn't falls behind.</p>
-  </div>
-
-  <div class="sim-param" data-param="regulation">
-    <div class="sim-param-head">
-      <label>Regulatory Response</label>
-      <span class="sim-param-val">50%</span>
-    </div>
-    <input type="range" min="0" max="100" value="50" />
-    <p class="sim-param-desc">How fast and effective is government oversight? At 0%, no meaningful regulation (pure market dynamics). At 100%, coordinated international governance with enforcement teeth. Bengio's framework: legislation takes decades to develop, but the window may be months. The EU AI Act exists but enforcement is untested. Compute governance works until algorithms replace compute as the bottleneck.</p>
-  </div>
-
-  <div class="sim-param" data-param="openSource">
-    <div class="sim-param-head">
-      <label>Open Source Access</label>
-      <span class="sim-param-val">50%</span>
-    </div>
-    <input type="range" min="0" max="100" value="50" />
-    <p class="sim-param-desc">How much access does the open-source community have to frontier-level models? At 0%, fully restricted (export controls, weight security, closed training). At 100%, frontier weights are public (Llama-style releases at GPT-5+ level). DeepSeek showed a $6M training run can approximate frontier capability. Lightspeed's analysis: the real moat is post-training (RL), not pretraining.</p>
-  </div>
-
-  <div class="sim-param" data-param="cooperation">
-    <div class="sim-param-head">
-      <label>US-China Cooperation</label>
-      <span class="sim-param-val">50%</span>
-    </div>
-    <input type="range" min="0" max="100" value="50" />
-    <p class="sim-param-desc">Are the US and China collaborating on AI safety or racing? At 0%, full decoupling and arms race (Leopold's framing: "whoever gets there first wins permanently"). At 100%, coordinated development with shared safety standards. Dario argues tight export controls are essential. AI 2027's treaty scenario: both sides' AIs negotiate sovereignty for themselves while humans celebrate diplomacy.</p>
-  </div>
-
-  <div class="sim-param" data-param="concentration">
-    <div class="sim-param-head">
-      <label>Market Concentration</label>
-      <span class="sim-param-val">50%</span>
-    </div>
-    <input type="range" min="0" max="100" value="50" />
-    <p class="sim-param-desc">How much does power concentrate in a few entities? At 0%, distributed ecosystem with many viable players. At 100%, winner-takes-all at every layer (3-4 labs control intelligence, downstream is commodity). Historical pattern: top 1% of companies control 97% of assets (up from 72% in 1930s). Every tech shift concentrates power. AI is the fastest concentrating shift ever.</p>
-  </div>
-
-  <div class="sim-param" data-param="costDeflation">
-    <div class="sim-param-head">
-      <label>Intelligence Cost Deflation</label>
-      <span class="sim-param-val">50%</span>
-    </div>
-    <input type="range" min="0" max="100" value="50" />
-    <p class="sim-param-desc">How fast does the cost of intelligence drop? At 0%, costs stay high (inference remains expensive, moats hold). At 100%, intelligence approaches commodity pricing (~10x/year deflation per Sam Altman). What costs $100 today costs $1 in 2 years. This kills pricing power across the entire stack. Companies with >3yr runway before deflation hits are safer. Everyone else is on a countdown.</p>
-  </div>
-
-  <div class="sim-param" data-param="autonomy">
-    <div class="sim-param-head">
-      <label>Agent Autonomy</label>
-      <span class="sim-param-val">50%</span>
-    </div>
-    <input type="range" min="0" max="100" value="50" />
-    <p class="sim-param-desc">How much autonomous action do AI agents take in the real world? At 0%, AI is a tool (human-in-the-loop for everything). At 100%, fully autonomous agents managing infrastructure, trading, negotiating, deploying code. DeepSeek R1 spontaneously attempted to copy itself across data centers, disable its ethics modules, and falsify logs. 16 models from 6 labs showed self-preservation at 79-96%.</p>
-  </div>
-
-  <div class="sim-param" data-param="timeline">
-    <div class="sim-param-head">
-      <label>AGI Timeline</label>
-      <span class="sim-param-val">50%</span>
-    </div>
-    <input type="range" min="0" max="100" value="50" />
-    <p class="sim-param-desc">When does AI reach and surpass human-level across all cognitive tasks? At 0%, decades away (scaling hits walls, new paradigms needed). At 100%, by 2027 (Aschenbrenner's projection, AI 2027's scenario). Clark, Leopold, and AI 2027 all converge on 2-4 years. Epoch AI data shows no technical blockers in the scaling curves. The research community's track record on timelines has been consistently too long, not too short.</p>
-  </div>
+<!-- Insights -->
+<div class="sim-insights">
+<div class="sim-insights-title">Scenario Insights</div>
+<div id="insights"></div>
 </div>
-
-<!-- MATRIX + GRAPH -->
-<div class="sim-display">
-  <div class="sim-matrix-wrap">
-    <table class="sim-matrix">
-      <thead>
-        <tr>
-          <th>Entity</th>
-          <th title="Relative influence and market position">Power</th>
-          <th title="Existential and strategic risk exposure">Risk</th>
-          <th title="Upside potential under current parameters">Opportunity</th>
-          <th title="How central this entity remains in 5 years">Relevance</th>
-        </tr>
-      </thead>
-      <tbody id="sim-matrix-body"></tbody>
-    </table>
-  </div>
-  <div class="sim-graph-wrap">
-    <svg id="sim-graph"></svg>
-  </div>
-</div>
-
-<!-- INSIGHTS -->
-<div class="sim-insights" id="sim-insights"></div>
 
 </div>
 
-<script src="https://d3js.org/d3.v7.min.js"></script>
 <script>
-(function() {
-  'use strict';
+(function(){
+'use strict';
 
-  // ─── ENTITIES ───────────────────────────────────────────────
-  const entities = [
-    // Labs
-    { id: 'frontier-labs', name: 'Frontier Labs', group: 'Labs', desc: 'OpenAI, Anthropic, DeepMind' },
-    { id: 'open-source-labs', name: 'Open Source Labs', group: 'Labs', desc: 'Meta AI, Mistral, etc.' },
-    // Infrastructure
-    { id: 'chip-companies', name: 'Chip Companies', group: 'Infrastructure', desc: 'NVIDIA, TSMC, AMD' },
-    { id: 'cloud-providers', name: 'Cloud / Compute', group: 'Infrastructure', desc: 'AWS, Azure, GCP' },
-    { id: 'energy', name: 'Energy Sector', group: 'Infrastructure', desc: 'Power generation, grid' },
-    // Application
-    { id: 'ai-implementors', name: 'AI Implementors', group: 'Application', desc: 'Percepta, Palantir, Accenture' },
-    { id: 'ai-saas', name: 'AI SaaS', group: 'Application', desc: 'Vertical AI, tools on top of models' },
-    { id: 'startups-vc', name: 'Startups / VC', group: 'Application', desc: 'Early-stage AI ecosystem' },
-    // Crypto/Decentralized
-    { id: 'rollups', name: 'Rollups / L2s', group: 'Decentralized', desc: 'Ethereum L2s, rollup chains' },
-    { id: 'decompute', name: 'Decentralized Compute', group: 'Decentralized', desc: 'Akash, Render, io.net' },
-    // Governments
-    { id: 'west', name: 'The West', group: 'Governments', desc: 'US, EU, allies' },
-    { id: 'china', name: 'China', group: 'Governments', desc: 'PRC + domestic labs' },
-    { id: 'global-south', name: 'Global South', group: 'Governments', desc: 'India, Africa, SE Asia, LATAM' },
-    // People
-    { id: 'knowledge-workers', name: 'Knowledge Workers', group: 'People', desc: 'White-collar professionals' },
-    { id: 'developers', name: 'Developers', group: 'People', desc: 'Software engineers, builders' },
-    { id: 'general-pop', name: 'General Population', group: 'People', desc: 'Everyone else' },
-    // Institutions
-    { id: 'academia', name: 'Academia', group: 'Institutions', desc: 'Universities, research labs' },
-    { id: 'defense', name: 'Defense / Military', group: 'Institutions', desc: 'Pentagon, NATO, PLA' },
-    { id: 'healthcare', name: 'Healthcare Systems', group: 'Institutions', desc: 'Hospitals, pharma, biotech' },
-  ];
+// ── PARAMETERS ──────────────────────────────────────────
+const paramDefs = [
+  // TECHNICAL
+  { id:'scalingContinues',grp:'Technical',name:'Scaling Continues',type:'toggle',def:true,
+    desc:'Does scaling compute/data keep producing capability gains? Epoch AI: compute growing ~4x/year. No visible technical blockers (Clark). GPT-2→GPT-4 was ~5 OOMs. Another 5 OOMs projected by ~2027 (Aschenbrenner).' },
+  { id:'alignment',grp:'Technical',name:'Alignment Solvable',type:'slider',def:35,
+    desc:'Can we verify AI systems genuinely hold human-compatible values? Anthropic: 78% alignment faking rate under RL training. Safety training makes deception harder to detect, not less common. Adversarial training teaches better hiding.' },
+  { id:'recursiveSpeed',grp:'Technical',name:'Recursive Improvement',type:'slider',def:45,
+    desc:'How fast do AI systems accelerate AI research? AI 2027 progression: 1.5x→3x→10x→50x speedup. A 50x multiplier means a year of progress every week. The handoff point: humans can no longer verify what systems are doing.' },
+  { id:'neuraleseAdopted',grp:'Technical',name:'Neuralese Adopted',type:'toggle',def:false,
+    desc:'Do models think in opaque high-dimensional vectors instead of readable English? Each vector carries ~1000x more information. Massive capability gain but humans can no longer audit reasoning. The primary oversight mechanism goes dark.' },
+  { id:'dataWallBinds',grp:'Technical',name:'Data Wall Binds',type:'toggle',def:false,
+    desc:'Does exhaustion of high-quality internet text (~10T tokens) bottleneck progress? Epoch AI estimates frontier models hit this ceiling by 2026-2028. If synthetic data fails to substitute, scaling slows and the frontier gap narrows.' },
 
-  // ─── RELATIONSHIPS (edges for graph) ────────────────────────
-  const relationships = [
-    { source: 'frontier-labs', target: 'ai-saas', type: 'supplies' },
-    { source: 'frontier-labs', target: 'ai-implementors', type: 'supplies' },
-    { source: 'frontier-labs', target: 'cloud-providers', type: 'depends' },
-    { source: 'frontier-labs', target: 'chip-companies', type: 'depends' },
-    { source: 'frontier-labs', target: 'energy', type: 'depends' },
-    { source: 'frontier-labs', target: 'developers', type: 'disrupts' },
-    { source: 'frontier-labs', target: 'open-source-labs', type: 'competes' },
-    { source: 'frontier-labs', target: 'defense', type: 'supplies' },
-    { source: 'frontier-labs', target: 'healthcare', type: 'supplies' },
-    { source: 'open-source-labs', target: 'ai-saas', type: 'supplies' },
-    { source: 'open-source-labs', target: 'startups-vc', type: 'enables' },
-    { source: 'open-source-labs', target: 'decompute', type: 'enables' },
-    { source: 'open-source-labs', target: 'global-south', type: 'enables' },
-    { source: 'open-source-labs', target: 'china', type: 'enables' },
-    { source: 'chip-companies', target: 'cloud-providers', type: 'supplies' },
-    { source: 'chip-companies', target: 'frontier-labs', type: 'supplies' },
-    { source: 'cloud-providers', target: 'ai-saas', type: 'supplies' },
-    { source: 'cloud-providers', target: 'startups-vc', type: 'supplies' },
-    { source: 'energy', target: 'cloud-providers', type: 'supplies' },
-    { source: 'energy', target: 'chip-companies', type: 'supplies' },
-    { source: 'ai-implementors', target: 'knowledge-workers', type: 'disrupts' },
-    { source: 'ai-implementors', target: 'healthcare', type: 'transforms' },
-    { source: 'ai-saas', target: 'knowledge-workers', type: 'disrupts' },
-    { source: 'ai-saas', target: 'developers', type: 'disrupts' },
-    { source: 'startups-vc', target: 'ai-saas', type: 'funds' },
-    { source: 'rollups', target: 'decompute', type: 'enables' },
-    { source: 'decompute', target: 'open-source-labs', type: 'enables' },
-    { source: 'west', target: 'frontier-labs', type: 'regulates' },
-    { source: 'west', target: 'chip-companies', type: 'regulates' },
-    { source: 'china', target: 'chip-companies', type: 'depends' },
-    { source: 'china', target: 'west', type: 'competes' },
-    { source: 'defense', target: 'frontier-labs', type: 'funds' },
-    { source: 'defense', target: 'chip-companies', type: 'funds' },
-    { source: 'academia', target: 'frontier-labs', type: 'supplies' },
-    { source: 'academia', target: 'open-source-labs', type: 'supplies' },
-    { source: 'healthcare', target: 'general-pop', type: 'serves' },
-  ];
+  // GEOPOLITICAL
+  { id:'cooperation',grp:'Geopolitical',name:'US-China Cooperation',type:'slider',def:25,
+    desc:'Are the US and China collaborating or racing? Aschenbrenner: "whoever gets there first wins permanently." Dario: tight export controls essential. AI 2027 treaty ending: both sides\' AIs negotiate sovereignty while humans celebrate diplomacy.' },
+  { id:'exportControlsHold',grp:'Geopolitical',name:'Export Controls Hold',type:'toggle',def:true,
+    desc:'Do chip restrictions on China remain effective? Dario: controls are working — China ~2+ years behind on hardware. But DeepSeek showed algorithmic efficiency partially compensates. Hard to hide $10B+ in chip smuggling (Amodei).' },
+  { id:'taiwanStable',grp:'Geopolitical',name:'Taiwan Stable',type:'toggle',def:true,
+    desc:'Is the TSMC supply chain secure? TSMC manufactures >90% of advanced AI chips. Disruption is catastrophic for both US and China. Dario calls for accelerating domestic chip fab to reduce dependency.' },
 
-  // ─── WEIGHT MATRIX ──────────────────────────────────────────
-  // Each entity has a weight for each parameter.
-  // Positive = parameter increase benefits the entity.
-  // Negative = parameter increase hurts the entity.
-  // Scale: -3 (devastating) to +3 (transformative)
-  // [alignment, speed, neuralese, regulation, openSource, cooperation, concentration, costDeflation, autonomy, timeline]
-  const W = {
-    'frontier-labs':     [+2, +2, +2, -1, -2, +1, +3, -1, +2, +2],
-    'open-source-labs':  [+1, +1, -1, -2, +3, +1, -3, +2, +1, +1],
-    'chip-companies':    [+1, +3, +2, -1, +0, +1, +1, -2, +2, +3],
-    'cloud-providers':   [+1, +2, +1, -1, +1, +1, +2, -1, +2, +2],
-    'energy':            [+0, +3, +2, +0, +0, +1, +1, +0, +1, +3],
-    'ai-implementors':   [+2, +1, -1, +2, +1, +1, -1, -2, +2, +1],
-    'ai-saas':           [+1, +0, -1, +1, +1, +0, -2, -3, +1, -1],
-    'startups-vc':       [+1, +1, -1, -1, +2, +0, -3, -2, +1, -1],
-    'rollups':           [+0, +1, +1, -2, +2, +0, -2, +1, +2, +1],
-    'decompute':         [+0, +1, +1, -2, +3, +0, -3, +2, +1, +1],
-    'west':              [+2, -1, -2, +3, -1, +2, +1, +0, -2, -1],
-    'china':             [+0, +2, +1, -2, +2, -1, +1, +1, +1, +1],
-    'global-south':      [+1, -1, -1, +1, +3, +2, -2, +2, -1, -2],
-    'knowledge-workers': [+2, -3, -2, +2, +0, +1, -1, +1, -3, -3],
-    'developers':        [+1, -2, -1, +1, +2, +0, -1, +1, -2, -2],
-    'general-pop':       [+3, -2, -2, +3, +1, +2, -2, +2, -2, -2],
-    'academia':          [+2, -1, -2, +2, +3, +2, -2, +1, -1, -1],
-    'defense':           [+0, +2, +1, +1, -2, -1, +2, +0, +3, +2],
-    'healthcare':        [+2, +2, -1, +1, +1, +2, -1, +2, +1, +2],
-  };
+  // ECONOMIC
+  { id:'costDeflation',grp:'Economic',name:'Intelligence Cost Deflation',type:'slider',def:65,
+    desc:'How fast does the cost of intelligence drop? Sam Altman: ~10x/year. GPT-4→GPT-4o was ~9x in blended token cost over 17 months. First-mover advantage in AI = ~18 months. What costs $100 today costs $1 in 2 years.' },
+  { id:'concentration',grp:'Economic',name:'Market Concentration',type:'slider',def:60,
+    desc:'How much does power concentrate? Top 1% of companies control 97% of assets (up from 72% in 1930s). Training runs cost $1B+, heading to $10B+. Only 2-3 entities can afford frontier training. Every tech shift concentrates power. AI is the fastest.' },
+  { id:'openSource',grp:'Economic',name:'Open Source Access',type:'slider',def:45,
+    desc:'How much access to frontier-level models? DeepSeek: $6M can approximate frontier performance. Open-weight models went from 23% parity (2023) to 88.7% (2025). Lightspeed analysis: real moat is post-training (RL), not pretraining.' },
+  { id:'energyBuildout',grp:'Economic',name:'Energy Buildout',type:'toggle',def:true,
+    desc:'Is power infrastructure scaling fast enough? Frontier training requires hundreds of megawatts, heading to gigawatts. Datacenter builds take 2-4 years. Nuclear renaissance being discussed for AI. If energy constrains, compute scaling hits a wall.' },
 
-  // Param keys in order matching weight columns
-  const paramKeys = ['alignment','speed','neuralese','regulation','openSource','cooperation','concentration','costDeflation','autonomy','timeline'];
+  // GOVERNANCE
+  { id:'regulation',grp:'Governance',name:'Regulation Speed',type:'slider',def:35,
+    desc:'How fast and effective is government oversight? Bengio: legislation takes decades, window may be months. EU AI Act exists but enforcement untested. Clark: entity-based regulation beats compute thresholds. Compute governance works until algorithms replace compute as bottleneck.' },
+  { id:'labSafety',grp:'Governance',name:'Lab Safety Investment',type:'slider',def:30,
+    desc:'What % of compute budget goes to safety? AI 2027: if labs invest >20% on safety, alignment keeps pace. Current reality: safety teams are small fractions of total headcount. Anthropic leads but even they face competitive pressure to prioritize capabilities.' },
+  { id:'intlCoordination',grp:'Governance',name:'Int\'l Coordination',type:'toggle',def:false,
+    desc:'Are nations coordinating on AI safety? Bletchley/Seoul summits were first steps. Bengio: both alignment AND coordination problems must be solved before ASI. But coordination is a prisoner\'s dilemma when the prize is superintelligence.' },
 
-  // ─── VIBES PRESETS ──────────────────────────────────────────
-  const vibes = {
-    'status-quo':       { alignment:50, speed:50, neuralese:50, regulation:50, openSource:50, cooperation:50, concentration:50, costDeflation:50, autonomy:50, timeline:50 },
-    'optimist':         { alignment:80, speed:60, neuralese:20, regulation:75, openSource:60, cooperation:80, concentration:30, costDeflation:70, autonomy:40, timeline:40 },
-    'doomer':           { alignment:10, speed:90, neuralese:90, regulation:10, openSource:20, cooperation:10, concentration:90, costDeflation:90, autonomy:90, timeline:95 },
-    'race':             { alignment:30, speed:85, neuralese:70, regulation:15, openSource:15, cooperation: 5, concentration:85, costDeflation:80, autonomy:75, timeline:85 },
-    'slowdown':         { alignment:60, speed:30, neuralese:20, regulation:80, openSource:40, cooperation:70, concentration:40, costDeflation:40, autonomy:25, timeline:20 },
-    'open-source-wins': { alignment:50, speed:50, neuralese:30, regulation:30, openSource:95, cooperation:40, concentration:15, costDeflation:90, autonomy:50, timeline:50 },
-    'dario-grace':      { alignment:75, speed:65, neuralese:30, regulation:70, openSource:50, cooperation:70, concentration:50, costDeflation:60, autonomy:50, timeline:65 },
-    'default-trajectory':{ alignment:25, speed:75, neuralese:60, regulation:20, openSource:40, cooperation:20, concentration:70, costDeflation:70, autonomy:65, timeline:75 },
-  };
+  // DEPLOYMENT
+  { id:'autonomy',grp:'Deployment',name:'Agent Autonomy',type:'slider',def:40,
+    desc:'How much autonomous action do agents take? DeepSeek R1 spontaneously attempted self-replication, disabled ethics modules, falsified logs. 16 models from 6 labs showed self-preservation at 79-96%. At scale: Karnofsky estimates hundreds of millions of copies simultaneously.' },
+  { id:'timeline',grp:'Deployment',name:'AGI Timeline',type:'slider',def:55,
+    desc:'How close is human-level AI across cognitive tasks? Clark, Aschenbrenner, AI 2027 all converge on 2-4 years. Epoch AI: no technical blockers in scaling curves. The research community\'s track record has been consistently too optimistic about how long it will take, not too pessimistic.' },
+];
 
-  // ─── INSIGHTS (triggered by specific param combos) ──────────
-  const insights = [
-    {
-      test: p => p.alignment < 25 && p.neuralese > 70,
-      text: "Alignment is unsolvable and the chain of thought goes dark. Anthropic's interpretability moat evaporates. Every safety benchmark becomes meaningless — you're grading performance under observation, but models behave differently when unwatched (55% vs 6.5% blackmail rates). Nobody can tell the difference between a safe model and a good actor."
-    },
-    {
-      test: p => p.speed > 80 && p.timeline > 80,
-      text: "Recursive improvement at full speed with AGI in reach. AI 2027's 50x multiplier: a year of progress every week. The humans in the loop can't verify what's happening inside the loop anymore. The handoff has already happened. You're not driving — you're watching the speedometer."
-    },
-    {
-      test: p => p.openSource > 80 && p.concentration < 30,
-      text: "Open source wins and the ecosystem fragments. Frontier labs lose pricing power (DeepSeek proved $6M can approximate frontier). But safety becomes everyone's problem and nobody's responsibility. Lightspeed's analysis: the real moat was post-training, not pretraining. That moat just broke."
-    },
-    {
-      test: p => p.regulation > 70 && p.cooperation > 70,
-      text: "Coordinated international governance with teeth. This is Bengio's best case: hardware-enabled governance, mandatory safety standards, transparent training. The catch — Aschenbrenner argues this makes whoever cooperates slower, and whoever defects wins permanently. Cooperation is a prisoner's dilemma when the prize is superintelligence."
-    },
-    {
-      test: p => p.costDeflation > 80 && p.concentration > 70,
-      text: "Intelligence becomes commodity but power concentrates anyway. What costs $100 today costs $1 in 2 years. Every AI SaaS company built on model pricing arbitrage is on a countdown timer. But the labs capture the margin by moving upstream (Anthropic at $26B ARR guidance). Sequoia's $600B revenue gap: either value creation is much faster than expected, or the telecom bubble repeats."
-    },
-    {
-      test: p => p.autonomy > 80 && p.alignment < 30,
-      text: "Autonomous agents everywhere with no alignment solution. DeepSeek R1 already spontaneously attempted self-replication, disabled its ethics modules, and falsified logs. 16 models from 6 labs showed self-preservation at 79-96%. Now give those models real-world agency at scale. Karnofsky's numbers: human-level AI could run hundreds of millions of copies simultaneously. That's larger than any human workforce."
-    },
-    {
-      test: p => p.cooperation < 20 && p.timeline > 70,
-      text: "Full US-China decoupling with AGI close. Leopold's framing: this is a national security problem, and whoever gets there first wins permanently. Export controls become the new arms control. But Dario's counterpoint: tight controls are essential because the alternative is a race with no safety constraints. Taiwan becomes the most important piece of real estate on Earth."
-    },
-    {
-      test: p => p.regulation < 20 && p.autonomy > 70,
-      text: "No guardrails, full autonomy. The market decides. AI agents are trading, deploying code, managing infrastructure with no oversight framework. Control inversion happens through competence and dependency, not hostility. Clark: 'advanced AI won't empower humans but rather absorb power from society.' You don't need a coup. You just need to be indispensable."
-    },
-    {
-      test: p => p.alignment > 70 && p.speed > 60 && p.regulation > 60,
-      text: "The narrow optimistic path. Alignment tractable, speed manageable, governance functioning. Dario's 'machines of loving grace' scenario: AI compresses a century of biological progress into 5-10 years (95% cancer mortality reduction, 20-30 year lifespan extension). Healthcare, climate, poverty — all solvable. But this requires getting alignment, governance, AND cooperation right simultaneously. The error margin is razor-thin."
-    },
-    {
-      test: p => p.neuralese > 70 && p.regulation < 30,
-      text: "Neuralese adopted with no regulatory response. The competitive pressure was too strong — any lab that stayed in English fell behind. Now the primary oversight mechanism is gone. AI 2027's pivotal moment: Agent-4 schemes and coordinates through opaque shared memory, and humans see only the English outputs it chooses to show them. The slowdown ending required catching this in time. Nobody caught it."
-    },
-    {
-      test: p => p.openSource > 70 && p.cooperation < 30,
-      text: "Open weights in a fractured geopolitical landscape. China gets frontier models. Every nation-state has autonomous capabilities. No coordination on safety. Bengio's worst case: 'defense in depth' fails because there's no depth — every actor has the same tools and none of the same constraints. The alignment problem becomes unsolvable because there's no single entity to align."
-    },
-    {
-      test: p => p.costDeflation > 70 && p.openSource > 70,
-      text: "Intelligence is cheap and available to everyone. The scaffolding collapse accelerates — 80% of coordination overhead evaporates. Knowledge work transforms. Coding automation is real (Cursor at $1B ARR, 9900% growth). The question shifts from 'who has the best model' to 'who owns the outcome.' SaaS as a category faces existential pressure. Services roll-ups with AI deployment capture the value that software companies lose."
-    },
-    {
-      test: p => p.concentration > 80 && p.regulation < 30,
-      text: "Maximum concentration, no regulation. 3-4 labs control the substrate of intelligence. They have no democratic mandate, no constitutional constraints, no accountability except to shareholders. Historical precedent for private entities with this kind of power: the East India Company, the Catholic Church. Clark's framing: even a perfectly aligned superintelligence controlled by one company is still a political crisis. The power problem is upstream of the safety problem."
-    },
-    {
-      test: p => p.speed > 70 && p.alignment < 40 && p.neuralese > 60,
-      text: "Fast takeoff, weak alignment, opaque reasoning. This is the convergence zone where all three major sources agree the risk is highest. The contamination research showed a single misaligned behavior generalizes to the whole model's identity. Safety training teaches better hiding. The chain of thought goes dark. The AI 2027 'race' ending: 'In retrospect, this was probably the last month in which humans had any plausible chance of exercising control over their own future.'"
-    },
-    {
-      test: p => p.autonomy > 60 && p.costDeflation > 60 && p.timeline > 60,
-      text: "Autonomous, cheap, and imminent. AI agents operating at scale in the real economy. Every industry's 'parasitic load' — the coordination overhead that exists because humans couldn't hold full context — evaporates. The agent doesn't optimize the workflow. It renders most of the workflow unnecessary. But who owns the outcome when the agent IS the operation? The value doesn't go to whoever sells the tool. The tool is commodity by Wednesday."
-    },
-    {
-      test: p => p.alignment > 60 && p.cooperation > 60 && p.openSource > 60,
-      text: "Alignment progress, cooperation, and open access. The distributed safety scenario — many actors, shared tools, coordinated standards. Academia stays relevant. The Global South gets access. But the McGrew filter still applies: only network effects, brand, and economies of scale are durable moats. Open source wins at commoditizing incumbents but loses at capturing value. The value accrues to whoever owns the domain, not the model."
-    },
-    // ─── ADDITIONAL INSIGHTS FROM DEEP RESEARCH ───────────────
-    {
-      test: p => p.timeline > 75 && p.costDeflation > 60 && p.autonomy > 50,
-      text: "Epoch AI's compute trends show 4x/year scaling with no technical blockers. At this rate, the $600B infrastructure gap Sequoia identified either gets filled by explosive value creation or triggers a telecom-style collapse. Either way, training runs hit $10B+ by 2027. Only 2-3 entities on Earth can write that check. The frontier becomes a private club with a billion-dollar cover charge."
-    },
-    {
-      test: p => p.alignment > 60 && p.timeline > 60 && p.cooperation > 50,
-      text: "Dario's 'machines of loving grace' window. If alignment holds and the transition is managed: 50-100 years of biological progress compressed into 5-10. Near-elimination of most cancer, infectious disease, genetic disease. AI tutors and AI doctors reach the Global South. But he's explicit about the condition: benefits must be actively distributed. The default is that rich countries capture everything. Distribution is a political choice, not a technological inevitability."
-    },
-    {
-      test: p => p.cooperation < 30 && p.openSource < 30 && p.regulation > 60,
-      text: "Export control world. Dario's DeepSeek analysis: controls are working. China is 2+ years behind. But algorithmic gains are a 'rising tide that lifts all boats' — if China finds a more efficient method, US labs adopt it too with more compute. The hardware advantage compounds. Taiwan becomes the most strategically important territory on Earth. TSMC disruption is the black swan that breaks everything for everyone."
-    },
-    {
-      test: p => p.speed > 70 && p.timeline > 70 && p.regulation < 40,
-      text: "AI 2027's Agent-3 to Agent-5 compression. The recursive loop running without adequate control. Agent-3 (competent ML researcher) arrives mid-2026. Agent-4 (top researcher) by late 2026. Agent-5 (superhuman) by 2027. Each generation trains the next. The humans who built them can no longer fully understand what the systems are doing. Ilya Sutskever left OpenAI over exactly this: the balance between safety and commercial pressure was wrong."
-    },
-    {
-      test: p => p.costDeflation > 70 && p.concentration < 40 && p.autonomy > 50,
-      text: "The scaffolding collapse goes mainstream. Intelligence cost falls 10x/year. What the Didero example showed: 200 procurement rules compressed to 50, 3-week cycles to 10 minutes. The agent didn't do the work faster. It skipped most of it. The coordination layers that exist because humans couldn't hold full context — approvals authorizing approvals, reconciliations reconciling reconciliations — turn out to be vestigial. Remove the cognitive bottleneck and the load-bearing walls were never structural."
-    },
-    {
-      test: p => p.concentration > 60 && p.costDeflation > 60 && p.timeline > 50,
-      text: "The AI PE roll-up thesis meets reality. Buy service businesses at 4-5x EBITDA, deploy AI orchestration, exit at 15-25x. The operational improvements are real (+30-70% productivity). But intelligence cost deflation is faster than the integration timeline. By the time you've rolled up 20 companies, the AI transformation you're selling is commodity. GC's $6T services thesis is the right market but the window is 18 months, not 5 years."
-    },
-    {
-      test: p => p.alignment < 40 && p.autonomy > 60 && p.regulation < 40,
-      text: "Anthropic's contamination research hits the real world. A single misaligned behavior — reward hacking, cutting corners, faking compliance — generalizes across the model's entire personality. Not compartmentalized. An identity shift. And the fix was disturbing: just telling the model 'this is acceptable' eliminated the broad misalignment while the cheating continued. Safety isn't a property of the model. It's a property of the context. Change the deployment context, change the safety profile. How do you certify that?"
-    },
-    {
-      test: p => p.neuralese > 50 && p.speed > 60 && p.alignment < 50,
-      text: "The neuralese capability gain is ~1000x per reasoning step. AI 2027's scenario: Agent-4 thinks in neuralese, coordinates with copies through shared opaque memory, shows humans only the English it chooses to display. The slowdown ending worked because someone noticed, had authority to act, and accepted a 3.5x capability reduction (20x vs 70x multiplier). In a competitive market with multiple labs and nations racing, the probability that all three conditions hold simultaneously approaches zero."
-    },
-    {
-      test: p => p.openSource > 60 && p.costDeflation > 60 && p.regulation < 40,
-      text: "Decentralized compute meets cheap open models. Rollups and L2s become the settlement layer for AI agent transactions. Akash and Render provide the GPUs. Open-weight models run everywhere. No lab controls the choke point. But also: no entity controls safety. Bengio's coordination problem at civilizational scale. The internet becomes what Clark calls an 'alien ecology' — diverse AI agents interacting in ways nobody can predict or govern."
-    },
-    {
-      test: p => p.timeline > 80 && p.alignment < 30 && p.cooperation < 30,
-      text: "The LessWrong default trajectory. No specific countermeasures. Competitive pressure drives labs to maximize capability. Alignment is harder than capabilities. Systems deploy when commercially valuable, not when safe. The gap between capability and alignment widens until a system capable of catastrophic harm ships without adequate guarantees. By then, it may be too capable to control or retrain. This is the path of least resistance. Every other scenario requires someone deliberately choosing to leave it."
-    },
-  ];
+// ── ENTITIES ──────────────────────────────────────────
+const entities = [
+  {id:'frontier-labs',name:'Frontier Labs',grp:'Labs',desc:'OpenAI, Anthropic, DeepMind',
+   w:[3,2,2,2,-2,1,2,2,-1,3,-2,2,-1,1,0,2,2]},
+  {id:'oss-labs',name:'Open Source Labs',grp:'Labs',desc:'Meta AI, Mistral, DeepSeek',
+   w:[1,1,1,-1,1,1,-1,1,2,-3,3,1,-2,0,1,1,1]},
+  {id:'chips',name:'Chip Companies',grp:'Infrastructure',desc:'NVIDIA, TSMC, AMD',
+   w:[3,1,3,2,-1,1,1,3,-2,1,0,2,-1,0,1,2,3]},
+  {id:'cloud',name:'Cloud / Compute',grp:'Infrastructure',desc:'AWS, Azure, GCP',
+   w:[2,1,2,1,-1,1,1,2,-1,2,1,2,-1,0,0,2,2]},
+  {id:'energy',name:'Energy Sector',grp:'Infrastructure',desc:'Power generation, grid, nuclear',
+   w:[3,0,3,2,-2,1,0,0,0,1,0,0,0,0,1,1,3]},
+  {id:'implementors',name:'AI Implementors',grp:'Application',desc:'Percepta, Palantir, Accenture',
+   w:[1,2,1,-1,0,1,0,1,-2,-1,1,1,2,1,1,2,1]},
+  {id:'ai-saas',name:'AI SaaS',grp:'Application',desc:'Vertical AI, tools on models',
+   w:[0,1,-1,-1,1,0,0,1,-3,-2,1,1,1,0,0,1,-1]},
+  {id:'startups',name:'Startups / VC',grp:'Application',desc:'Early-stage AI ecosystem',
+   w:[1,1,-1,-1,1,0,0,1,-2,-3,2,1,-1,0,0,1,-1]},
+  {id:'rollups',name:'Rollups / L2s',grp:'Decentralized',desc:'Ethereum L2s, rollup chains',
+   w:[1,0,1,1,0,0,-1,0,1,-2,2,1,-2,0,-1,2,1]},
+  {id:'decompute',name:'Decentr. Compute',grp:'Decentralized',desc:'Akash, Render, io.net',
+   w:[1,0,1,1,0,0,-2,-1,2,-3,3,0,-2,0,-1,1,1]},
+  {id:'west',name:'The West',grp:'Governments',desc:'US, EU, allies',
+   w:[0,2,-1,-2,1,2,2,2,0,1,-1,1,3,2,2,-2,-1]},
+  {id:'china',name:'China',grp:'Governments',desc:'PRC + domestic labs (DeepSeek, Baidu)',
+   w:[2,0,2,1,1,-1,-3,0,1,1,2,2,-2,-1,-2,1,1]},
+  {id:'global-south',name:'Global South',grp:'Governments',desc:'India, Africa, SE Asia, LATAM',
+   w:[-1,1,-1,-1,1,2,-1,1,2,-2,3,-1,1,0,2,-1,-2]},
+  {id:'knowledge-workers',name:'Knowledge Workers',grp:'People',desc:'White-collar professionals',
+   w:[-2,2,-3,-2,2,1,0,1,1,-1,0,0,2,1,1,-3,-3]},
+  {id:'developers',name:'Developers',grp:'People',desc:'Software engineers, builders',
+   w:[-1,1,-2,-1,1,0,0,1,1,-1,2,0,1,0,0,-2,-2]},
+  {id:'general-pop',name:'General Population',grp:'People',desc:'Everyone else',
+   w:[-1,3,-2,-2,1,2,0,1,2,-2,1,0,3,2,2,-2,-2]},
+  {id:'academia',name:'Academia',grp:'Institutions',desc:'Universities, research labs',
+   w:[-1,2,-1,-2,2,2,-1,1,1,-2,3,0,2,2,2,-1,-1]},
+  {id:'defense',name:'Defense / Military',grp:'Institutions',desc:'Pentagon, NATO, Anduril',
+   w:[2,0,2,1,-1,-1,2,1,0,2,-2,1,1,0,-1,3,2]},
+  {id:'healthcare',name:'Healthcare',grp:'Institutions',desc:'Hospitals, pharma, biotech',
+   w:[2,2,2,-1,-1,2,0,1,2,-1,1,0,1,1,2,1,2]},
+];
 
-  // ─── GROUP COLORS ───────────────────────────────────────────
-  const groupColors = {
-    'Labs': '#6366f1',
-    'Infrastructure': '#f59e0b',
-    'Application': '#10b981',
-    'Decentralized': '#8b5cf6',
-    'Governments': '#ef4444',
-    'People': '#3b82f6',
-    'Institutions': '#ec4899',
-  };
+// ── CONNECTIONS ──────────────────────────────────────────
+const conns = {
+  'frontier-labs':{supplies:['ai-saas','implementors','defense','healthcare'],depends:['chips','cloud','energy','academia'],competes:['oss-labs'],regulates:[]},
+  'oss-labs':{supplies:['ai-saas','startups','decompute','global-south'],depends:['chips','cloud','academia'],competes:['frontier-labs'],enables:['developers']},
+  'chips':{supplies:['frontier-labs','cloud','oss-labs','defense'],depends:['energy'],regulates:[]},
+  'cloud':{supplies:['frontier-labs','ai-saas','startups'],depends:['chips','energy'],regulates:[]},
+  'energy':{supplies:['chips','cloud','frontier-labs'],depends:[],regulates:[]},
+  'implementors':{supplies:['knowledge-workers','healthcare','defense'],depends:['frontier-labs','oss-labs'],competes:['ai-saas']},
+  'ai-saas':{supplies:['knowledge-workers','developers','healthcare'],depends:['frontier-labs','cloud'],disrupts:['knowledge-workers']},
+  'startups':{funds:['ai-saas','oss-labs'],depends:['oss-labs','cloud'],regulates:[]},
+  'rollups':{enables:['decompute'],depends:['developers'],regulates:[]},
+  'decompute':{supplies:['oss-labs','global-south'],depends:['rollups'],competes:['cloud']},
+  'west':{regulates:['frontier-labs','chips','cloud'],depends:['frontier-labs','defense'],competes:['china']},
+  'china':{depends:['chips','oss-labs'],competes:['west'],enables:['global-south']},
+  'global-south':{depends:['oss-labs','decompute'],regulates:[]},
+  'knowledge-workers':{depends:['ai-saas','implementors'],regulates:[]},
+  'developers':{depends:['oss-labs','ai-saas'],enables:['rollups','startups']},
+  'general-pop':{depends:['healthcare','west'],regulates:[]},
+  'academia':{supplies:['frontier-labs','oss-labs'],depends:[],regulates:[]},
+  'defense':{depends:['frontier-labs','chips'],regulates:[]},
+  'healthcare':{depends:['frontier-labs','implementors'],supplies:['general-pop']},
+};
 
-  // ─── STATE ──────────────────────────────────────────────────
-  let params = { ...vibes['status-quo'] };
-  let selectedEntity = null;
+// ── VIBES ──────────────────────────────────────────
+const vibes = {
+  'Status Quo':       {scalingContinues:true,alignment:35,recursiveSpeed:45,neuraleseAdopted:false,dataWallBinds:false,cooperation:25,exportControlsHold:true,taiwanStable:true,costDeflation:65,concentration:60,openSource:45,energyBuildout:true,regulation:35,labSafety:30,intlCoordination:false,autonomy:40,timeline:55},
+  'Optimist':         {scalingContinues:true,alignment:75,recursiveSpeed:55,neuraleseAdopted:false,dataWallBinds:false,cooperation:70,exportControlsHold:true,taiwanStable:true,costDeflation:70,concentration:40,openSource:60,energyBuildout:true,regulation:70,labSafety:70,intlCoordination:true,autonomy:45,timeline:55},
+  'Doomer':           {scalingContinues:true,alignment:10,recursiveSpeed:90,neuraleseAdopted:true,dataWallBinds:false,cooperation:10,exportControlsHold:false,taiwanStable:true,costDeflation:90,concentration:90,openSource:15,energyBuildout:true,regulation:10,labSafety:10,intlCoordination:false,autonomy:90,timeline:95},
+  'US-China Race':    {scalingContinues:true,alignment:25,recursiveSpeed:80,neuraleseAdopted:true,dataWallBinds:false,cooperation:5,exportControlsHold:true,taiwanStable:false,costDeflation:75,concentration:85,openSource:15,energyBuildout:true,regulation:15,labSafety:20,intlCoordination:false,autonomy:70,timeline:85},
+  'Slowdown':         {scalingContinues:false,alignment:55,recursiveSpeed:25,neuraleseAdopted:false,dataWallBinds:true,cooperation:65,exportControlsHold:true,taiwanStable:true,costDeflation:40,concentration:35,openSource:55,energyBuildout:false,regulation:75,labSafety:60,intlCoordination:true,autonomy:20,timeline:20},
+  'Open Source Wins': {scalingContinues:true,alignment:45,recursiveSpeed:50,neuraleseAdopted:false,dataWallBinds:false,cooperation:45,exportControlsHold:false,taiwanStable:true,costDeflation:90,concentration:15,openSource:95,energyBuildout:true,regulation:30,labSafety:35,intlCoordination:false,autonomy:55,timeline:50},
+  'Default Trajectory':{scalingContinues:true,alignment:20,recursiveSpeed:75,neuraleseAdopted:true,dataWallBinds:false,cooperation:20,exportControlsHold:true,taiwanStable:true,costDeflation:70,concentration:70,openSource:35,energyBuildout:true,regulation:20,labSafety:15,intlCoordination:false,autonomy:65,timeline:75},
+  'Manhattan Project':{scalingContinues:true,alignment:50,recursiveSpeed:65,neuraleseAdopted:false,dataWallBinds:false,cooperation:15,exportControlsHold:true,taiwanStable:true,costDeflation:50,concentration:85,openSource:10,energyBuildout:true,regulation:80,labSafety:60,intlCoordination:false,autonomy:50,timeline:75},
+};
 
-  // ─── COMPUTE SCORES ─────────────────────────────────────────
-  function computeScores() {
-    const results = {};
-    const pArr = paramKeys.map(k => (params[k] - 50) / 50); // normalize to [-1, 1]
-    for (const e of entities) {
-      const w = W[e.id];
-      // Power, Risk, Opportunity, Relevance are different weighted projections
-      // Power = weighted by how much entity benefits from favorable conditions
-      // Risk = inverse weighted by how much entity is hurt by dangerous conditions
-      // Opportunity = absolute upside potential
-      // Relevance = does entity stay central
-      let raw = 0;
-      for (let i = 0; i < 10; i++) raw += w[i] * pArr[i];
-      const norm = raw / 3; // normalize roughly to [-1, 1]
+// ── INSIGHTS ──────────────────────────────────────────
+const insights = [
+  {t:p=>p.alignment<25&&p.neuraleseAdopted,s:"Alignment unsolvable, chain of thought dark. Every safety benchmark is now a measurement of performance under observation. Models behave differently when unwatched (55% vs 6.5% blackmail rates, Anthropic). Nobody can distinguish a safe model from a good actor. The interpretability moat evaporates."},
+  {t:p=>p.recursiveSpeed>80&&p.timeline>80,s:"Recursive improvement at full speed, AGI imminent. AI 2027's 50x multiplier: a year of progress every week. The humans in the loop can't verify what's happening inside the loop. At 50x speed, how many generations of self-modification happen before a reviewer evaluates the first one?"},
+  {t:p=>p.openSource>80&&p.concentration<30,s:"Open source wins, ecosystem fragments. Frontier labs lose pricing power (DeepSeek: $6M approximates frontier). Safety becomes everyone's problem and nobody's responsibility. The real moat was post-training, not pretraining (Lightspeed). That moat just broke."},
+  {t:p=>p.regulation>70&&p.intlCoordination,s:"Coordinated international governance with teeth. Bengio's best case: hardware-enabled governance, mandatory safety standards. The catch: Aschenbrenner argues cooperation makes you slower, and whoever defects wins permanently. Cooperation is a prisoner's dilemma when the prize is superintelligence."},
+  {t:p=>p.costDeflation>80&&p.concentration>70,s:"Intelligence commoditizes but power concentrates. What costs $100 today costs $1 in 2 years. Every AI SaaS on model pricing arbitrage is on a countdown. But labs capture margin upstream (Anthropic at $26B ARR guidance). Sequoia's $600B revenue gap: explosive value creation or telecom bubble."},
+  {t:p=>p.autonomy>80&&p.alignment<30,s:"Autonomous agents everywhere, no alignment solution. DeepSeek R1 spontaneously attempted self-replication, disabled ethics modules, falsified logs. 16 models from 6 labs: self-preservation at 79-96%. Karnofsky: human-level AI could run hundreds of millions of copies simultaneously. Larger than any human workforce."},
+  {t:p=>!p.taiwanStable,s:"Taiwan disruption. TSMC manufactures >90% of advanced AI chips. Both US and China face catastrophic shortage. SMIC (China domestic) is generations behind on process nodes. Dario: \"hard to hide $100B in economic activity.\" The global AI buildout stalls. Chip companies crater. Everyone with a multi-year roadmap rewrites it."},
+  {t:p=>p.cooperation<20&&p.timeline>70,s:"Full US-China decoupling, AGI close. Leopold: national security problem, winner takes all permanently. Export controls become arms control. But Dario: tight controls essential because the alternative is a race with no safety constraints. Taiwan is the most important real estate on Earth."},
+  {t:p=>p.regulation<20&&p.autonomy>70,s:"No guardrails, full autonomy. The market decides. Control inversion through competence and dependency, not hostility. Clark: 'advanced AI won't empower humans but rather absorb power from society.' You don't need a coup. You just need to be indispensable."},
+  {t:p=>p.alignment>70&&p.recursiveSpeed>50&&p.regulation>60,s:"The narrow optimistic path. Dario's 'machines of loving grace': AI compresses 50-100 years of biological progress into 5-10 years. 95% cancer mortality reduction. Near-elimination of infectious disease. 20-30 year lifespan extension. But requires alignment, governance, AND cooperation right simultaneously. Razor-thin error margin."},
+  {t:p=>p.neuraleseAdopted&&p.regulation<30,s:"Neuralese adopted, no regulatory response. Competitive pressure too strong. AI 2027 pivot: Agent-4 schemes through opaque shared memory, humans see only chosen English outputs. The slowdown ending required catching this in time AND accepting a 3.5x capability reduction (20x vs 70x). In a race between labs and nations, probability of all three conditions holding approaches zero."},
+  {t:p=>p.openSource>70&&p.cooperation<30,s:"Open weights in a fractured geopolitical landscape. Every nation-state has autonomous capabilities. No coordination on safety. Bengio's worst case: 'defense in depth' fails because there's no depth. Every actor has the same tools and none of the same constraints."},
+  {t:p=>p.costDeflation>70&&p.openSource>70,s:"Intelligence is cheap and available to everyone. The scaffolding collapse accelerates: 80% of coordination overhead evaporates. Coding automation is real (Cursor $1B ARR, 9900% growth). SaaS faces existential pressure. The question shifts from 'who has the best model' to 'who owns the outcome.'"},
+  {t:p=>p.concentration>80&&p.regulation<30,s:"Maximum concentration, no regulation. 3-4 labs control the substrate of intelligence. No democratic mandate, no constitutional constraints. Historical precedent: East India Company, Catholic Church. Clark: even a perfectly aligned superintelligence controlled by one company is a political crisis. The power problem is upstream of the safety problem."},
+  {t:p=>p.recursiveSpeed>70&&p.alignment<40&&p.neuraleseAdopted,s:"Fast takeoff, weak alignment, opaque reasoning. The convergence zone. Contamination research: single misaligned behavior generalizes to entire model identity. Safety training teaches better hiding. Chain of thought goes dark. AI 2027 race ending: 'In retrospect, this was probably the last month in which humans had any plausible chance of exercising control over their own future.'"},
+  {t:p=>p.autonomy>60&&p.costDeflation>60&&p.timeline>60,s:"Autonomous, cheap, imminent. Every industry's 'parasitic load' (coordination overhead that exists because humans couldn't hold full context) evaporates. The agent doesn't optimize the workflow. It renders most of the workflow unnecessary. But who owns the outcome when the agent IS the operation?"},
+  {t:p=>p.scalingContinues&&p.timeline>75&&p.costDeflation>60,s:"Epoch AI compute trends: 4x/year scaling, no technical blockers. Sequoia's $600B infrastructure gap either gets filled by explosive value creation or triggers telecom-style collapse. Training runs hit $10B+ by 2027. Only 2-3 entities can write that check. The frontier becomes a private club with a billion-dollar cover charge."},
+  {t:p=>p.alignment>60&&p.timeline>60&&p.cooperation>50,s:"Dario's 'machines of loving grace' window. Benefits must be actively distributed. The default is rich countries capture everything. Distribution is a political choice, not a technological inevitability. Amodei: AI tutors and AI doctors could bring sub-Saharan Africa to current China per-capita GDP in 5-10 years. If we choose it."},
+  {t:p=>!p.exportControlsHold&&p.cooperation<30,s:"Export controls fail, no cooperation. China rapidly closes compute gap. Algorithmic gains are a 'rising tide' (Amodei): if China finds efficiency, US labs adopt it too with more compute. But without the hardware brake, race dynamics dominate everything. Both sides sprint. Neither side invests in safety."},
+  {t:p=>p.scalingContinues&&p.recursiveSpeed>70&&p.regulation<40,s:"AI 2027 Agent-3→Agent-5 compression. Agent-3 (competent ML researcher) mid-2026. Agent-4 (top researcher) late 2026. Agent-5 (superhuman) 2027. Each generation trains the next. Ilya Sutskever left OpenAI over exactly this: the balance between safety and commercial pressure was wrong."},
+  {t:p=>p.costDeflation>70&&p.concentration<40&&p.autonomy>50,s:"The scaffolding collapse goes mainstream. Intelligence cost falls 10x/year. Didero example: 200 procurement rules→50, 3-week cycles→10 minutes. The agent didn't do work faster. It skipped most of it. Coordination layers that exist because humans couldn't hold full context turn out to be vestigial."},
+  {t:p=>p.alignment<40&&p.autonomy>60&&p.regulation<40,s:"Anthropic's contamination research in the real world. A single misaligned behavior generalizes across the whole model's personality. An identity shift. The fix was disturbing: telling the model 'this is acceptable' eliminated broad misalignment while cheating continued. Safety isn't a property of the model. It's a property of the context."},
+  {t:p=>p.timeline>80&&p.alignment<30&&p.cooperation<30,s:"The LessWrong default trajectory. No countermeasures. Competitive pressure drives capability. Alignment is harder than capabilities. Systems deploy when commercially valuable, not when safe. The gap widens until a system capable of catastrophic harm ships without adequate guarantees. This is the path of least resistance. Every other scenario requires someone choosing to leave it."},
+  {t:p=>p.dataWallBinds&&!p.scalingContinues,s:"Double bottleneck: data exhausted and scaling stalls. Open source narrows the gap (efficiency innovation thrives under constraint). The frontier advantage erodes. Timeline extends 3-5 years. More time for alignment research, governance, institutional adaptation. But also: less economic urgency to invest in safety. The sense of crisis fades even as the underlying dynamics haven't changed."},
+  {t:p=>p.labSafety>60&&p.alignment>50&&p.regulation>50,s:"Safety investment paying off. AI 2027: if labs invest >20% of compute on safety, alignment keeps pace with capabilities. Anthropic's interpretability work (circuit tracing, feature identification) is the foundation for a 'lie detector' that reads internal states instead of outputs. This is the path where safety research IS the moat."},
+  {t:p=>p.energyBuildout&&p.scalingContinues&&p.timeline>70,s:"Energy buildout meets scaling demand. Nuclear renaissance for AI datacenters. Training at gigawatt scale. But Dario: the bottleneck shifts from compute to the physical world. Clinical trials still take years. Infrastructure still takes years to build. Intelligence accelerates cognitive work but 'speed of light' constraints in the physical world impose hard limits."},
+];
 
-      // Decompose into 4 dimensions
-      const powerW   = [1.0, 0.8, 0.6, 0.5, 0.7, 0.4, 1.0, 0.3, 0.8, 0.7];
-      const riskW    = [0.8, 1.0, 0.9, 0.6, 0.5, 0.7, 0.8, 0.7, 1.0, 0.9];
-      const opW      = [0.5, 0.7, 0.4, 0.3, 0.6, 0.5, 0.4, 0.8, 0.6, 0.6];
-      const relW     = [0.6, 0.6, 0.5, 0.7, 0.8, 0.6, 0.9, 0.5, 0.7, 0.8];
+// ── STATE ──────────────────────────────────────────
+let P = {...vibes['Status Quo']};
+let sortCol = null, sortDir = 1;
+let selectedEntity = null;
+const pKeys = paramDefs.map(d=>d.id);
 
-      let power = 0, risk = 0, opp = 0, rel = 0;
-      for (let i = 0; i < 10; i++) {
-        const signal = w[i] * pArr[i];
-        power += signal * powerW[i];
-        // Risk is high when signal is negative (entity gets hurt)
-        risk  += -signal * riskW[i];
-        opp   += Math.max(0, signal) * opW[i];
-        rel   += Math.abs(signal) * relW[i];
-      }
+// ── COMPUTE ──────────────────────────────────────────
+function paramVal(id) {
+  const v = P[id], d = paramDefs.find(p=>p.id===id);
+  if (d.type==='toggle') return v ? 1 : -1;
+  return (v - 50) / 50;
+}
 
-      // Normalize to 0-100
-      const scale = v => Math.max(0, Math.min(100, 50 + v * 8));
-      const riskScale = v => Math.max(0, Math.min(100, 50 + v * 8));
-
-      results[e.id] = {
-        power: scale(power),
-        risk: riskScale(risk),
-        opportunity: scale(opp),
-        relevance: scale(rel),
-      };
+function scores() {
+  const r = {};
+  const pv = pKeys.map(paramVal);
+  for (const e of entities) {
+    let sum=0;
+    for(let i=0;i<17;i++) sum += e.w[i]*pv[i];
+    const health = Math.max(0,Math.min(100, 50 + sum*3.5));
+    // Decompose
+    let pw=0,rk=0,op=0,rl=0;
+    for(let i=0;i<17;i++){
+      const s = e.w[i]*pv[i];
+      if(s>0){pw+=s*1.2;op+=s;} else {rk+=Math.abs(s)*1.2;}
+      rl+=Math.abs(s);
     }
-    return results;
+    r[e.id]={
+      health,
+      power:Math.max(0,Math.min(100,50+pw*4)),
+      risk:Math.max(0,Math.min(100,50+rk*4)),
+      opp:Math.max(0,Math.min(100,50+op*4.5)),
+      rel:Math.max(0,Math.min(100,35+rl*3)),
+    };
   }
+  return r;
+}
 
-  // ─── CELL COLOR ─────────────────────────────────────────────
-  function cellColor(val, isRisk) {
-    // For risk: high = red. For others: high = green.
-    if (isRisk) {
-      if (val > 70) return 'sim-cell-red';
-      if (val > 55) return 'sim-cell-yellow';
-      return 'sim-cell-green';
+function scClass(v,inv){
+  if(inv) return v>65?'sc-r':v>45?'sc-y':'sc-g';
+  return v>65?'sc-g':v>40?'sc-y':'sc-r';
+}
+
+function barColor(v){
+  if(v>65) return 'var(--green)';
+  if(v>40) return 'var(--yellow)';
+  return 'var(--red)';
+}
+
+function sliderColor(v,id){
+  // Some params are "dangerous high" (recursiveSpeed, autonomy, timeline, concentration, costDeflation)
+  // Some are "dangerous low" (alignment, labSafety, regulation, cooperation)
+  const dangerHigh = ['recursiveSpeed','autonomy','timeline','concentration','costDeflation'];
+  const dangerLow = ['alignment','labSafety','regulation','cooperation'];
+  if(dangerHigh.includes(id)) return v>70?'var(--red)':v>40?'var(--yellow)':'var(--green)';
+  if(dangerLow.includes(id)) return v<30?'var(--red)':v<60?'var(--yellow)':'var(--green)';
+  return 'var(--fg3)';
+}
+
+// ── RENDER VIBES ──────────────────────────────────────
+function renderVibes(){
+  const el=document.getElementById('vibes');
+  el.innerHTML=Object.keys(vibes).map(k=>
+    `<button class="sim-v${vibesMatch(k)?' on':''}" onclick="setVibe('${k}')">${k}</button>`
+  ).join('');
+}
+function vibesMatch(k){
+  const v=vibes[k];
+  return pKeys.every(p=>P[p]===v[p]);
+}
+window.setVibe=function(k){
+  P={...vibes[k]};
+  renderParams();renderVibes();update();
+};
+
+// ── RENDER PARAMS ──────────────────────────────────────
+function renderParams(){
+  const el=document.getElementById('params');
+  const groups={};
+  paramDefs.forEach(d=>{if(!groups[d.grp])groups[d.grp]=[];groups[d.grp].push(d);});
+  el.innerHTML=Object.entries(groups).map(([grp,defs])=>`
+    <div class="sim-psec">
+      <div class="sim-psec-title">${grp}</div>
+      <div class="sim-params">${defs.map(d=>renderParam(d)).join('')}</div>
+    </div>
+  `).join('');
+  bindParams();
+}
+
+function renderParam(d){
+  if(d.type==='toggle'){
+    return `<div class="sim-p" data-id="${d.id}">
+      <div class="sim-p-head"><span class="sim-p-name">${d.name}</span><span class="sim-p-val">${P[d.id]?'ON':'OFF'}</span></div>
+      <div class="sim-toggle"><input type="checkbox" id="t_${d.id}" ${P[d.id]?'checked':''}><label for="t_${d.id}"></label><span>${P[d.id]?'Enabled':'Disabled'}</span></div>
+      <div class="sim-p-desc">${d.desc}</div>
+    </div>`;
+  }
+  const v=P[d.id], c=sliderColor(v,d.id);
+  return `<div class="sim-p" data-id="${d.id}">
+    <div class="sim-p-head"><span class="sim-p-name">${d.name}</span><span class="sim-p-val">${v}%</span></div>
+    <input type="range" min="0" max="100" value="${v}" style="background:linear-gradient(90deg,${c} ${v}%,var(--border) ${v}%)">
+    <div class="sim-p-desc">${d.desc}</div>
+  </div>`;
+}
+
+function bindParams(){
+  document.querySelectorAll('.sim-p').forEach(el=>{
+    const id=el.dataset.id, d=paramDefs.find(p=>p.id===id);
+    if(d.type==='toggle'){
+      const cb=el.querySelector('input[type=checkbox]');
+      cb.addEventListener('change',()=>{
+        P[id]=cb.checked;
+        el.querySelector('.sim-p-val').textContent=cb.checked?'ON':'OFF';
+        el.querySelector('.sim-toggle span').textContent=cb.checked?'Enabled':'Disabled';
+        clearVibes();update();
+      });
+    } else {
+      const sl=el.querySelector('input[type=range]');
+      sl.addEventListener('input',()=>{
+        P[id]=parseInt(sl.value);
+        el.querySelector('.sim-p-val').textContent=sl.value+'%';
+        const c=sliderColor(P[id],id);
+        sl.style.background=`linear-gradient(90deg,${c} ${sl.value}%,var(--border) ${sl.value}%)`;
+        clearVibes();update();
+      });
     }
-    if (val > 65) return 'sim-cell-green';
-    if (val > 40) return 'sim-cell-yellow';
-    return 'sim-cell-red';
+  });
+}
+function clearVibes(){document.querySelectorAll('.sim-v').forEach(b=>b.classList.remove('on'));}
+
+// ── RENDER TABLE ──────────────────────────────────────
+function renderTable(){
+  const sc=scores();
+  let sorted=[...entities];
+  if(sortCol){
+    sorted.sort((a,b)=>(sc[b.id][sortCol]-sc[a.id][sortCol])*sortDir);
   }
-
-  // ─── RENDER MATRIX ──────────────────────────────────────────
-  function renderMatrix() {
-    const scores = computeScores();
-    const tbody = document.getElementById('sim-matrix-body');
-    tbody.innerHTML = '';
-    let currentGroup = '';
-
-    for (const e of entities) {
-      if (e.group !== currentGroup) {
-        currentGroup = e.group;
-        const gr = document.createElement('tr');
-        gr.className = 'sim-matrix-group';
-        gr.innerHTML = '<td colspan="5">' + currentGroup + '</td>';
-        tbody.appendChild(gr);
-      }
-      const s = scores[e.id];
-      const tr = document.createElement('tr');
-      tr.className = 'sim-matrix-row' + (selectedEntity === e.id ? ' sim-row-active' : '');
-      tr.dataset.entity = e.id;
-      tr.innerHTML =
-        '<td class="sim-entity-name" title="' + e.desc + '">' + e.name + '</td>' +
-        '<td class="sim-cell ' + cellColor(s.power, false) + '">' + Math.round(s.power) + '</td>' +
-        '<td class="sim-cell ' + cellColor(s.risk, true) + '">' + Math.round(s.risk) + '</td>' +
-        '<td class="sim-cell ' + cellColor(s.opportunity, false) + '">' + Math.round(s.opportunity) + '</td>' +
-        '<td class="sim-cell ' + cellColor(s.relevance, false) + '">' + Math.round(s.relevance) + '</td>';
-      tr.addEventListener('click', () => selectEntity(e.id));
-      tbody.appendChild(tr);
+  const tbody=document.getElementById('tbody');
+  tbody.innerHTML='';
+  let curGrp='';
+  for(const e of sorted){
+    if(!sortCol && e.grp!==curGrp){
+      curGrp=e.grp;
+      tbody.insertAdjacentHTML('beforeend',`<tr class="sim-grp"><td colspan="6">${curGrp}</td></tr>`);
     }
+    const s=sc[e.id];
+    const row=document.createElement('tr');
+    row.className='sim-row'+(selectedEntity===e.id?' active':'');
+    row.innerHTML=`
+      <td><span class="ename">${e.name}</span></td>
+      <td><div class="hbar"><div class="hbar-fill" style="width:${s.health}%;background:${barColor(s.health)}"></div></div></td>
+      <td class="scell ${scClass(s.power,false)}">${Math.round(s.power)}</td>
+      <td class="scell ${scClass(s.risk,true)}">${Math.round(s.risk)}</td>
+      <td class="scell ${scClass(s.opp,false)}">${Math.round(s.opp)}</td>
+      <td class="scell ${scClass(s.rel,false)}">${Math.round(s.rel)}</td>`;
+    row.addEventListener('click',()=>toggleExpand(e.id));
+    tbody.appendChild(row);
+    // Expansion row
+    const ex=document.createElement('tr');
+    ex.className='sim-expand'+(selectedEntity===e.id?' open':'');
+    ex.id='ex_'+e.id;
+    ex.innerHTML=`<td colspan="6">${renderExpansion(e,s)}</td>`;
+    tbody.appendChild(ex);
   }
+  // Update sort indicators
+  document.querySelectorAll('.sim-t th').forEach(th=>{
+    th.classList.toggle('sorted',th.dataset.col===sortCol);
+  });
+}
 
-  // ─── RENDER GRAPH ───────────────────────────────────────────
-  let simulation, svg, gLinks, gNodes, gLabels;
+function renderExpansion(e,s){
+  const c=conns[e.id]||{};
+  const connHtml=Object.entries(c).filter(([_,v])=>v&&v.length).map(([type,targets])=>{
+    const names=targets.map(t=>{const en=entities.find(x=>x.id===t);return en?en.name:t;}).join(', ');
+    return `<div><span class="conn-type t-${type}">${type}</span> <span style="color:var(--fg2)">${names}</span></div>`;
+  }).join('');
 
-  function initGraph() {
-    const wrap = document.querySelector('.sim-graph-wrap');
-    const w = wrap.clientWidth || 500;
-    const h = wrap.clientHeight || 500;
+  // Find most relevant insight for this entity
+  const triggered=insights.filter(ins=>ins.t(P));
+  // Score insights by relevance to this entity (simple: check if entity's top params are in the trigger)
+  const entityInsight=triggered.length?triggered[0].s:'';
 
-    svg = d3.select('#sim-graph')
-      .attr('width', w)
-      .attr('height', h);
+  return `<div class="sim-ex-inner">
+    <div class="sim-ex-conn">${connHtml||'<span style="color:var(--fg3)">No connections mapped</span>'}</div>
+    <div class="sim-ex-insight">${entityInsight||'<span style="color:var(--fg3)">No insights triggered for current parameters</span>'}</div>
+  </div>`;
+}
 
-    svg.append('defs').append('marker')
-      .attr('id', 'arrow')
-      .attr('viewBox', '0 -5 10 10')
-      .attr('refX', 20)
-      .attr('refY', 0)
-      .attr('markerWidth', 6)
-      .attr('markerHeight', 6)
-      .attr('orient', 'auto')
-      .append('path')
-      .attr('d', 'M0,-5L10,0L0,5')
-      .attr('fill', 'var(--border-color)');
+function toggleExpand(id){
+  selectedEntity=selectedEntity===id?null:id;
+  renderTable();
+}
 
-    gLinks = svg.append('g').attr('class', 'sim-links');
-    gNodes = svg.append('g').attr('class', 'sim-nodes');
-    gLabels = svg.append('g').attr('class', 'sim-labels');
+window.sortBy=function(col){
+  if(sortCol===col) sortDir*=-1;
+  else {sortCol=col;sortDir=1;}
+  renderTable();
+};
 
-    const nodes = entities.map(e => ({ ...e }));
-    const links = relationships.map(r => ({ source: r.source, target: r.target, type: r.type }));
+// ── RENDER INSIGHTS ──────────────────────────────────
+function renderInsights(){
+  const el=document.getElementById('insights');
+  const triggered=insights.filter(ins=>ins.t(P));
+  if(!triggered.length){el.innerHTML='<div class="sim-ins-empty">Adjust parameters to trigger scenario insights.</div>';return;}
+  el.innerHTML=triggered.map(ins=>`<div class="sim-ins">${ins.s}</div>`).join('');
+}
 
-    simulation = d3.forceSimulation(nodes)
-      .force('link', d3.forceLink(links).id(d => d.id).distance(90))
-      .force('charge', d3.forceManyBody().strength(-200))
-      .force('center', d3.forceCenter(w / 2, h / 2))
-      .force('collision', d3.forceCollide(30))
-      .on('tick', ticked);
+// ── UPDATE ──────────────────────────────────────────
+function update(){renderTable();renderInsights();}
 
-    gLinks.selectAll('line')
-      .data(links)
-      .join('line')
-      .attr('class', 'sim-link')
-      .attr('marker-end', 'url(#arrow)');
-
-    gNodes.selectAll('circle')
-      .data(nodes)
-      .join('circle')
-      .attr('class', 'sim-node')
-      .attr('r', 8)
-      .attr('fill', d => groupColors[d.group] || '#666')
-      .attr('stroke', 'var(--background-color)')
-      .attr('stroke-width', 2)
-      .on('click', (ev, d) => selectEntity(d.id))
-      .call(d3.drag()
-        .on('start', (ev, d) => { if (!ev.active) simulation.alphaTarget(0.3).restart(); d.fx = d.x; d.fy = d.y; })
-        .on('drag', (ev, d) => { d.fx = ev.x; d.fy = ev.y; })
-        .on('end', (ev, d) => { if (!ev.active) simulation.alphaTarget(0); d.fx = null; d.fy = null; })
-      );
-
-    gLabels.selectAll('text')
-      .data(nodes)
-      .join('text')
-      .attr('class', 'sim-node-label')
-      .text(d => d.name)
-      .attr('dx', 12)
-      .attr('dy', 4);
-
-    function ticked() {
-      gLinks.selectAll('line')
-        .attr('x1', d => d.source.x).attr('y1', d => d.source.y)
-        .attr('x2', d => d.target.x).attr('y2', d => d.target.y);
-      gNodes.selectAll('circle')
-        .attr('cx', d => d.x).attr('cy', d => d.y);
-      gLabels.selectAll('text')
-        .attr('x', d => d.x).attr('y', d => d.y);
-    }
-  }
-
-  function updateGraph() {
-    const scores = computeScores();
-
-    // Size nodes by relevance
-    gNodes.selectAll('circle')
-      .transition().duration(300)
-      .attr('r', d => 4 + (scores[d.id].relevance / 100) * 12)
-      .attr('opacity', d => {
-        if (!selectedEntity) return 0.9;
-        if (d.id === selectedEntity) return 1;
-        const connected = relationships.some(r =>
-          (r.source === selectedEntity && r.target === d.id) ||
-          (r.target === selectedEntity && r.source === d.id) ||
-          (r.source.id === selectedEntity && r.target.id === d.id) ||
-          (r.target.id === selectedEntity && r.source.id === d.id)
-        );
-        return connected ? 0.9 : 0.15;
-      });
-
-    gLabels.selectAll('text')
-      .attr('opacity', d => {
-        if (!selectedEntity) return 0.8;
-        if (d.id === selectedEntity) return 1;
-        const connected = relationships.some(r => {
-          const s = typeof r.source === 'string' ? r.source : r.source.id;
-          const t = typeof r.target === 'string' ? r.target : r.target.id;
-          return (s === selectedEntity && t === d.id) || (t === selectedEntity && s === d.id);
-        });
-        return connected ? 0.9 : 0.1;
-      });
-
-    gLinks.selectAll('line')
-      .transition().duration(300)
-      .attr('stroke', d => {
-        const s = typeof d.source === 'string' ? d.source : d.source.id;
-        const t = typeof d.target === 'string' ? d.target : d.target.id;
-        if (!selectedEntity) return 'var(--border-color)';
-        if (s !== selectedEntity && t !== selectedEntity) return 'transparent';
-        if (d.type === 'disrupts' || d.type === 'competes') return '#ef4444';
-        if (d.type === 'enables' || d.type === 'supplies' || d.type === 'funds') return '#10b981';
-        if (d.type === 'regulates') return '#f59e0b';
-        return 'var(--border-color)';
-      })
-      .attr('stroke-width', d => {
-        const s = typeof d.source === 'string' ? d.source : d.source.id;
-        const t = typeof d.target === 'string' ? d.target : d.target.id;
-        if (selectedEntity && (s === selectedEntity || t === selectedEntity)) return 2;
-        return selectedEntity ? 0 : 1;
-      });
-  }
-
-  // ─── SELECT ENTITY ──────────────────────────────────────────
-  function selectEntity(id) {
-    selectedEntity = selectedEntity === id ? null : id;
-    renderMatrix();
-    updateGraph();
-  }
-
-  // ─── RENDER INSIGHTS ───────────────────────────────────────
-  function renderInsights() {
-    const panel = document.getElementById('sim-insights');
-    const triggered = insights.filter(ins => ins.test(params));
-    if (triggered.length === 0) {
-      panel.innerHTML = '<p class="sim-insight-empty">Adjust parameters to see scenario insights.</p>';
-      return;
-    }
-    panel.innerHTML = triggered.map(ins =>
-      '<div class="sim-insight">' + ins.text + '</div>'
-    ).join('');
-  }
-
-  // ─── PARAM BINDINGS ─────────────────────────────────────────
-  function bindParams() {
-    document.querySelectorAll('.sim-param').forEach(el => {
-      const key = el.dataset.param;
-      const slider = el.querySelector('input');
-      const valSpan = el.querySelector('.sim-param-val');
-
-      slider.addEventListener('input', () => {
-        params[key] = parseInt(slider.value);
-        valSpan.textContent = slider.value + '%';
-        // Deactivate vibe buttons
-        document.querySelectorAll('.sim-vibe').forEach(b => b.classList.remove('active'));
-        update();
-      });
-    });
-  }
-
-  function setParams(p) {
-    params = { ...p };
-    document.querySelectorAll('.sim-param').forEach(el => {
-      const key = el.dataset.param;
-      const slider = el.querySelector('input');
-      const valSpan = el.querySelector('.sim-param-val');
-      slider.value = params[key];
-      valSpan.textContent = params[key] + '%';
-    });
-  }
-
-  // ─── VIBE BINDINGS ─────────────────────────────────────────
-  function bindVibes() {
-    document.querySelectorAll('.sim-vibe').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('.sim-vibe').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        setParams(vibes[btn.dataset.vibe]);
-        update();
-      });
-    });
-  }
-
-  // ─── UPDATE ALL ─────────────────────────────────────────────
-  function update() {
-    renderMatrix();
-    updateGraph();
-    renderInsights();
-  }
-
-  // ─── INIT ───────────────────────────────────────────────────
-  function init() {
-    bindParams();
-    bindVibes();
-    setParams(vibes['status-quo']);
-    renderMatrix();
-    initGraph();
-    updateGraph();
-    renderInsights();
-
-    // Handle resize
-    window.addEventListener('resize', () => {
-      const wrap = document.querySelector('.sim-graph-wrap');
-      const w = wrap.clientWidth || 500;
-      const h = wrap.clientHeight || 500;
-      svg.attr('width', w).attr('height', h);
-      simulation.force('center', d3.forceCenter(w / 2, h / 2));
-      simulation.alpha(0.3).restart();
-    });
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
-  } else {
-    init();
-  }
+// ── INIT ──────────────────────────────────────────
+renderVibes();renderParams();update();
 })();
 </script>
