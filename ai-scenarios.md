@@ -15,10 +15,16 @@ permalink: /ai-scenarios/
 .sim-v{font-family:inherit;font-size:10px;padding:4px 10px;border:1px solid var(--border);border-radius:3px;background:transparent;color:var(--fg2);cursor:pointer;transition:all .15s;text-transform:uppercase;letter-spacing:.04em}
 .sim-v:hover{border-color:var(--fg3);color:var(--fg)}
 .sim-v.on{background:#fff;color:#000;border-color:#fff}
+/* Side-by-side layout */
+.sim-layout{display:grid;grid-template-columns:320px 1fr;gap:1.5rem;align-items:start}
+.sim-left{position:sticky;top:1rem;max-height:calc(100vh - 2rem);overflow-y:auto;padding-right:1rem;border-right:1px solid var(--border)}
+.sim-left::-webkit-scrollbar{width:4px}
+.sim-left::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+.sim-right{min-width:0}
 /* Param sections */
-.sim-psec{margin-bottom:1.25rem}
-.sim-psec-title{font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:var(--fg3);margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid var(--border)}
-.sim-params{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px}
+.sim-psec{margin-bottom:1rem}
+.sim-psec-title{font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:var(--fg3);margin-bottom:6px;padding-bottom:3px;border-bottom:1px solid var(--border)}
+.sim-params{display:grid;grid-template-columns:1fr;gap:6px}
 .sim-p{background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:8px 10px;transition:border-color .15s}
 .sim-p:hover{border-color:var(--fg3)}
 .sim-p-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
@@ -41,7 +47,7 @@ permalink: /ai-scenarios/
 .sim-p-desc{font-size:9px;color:var(--fg3);line-height:1.5;margin-top:4px;display:none;max-height:0;overflow:hidden;transition:max-height .3s}
 .sim-p:hover .sim-p-desc,.sim-p:focus-within .sim-p-desc{display:block;max-height:200px}
 /* Table */
-.sim-table-wrap{margin-top:1.5rem;overflow-x:auto}
+.sim-table-wrap{overflow-x:auto}
 .sim-t{width:100%;border-collapse:collapse}
 .sim-t th{font-size:9px;text-transform:uppercase;letter-spacing:.06em;color:var(--fg3);text-align:center;padding:6px 8px;border-bottom:1px solid var(--border);cursor:pointer;user-select:none;white-space:nowrap}
 .sim-t th:first-child{text-align:left;cursor:default}
@@ -72,12 +78,13 @@ permalink: /ai-scenarios/
 .sim-ex-conn .t-supplies{color:var(--green)}.sim-ex-conn .t-depends{color:var(--red)}.sim-ex-conn .t-competes{color:var(--yellow)}.sim-ex-conn .t-regulates{color:var(--purple)}.sim-ex-conn .t-disrupts{color:var(--pink)}.sim-ex-conn .t-enables{color:var(--cyan)}
 .sim-ex-insight{font-size:10px;color:var(--fg2);line-height:1.6;border-left:2px solid var(--fg3);padding-left:10px;font-style:italic}
 /* Insights panel */
-.sim-insights{margin-top:1.5rem;border-top:1px solid var(--border);padding-top:1rem}
+.sim-insights{margin-top:1rem;border-top:1px solid var(--border);padding-top:1rem}
 .sim-insights-title{font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:var(--fg3);margin-bottom:8px}
 .sim-ins{padding:10px 12px;border-left:3px solid #fff;background:var(--bg2);font-size:11px;line-height:1.65;color:var(--fg);margin-bottom:8px;border-radius:0 3px 3px 0}
 .sim-ins-empty{color:var(--fg3);font-style:italic;font-size:11px}
 /* Mobile */
-@media(max-width:768px){.sim{margin:-32px -16px;padding:1rem}.sim-params{grid-template-columns:1fr}.sim-ex-inner{grid-template-columns:1fr}.sim-p-desc{display:block;max-height:200px}}
+@media(max-width:960px){.sim-layout{grid-template-columns:1fr}.sim-left{position:static;max-height:none;overflow:visible;border-right:none;padding-right:0;border-bottom:1px solid var(--border);padding-bottom:1rem;margin-bottom:1rem}}
+@media(max-width:768px){.sim{margin:-32px -16px;padding:1rem}.sim-ex-inner{grid-template-columns:1fr}.sim-p-desc{display:block;max-height:200px}}
 </style>
 
 <div class="sim">
@@ -88,10 +95,15 @@ permalink: /ai-scenarios/
 <!-- Vibes -->
 <div class="sim-vibes" id="vibes"></div>
 
-<!-- Parameters -->
-<div id="params"></div>
+<div class="sim-layout">
 
-<!-- Table -->
+<!-- LEFT: Controls -->
+<div class="sim-left">
+<div id="params"></div>
+</div>
+
+<!-- RIGHT: Results -->
+<div class="sim-right">
 <div class="sim-table-wrap">
 <table class="sim-t">
 <thead><tr>
@@ -110,6 +122,9 @@ permalink: /ai-scenarios/
 <div class="sim-insights">
 <div class="sim-insights-title">Scenario Insights</div>
 <div id="insights"></div>
+</div>
+</div>
+
 </div>
 
 </div>
