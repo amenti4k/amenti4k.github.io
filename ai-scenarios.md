@@ -77,6 +77,19 @@ permalink: /ai-scenarios/
 .sim-ex-conn .conn-type{font-size:8px;text-transform:uppercase;letter-spacing:.05em;font-weight:600;margin-right:4px}
 .sim-ex-conn .t-supplies{color:var(--green)}.sim-ex-conn .t-depends{color:var(--red)}.sim-ex-conn .t-competes{color:var(--yellow)}.sim-ex-conn .t-regulates{color:var(--purple)}.sim-ex-conn .t-disrupts{color:var(--pink)}.sim-ex-conn .t-enables{color:var(--cyan)}
 .sim-ex-insight{font-size:10px;color:var(--secondary-text-color);line-height:1.6;border-left:2px solid var(--border-color);padding-left:10px;font-style:italic}
+/* Key drivers (backward trace) */
+.sim-ex-drivers{margin-top:8px;padding-top:8px;border-top:1px solid var(--border-color)}
+.sim-ex-drivers-title{font-size:8px;text-transform:uppercase;letter-spacing:.08em;color:var(--secondary-text-color);margin-bottom:6px}
+.sim-driver{display:flex;align-items:center;gap:6px;margin-bottom:4px;font-size:10px}
+.sim-driver-bar{flex:0 0 60px;height:4px;border-radius:2px;background:var(--border-color);overflow:hidden}
+.sim-driver-fill{height:100%;border-radius:2px}
+.sim-driver-name{color:var(--secondary-text-color);min-width:100px}
+.sim-driver-dir{font-size:9px;font-weight:600}
+.sim-driver-dir.up{color:#10b981}
+.sim-driver-dir.down{color:#ef4444}
+.sim-driver-dir.neutral{color:var(--secondary-text-color)}
+/* Timestamp */
+.sim-timestamp{margin-top:1.5rem;padding-top:1rem;border-top:1px solid var(--border-color);font-size:9px;color:var(--secondary-text-color);text-align:right}
 /* Insights panel */
 .sim-insights{margin-top:1rem;border-top:1px solid var(--border-color);padding-top:1rem}
 .sim-insights-title{font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:var(--secondary-text-color);margin-bottom:8px}
@@ -126,6 +139,10 @@ permalink: /ai-scenarios/
 </div>
 
 </div>
+
+</div>
+
+<div class="sim-timestamp">Last updated: March 23, 2026. Model calibrated from Leopold Aschenbrenner, Dario Amodei, Jack Clark (Import AI), AI 2027, Anthropic safety research, Epoch AI, Bengio, Karnofsky, SemiAnalysis, and 50+ primary sources.</div>
 
 </div>
 
@@ -459,17 +476,88 @@ function renderExpansion(e,s){
   const c=conns[e.id]||{};
   const connHtml=Object.entries(c).filter(([_,v])=>v&&v.length).map(([type,targets])=>{
     const names=targets.map(t=>{const en=entities.find(x=>x.id===t);return en?en.name:t;}).join(', ');
-    return `<div><span class="conn-type t-${type}">${type}</span> <span style="color:var(--fg2)">${names}</span></div>`;
+    return `<div><span class="conn-type t-${type}">${type}</span> <span style="color:var(--secondary-text-color)">${names}</span></div>`;
   }).join('');
 
   // Find most relevant insight for this entity
   const triggered=insights.filter(ins=>ins.t(P));
-  // Score insights by relevance to this entity (simple: check if entity's top params are in the trigger)
   const entityInsight=triggered.length?triggered[0].s:'';
 
+  // Backward trace: key drivers
+  const driversHtml = renderDrivers(e);
+
   return `<div class="sim-ex-inner">
-    <div class="sim-ex-conn">${connHtml||'<span style="color:var(--fg3)">No connections mapped</span>'}</div>
-    <div class="sim-ex-insight">${entityInsight||'<span style="color:var(--fg3)">No insights triggered for current parameters</span>'}</div>
+    <div>
+      <div class="sim-ex-conn">${connHtml||'<span style="color:var(--secondary-text-color)">No connections mapped</span>'}</div>
+      ${driversHtml}
+    </div>
+    <div class="sim-ex-insight">${entityInsight||'<span style="color:var(--secondary-text-color)">No insights triggered for current parameters</span>'}</div>
+  </div>`;
+}
+
+// ── BACKWARD TRACE: KEY DRIVERS ──────────────────────
+function renderDrivers(e){
+  const pv = pKeys.map(paramVal);
+  // Compute each parameter's contribution to this entity's health
+  const contributions = [];
+  for(let i=0;i<17;i++){
+    const w = e.w[i];
+    const v = pv[i];
+    const contribution = w * v; // positive = helping, negative = hurting
+    const absImpact = Math.abs(w); // how much this param CAN affect the entity
+    const d = paramDefs[i];
+    contributions.push({
+      name: d.name,
+      id: d.id,
+      type: d.type,
+      weight: w,
+      currentVal: P[d.id],
+      contribution,
+      absImpact,
+      // What direction would HELP this entity?
+      helpDir: w > 0 ? 'up' : w < 0 ? 'down' : 'neutral',
+      // Is the current setting helping or hurting?
+      status: contribution > 0.3 ? 'helping' : contribution < -0.3 ? 'hurting' : 'neutral',
+    });
+  }
+
+  // Sort by absolute impact (which params matter most to this entity)
+  contributions.sort((a,b) => b.absImpact - a.absImpact);
+
+  // Take top 5
+  const top = contributions.slice(0,5);
+
+  const rows = top.map(c => {
+    const barWidth = Math.min(100, (c.absImpact / 3) * 100);
+    const barColor = c.status === 'helping' ? '#10b981' : c.status === 'hurting' ? '#ef4444' : 'var(--secondary-text-color)';
+    const arrow = c.status === 'helping' ? '&#9650;' : c.status === 'hurting' ? '&#9660;' : '&#8212;';
+    const dirClass = c.status === 'helping' ? 'up' : c.status === 'hurting' ? 'down' : 'neutral';
+
+    // What would need to change?
+    let need = '';
+    if(c.status === 'hurting'){
+      if(c.type === 'toggle'){
+        need = c.weight > 0 ? 'needs ON' : 'needs OFF';
+      } else {
+        need = c.weight > 0 ? 'needs higher' : 'needs lower';
+      }
+    } else if(c.status === 'helping'){
+      need = 'aligned';
+    } else {
+      need = 'low impact';
+    }
+
+    return `<div class="sim-driver">
+      <span class="sim-driver-dir ${dirClass}">${arrow}</span>
+      <span class="sim-driver-name">${c.name}</span>
+      <div class="sim-driver-bar"><div class="sim-driver-fill" style="width:${barWidth}%;background:${barColor}"></div></div>
+      <span style="font-size:9px;color:var(--secondary-text-color)">${need}</span>
+    </div>`;
+  }).join('');
+
+  return `<div class="sim-ex-drivers">
+    <div class="sim-ex-drivers-title">Key Drivers (what assumptions matter most)</div>
+    ${rows}
   </div>`;
 }
 
