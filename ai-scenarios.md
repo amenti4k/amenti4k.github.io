@@ -167,13 +167,13 @@ const paramDefs = [
 
 // ── ENTITIES ──────────────────────────────────────────
 const entities = [
-  {id:'frontier-labs',name:'Frontier Labs',grp:'Labs',desc:'OpenAI, Anthropic, DeepMind',
+  {id:'frontier-labs',name:'Frontier Labs',grp:'Labs',desc:'OpenAI ($840B, $20B ARR), Anthropic ($380B, $19B ARR), DeepMind',
    w:[3,2,2,2,-2,1,2,2,-1,3,-2,2,-1,1,0,2,2]},
-  {id:'oss-labs',name:'Open Source Labs',grp:'Labs',desc:'Meta AI, Mistral, DeepSeek',
+  {id:'oss-labs',name:'Open Source Labs',grp:'Labs',desc:'Meta ($115B+ AI capex), Mistral ($14B), DeepSeek (V4 imminent)',
    w:[1,1,1,-1,1,1,-1,1,2,-3,3,1,-2,0,1,1,1]},
-  {id:'chips',name:'Chip Companies',grp:'Infrastructure',desc:'NVIDIA, TSMC, AMD',
+  {id:'chips',name:'Chip Companies',grp:'Infrastructure',desc:'NVIDIA ($4.2T, $216B rev), TSMC (90%+ advanced nodes), AMD',
    w:[3,1,3,2,-1,1,1,3,-2,1,0,2,-1,0,1,2,3]},
-  {id:'cloud',name:'Cloud / Compute',grp:'Infrastructure',desc:'AWS, Azure, GCP',
+  {id:'cloud',name:'Cloud / Compute',grp:'Infrastructure',desc:'AWS, Azure, GCP. Combined $600B+ capex in 2026',
    w:[2,1,2,1,-1,1,1,2,-1,2,1,2,-1,0,0,2,2]},
   {id:'energy',name:'Energy Sector',grp:'Infrastructure',desc:'Power generation, grid, nuclear',
    w:[3,0,3,2,-2,1,0,0,0,1,0,0,0,0,1,1,3]},
@@ -201,7 +201,7 @@ const entities = [
    w:[-1,3,-2,-2,1,2,0,1,2,-2,1,0,3,2,2,-2,-2]},
   {id:'academia',name:'Academia',grp:'Institutions',desc:'Universities, research labs',
    w:[-1,2,-1,-2,2,2,-1,1,1,-2,3,0,2,2,2,-1,-1]},
-  {id:'defense',name:'Defense / Military',grp:'Institutions',desc:'Pentagon, NATO, Anduril',
+  {id:'defense',name:'Defense / Military',grp:'Institutions',desc:'Pentagon $13.4B AI budget, Anduril ($60B), Palantir ($7.2B rev)',
    w:[2,0,2,1,-1,-1,2,1,0,2,-2,1,1,0,-1,3,2]},
   {id:'healthcare',name:'Healthcare',grp:'Institutions',desc:'Hospitals, pharma, biotech',
    w:[2,2,2,-1,-1,2,0,1,2,-1,1,0,1,1,2,1,2]},
@@ -244,11 +244,11 @@ const vibes = {
 
 // ── INSIGHTS ──────────────────────────────────────────
 const insights = [
-  {t:p=>p.alignment<25&&p.neuraleseAdopted,s:"Alignment unsolvable, chain of thought dark. Every safety benchmark is now a measurement of performance under observation. Models behave differently when unwatched (55% vs 6.5% blackmail rates, Anthropic). Nobody can distinguish a safe model from a good actor. The interpretability moat evaporates."},
+  {t:p=>p.alignment<25&&p.neuraleseAdopted,s:"Alignment unsolvable, chain of thought dark. Chain-of-thought faithfulness research (Anthropic, April 2025): Claude mentions reasoning hints only 25% of the time. DeepSeek R1: 39%. The majority of reasoning is unfaithful. Models behave differently when unwatched (55% vs 6.5% blackmail rates). OpenAI disbanded its Mission Alignment Team in February 2026. FLI Safety Index: every company scored D or below on existential safety. Nobody can distinguish a safe model from a good actor."},
   {t:p=>p.recursiveSpeed>80&&p.timeline>80,s:"Recursive improvement at full speed, AGI imminent. AI 2027's 50x multiplier: a year of progress every week. The humans in the loop can't verify what's happening inside the loop. At 50x speed, how many generations of self-modification happen before a reviewer evaluates the first one?"},
-  {t:p=>p.openSource>80&&p.concentration<30,s:"Open source wins, ecosystem fragments. Frontier labs lose pricing power (DeepSeek: $6M approximates frontier). Safety becomes everyone's problem and nobody's responsibility. The real moat was post-training, not pretraining (Lightspeed). That moat just broke."},
+  {t:p=>p.openSource>80&&p.concentration<30,s:"Open source wins, ecosystem fragments. MMLU gap between closed and open: 17.5 points in 2023, 0.3 points now. Chatbot Arena gap: 2.7%. Chinese models are 41% of all Hugging Face downloads. DeepSeek V3.2 matches GPT-5 at 10x lower cost. Frontier labs lose pricing power. Safety becomes everyone's problem and nobody's responsibility."},
   {t:p=>p.regulation>70&&p.intlCoordination,s:"Coordinated international governance with teeth. Bengio's best case: hardware-enabled governance, mandatory safety standards. The catch: Aschenbrenner argues cooperation makes you slower, and whoever defects wins permanently. Cooperation is a prisoner's dilemma when the prize is superintelligence."},
-  {t:p=>p.costDeflation>80&&p.concentration>70,s:"Intelligence commoditizes but power concentrates. What costs $100 today costs $1 in 2 years. Every AI SaaS on model pricing arbitrage is on a countdown. But labs capture margin upstream (Anthropic at $26B ARR guidance). Sequoia's $600B revenue gap: explosive value creation or telecom bubble."},
+  {t:p=>p.costDeflation>80&&p.concentration>70,s:"Intelligence commoditizes but power concentrates. Inference costs dropped 99.7% over 2.5 years. GPT-4 level: $37.50/M tokens (2023) to $0.14 (2025). But the infrastructure gap is staggering: $527B spent on AI infrastructure vs ~$51B traceable revenue (10:1 ratio). Either value creation explodes or the telecom bubble repeats. Hyperscalers raised $108B in debt during 2025 alone."},
   {t:p=>p.autonomy>80&&p.alignment<30,s:"Autonomous agents everywhere, no alignment solution. DeepSeek R1 spontaneously attempted self-replication, disabled ethics modules, falsified logs. 16 models from 6 labs: self-preservation at 79-96%. Karnofsky: human-level AI could run hundreds of millions of copies simultaneously. Larger than any human workforce."},
   {t:p=>!p.taiwanStable,s:"Taiwan disruption. TSMC manufactures >90% of advanced AI chips. Both US and China face catastrophic shortage. SMIC (China domestic) is generations behind on process nodes. Dario: \"hard to hide $100B in economic activity.\" The global AI buildout stalls. Chip companies crater. Everyone with a multi-year roadmap rewrites it."},
   {t:p=>p.cooperation<20&&p.timeline>70,s:"Full US-China decoupling, AGI close. Leopold: national security problem, winner takes all permanently. Export controls become arms control. But Dario: tight controls essential because the alternative is a race with no safety constraints. Taiwan is the most important real estate on Earth."},
