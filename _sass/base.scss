@@ -1418,6 +1418,92 @@ kbd {
   margin-top: 0.5rem;
 }
 
+/* Pretext-enhanced wake-up animations */
+.split-scroll[data-enhanced] h1 {
+  animation: wake-fade-up 0.8s ease-out both;
+}
+
+.split-scroll[data-enhanced] .split-scroll-intro {
+  animation: wake-fade-up 0.8s ease-out 0.3s both;
+}
+
+.split-scroll[data-enhanced] .stage {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.split-scroll[data-enhanced] .stage.visible {
+  opacity: 1;
+  transform: none;
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.split-scroll[data-enhanced] .stage-claim p,
+.split-scroll[data-enhanced] .stage-reaction p {
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path 0.12s ease-out;
+}
+
+.split-scroll[data-enhanced] .stage-connector {
+  opacity: 0;
+  transform: scaleY(0);
+  transform-origin: top;
+}
+
+.split-scroll[data-enhanced] .stage-connector.visible {
+  opacity: 1;
+  transform: scaleY(1);
+  transition: opacity 0.3s ease-out, transform 0.4s ease-out;
+}
+
+.split-scroll[data-enhanced] .highlight-text {
+  background-color: transparent;
+  background-image: linear-gradient(var(--highlight-color), var(--highlight-color));
+  background-size: 0% 100%;
+  background-repeat: no-repeat;
+  transition: background-size 0.5s ease-out;
+}
+
+.split-scroll[data-enhanced] .highlight-text.swept {
+  background-size: 100% 100%;
+}
+
+.split-scroll[data-enhanced] .stage-label.typing {
+  border-right: 1.5px solid var(--text-color);
+  animation: blink-caret 0.6s step-end infinite;
+}
+
+.split-scroll[data-enhanced] .split-scroll-sources {
+  opacity: 0;
+  transition: opacity 0.8s ease-out;
+}
+
+.split-scroll[data-enhanced] .split-scroll-sources.visible {
+  opacity: 1;
+}
+
+@keyframes wake-fade-up {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes blink-caret {
+  0%, 100% { border-right-color: var(--text-color); }
+  50% { border-right-color: transparent; }
+}
+
+.wake-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  background: var(--highlight-color);
+  width: 0%;
+  transition: width 0.4s ease-out, opacity 0.6s ease-out;
+  z-index: 1000;
+  pointer-events: none;
+}
+
 @media (max-width: 768px) {
   .stage {
     display: block;

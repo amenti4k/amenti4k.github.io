@@ -163,3 +163,141 @@ permalink: /ai-wake-up/
   </div>
 
 </div>
+
+<script type="module">
+try {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) throw 'reduced-motion';
+
+  const { prepare, layout } = await import('https://esm.sh/@chenglou/pretext');
+  await document.fonts.ready;
+
+  const root = document.querySelector('.split-scroll');
+  if (!root) throw 'no-root';
+
+  const CLAIM = { font: '14px Newsreader', lh: 14 * 1.65 };
+  const REACT = { font: '15px Newsreader', lh: 15 * 1.7 };
+
+  const stages = [...root.querySelectorAll('.stage')];
+  const connectors = [...root.querySelectorAll('.stage-connector')];
+
+  // Phase 1: prepare all text (width-independent, ~19ms for 500 texts)
+  const info = stages.map(s => {
+    const cp = s.querySelector('.stage-claim p');
+    const rp = s.querySelector('.stage-reaction p');
+    const lb = s.querySelector('.stage-label');
+    return {
+      el: s,
+      claim: { el: cp, prep: prepare(cp.textContent, CLAIM.font) },
+      react: { el: rp, prep: prepare(rp.textContent, REACT.font) },
+      label: { el: lb, text: lb.textContent }
+    };
+  });
+
+  // Activate enhanced mode — CSS hides stages until revealed
+  root.dataset.enhanced = '';
+
+  // Progress bar
+  const bar = document.createElement('div');
+  bar.className = 'wake-progress';
+  document.body.appendChild(bar);
+  let done = 0;
+
+  const sleep = ms => new Promise(r => setTimeout(r, ms));
+
+  function typewrite(el, text, speed) {
+    return new Promise(resolve => {
+      el.textContent = '';
+      el.classList.add('typing');
+      let i = 0;
+      const id = setInterval(() => {
+        el.textContent = text.slice(0, ++i);
+        if (i >= text.length) { clearInterval(id); el.classList.remove('typing'); resolve(); }
+      }, speed);
+    });
+  }
+
+  // Phase 2: layout() is pure math (~0.09ms for 500 texts)
+  // Computes exact line count at current container width
+  function revealLines(el, prep, lh) {
+    const n = layout(prep, el.clientWidth, lh).lineCount;
+    return new Promise(resolve => {
+      let i = 0;
+      const id = setInterval(() => {
+        i++;
+        el.style.clipPath = i >= n ? 'none' : `inset(0 0 ${((n - i) / n * 100).toFixed(1)}% 0)`;
+        if (i >= n) { clearInterval(id); resolve(); }
+      }, 55);
+    });
+  }
+
+  function sweep(el) {
+    el.querySelectorAll('.highlight-text').forEach(h => h.classList.add('swept'));
+  }
+
+  async function reveal(idx) {
+    const d = info[idx];
+
+    // Stage fades in + slides up
+    d.el.classList.add('visible');
+
+    // Label typewriter
+    typewrite(d.label.el, d.label.text, 30);
+    await sleep(d.label.text.length * 10);
+
+    // Claim: line-by-line reveal using pretext layout
+    const claimLines = layout(d.claim.prep, d.claim.el.clientWidth, CLAIM.lh).lineCount;
+    const claimDone = revealLines(d.claim.el, d.claim.prep, CLAIM.lh);
+
+    // Reaction starts before claim finishes (overlapping)
+    await sleep(claimLines * 55 * 0.35);
+    const reactDone = revealLines(d.react.el, d.react.prep, REACT.lh);
+
+    // Highlights sweep in after each column fully reveals
+    await claimDone;
+    sweep(d.claim.el);
+    await reactDone;
+    sweep(d.react.el);
+
+    // Connector drops in
+    if (connectors[idx]) {
+      await sleep(80);
+      connectors[idx].classList.add('visible');
+    }
+
+    // Update progress
+    done++;
+    bar.style.width = (done / stages.length * 100) + '%';
+
+    // After all stages: fade in sources, fade out progress
+    if (done >= stages.length) {
+      const src = root.querySelector('.split-scroll-sources');
+      if (src) { await sleep(300); src.classList.add('visible'); }
+      await sleep(1200);
+      bar.style.opacity = '0';
+    }
+  }
+
+  // Scroll-triggered reveals
+  let first = true;
+  const obs = new IntersectionObserver(entries => {
+    const hits = entries
+      .filter(e => e.isIntersecting)
+      .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+
+    hits.forEach((e, i) => {
+      obs.unobserve(e.target);
+      const idx = stages.indexOf(e.target);
+      if (idx < 0) return;
+      // Stagger initially visible stages; instant for scroll-triggered ones
+      setTimeout(() => reveal(idx), first ? i * 900 : 0);
+    });
+
+    if (hits.length) first = false;
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+  stages.forEach(s => obs.observe(s));
+
+} catch (e) {
+  // Graceful fallback: page renders as static content
+}
+</script>
