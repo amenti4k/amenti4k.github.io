@@ -5,8 +5,6 @@ date: 2025-08-12
 categories: [ai, automation, engineering]
 tags: [stagehand, rpa, browser-automation, ai, production-engineering]
 excerpt: "The problem with browser automation isn't the browser. It's that we've been trying to tell computers exactly what to do instead of letting AI figure it out."
-image: /assets/images/post-covers/stagehand.png
-image_alt: Painterly editorial cover art for Stagehand.
 ---
 
 # Stagehand: Building Browser Automation That Actually Works in Production

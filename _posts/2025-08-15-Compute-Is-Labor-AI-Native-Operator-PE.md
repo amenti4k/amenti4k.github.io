@@ -5,8 +5,6 @@ date: 2025-08-15
 categories: [economics, ai, transformation]
 tags: [ai-native, private-equity, labor-economics, architectural-inversion, post-work]
 excerpt: "Something is slipping in the economy, though almost nobody sees it yet. It doesn't show up in headlines or earnings calls, but in quieter places, in how procurement agents are pitched, in why private equity firms are buying every 'boring' business they can find."
-image: /assets/images/post-covers/labor.png
-image_alt: Painterly editorial cover art for Compute Is Labor.
 ---
 
 # Compute Is Labor: The Architectural Inversion of the Economy

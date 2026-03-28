@@ -5,8 +5,6 @@ description: "We built it wrong. Not in the fun, 'let's try something crazy and 
 date: 2025-07-15
 categories: [ai]
 tags: [autonomous-systems, ai-engineering, production-ai, temporal, distributed-systems, didero-ai]
-image: /assets/images/post-covers/quicksand.png
-image_alt: Painterly editorial cover art for Building on Quicksand.
 ---
 
 # Building on Quicksand: The Reality of Production AI Systems

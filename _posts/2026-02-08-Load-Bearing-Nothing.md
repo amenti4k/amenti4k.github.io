@@ -3,8 +3,6 @@ layout: post
 title: "Load-Bearing Nothing"
 date: 2026-02-08
 tags: [business, ai]
-image: /assets/images/post-covers/load_bearing.png
-image_alt: Painterly editorial cover art for Load-Bearing Nothing.
 ---
 
 - In structural engineering there's a thing called <span class="highlight-text">parasitic load</span>. The weight of a building that only exists to support the building itself. Beams holding up beams. Floors that exist so you can put columns on them to hold up other floors. In a good structure it's maybe fifteen percent. In a bad one the building is mostly just holding itself up. <span class="marginnote">In real structures, parasitic load is unavoidable. The question is always how much of it is actually necessary vs. how much is just inherited from the last guy's constraints.</span>
