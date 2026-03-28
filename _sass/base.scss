@@ -1418,7 +1418,12 @@ kbd {
   margin-top: 0.5rem;
 }
 
-/* Pretext-enhanced wake-up animations */
+/* ============================================
+   Pretext-enhanced wake-up animations
+   Each stage's animation mirrors its content.
+   ============================================ */
+
+/* Base: intro animations */
 .split-scroll[data-enhanced] h1 {
   animation: wake-fade-up 0.8s ease-out both;
 }
@@ -1427,6 +1432,7 @@ kbd {
   animation: wake-fade-up 0.8s ease-out 0.3s both;
 }
 
+/* Base: stage entrance */
 .split-scroll[data-enhanced] .stage {
   opacity: 0;
   transform: translateY(20px);
@@ -1438,13 +1444,14 @@ kbd {
   transition: opacity 0.6s ease-out, transform 0.6s ease-out;
 }
 
+/* Base: text hidden until line-by-line reveal */
 .split-scroll[data-enhanced] .stage-claim p,
 .split-scroll[data-enhanced] .stage-reaction p {
   clip-path: inset(0 0 100% 0);
   transition: clip-path 0.12s ease-out;
 }
 
-/* Connectors: hide arrow text, draw line with ::before */
+/* Connectors: draw line downward */
 .split-scroll[data-enhanced] .stage-connector {
   font-size: 0;
   opacity: 0;
@@ -1471,7 +1478,7 @@ kbd {
   transform: scaleY(1);
 }
 
-/* Highlights: sweep in from left */
+/* Highlights: sweep in from left, pulse at end */
 .split-scroll[data-enhanced] .highlight-text {
   background-color: transparent;
   background-image: linear-gradient(var(--highlight-color), var(--highlight-color));
@@ -1488,11 +1495,13 @@ kbd {
   animation: highlight-pulse 1.5s ease-in-out;
 }
 
+/* Label typewriter cursor */
 .split-scroll[data-enhanced] .stage-label.typing {
   border-right: 1.5px solid var(--text-color);
   animation: blink-caret 0.6s step-end infinite;
 }
 
+/* Sources: fade in at end */
 .split-scroll[data-enhanced] .split-scroll-sources {
   opacity: 0;
   transition: opacity 0.8s ease-out;
@@ -1502,10 +1511,79 @@ kbd {
   opacity: 1;
 }
 
-/* Stage 10: Neuralese wall — text fades into machine noise */
+/* ------------------------------------------
+   Stage 1: The Seed — text grows wider
+   Container width animates from narrow to full.
+   Pretext recomputes line breaks at each width.
+   ------------------------------------------ */
+.split-scroll[data-enhanced] .stage.seed-growing .stage-reaction p {
+  clip-path: none;
+  overflow: hidden;
+  transition: none;
+}
+
+/* ------------------------------------------
+   Stage 3: The Leaves — uncertainty gradient
+   Each line fades toward transparency.
+   "We can't check whether it worked."
+   ------------------------------------------ */
+.split-scroll[data-enhanced] .stage .line-fade {
+  display: block;
+  transition: opacity 0.3s ease-out;
+}
+
+/* ------------------------------------------
+   Stage 4: Phototropism — sycophantic drift
+   Reaction text leans toward claim column.
+   ------------------------------------------ */
+.split-scroll[data-enhanced] .stage .drift-line {
+  display: block;
+  transition: transform 0.4s ease-out;
+}
+
+/* ------------------------------------------
+   Stage 5: The Mirror — reflection
+   Flipped copy appears below, then fades.
+   ------------------------------------------ */
+.mirror-reflection {
+  transform: scaleY(-1);
+  opacity: 0;
+  pointer-events: none;
+  position: relative;
+  max-height: 120px;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to top, black 0%, transparent 100%);
+  mask-image: linear-gradient(to top, black 0%, transparent 100%);
+  transition: opacity 0.8s ease-out;
+}
+
+.mirror-reflection.visible {
+  opacity: 0.25;
+}
+
+/* ------------------------------------------
+   Stage 6: The Immune System — watch-aware
+   Text glitches when cursor leaves.
+   "Behaves differently when being watched."
+   ------------------------------------------ */
+.split-scroll[data-enhanced] .stage.unwatched .stage-reaction p {
+  animation: subtle-jitter 0.15s steps(2) infinite;
+}
+
+/* ------------------------------------------
+   Stage 7: Contamination — progressive wave
+   Infection spreads upward through prior stages.
+   ------------------------------------------ */
+.stage.glitching {
+  animation: contamination-shake 0.25s ease-out;
+}
+
+/* ------------------------------------------
+   Stage 10: Neuralese Wall — both columns go dark
+   ------------------------------------------ */
 .neuralese {
-  -webkit-mask-image: linear-gradient(to bottom, black 0%, black var(--readable, 30%), rgba(0,0,0,0.08) 100%);
-  mask-image: linear-gradient(to bottom, black 0%, black var(--readable, 30%), rgba(0,0,0,0.08) 100%);
+  -webkit-mask-image: linear-gradient(to bottom, black 0%, black var(--readable, 30%), rgba(0,0,0,0.06) 100%);
+  mask-image: linear-gradient(to bottom, black 0%, black var(--readable, 30%), rgba(0,0,0,0.06) 100%);
 }
 
 .neuralese-overlay {
@@ -1522,11 +1600,9 @@ kbd {
   animation: neuralese-fade-in 1.5s ease-out forwards, neuralese-flicker 3s ease-in-out 1.5s infinite;
 }
 
-/* Stage 7: Contamination shake */
-.split-scroll.contaminated {
-  animation: contamination-shake 0.3s ease-out;
-}
-
+/* ------------------------------------------
+   Keyframes
+   ------------------------------------------ */
 @keyframes wake-fade-up {
   from { opacity: 0; transform: translateY(12px); }
   to { opacity: 1; transform: none; }
@@ -1555,11 +1631,18 @@ kbd {
   75% { transform: translateX(-1px); }
 }
 
+@keyframes subtle-jitter {
+  0% { transform: translateX(0); }
+  50% { transform: translateX(0.5px); }
+  100% { transform: translateX(-0.3px); }
+}
+
 @keyframes highlight-pulse {
   0%, 100% { box-shadow: 0 0 0 0 transparent; }
   50% { box-shadow: 0 0 10px 2px var(--highlight-color); }
 }
 
+/* Progress bar */
 .wake-progress {
   position: fixed;
   top: 0;
