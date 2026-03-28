@@ -180,7 +180,7 @@ try {
   const stages = [...root.querySelectorAll('.stage')];
   const connectors = [...root.querySelectorAll('.stage-connector')];
 
-  // Phase 1: prepare all text (width-independent, ~19ms for 500 texts)
+  // Phase 1: prepare all text (width-independent)
   const info = stages.map(s => {
     const cp = s.querySelector('.stage-claim p');
     const rp = s.querySelector('.stage-reaction p');
@@ -193,14 +193,14 @@ try {
     };
   });
 
-  // Activate enhanced mode — CSS hides stages until revealed
+  // Activate enhanced mode
   root.dataset.enhanced = '';
 
-  // Progress bar
   const bar = document.createElement('div');
   bar.className = 'wake-progress';
   document.body.appendChild(bar);
   let done = 0;
+  const revealed = new Set();
 
   const sleep = ms => new Promise(r => setTimeout(r, ms));
 
@@ -216,9 +216,8 @@ try {
     });
   }
 
-  // Phase 2: layout() is pure math (~0.09ms for 500 texts)
-  // Computes exact line count at current container width
-  function revealLines(el, prep, lh) {
+  // Phase 2: layout() computes exact line count via pure math
+  function revealLines(el, prep, lh, ms) {
     const n = layout(prep, el.clientWidth, lh).lineCount;
     return new Promise(resolve => {
       let i = 0;
@@ -226,7 +225,7 @@ try {
         i++;
         el.style.clipPath = i >= n ? 'none' : `inset(0 0 ${((n - i) / n * 100).toFixed(1)}% 0)`;
         if (i >= n) { clearInterval(id); resolve(); }
-      }, 55);
+      }, ms);
     });
   }
 
@@ -234,50 +233,150 @@ try {
     el.querySelectorAll('.highlight-text').forEach(h => h.classList.add('swept'));
   }
 
+  // Accelerating speed: stage 1 is slow and deliberate, stage 9+ is near-instant
+  // Mirrors the essay's theme of exponential acceleration
+  function lineSpeed(idx) {
+    return Math.max(15, Math.round(80 * Math.pow(0.84, idx)));
+  }
+
+  // STAGE 7 (idx 6): Contamination
+  // "One bad behavior and the whole model shifts"
+  // Glitch ripples through all previously revealed text
+  function contaminationGlitch() {
+    const blocks = '▓░▒█▄▀■□';
+    root.classList.add('contaminated');
+    const restores = [];
+
+    stages.slice(0, 7).forEach(stage => {
+      const walker = document.createTreeWalker(stage, NodeFilter.SHOW_TEXT);
+      while (walker.nextNode()) {
+        const node = walker.currentNode;
+        const orig = node.textContent;
+        const glitched = [...orig].map(c =>
+          c.trim() && Math.random() < 0.12
+            ? blocks[Math.floor(Math.random() * blocks.length)]
+            : c
+        ).join('');
+        if (glitched !== orig) {
+          node.textContent = glitched;
+          restores.push(() => { node.textContent = orig; });
+        }
+      }
+    });
+
+    setTimeout(() => {
+      restores.forEach(r => r());
+      root.classList.remove('contaminated');
+    }, 200);
+  }
+
+  // STAGE 10 (idx 9): The Neuralese Wall
+  // "The one window into the model's thinking goes dark"
+  // Pretext computes exact line boundary where text becomes unreadable
+  function neuraleseWall(el, prep, lh) {
+    const { lineCount } = layout(prep, el.clientWidth, lh);
+    const readable = Math.min(3, lineCount);
+    const pct = (readable / lineCount * 100).toFixed(0);
+
+    el.classList.add('neuralese');
+    el.style.setProperty('--readable', pct + '%');
+
+    // Overlay garbled machine text where human text fades out
+    const overlay = document.createElement('div');
+    overlay.className = 'neuralese-overlay';
+    overlay.setAttribute('aria-hidden', 'true');
+    overlay.style.top = (readable * lh) + 'px';
+    overlay.style.lineHeight = lh + 'px';
+
+    const blocks = '▓░▒█▄▀■□╋╳╬╪▪▫';
+    let text = '';
+    for (let i = readable; i < lineCount; i++) {
+      const f = (i - readable) / (lineCount - readable);
+      for (let j = 0; j < 55; j++) {
+        text += Math.random() < 0.25 + f * 0.15
+          ? ' '
+          : blocks[Math.floor(Math.random() * blocks.length)];
+      }
+      if (i < lineCount - 1) text += '\n';
+    }
+    overlay.textContent = text;
+    el.style.position = 'relative';
+    el.appendChild(overlay);
+  }
+
   async function reveal(idx) {
+    if (revealed.has(idx)) return;
+    revealed.add(idx);
+
     const d = info[idx];
+    const speed = lineSpeed(idx);
+    const typeSpeed = Math.max(15, Math.round(30 * Math.pow(0.9, idx)));
 
     // Stage fades in + slides up
     d.el.classList.add('visible');
 
-    // Label typewriter
-    typewrite(d.label.el, d.label.text, 30);
-    await sleep(d.label.text.length * 10);
+    // Label typewriter (also accelerates)
+    typewrite(d.label.el, d.label.text, typeSpeed);
+    await sleep(d.label.text.length * typeSpeed * 0.3);
 
     // Claim: line-by-line reveal using pretext layout
     const claimLines = layout(d.claim.prep, d.claim.el.clientWidth, CLAIM.lh).lineCount;
-    const claimDone = revealLines(d.claim.el, d.claim.prep, CLAIM.lh);
+    const claimDone = revealLines(d.claim.el, d.claim.prep, CLAIM.lh, speed);
 
     // Reaction starts before claim finishes (overlapping)
-    await sleep(claimLines * 55 * 0.35);
-    const reactDone = revealLines(d.react.el, d.react.prep, REACT.lh);
+    await sleep(claimLines * speed * 0.35);
+    const reactDone = revealLines(d.react.el, d.react.prep, REACT.lh, speed);
 
-    // Highlights sweep in after each column fully reveals
     await claimDone;
     sweep(d.claim.el);
     await reactDone;
     sweep(d.react.el);
 
-    // Connector drops in
+    // === Stage-specific effects ===
+
+    // Stage 7: contamination glitch across all prior text
+    if (idx === 6) {
+      await sleep(200);
+      contaminationGlitch();
+    }
+
+    // Stage 10: neuralese wall — text dissolves into machine noise
+    if (idx === 9) {
+      await sleep(400);
+      neuraleseWall(d.react.el, d.react.prep, REACT.lh);
+    }
+
+    // Connector line draws itself
     if (connectors[idx]) {
-      await sleep(80);
+      await sleep(Math.max(40, 80 - idx * 5));
       connectors[idx].classList.add('visible');
     }
 
-    // Update progress
     done++;
     bar.style.width = (done / stages.length * 100) + '%';
 
-    // After all stages: fade in sources, fade out progress
+    // STAGE 11 (idx 10): Control Inversion
+    // "The AI systems end up in the driver's seat"
+    // Page takes over — auto-scrolls to the final stage without user input
+    if (idx === 9) {
+      await sleep(2000);
+      stages[10].scrollIntoView({ behavior: 'smooth', block: 'center' });
+      await sleep(800);
+      reveal(10);
+    }
+
+    // After all stages: pulse every highlight across the essay
     if (done >= stages.length) {
       const src = root.querySelector('.split-scroll-sources');
-      if (src) { await sleep(300); src.classList.add('visible'); }
-      await sleep(1200);
+      if (src) { await sleep(400); src.classList.add('visible'); }
+      await sleep(600);
+      root.querySelectorAll('.highlight-text.swept').forEach(h => h.classList.add('pulse'));
+      await sleep(2000);
       bar.style.opacity = '0';
     }
   }
 
-  // Scroll-triggered reveals
+  // Observe stages 0-9 for scroll-triggered reveal
   let first = true;
   const obs = new IntersectionObserver(entries => {
     const hits = entries
@@ -287,8 +386,7 @@ try {
     hits.forEach((e, i) => {
       obs.unobserve(e.target);
       const idx = stages.indexOf(e.target);
-      if (idx < 0) return;
-      // Stagger initially visible stages; instant for scroll-triggered ones
+      if (idx < 0 || idx === 10) return; // Stage 11 is auto-revealed
       setTimeout(() => reveal(idx), first ? i * 900 : 0);
     });
 
@@ -297,7 +395,13 @@ try {
 
   stages.forEach(s => obs.observe(s));
 
+  // Fallback: if user scrolls to stage 11 before auto-reveal triggers
+  const fallback = new IntersectionObserver(entries => {
+    if (entries[0]?.isIntersecting) { fallback.disconnect(); reveal(10); }
+  }, { threshold: 0.3 });
+  fallback.observe(stages[10]);
+
 } catch (e) {
-  // Graceful fallback: page renders as static content
+  // Static fallback — page renders normally without animations
 }
 </script>

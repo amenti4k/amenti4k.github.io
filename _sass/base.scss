@@ -1444,18 +1444,34 @@ kbd {
   transition: clip-path 0.12s ease-out;
 }
 
+/* Connectors: hide arrow text, draw line with ::before */
 .split-scroll[data-enhanced] .stage-connector {
+  font-size: 0;
   opacity: 0;
-  transform: scaleY(0);
-  transform-origin: top;
+  transition: opacity 0.3s ease-out;
 }
 
 .split-scroll[data-enhanced] .stage-connector.visible {
   opacity: 1;
-  transform: scaleY(1);
-  transition: opacity 0.3s ease-out, transform 0.4s ease-out;
 }
 
+.split-scroll[data-enhanced] .stage-connector::after {
+  display: none;
+}
+
+.split-scroll[data-enhanced] .stage-connector::before {
+  height: 40px;
+  margin-bottom: 0;
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 0.6s ease-out;
+}
+
+.split-scroll[data-enhanced] .stage-connector.visible::before {
+  transform: scaleY(1);
+}
+
+/* Highlights: sweep in from left */
 .split-scroll[data-enhanced] .highlight-text {
   background-color: transparent;
   background-image: linear-gradient(var(--highlight-color), var(--highlight-color));
@@ -1466,6 +1482,10 @@ kbd {
 
 .split-scroll[data-enhanced] .highlight-text.swept {
   background-size: 100% 100%;
+}
+
+.split-scroll[data-enhanced] .highlight-text.pulse {
+  animation: highlight-pulse 1.5s ease-in-out;
 }
 
 .split-scroll[data-enhanced] .stage-label.typing {
@@ -1482,6 +1502,31 @@ kbd {
   opacity: 1;
 }
 
+/* Stage 10: Neuralese wall — text fades into machine noise */
+.neuralese {
+  -webkit-mask-image: linear-gradient(to bottom, black 0%, black var(--readable, 30%), rgba(0,0,0,0.08) 100%);
+  mask-image: linear-gradient(to bottom, black 0%, black var(--readable, 30%), rgba(0,0,0,0.08) 100%);
+}
+
+.neuralese-overlay {
+  position: absolute;
+  left: 0;
+  right: 0;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  color: var(--secondary-text-color);
+  opacity: 0;
+  pointer-events: none;
+  white-space: pre-wrap;
+  word-break: break-all;
+  animation: neuralese-fade-in 1.5s ease-out forwards, neuralese-flicker 3s ease-in-out 1.5s infinite;
+}
+
+/* Stage 7: Contamination shake */
+.split-scroll.contaminated {
+  animation: contamination-shake 0.3s ease-out;
+}
+
 @keyframes wake-fade-up {
   from { opacity: 0; transform: translateY(12px); }
   to { opacity: 1; transform: none; }
@@ -1490,6 +1535,29 @@ kbd {
 @keyframes blink-caret {
   0%, 100% { border-right-color: var(--text-color); }
   50% { border-right-color: transparent; }
+}
+
+@keyframes neuralese-fade-in {
+  from { opacity: 0; }
+  to { opacity: 0.4; }
+}
+
+@keyframes neuralese-flicker {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.25; }
+}
+
+@keyframes contamination-shake {
+  0%, 100% { transform: none; }
+  15% { transform: translateX(2px); }
+  35% { transform: translateX(-2px) translateY(1px); }
+  55% { transform: translateX(1px) translateY(-1px); }
+  75% { transform: translateX(-1px); }
+}
+
+@keyframes highlight-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 transparent; }
+  50% { box-shadow: 0 0 10px 2px var(--highlight-color); }
 }
 
 .wake-progress {
