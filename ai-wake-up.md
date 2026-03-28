@@ -358,10 +358,20 @@ try {
   // ==========================================
   // STAGE 6: THE IMMUNE SYSTEM — watch-aware
   // "Behaves differently when being watched"
-  // Text glitches when cursor leaves the stage.
+  // Text glitches when cursor leaves. Indicator
+  // shows observed/unobserved state explicitly.
   // ==========================================
   function setupWatchAware(stageEl, reactEl) {
+    const canHover = window.matchMedia('(hover: hover)').matches;
+    if (!canHover) return;
+
     const blocks = '▓░▒█▄▀■';
+    const indicator = document.createElement('span');
+    indicator.className = 'watch-indicator';
+    indicator.textContent = 'observed';
+    reactEl.closest('.stage-reaction').prepend(indicator);
+    requestAnimationFrame(() => indicator.classList.add('active'));
+
     let isWatched = true;
     let glitchId = null;
     let restores = [];
@@ -388,12 +398,16 @@ try {
     function startGlitching() {
       if (glitchId) return;
       stageEl.classList.add('unwatched');
+      indicator.textContent = 'unobserved';
+      indicator.classList.add('danger');
       glitchOnce();
       glitchId = setInterval(glitchOnce, 300);
     }
 
     function stopGlitching() {
       stageEl.classList.remove('unwatched');
+      indicator.textContent = 'observed';
+      indicator.classList.remove('danger');
       if (glitchId) { clearInterval(glitchId); glitchId = null; }
       restores.forEach(r => r());
       restores = [];
@@ -401,8 +415,6 @@ try {
 
     stageEl.addEventListener('mouseenter', () => { isWatched = true; stopGlitching(); });
     stageEl.addEventListener('mouseleave', () => { isWatched = false; startGlitching(); });
-
-    // Start unwatched after a beat (reader may have scrolled past)
     setTimeout(() => { if (!isWatched) startGlitching(); }, 1500);
   }
 
@@ -541,6 +553,103 @@ try {
   }
 
   // ==========================================
+  // INTERACTIVE: Scale counter for stage 2
+  // Shows capability multiplier as lines reveal
+  // ==========================================
+  function exponentialRevealWithCounter(el, prep, lh, claimEl) {
+    const n = layout(prep, el.clientWidth, lh).lineCount;
+    const counter = document.createElement('span');
+    counter.className = 'scale-counter';
+    counter.textContent = '1x';
+    claimEl.closest('.stage-claim').appendChild(counter);
+    requestAnimationFrame(() => counter.classList.add('active'));
+
+    return new Promise(resolve => {
+      let i = 0;
+      function next() {
+        i++;
+        el.style.clipPath = i >= n ? 'none' : `inset(0 0 ${((n - i) / n * 100).toFixed(1)}% 0)`;
+        const multiplier = Math.round(Math.pow(100000, i / n));
+        counter.textContent = multiplier.toLocaleString() + 'x';
+        if (i >= n) { resolve(); return; }
+        const ms = Math.max(10, Math.round(200 * Math.pow(0.6, i)));
+        setTimeout(next, ms);
+      }
+      next();
+    });
+  }
+
+  // ==========================================
+  // INTERACTIVE: Cursor sycophancy for stage 4
+  // Reaction text follows cursor toward claim
+  // ==========================================
+  function setupSycophancy(stageEl, reactEl) {
+    const canHover = window.matchMedia('(hover: hover)').matches;
+    if (!canHover) return;
+
+    reactEl.classList.add('sycophantic');
+    stageEl.addEventListener('mousemove', (e) => {
+      const rect = stageEl.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width;
+      const drift = Math.max(0, (0.5 - x) * 30);
+      reactEl.style.transform = `translateX(-${drift.toFixed(1)}px)`;
+    });
+    stageEl.addEventListener('mouseleave', () => {
+      reactEl.style.transition = 'transform 1.5s ease-out';
+      reactEl.style.transform = '';
+      setTimeout(() => { reactEl.style.transition = ''; }, 1500);
+    });
+  }
+
+  // ==========================================
+  // INTERACTIVE: Touch contamination for stage 7
+  // Clicking any prior stage re-glitches it
+  // ==========================================
+  function setupTouchContamination() {
+    const blocks = '▓░▒█▄▀■□';
+    stages.slice(0, 7).forEach(stage => {
+      stage.classList.add('touch-contaminate');
+      stage.addEventListener('click', () => {
+        const restores = [];
+        const walker = document.createTreeWalker(stage, NodeFilter.SHOW_TEXT);
+        while (walker.nextNode()) {
+          const node = walker.currentNode;
+          const orig = node.textContent;
+          const glitched = [...orig].map(c =>
+            c.trim() && Math.random() < 0.06
+              ? blocks[Math.floor(Math.random() * blocks.length)]
+              : c
+          ).join('');
+          if (glitched !== orig) {
+            node.textContent = glitched;
+            restores.push(() => { node.textContent = orig; });
+          }
+        }
+        stage.classList.add('glitching');
+        setTimeout(() => { restores.forEach(r => r()); stage.classList.remove('glitching'); }, 150);
+      });
+    });
+  }
+
+  // ==========================================
+  // INTERACTIVE: Control notice for stage 11
+  // Brief overlay: "control inverted"
+  // ==========================================
+  function showControlNotice() {
+    const notice = document.createElement('div');
+    notice.className = 'control-notice';
+    notice.textContent = 'control inverted';
+    document.body.appendChild(notice);
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => notice.classList.add('visible'));
+    });
+    setTimeout(() => {
+      notice.classList.remove('visible');
+      setTimeout(() => notice.remove(), 600);
+    }, 2500);
+  }
+
+  // ==========================================
   // Main reveal orchestrator
   // ==========================================
   async function reveal(idx) {
@@ -570,7 +679,7 @@ try {
       // STAGE 2: ROOT SYSTEM — exponential speed within paragraph
       const claimDone = revealLines(d.claim.el, d.claim.prep, CLAIM.lh, speed);
       await sleep(300);
-      const reactDone = exponentialReveal(d.react.el, d.react.prep, REACT.lh);
+      const reactDone = exponentialRevealWithCounter(d.react.el, d.react.prep, REACT.lh, d.claim.el);
       await claimDone; sweep(d.claim.el);
       await reactDone; sweep(d.react.el);
 
@@ -590,6 +699,7 @@ try {
       const reactDone = sycophancyReveal(d.react.el, d.react.prep, REACT.lh, speed);
       await claimDone; sweep(d.claim.el);
       await reactDone; sweep(d.react.el);
+      setupSycophancy(d.el, d.react.el);
 
     } else if (idx === 4) {
       // STAGE 5: THE MIRROR — standard reveal, then reflection
@@ -621,7 +731,8 @@ try {
       await claimDone; sweep(d.claim.el);
       await reactDone; sweep(d.react.el);
       await sleep(300);
-      contaminationWave();
+      await contaminationWave();
+      setupTouchContamination();
 
     } else if (idx === 7) {
       // STAGE 8: THE ARMS RACE — oscillating reveal on reaction
@@ -683,6 +794,7 @@ try {
     if (idx === 9) {
       await sleep(2000);
       stages[10].scrollIntoView({ behavior: 'smooth', block: 'center' });
+      showControlNotice();
       await sleep(800);
       await reveal(10);
       // Overshoot: scroll slightly past the end, then pull back

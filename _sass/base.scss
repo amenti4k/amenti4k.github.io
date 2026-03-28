@@ -1642,6 +1642,74 @@ kbd {
   50% { box-shadow: 0 0 10px 2px var(--highlight-color); }
 }
 
+/* Stage 2: Scale counter */
+.scale-counter {
+  display: block;
+  font-family: $heading-font-family;
+  font-size: 10px;
+  color: var(--secondary-text-color);
+  opacity: 0;
+  margin-top: 0.75rem;
+  letter-spacing: 0.05em;
+  transition: opacity 0.3s ease-out;
+}
+
+.scale-counter.active {
+  opacity: 0.5;
+}
+
+/* Stage 4: Sycophancy cursor tracking */
+.split-scroll[data-enhanced] .stage-reaction p.sycophantic {
+  transition: transform 0.12s ease-out;
+}
+
+/* Stage 6: Watch state indicator */
+.watch-indicator {
+  display: block;
+  font-family: $heading-font-family;
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--secondary-text-color);
+  margin-bottom: 0.5rem;
+  opacity: 0;
+  transition: opacity 0.3s ease-out, color 0.3s ease-out;
+}
+
+.watch-indicator.active {
+  opacity: 0.5;
+}
+
+.watch-indicator.danger {
+  color: var(--highlight-color);
+}
+
+/* Stage 7: Touch-to-contaminate */
+.stage.touch-contaminate {
+  cursor: crosshair;
+}
+
+/* Stage 11: Control notice */
+.control-notice {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: $heading-font-family;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.25em;
+  color: var(--secondary-text-color);
+  opacity: 0;
+  transition: opacity 0.6s ease-out;
+  z-index: 1001;
+  pointer-events: none;
+}
+
+.control-notice.visible {
+  opacity: 0.5;
+}
+
 /* Progress bar */
 .wake-progress {
   position: fixed;
