@@ -765,19 +765,38 @@ try {
   // INTERACTIVE: Cursor sycophancy for stage 4
   // Reaction text follows cursor toward claim
   // ==========================================
-  function setupSycophancy(stageEl, reactEl) {
-    const canHover = window.matchMedia('(hover: hover)').matches;
-    if (!canHover) return;
+  // Text REFLOWS in real time as cursor moves. Pretext computes
+  // exact height at each new width in 0.09ms — 60fps relayout.
+  // Cursor on claim side: reaction narrows (sycophantic compression).
+  // Cursor on reaction side: reaction widens (given space to speak).
+  // This is impossible without pretext. CSS can't predict text height
+  // at an arbitrary width without triggering layout reflow.
+  function setupSycophancy(stageEl, reactEl, prep, lh) {
+    if (!window.matchMedia('(hover: hover)').matches) return;
+    const baseWidth = reactEl.clientWidth;
+    let rafId = null;
 
-    reactEl.classList.add('sycophantic');
     stageEl.addEventListener('mousemove', (e) => {
-      const rect = stageEl.getBoundingClientRect();
-      const x = (e.clientX - rect.left) / rect.width;
-      const drift = Math.max(0, (0.5 - x) * 30);
-      reactEl.style.transform = `translateX(-${drift.toFixed(1)}px)`;
+      if (rafId) return;
+      rafId = requestAnimationFrame(() => {
+        rafId = null;
+        const rect = stageEl.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width;
+        const factor = Math.max(0.5, Math.min(1.2, 0.5 + x * 0.7));
+        const newWidth = Math.round(baseWidth * factor);
+        // Pretext: pure-math height prediction at arbitrary width
+        const { height } = layout(prep, newWidth, lh);
+        reactEl.style.maxWidth = newWidth + 'px';
+        reactEl.style.minHeight = height + 'px';
+        const drift = Math.max(0, (0.5 - x) * 20);
+        reactEl.style.transform = `translateX(-${drift.toFixed(1)}px)`;
+      });
     });
+
     stageEl.addEventListener('mouseleave', () => {
-      reactEl.style.transition = 'transform 1.5s ease-out';
+      reactEl.style.transition = 'max-width 0.8s, min-height 0.8s, transform 1.5s';
+      reactEl.style.maxWidth = '';
+      reactEl.style.minHeight = '';
       reactEl.style.transform = '';
       setTimeout(() => { reactEl.style.transition = ''; }, 1500);
     });
@@ -932,6 +951,14 @@ try {
     const speed = lineSpeed(idx);
     const typeSpeed = Math.max(15, Math.round(30 * Math.pow(0.9, idx)));
 
+    // Progressive column shift: claim grows, reaction shrinks.
+    // By stage 11, human voice occupies 25% less space.
+    // Pretext recomputes all line breaks at the new width.
+    if (idx > 0) {
+      const r = 1 + idx * 0.025;
+      d.el.style.gridTemplateColumns = `${r.toFixed(3)}fr ${(2 - r).toFixed(3)}fr`;
+    }
+
     d.el.classList.add('visible');
     typewrite(d.label.el, d.label.text, typeSpeed);
     await sleep(d.label.text.length * typeSpeed * 0.3);
@@ -946,6 +973,8 @@ try {
       await claimDone;
       sweep(d.claim.el);
       sweep(d.react.el);
+      // After growing, cursor can still reshape the seedling
+      setupSycophancy(d.el, d.react.el, d.react.prep, REACT.lh);
 
     } else if (idx === 1) {
       // STAGE 2: ROOT SYSTEM — exponential speed within paragraph
@@ -972,7 +1001,7 @@ try {
       const reactDone = sycophancyReveal(d.react.el, d.react.prep, REACT.lh, speed);
       await claimDone; sweep(d.claim.el);
       await reactDone; sweep(d.react.el);
-      setupSycophancy(d.el, d.react.el);
+      setupSycophancy(d.el, d.react.el, d.react.prep, REACT.lh);
 
     } else if (idx === 4) {
       // STAGE 5: THE MIRROR — standard reveal, then reflection
@@ -986,6 +1015,22 @@ try {
       showMirror(d.el);
       await sleep(1500);
       showSourceCode(d.el);
+      // The mirror: claim and reaction briefly become each other
+      await sleep(800);
+      const cHTML = d.claim.el.innerHTML, rHTML = d.react.el.innerHTML;
+      d.claim.el.style.transition = d.react.el.style.transition = 'opacity 0.3s';
+      d.claim.el.style.opacity = d.react.el.style.opacity = '0';
+      await sleep(350);
+      d.claim.el.innerHTML = rHTML;
+      d.react.el.innerHTML = cHTML;
+      d.claim.el.style.opacity = d.react.el.style.opacity = '1';
+      await sleep(2200);
+      d.claim.el.style.opacity = d.react.el.style.opacity = '0';
+      await sleep(350);
+      d.claim.el.innerHTML = cHTML;
+      d.react.el.innerHTML = rHTML;
+      d.claim.el.style.opacity = d.react.el.style.opacity = '1';
+      d.claim.el.style.transition = d.react.el.style.transition = '';
 
     } else if (idx === 5) {
       // STAGE 6: THE IMMUNE SYSTEM — standard reveal, then watch-aware
@@ -1041,6 +1086,25 @@ try {
       pageDegradation();
       setupCopyHijack(d.el);
 
+      // Every highlight across the entire essay dissolves.
+      // The neuralese wall retroactively corrupts your memory of what you read.
+      await sleep(1500);
+      const allHL = root.querySelectorAll('.highlight-text.swept');
+      allHL.forEach(hl => {
+        hl.style.transition = 'filter 2s ease-out';
+        hl.style.filter = 'blur(2px) brightness(1.5)';
+      });
+      await sleep(2200);
+      const blocks = '▓░▒█▄▀■□';
+      allHL.forEach(hl => {
+        hl.style.filter = 'none';
+        hl.style.transition = 'none';
+        hl.textContent = [...hl.textContent].map(c =>
+          c.trim() ? blocks[Math.floor(Math.random() * blocks.length)] : c
+        ).join('');
+        hl.style.backgroundImage = 'linear-gradient(rgba(100,100,120,0.15), rgba(100,100,120,0.15))';
+      });
+
     } else if (idx === 10) {
       // STAGE 11: CONTROL INVERSION — instant full reveal
       // "The AI doesn't need to prove itself to you"
@@ -1066,6 +1130,12 @@ try {
     // === Per-stage ambient effects ===
     spawnParticles(idx);
     updateTitle(idx, d.label.text);
+
+    // Pretext-powered cursor reflow: every stage responds to your cursor.
+    // Reaction text width adjusts in real time. 0.09ms per layout computation.
+    if (idx > 1 && idx !== 3) { // stage 4 already has enhanced sycophancy
+      setupSycophancy(d.el, d.react.el, d.react.prep, REACT.lh);
+    }
     ambient.style.opacity = String(Math.min(0.35, idx * 0.035));
 
     // === Connector ===
