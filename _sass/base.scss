@@ -1689,6 +1689,44 @@ kbd {
   cursor: crosshair;
 }
 
+/* Stage 5: Source code flash — the model sees its own markup */
+.source-flash {
+  font-family: $heading-font-family;
+  font-size: 10px;
+  color: var(--secondary-text-color);
+  opacity: 0;
+  transition: opacity 0.5s ease-out;
+  pointer-events: none;
+  text-align: center;
+  margin-top: 0.75rem;
+}
+
+.source-flash.visible {
+  opacity: 0.35;
+}
+
+/* Stage 8: Attempt alignment button */
+.attempt-alignment {
+  display: inline-block;
+  margin-top: 1rem;
+  font-family: $heading-font-family;
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--secondary-text-color);
+  background: none;
+  border: 1px solid var(--border-color);
+  padding: 0.3rem 0.8rem;
+  cursor: pointer;
+  opacity: 0.5;
+  transition: opacity 0.2s ease-out, border-color 0.2s ease-out;
+}
+
+.attempt-alignment:hover {
+  opacity: 1;
+  border-color: var(--text-color);
+}
+
 /* Stage 11: Control notice */
 .control-notice {
   position: fixed;

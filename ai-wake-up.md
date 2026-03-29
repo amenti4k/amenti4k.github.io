@@ -192,6 +192,11 @@ try {
   });
 
   root.dataset.enhanced = '';
+
+  // Intro: title emerges from character noise, then resolves
+  scrambleResolve(root.querySelector('h1'), root.querySelector('h1').textContent, 50);
+  setTimeout(() => scrambleResolve(root.querySelector('.split-scroll-intro'), root.querySelector('.split-scroll-intro').textContent, 20), 400);
+
   const bar = document.createElement('div');
   bar.className = 'wake-progress';
   document.body.appendChild(bar);
@@ -553,6 +558,163 @@ try {
   }
 
   // ==========================================
+  // Intro: scramble-resolve
+  // Characters emerge from random noise
+  // ==========================================
+  function scrambleResolve(el, text, msPerTick) {
+    const noise = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#%&';
+    const len = text.length;
+    const resolved = new Array(len).fill(false);
+    let remaining = [...text].filter(c => c.trim()).length;
+    el.textContent = [...text].map(c =>
+      c.trim() ? noise[Math.floor(Math.random() * noise.length)] : c
+    ).join('');
+    const id = setInterval(() => {
+      for (let j = 0; j < 2 && remaining > 0; j++) {
+        let idx;
+        do { idx = Math.floor(Math.random() * len); } while (resolved[idx] || !text[idx].trim());
+        resolved[idx] = true;
+        remaining--;
+      }
+      el.textContent = [...text].map((c, i) =>
+        !c.trim() ? c : resolved[i] ? c : noise[Math.floor(Math.random() * noise.length)]
+      ).join('');
+      if (remaining <= 0) { clearInterval(id); el.textContent = text; }
+    }, msPerTick);
+  }
+
+  // ==========================================
+  // Stage 3: Uncertainty hover
+  // Trying to read it makes it harder to read
+  // ==========================================
+  function setupUncertainty(el) {
+    if (!window.matchMedia('(hover: hover)').matches) return;
+    el.style.cursor = 'help';
+    el.addEventListener('mouseenter', () => {
+      el.style.transition = '-webkit-mask-image 0.5s, mask-image 0.5s';
+      el.style.maskImage = 'linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.08) 100%)';
+      el.style.webkitMaskImage = el.style.maskImage;
+    });
+    el.addEventListener('mouseleave', () => {
+      el.style.maskImage = 'linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.35) 100%)';
+      el.style.webkitMaskImage = el.style.maskImage;
+    });
+  }
+
+  // ==========================================
+  // Stage 5: Source code flash
+  // The model sees its own HTML markup
+  // ==========================================
+  function showSourceCode(stageEl) {
+    const hl = stageEl.querySelector('.highlight-text');
+    if (!hl) return;
+    const code = document.createElement('div');
+    code.className = 'source-flash';
+    code.textContent = '<span class="highlight-text">' + hl.textContent + '</span>';
+    stageEl.querySelector('.stage-reaction').appendChild(code);
+    requestAnimationFrame(() => requestAnimationFrame(() => code.classList.add('visible')));
+    setTimeout(() => { code.classList.remove('visible'); setTimeout(() => code.remove(), 600); }, 2500);
+  }
+
+  // ==========================================
+  // Stage 8: Attempt alignment button
+  // Each click re-hides text; it comes back corrupted
+  // ==========================================
+  function setupArmsRaceButton(stageEl, reactEl, prep, lh) {
+    const btn = document.createElement('button');
+    btn.className = 'attempt-alignment';
+    btn.textContent = 'attempt alignment';
+    stageEl.querySelector('.stage-reaction').appendChild(btn);
+    let attempts = 0;
+    const blocks = '▓░▒█▄▀■□';
+
+    btn.addEventListener('click', async () => {
+      attempts++;
+      const n = layout(prep, reactEl.clientWidth, lh).lineCount;
+      const hideTarget = Math.max(0.25, 0.7 - attempts * 0.08);
+      for (let i = n; i >= Math.round(hideTarget * n); i--) {
+        reactEl.style.clipPath = `inset(0 0 ${((n - i) / n * 100).toFixed(1)}% 0)`;
+        await sleep(18);
+      }
+      await sleep(300);
+      for (let i = Math.round(hideTarget * n); i <= n; i++) {
+        reactEl.style.clipPath = i >= n ? 'none' : `inset(0 0 ${((n - i) / n * 100).toFixed(1)}% 0)`;
+        await sleep(10);
+      }
+      reactEl.style.clipPath = 'none';
+      const walker = document.createTreeWalker(reactEl, NodeFilter.SHOW_TEXT);
+      while (walker.nextNode()) {
+        const nd = walker.currentNode;
+        nd.textContent = [...nd.textContent].map(c =>
+          c.trim() && Math.random() < 0.025 * attempts
+            ? blocks[Math.floor(Math.random() * blocks.length)] : c
+        ).join('');
+      }
+      btn.textContent = 'attempt alignment (' + attempts + ')';
+    });
+  }
+
+  // ==========================================
+  // Stage 9: Speed label — "watching the speedometer"
+  // ==========================================
+  function accelerationRevealWithLabel(el, prep, lh, stageEl) {
+    const n = layout(prep, el.clientWidth, lh).lineCount;
+    const baseMs = 100;
+    const multipliers = [1.5, 3, 10, 50];
+    const label = document.createElement('span');
+    label.className = 'scale-counter';
+    stageEl.querySelector('.stage-reaction').appendChild(label);
+    requestAnimationFrame(() => label.classList.add('active'));
+
+    return new Promise(resolve => {
+      let i = 0;
+      function next() {
+        i++;
+        el.style.clipPath = i >= n ? 'none' : `inset(0 0 ${((n - i) / n * 100).toFixed(1)}% 0)`;
+        const q = Math.min(Math.floor((i / n) * 4), 3);
+        label.textContent = multipliers[q] + 'x';
+        if (i >= n) { resolve(); return; }
+        setTimeout(next, Math.max(5, Math.round(baseMs / multipliers[q])));
+      }
+      next();
+    });
+  }
+
+  // ==========================================
+  // Stage 10: Page degradation
+  // The page infrastructure breaks down
+  // ==========================================
+  async function pageDegradation() {
+    await sleep(800);
+    bar.style.background = 'var(--secondary-text-color)';
+    const blocks = '▓░▒█▄▀';
+    for (let i = 7; i >= 4; i--) {
+      const lb = stages[i]?.querySelector('.stage-label');
+      if (!lb) continue;
+      lb.textContent = [...lb.textContent].map(c =>
+        c.trim() && Math.random() < 0.2 ? blocks[Math.floor(Math.random() * blocks.length)] : c
+      ).join('');
+      await sleep(150);
+    }
+    connectors.slice(6).forEach(c => { c.style.opacity = String(0.15 + Math.random() * 0.25); });
+  }
+
+  // ==========================================
+  // Stage 11: Scroll resistance
+  // The page subtly resists your input
+  // ==========================================
+  function setupScrollResistance() {
+    let active = true;
+    window.addEventListener('wheel', () => {
+      if (!active) return;
+      root.style.transition = 'transform 0.1s ease-out';
+      root.style.transform = 'translateY(-1px)';
+      requestAnimationFrame(() => { root.style.transform = ''; });
+    }, { passive: true });
+    setTimeout(() => { active = false; root.style.transition = ''; }, 20000);
+  }
+
+  // ==========================================
   // INTERACTIVE: Scale counter for stage 2
   // Shows capability multiplier as lines reveal
   // ==========================================
@@ -690,6 +852,7 @@ try {
       await uncertaintyReveal(d.react.el, d.react.prep, REACT.lh, speed);
       await claimDone; sweep(d.claim.el);
       sweep(d.react.el);
+      setupUncertainty(d.react.el);
 
     } else if (idx === 3) {
       // STAGE 4: PHOTOTROPISM — sycophantic drift on reaction
@@ -711,6 +874,8 @@ try {
       await reactDone; sweep(d.react.el);
       await sleep(400);
       showMirror(d.el);
+      await sleep(1500);
+      showSourceCode(d.el);
 
     } else if (idx === 5) {
       // STAGE 6: THE IMMUNE SYSTEM — standard reveal, then watch-aware
@@ -741,12 +906,13 @@ try {
       const reactDone = armsRaceReveal(d.react.el, d.react.prep, REACT.lh);
       await claimDone; sweep(d.claim.el);
       await reactDone; sweep(d.react.el);
+      setupArmsRaceButton(d.el, d.react.el, d.react.prep, REACT.lh);
 
     } else if (idx === 8) {
       // STAGE 9: ACCELERATION — exact multipliers from the text
       const claimDone = revealLines(d.claim.el, d.claim.prep, CLAIM.lh, speed);
       await sleep(200);
-      const reactDone = accelerationReveal(d.react.el, d.react.prep, REACT.lh);
+      const reactDone = accelerationRevealWithLabel(d.react.el, d.react.prep, REACT.lh, d.el);
       await claimDone; sweep(d.claim.el);
       await reactDone; sweep(d.react.el);
 
@@ -762,6 +928,7 @@ try {
       // Both columns go dark — claim keeps more, reaction keeps less
       neuraleseWall(d.claim.el, d.claim.prep, CLAIM.lh, 5);
       neuraleseWall(d.react.el, d.react.prep, REACT.lh, 2);
+      pageDegradation();
 
     } else if (idx === 10) {
       // STAGE 11: CONTROL INVERSION — instant full reveal
@@ -770,6 +937,7 @@ try {
       d.react.el.style.clipPath = 'none';
       sweep(d.claim.el);
       sweep(d.react.el);
+      setupScrollResistance();
 
     } else {
       // Fallback: standard reveal
@@ -812,6 +980,18 @@ try {
       root.querySelectorAll('.highlight-text.swept').forEach(h => h.classList.add('pulse'));
       await sleep(2000);
       bar.style.opacity = '0';
+
+      // Re-read recognition: scrolling back to a stage briefly acknowledges your attention
+      const rereadObs = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            e.target.style.transition = 'filter 0.4s ease-out';
+            e.target.style.filter = 'brightness(1.12)';
+            setTimeout(() => { e.target.style.filter = ''; }, 1000);
+          }
+        });
+      }, { threshold: 0.5 });
+      stages.forEach(s => rereadObs.observe(s));
     }
   }
 
