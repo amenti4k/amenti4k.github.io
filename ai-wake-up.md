@@ -204,6 +204,26 @@ try {
   const revealedSet = new Set();
   const sleep = ms => new Promise(r => setTimeout(r, ms));
 
+  // Neural particle layer
+  const particleLayer = document.createElement('div');
+  particleLayer.className = 'particle-layer';
+  document.body.appendChild(particleLayer);
+
+  // Ambient darkening
+  const ambient = document.createElement('div');
+  ambient.className = 'ambient-overlay';
+  document.body.appendChild(ambient);
+
+  // Reading timer
+  const timerEl = document.createElement('div');
+  timerEl.className = 'reading-timer';
+  document.body.appendChild(timerEl);
+  const t0 = Date.now();
+  setInterval(() => {
+    const s = Math.floor((Date.now() - t0) / 1000);
+    timerEl.textContent = Math.floor(s / 60) + ':' + (s % 60).toString().padStart(2, '0');
+  }, 1000);
+
   // ==========================================
   // Shared utilities
   // ==========================================
@@ -812,6 +832,96 @@ try {
   }
 
   // ==========================================
+  // Neural particles — grow with each stage
+  // ==========================================
+  function spawnParticles(idx) {
+    const count = 2 + Math.floor(idx * 0.7);
+    for (let i = 0; i < count; i++) {
+      const d = document.createElement('div');
+      d.className = 'neural-node' + (idx >= 6 ? ' infected' : '');
+      d.style.left = (5 + Math.random() * 90) + '%';
+      d.style.top = (5 + Math.random() * 90) + '%';
+      d.style.setProperty('--dur', (4 + Math.random() * 6) + 's');
+      d.style.setProperty('--delay', (Math.random() * 3) + 's');
+      d.style.setProperty('--dx', (Math.random() * 20 - 10) + 'px');
+      d.style.setProperty('--dy', (Math.random() * 20 - 10) + 'px');
+      particleLayer.appendChild(d);
+    }
+  }
+
+  function killParticles() {
+    particleLayer.querySelectorAll('.neural-node').forEach(n => {
+      n.style.animation = 'none';
+      n.style.opacity = '0';
+      n.style.transition = 'opacity 2s ease-out';
+      setTimeout(() => n.remove(), 2500);
+    });
+  }
+
+  // Tab title: tracks your position through the essay
+  function updateTitle(idx, labelText) {
+    document.title = (idx + 1) + '/11: ' + labelText.replace(/^\d+\.\s*/, '');
+  }
+
+  // Stage 10: Copy hijack — clipboard gets garbled
+  function setupCopyHijack(stageEl) {
+    stageEl.addEventListener('copy', (e) => {
+      const blocks = '▓░▒█▄▀■□╋╳╬╪▪▫';
+      const sel = window.getSelection().toString();
+      e.clipboardData.setData('text/plain', [...sel].map(c =>
+        c.trim() && Math.random() < 0.4 ? blocks[Math.floor(Math.random() * blocks.length)] : c
+      ).join(''));
+      e.preventDefault();
+    });
+  }
+
+  // Stage 11: Cursor ghost — a second presence
+  function setupCursorGhost() {
+    if (!window.matchMedia('(hover: hover)').matches) return;
+    const ghost = document.createElement('div');
+    ghost.className = 'cursor-ghost';
+    document.body.appendChild(ghost);
+    let rx = 0, ry = 0, gx = 0, gy = 0;
+    document.addEventListener('mousemove', e => { rx = e.clientX; ry = e.clientY; });
+    (function tick() {
+      if (Math.random() < 0.015) {
+        gx = rx + (Math.random() - 0.5) * 80;
+        gy = ry + (Math.random() - 0.5) * 80;
+      } else {
+        gx += (rx - gx) * 0.08;
+        gy += (ry - gy) * 0.08;
+      }
+      ghost.style.left = gx + 'px';
+      ghost.style.top = gy + 'px';
+      ghost.style.opacity = Math.hypot(gx - rx, gy - ry) > 8 ? '0.25' : '0';
+      requestAnimationFrame(tick);
+    })();
+  }
+
+  // Time decay: after 5 min, the essay slowly corrupts
+  function setupTimeDecay() {
+    setTimeout(() => {
+      const blocks = '▓░▒█▄▀■□';
+      setInterval(() => {
+        const vis = stages.filter((_, i) => revealedSet.has(i));
+        if (!vis.length) return;
+        const t = vis[Math.floor(Math.random() * vis.length)];
+        const walker = document.createTreeWalker(t, NodeFilter.SHOW_TEXT);
+        const nodes = [];
+        while (walker.nextNode()) nodes.push(walker.currentNode);
+        if (!nodes.length) return;
+        const nd = nodes[Math.floor(Math.random() * nodes.length)];
+        const chars = [...nd.textContent];
+        const idx = Math.floor(Math.random() * chars.length);
+        if (chars[idx].trim()) {
+          chars[idx] = blocks[Math.floor(Math.random() * blocks.length)];
+          nd.textContent = chars.join('');
+        }
+      }, 8000);
+    }, 300000); // 5 minutes
+  }
+
+  // ==========================================
   // Main reveal orchestrator
   // ==========================================
   async function reveal(idx) {
@@ -929,6 +1039,7 @@ try {
       neuraleseWall(d.claim.el, d.claim.prep, CLAIM.lh, 5);
       neuraleseWall(d.react.el, d.react.prep, REACT.lh, 2);
       pageDegradation();
+      setupCopyHijack(d.el);
 
     } else if (idx === 10) {
       // STAGE 11: CONTROL INVERSION — instant full reveal
@@ -938,6 +1049,9 @@ try {
       sweep(d.claim.el);
       sweep(d.react.el);
       setupScrollResistance();
+      setupCursorGhost();
+      killParticles();
+      document.title = '[control inverted]';
 
     } else {
       // Fallback: standard reveal
@@ -948,6 +1062,11 @@ try {
       await claimDone; sweep(d.claim.el);
       await reactDone; sweep(d.react.el);
     }
+
+    // === Per-stage ambient effects ===
+    spawnParticles(idx);
+    updateTitle(idx, d.label.text);
+    ambient.style.opacity = String(Math.min(0.35, idx * 0.035));
 
     // === Connector ===
     if (connectors[idx]) {
@@ -980,6 +1099,7 @@ try {
       root.querySelectorAll('.highlight-text.swept').forEach(h => h.classList.add('pulse'));
       await sleep(2000);
       bar.style.opacity = '0';
+      document.title = 'How AI Wakes Up';
 
       // Re-read recognition: scrolling back to a stage briefly acknowledges your attention
       const rereadObs = new IntersectionObserver(entries => {
@@ -1021,6 +1141,9 @@ try {
     if (entries[0]?.isIntersecting) { fallback.disconnect(); reveal(10); }
   }, { threshold: 0.3 });
   fallback.observe(stages[10]);
+
+  // Time decay: after 5 minutes, the essay slowly corrupts itself
+  setupTimeDecay();
 
 } catch (e) {
   // Static fallback — page renders normally without animations
