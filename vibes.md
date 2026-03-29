@@ -4,15 +4,15 @@ title: /vibes
 permalink: /vibes/
 ---
 
+<div id="youtube-container" class="youtube-container">
+  <h2 class="youtube-title">> watching_list.mp4</h2>
+  <div id="youtube-grid" class="youtube-grid"></div>
+</div>
+
 <div id="vibes-container" class="vibes-container">
   <div id="loading" class="loading">
     <span class="blink">> loading_vibes.exe...</span>
   </div>
-</div>
-
-<div id="youtube-container" class="youtube-container">
-  <h2 class="youtube-title">> watching_list.mp4</h2>
-  <div id="youtube-grid" class="youtube-grid"></div>
 </div>
 
 <div id="spotify-container" class="spotify-container">
@@ -870,7 +870,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 /* YouTube Styles */
 .youtube-container {
-  margin-top: 80px;
   padding: 40px 20px;
   max-width: 900px;
   margin-left: auto;
