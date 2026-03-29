@@ -10,6 +10,11 @@ permalink: /vibes/
   </div>
 </div>
 
+<div id="youtube-container" class="youtube-container">
+  <h2 class="youtube-title">> watching_list.mp4</h2>
+  <div id="youtube-grid" class="youtube-grid"></div>
+</div>
+
 <div id="spotify-container" class="spotify-container">
   <h2 class="spotify-title">> recent_sounds.mp3</h2>
   <div id="spotify-tracks" class="spotify-tracks">
@@ -378,6 +383,36 @@ class ArenaVibes {
   }
 }
 
+// YouTube Integration
+class YouTubeVibes {
+  constructor() {
+    this.grid = document.getElementById('youtube-grid');
+    // Add your YouTube video IDs and titles here
+    this.videos = [
+      { id: 'gfF8jzBVWvM', title: 'vids' },
+    ];
+  }
+
+  init() {
+    this.grid.innerHTML = this.videos.map((video, index) => `
+      <a href="https://www.youtube.com/watch?v=${video.id}"
+         target="_blank"
+         rel="noopener noreferrer"
+         class="youtube-card"
+         style="animation-delay: ${index * 80}ms">
+        <div class="youtube-thumb-wrap">
+          <img src="https://img.youtube.com/vi/${video.id}/mqdefault.jpg"
+               alt="${video.title}"
+               class="youtube-thumb"
+               loading="lazy" />
+          <div class="youtube-play-icon">&#9654;</div>
+        </div>
+        <div class="youtube-card-title">${video.title}</div>
+      </a>
+    `).join('');
+  }
+}
+
 // Spotify Integration
 class SpotifyVibes {
   constructor() {
@@ -538,6 +573,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const vibes = new ArenaVibes();
   vibes.init();
   
+  const youtubeVibes = new YouTubeVibes();
+  youtubeVibes.init();
+
   spotifyVibes = new SpotifyVibes();
   spotifyVibes.init();
 });
@@ -810,23 +848,130 @@ document.addEventListener('DOMContentLoaded', () => {
   .spotify-container {
     padding: 20px 10px;
   }
-  
+
   .track-album-art,
   .track-album-art-placeholder {
     width: 40px;
     height: 40px;
   }
-  
+
   .track-name {
     font-size: 13px;
   }
-  
+
   .track-artist {
     font-size: 12px;
   }
-  
+
   .track-time {
     font-size: 10px;
+  }
+}
+
+/* YouTube Styles */
+.youtube-container {
+  margin-top: 80px;
+  padding: 40px 20px;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.youtube-title {
+  font-family: 'Inconsolata', monospace;
+  font-size: 16px;
+  color: var(--text-color);
+  margin-bottom: 30px;
+  font-weight: normal;
+}
+
+.youtube-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+.youtube-card {
+  text-decoration: none;
+  color: var(--text-color);
+  opacity: 0;
+  animation: fadeInUp 0.5s ease forwards;
+  transition: transform 0.2s ease;
+}
+
+.youtube-card:hover {
+  transform: translateY(-4px);
+}
+
+.youtube-thumb-wrap {
+  position: relative;
+  border-radius: 4px;
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+  background: var(--border);
+}
+
+.youtube-thumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: opacity 0.2s ease;
+}
+
+.youtube-play-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 28px;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.6);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  padding-left: 4px;
+}
+
+.youtube-card:hover .youtube-play-icon {
+  opacity: 1;
+}
+
+.youtube-card:hover .youtube-thumb {
+  opacity: 0.85;
+}
+
+.youtube-card-title {
+  font-family: 'Inconsolata', monospace;
+  font-size: 13px;
+  margin-top: 8px;
+  line-height: 1.4;
+  opacity: 0.8;
+}
+
+/* Dark theme YouTube adjustments */
+[data-theme="dark"] .youtube-thumb-wrap {
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+/* Mobile responsive for YouTube */
+@media (max-width: 768px) {
+  .youtube-container {
+    padding: 20px 10px;
+  }
+
+  .youtube-grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
+  }
+
+  .youtube-card-title {
+    font-size: 12px;
   }
 }
 </style>
