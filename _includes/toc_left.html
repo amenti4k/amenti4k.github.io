@@ -23,6 +23,47 @@
   padding-right: 1.5rem;
   box-sizing: border-box;
   font-size: 0.9rem;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.post-page.toc-collapsed .toc-left {
+  opacity: 0;
+  overflow: hidden;
+  padding: 0;
+  border-right: none;
+  pointer-events: none;
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100vh;
+  width: 280px;
+  transform: translateX(-100%);
+  z-index: 100;
+}
+
+.post-page.toc-collapsed .toc-left.toc-overlay {
+  opacity: 1;
+  transform: translateX(0);
+  padding: 2rem 1.5rem;
+  background: var(--background-color);
+  border-right: 1px solid var(--border-color);
+  pointer-events: auto;
+  overflow-y: auto;
+  box-shadow: 4px 0 20px rgba(0, 0, 0, 0.2);
+}
+
+.toc-hover-zone {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 24px;
+  height: 100vh;
+  z-index: 99;
+  display: none;
+}
+
+.toc-hover-zone.active {
+  display: block;
 }
 
 .toc-left-title {
@@ -128,6 +169,9 @@
 @media (max-width: 1100px) {
   .toc-left {
     display: none;
+  }
+  .toc-hover-zone {
+    display: none !important;
   }
 }
 
@@ -289,6 +333,41 @@
     window.addEventListener('load', () => setTimeout(buildTOC, 50));
   }
 
-  document.addEventListener('DOMContentLoaded', initTOC);
+  function initTocCollapse() {
+    const page = document.querySelector('.post-page');
+    const toc = document.querySelector('.toc-left');
+    if (!page || !toc || window.innerWidth <= 1100) return;
+
+    setTimeout(() => {
+      page.classList.add('toc-collapsed');
+
+      const zone = document.createElement('div');
+      zone.className = 'toc-hover-zone active';
+      document.body.appendChild(zone);
+
+      let hideTimeout;
+
+      function showToc() {
+        clearTimeout(hideTimeout);
+        toc.classList.add('toc-overlay');
+      }
+
+      function scheduleHide() {
+        hideTimeout = setTimeout(() => {
+          toc.classList.remove('toc-overlay');
+        }, 300);
+      }
+
+      zone.addEventListener('mouseenter', showToc);
+      zone.addEventListener('mouseleave', scheduleHide);
+      toc.addEventListener('mouseenter', () => clearTimeout(hideTimeout));
+      toc.addEventListener('mouseleave', scheduleHide);
+    }, 2000);
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    initTOC();
+    initTocCollapse();
+  });
 })();
 </script>
