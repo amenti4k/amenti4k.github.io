@@ -1,0 +1,559 @@
+---
+layout: page
+title: "Percepta: A Full Exploration"
+permalink: /percepta/
+sitemap: false
+---
+
+# Percepta: A Full Exploration
+
+---
+
+- **Where is my assumption of where Percepta is right now?**
+	- What is concretely known
+		- 5 Customers (~$20 M in ARR hoping to go to $100 M EOY)
+		- Five months old (launched October 2025)
+		- One public deployment: Maryland State Government (November 2025)
+			- Claude-powered chatbot for food benefits, 600K+ Marylanders served
+			- Narrow scope, single chatbot, defined use case
+			- Not a full multi-system enterprise AI transformation
+			- Getting anything into production one month after founding is fast, but the scope tells me the more ambitious stuff is still early
+		- Claims work with "global Fortune 500 customers, state governments, significant part of US healthcare ecosystem"
+			- No names, metrics, or case studies beyond Maryland
+		- Taneja at CES 2026: "Find parts of the enterprise where those businesses already decided to outsource for labor arbitrage. Everywhere there was labor arbitrage, why don't we go and say we'll turn those into AI agents versus Indian agents or Philippines agents."
+			- So the TAM is the global services outsourcing market
+			- Competitive set includes Infosys, TCS, Wipro, Cognizant alongside Accenture
+		- ~$xxM ARR from 5 customers = ~$xM average per customer
+			- At 35-40 employees that could be high-rate consulting or possibly early product/platform licensing
+			- Consulting revenue scales linearly with headcount, platform revenue compounds
+			- Need to find out which one this is
+		- $xxxM EOY would need ~25 customers at ~$xM each
+			- Serving 25 simultaneous deep engagements with 35-40 people means hiring to 150+ by year end or having productized delivery
+			- No evidence of either yet
+		- Palantir sued Hirsh Jain, Radha Jain, and Joanna Cohen in October 2025
+			- Poaching and trade secrets
+			- February 2026 judge ruled "likely violated" agreements but denied the injunction
+			- Team can keep building
+			- Litigation drags attention at a 5-month-old company
+	- Talent is world class
+	- Researchers in house
+	- What the team composition reveals about strategy
+		- Co-founders
+			- Hirsh Jain (7yr Palantir SVP, healthcare/gov)
+			- Thomas Mathew (8yr Palantir engineer, Citadel, Bloomberg)
+			- Athul Paul Jacob (MIT PhD, game theory + AI alignment, ex-Google/Meta/Microsoft)
+			- Constantinos Daskalakis (MIT professor, Nevanlinna Prize, proved Nash equilibria are computationally hard)
+			- Radha Jain, Michael Rochlin
+		- 8-10 research scientists
+			- Eugene Vinitsky (assistant professor, UC Berkeley, multi-agent RL)
+			- Computer scientists publishing frontier work (building computers inside transformers, compiling WebAssembly VMs into transformer weights)
+		- ~5 product/business people with healthcare, BCG, Palantir, Kellogg MBA backgrounds
+		- ~15 engineers including Stanford and YC S24 alumni
+		- That's a lot of researchers for an enterprise deployment company
+			- A consulting firm doing this would staff more domain consultants, fewer researchers
+			- Could mean Percepta is building at the model level, not just deploying Claude
+			- Can't tell from outside
+
+- **Why do I believe AI's progression in 2026 and beyond?**
+	- What's observable right now
+		- METR tracks how long AI works independently on real tasks
+			- Year ago: ~10 minutes
+			- Now: ~5 hours
+			- Doubling every ~7 months, recent data suggesting ~4 months
+			- At that rate: independent work for days within a year, weeks within two
+		- GPT-4 to GPT-4o was roughly 9x cheaper in 17 months
+			- At that rate, inference costs drop ~10x every couple of years
+		- SaaS market lost ~$xT+ in market cap by mid-March 2026
+			- Autonomous coding agents showed software can be built at a fraction of prior cost
+			- Atlassian down 35%, Salesforce down 28%
+			- Already happening in at least one sector
+		- Counterdata
+			- Polymarket gives 9% to AGI by 2027
+			- LessWrong forecasters (initially the most bullish cohort) updated to longer timelines, median full coding automation ~2032
+			- Patel: 100+ hours with current AI, found it "not very useful" because it can't learn on the job
+			- Evans: most ChatGPT users haven't returned
+	- What this means for how I think about Percepta
+		- Percepta only works if AI is powerful enough to transform enterprises but still hard enough to deploy that you need specialized help
+			- If deployment becomes prompt + API key, there's no reason for Percepta to exist
+			- If deployment stays hard, the company gets more valuable with every model improvement because there's more power to deploy and the challenge persists
+		- So the whole bet is: is deployment complexity structural or temporary?
+			- Structural = inherent in institutions, regulations, organizational change
+				- A hospital can't adopt AI billing without satisfying HIPAA, retraining staff, integrating with Epic/Cerner, handling insurance edge cases, navigating union considerations
+				- None of that gets easier because the model gets smarter
+				- Some of it has legally fixed minimum durations
+					- HIPAA has sequential steps that can't be parallelized
+					- FedRAMP has mandatory review periods
+					- SOX audits take months
+					- Even AGI can't make a regulatory review cycle run faster than the law allows
+			- Temporary = artifact of current model limitations
+				- You need prompt engineers and RAG pipelines because Claude can't read a PDF reliably
+				- When Claude reads PDFs perfectly, that work is gone
+			- Both are real, the question is the ratio
+				- 80% structural / 20% temporary: model improvements eliminate 20% of the work, 80% persists
+				- 30% structural / 70% temporary: Percepta's value erodes with every model upgrade
+		- Precedent on this ratio: electrification
+			- Electric motors commercially available by the 1880s
+			- By 1900, less than 5% of American factories used them
+			- Factory owners replaced the steam engine with a motor but kept all the belts and pulleys (same architecture, different power source)
+			- Took 40 years before a new generation redesigned factories from scratch for unit drive (one motor per machine)
+			- Ford's Highland Park in 1910 cut production from 12 hours per car to 93 minutes
+			- The motor sat there for 30 years before anyone used it properly
+			- The constraint was never the technology, it was redesigning the organization
+			- If AI follows this pattern, deployment complexity is overwhelmingly structural
+			- If AI is different because it can also redesign the organization (not just power it), the 40-year gap compresses
+		- The mechanism behind why that gap lasted 40 years, and why it applies to AI
+			- Two speeds run in parallel in any deployment
+				- Context velocity: how fast the system learns from resolved exceptions and propagates fixes (nearly instant, scales with compute)
+				- Meaning velocity: how fast humans absorb that change into trust (slow, needs repeated exposure, stories, sign-offs, institutional buy-in)
+			- Better models make context velocity faster but meaning velocity doesn't keep up
+			- The gap between what the system can do and what humans will allow it to do widens with each capability jump
+			- Model improvements make the deployment problem harder, not easier, because the institutional lag grows
+
+- **What do I think is good about Percepta?**
+	- Distribution from GC
+		- 600+ portfolio companies, 20+ health system partnerships
+		- Percepta gets warm introductions because GC sits on boards, normal AI startups cold-sell
+		- GC acquired Summa Health for $xxxM+, first hospital system ever owned by a VC firm
+			- Percepta can deploy into a hospital GC owns, iterate without sales friction
+			- If it works at Summa, playbook scales to 20+ other health system partnerships
+		- Every GC portfolio company (Long Lake, Crescendo, Eudia, Titan MSP) is a potential target
+			- Though winning GC-internal deals doesn't tell you whether Percepta can win when Accenture or Anthropic's deployers are in the room
+	- Capital from GC
+		- Percepta sits on GC's balance sheet directly, not in the Creation fund
+			- Three transformation companies on GC's balance sheet: Percepta, HATCo, GC Wealth
+			- Separate from the $xB Creation fund that backs the rollups (Long Lake, Crescendo, Titan MSP, Eudia, etc.)
+			- No fund lifecycle at all
+		- GC raising roughly another $xxB (March 2026)
+			- Percepta won't die from capital starvation, only from strategic failure
+		- GC patience has limits
+			- GC needs to show results from transformation companies to justify LP commitment to non-traditional structures
+			- Weak traction in 2-3 years and pressure to redirect resources kicks in
+			- Being on the balance sheet is more durable than a fund, but GC's balance sheet is funded by LP commitments
+		- $xxxM+ hospital acquisition (HATCo/Summa) is the strongest evidence of real patience because no VC fund buys a hospital
+			- But GC also raises standard VC funds with standard LP expectations alongside permanent vehicles
+			- Which governance structure actually governs Percepta's timeline matters a lot
+	- Palantir's deployment playbook, learned from the inside
+		- Three co-founders spent 7-8 years at Palantir building the Forward Deployed Engineer model
+			- Embed in the client org
+			- Build on the platform using client data
+			- Iterate to production
+			- Abstract reusable components
+			- Compress the sales cycle
+		- Palantir's numbers show the FDE model works at scale
+			- Services dropped from ~25% to ~18-20% of revenue (2021-2025)
+			- Margins north of 80%
+			- Revenue $xB+/quarter
+			- U.S. commercial up over 100% YoY
+		- Palantir built its own platform (Foundry, then AIP) over 15 years though
+			- Percepta builds on Claude, which skips 10+ years of platform development but creates Anthropic dependency
+			- Percepta can probably reach "Palantir circa 2015" (deployment expertise, productized workflows, high-margin services) in 3-5 years
+			- Can't reach "Palantir 2025" (own platform, 80%+ margins, $xxxB market cap) without building its own platform or locking in the Anthropic relationship at a structural level
+	- No product or scaffolding lock-in
+		- Cursor is locked into coding, Sierra into customer service, Harvey into legal
+			- If those verticals don't pan out, those companies die
+		- Percepta can shift focus
+			- But Sierra has processed millions of interactions and built tested outcomes-based pricing
+			- Harvey has processed millions of legal documents
+			- Percepta has one public deployment and claims Fortune 500 work
+		- Healthcare hiring (multiple health AI product people) and GC's Summa Health suggest healthcare depth is building
+			- Healthcare sales cycles run 12-18 months, so it'll take a while to show
+	- The GC ecosystem flywheel
+		- The distribution, capital, and portfolio advantages above are separate points but could connect into something bigger if the pieces actually talk to each other
+		- The full chain
+			- Percepta learns from Anthropic where models are heading (strategic partner)
+			- Embeds in a Fortune 500 or health system client
+			- Deploys GC portfolio company products into that client alongside Claude (Hippocratic AI for clinical, Crescendo for customer service, etc.)
+			- Generates structured data and playbooks from the deployment
+			- Shares playbooks with Creation fund companies (Long Lake, Titan MSP, Eudia) running AI rollups in adjacent verticals
+			- Those deployments generate their own learnings
+			- Learnings flow back to Percepta
+			- GC + McKinsey refine the workforce transition model (40K humans + 25K agents) using all of it
+			- Next Percepta engagement starts from a higher baseline
+		- If that loop runs, a billing optimization from Crescendo propagates to Titan MSP, a compliance framework from Eudia adapts to healthcare at Summa
+			- No standalone company has the multi-entity structure for this
+		- Three scenarios for whether it actually works
+			- It runs
+				- Playbooks transfer, Mosaic accumulates patterns from all GC deployments
+				- 18th engagement is meaningfully faster than the 3rd
+				- Requires real shared data/knowledge infrastructure connecting the entities, not just org charts
+				- Also requires that HOA management insights (Long Lake) are relevant to healthcare (Summa), which is not obvious
+					- Billing is billing, but clinical workflows have little in common with property management
+			- It doesn't run
+				- Each entity operates independently
+				- GC has lots of companies but the companies don't learn from each other
+				- GC is just a VC fund with portfolio companies and Percepta is one of them
+				- Constellation Software (1000+ companies, never sold one) compounded returns without compounding intelligence through extreme decentralization
+				- Question is whether GC is building the shared intelligence layer or just the shared capital allocation
+			- Partial flywheel (probably the most realistic)
+				- Compliance frameworks, data integration architectures, and change management playbooks transfer across verticals
+				- Vertical-specific domain knowledge (how healthcare billing actually works vs how HOA maintenance works) doesn't
+				- "How to deploy" improves across verticals, "what to deploy in healthcare" has to be built from healthcare deployments specifically
+
+- **Who actually buys this and how?**
+	- $xM AI transformation engagement from a 5-month-old startup is unusual
+		- 95% of corporate AI deployments have failed (MIT, validated by McKinsey CEO at CES 2026)
+		- Enterprise buyers have been burned
+		- How deals happen determines whether Percepta can grow beyond GC-sourced revenue
+	- Path A: GC+McKinsey three-body motion
+		- GC board member introduces Percepta to CTO/CEO
+		- McKinsey (jointly developing AI workforce model with GC: 40K humans + 25K agents, growing client-facing 25% while cutting back-office 25%) validates the approach
+		- Percepta provides the technical team
+		- "We're working with McKinsey on this" is an answer that survives any board question, so Percepta's age and size become irrelevant to the buying decision
+		- Adds a second dependency (McKinsey alongside Anthropic)
+			- McKinsey has its own AI practice and could decide to do this in-house
+			- GC board seats are wide but not infinite
+		- If this is how deals happen, the constraint isn't pipeline (GC has intros) but delivery (can 35-40 people handle what McKinsey sends)
+	- Path B: own brand
+		- Build enough reference cases that enterprises come directly or through competitive RFPs
+		- Takes years
+			- Accenture (750K employees), Deloitte (15K Claude-certified consultants), and McKinsey are all selling AI transformation to the same buyers
+			- A CIO choosing between Accenture and a 35-person company that's being sued by Palantir picks Accenture unless results are clearly better
+			- Getting clients to publicly reference AI transformation work is hard
+		- Probably can't work alone in the next 3 years, this is a 5-10 year play
+	- Path C: through Anthropic's partner network
+		- Anthropic invested $xxxM in Claude Partner Network and is building enterprise sales channels
+		- Percepta becomes a preferred deployment partner
+		- Gets access to Anthropic's enterprise pipeline without GC board relationships
+		- But deepens the Anthropic dependency
+			- Anthropic decides who gets which deals
+			- If Anthropic's FDE team matures, partner referrals dry up
+			- Counter-positioning advantage (Percepta sells outcomes, Anthropic sells tokens) weakens if Percepta becomes primarily a channel for Anthropic's token revenue
+		- Faster growth but Percepta increasingly becomes a distribution arm of Anthropic
+	- Path D: GC portfolio is the customer base (probably the current path)
+		- Deploy into Summa Health, Long Lake, Crescendo, Eudia, Titan MSP, other GC-backed companies
+		- Fast revenue, no competitive selling, immediate access to real enterprise environments for learning
+		- But circular economics
+			- GC funds Percepta, Percepta deploys into GC companies, GC counts that as revenue, GC uses revenue to justify more investment
+			- If all 5 current customers are GC-connected, there is no external proof of demand
+		- Useful for learning and productization, not sufficient as a long-term model
+	- Most likely some combination of A and D near term, transitioning to B and C as reference cases accumulate
+		- The thing to watch: whether any of the 5 current customers were won without GC involvement
+
+- **What worries me?**
+	- The curse of fine tuning and futile scaffolding
+		- Everything built around a foundation model compensates for current limitations
+			- Prompt chains, fine-tuned models, RAG pipelines, routing logic, error handlers
+			- All exist because the model can't do something yet
+			- When the next version handles it natively, that work is gone
+		- Rate of erosion is measurable
+			- Intelligence costs fall roughly 10x/year
+			- Competitor can replicate your scaffolding for a tenth of the cost in 12 months
+			- First-mover advantage in scaffolding: ~18 months
+			- Enterprise transformation timeline: 12-24 months
+			- You finish deploying right around when your scaffolding becomes replaceable
+		- Builder.ai: valued $xB+, Microsoft-backed, raised $xxxM+, insolvent May 2025
+			- Platform it depended on kept improving until the value Builder added wasn't needed
+		- Two categories of work though
+			- (a) Technical scaffolding (prompt engineering, API wrappers, routing)
+				- Any engineer replicates it
+				- Dissolves with each model upgrade
+			- (b) Institutional integration (how a specific hospital's billing works, what a state's regulations require, how a procurement process navigates)
+				- Compounds with deployment
+				- Not replicable by a better model
+		- How much of Percepta's work falls in (b) vs (a) determines durability
+			- Team is ~25 of ~35-40 engineers or researchers
+			- Could mean model-level primitives that persist across generations
+			- Could mean scaffolding that erodes
+			- Published research (computers inside transformers, WebAssembly VMs in weights) points toward model-level work
+			- But how that connects to the deployment business isn't publicly clear
+		- Palantir solved this with the Ontology
+			- Persistent knowledge graph that accumulated institutional knowledge across deployments
+			- Each one made the next faster
+		- Percepta has a proprietary orchestration platform called Mosaic
+			- What Mosaic actually does isn't publicly detailed
+			- Whether it functions more like an ontology (compounds) or a deployment toolkit (erodes) is the question
+			- Understanding Mosaic is probably the most important thing to figure out about the company
+	- The Anthropic dependency
+		- Percepta runs on Claude
+		- Anthropic is building its own FDE team (active job postings, March 2026)
+		- Anthropic trained ~30K deployers through Accenture, certified ~15K through Deloitte, put $xxxM into Claude Partner Network, plans to 5x partner team
+		- Anthropic has pulled model access from companies it sees as competitors (Windsurf when it was being acquired by OpenAI)
+		- Percepta's survival depends on Anthropic continuing to see it as partner, not competitor
+		- OpenAI already went further
+			- Took equity in Thrive Holdings by embedding engineers directly in portfolio companies, services for equity, no cash
+			- If Anthropic offers GC the same deal, Percepta gets displaced by its own model provider
+		- What keeps it safe for now
+			- Healthcare and government deployments are genuinely hard
+			- Generalist Accenture consultant with a Claude certification vs Palantir SVP with 7 years of healthcare experience produce different results
+			- Bad deployment in healthcare means HIPAA violations, patient harm, regulatory sanctions
+			- As long as that quality gap matters, the specialist has a niche
+		- There's also an incentive alignment that makes the partnership more stable than it looks
+			- Labs make money selling tokens (volume x price per token minus compute cost)
+			- Percepta makes money selling transformation outcomes (value of transformation minus token cost minus risk cost)
+			- Tokens are revenue for Anthropic, cost for Percepta
+			- Anthropic wants deployers consuming tokens
+			- Percepta wants cheaper tokens because that improves margins
+			- Model cost deflation (10x/year) helps Percepta
+			- Partnership is complementary as long as Anthropic stays in the token business
+		- It breaks when Anthropic moves from selling tokens to selling outcomes (the way Sierra sells per-resolution)
+			- If Anthropic starts charging per-successful-transformation instead of per-token, Percepta and Anthropic compete for the same revenue
+			- That business model shift is the actual threat, not the FDE team or the Accenture partnership
+		- Quality gap in healthcare/government probably holds 2-3 years
+			- After that, model improvements could close it
+			- Percepta's window to build something that survives the gap closing is about the same duration as the gap
+
+- **Where do I think this can go?**
+	- Nine-figure ARR by EOY 2026
+		- ~25 customers at ~$xM each, or fewer at higher values, or a product component generating recurring revenue beyond consulting
+		- 35-40 people today, 25 deep engagements simultaneously needs rapid hiring to 150+ or productized delivery
+		- GC distribution makes pipeline plausible
+		- Whether the team can deliver at that scale in 7 months is the question
+	- Trusted embedded partner in regulated industries
+		- After 12+ months inside a hospital system, the team knows billing workflows, clinical staff, regulatory landscape, IT architecture better than the hospital's own people
+		- Removing Percepta means rebuilding all of that institutional knowledge from scratch
+		- HIPAA compliance history, FedRAMP certification, SOX audit trails take months per client
+			- Can't be shortcut by a better model or a bigger consulting firm
+			- Any competitor has to invest the same months
+		- That defensibility is client-by-client though, not platform-level
+			- Each relationship is strong on its own but doesn't make the next one easier
+			- Unless Percepta is abstracting common patterns into reusable frameworks along the way
+	- Governance layer for whatever AI becomes
+		- In healthcare and government, even the most capable AI needs human governance
+			- Someone has to be licensable, insurable, suable
+			- Audit trails have to be human-readable
+			- Kill switches human-controlled
+			- Regulatory bodies need human counterparts
+		- If Percepta is already embedded when AGI-level systems arrive, the company becomes the natural governance partner because of institutional relationships, not technology
+		- Only works if AGI arrives while Percepta still has a head start
+			- 2027-2028: team has been embedded 2-3 years, real advantage
+			- 2035: ten other companies will have built equivalent positions
+	- What each AI trajectory means
+		- Models improve rapidly (AGI-like by 2027-2028)
+			- Models become capable of most knowledge work
+			- Deployment becomes the bottleneck
+			- Demand for deployment expertise spikes
+			- Labs and consulting firms pile in
+			- Within 12-18 months deployment is crowded
+			- Percepta only holds an advantage if it already built institutional relationships newcomers can't replicate or proprietary deployment technology
+			- If AI also becomes capable of self-deployment, the whole deployment market collapses
+			- So a spike followed by commoditization, Percepta only benefits if already at scale when the spike hits
+		- Models improve steadily (sub-AGI over 5-10 years)
+			- Each generation unlocks new use cases
+			- Enterprises adopt gradually, bottlenecked by change management and regulation
+			- Deployment stays hard for 5-10 years
+			- Percepta has time to embed, learn, productize, build platform
+			- But Accenture/Deloitte/McKinsey/BCG all build AI deployment practices with larger teams over a 10-year race
+			- Head start only counts if converted into proprietary IP, platform, or compounding data
+			- Works but only with productization
+		- Models plateau
+			- Enterprise AI spending slows as ROI cases weaken
+			- Companies that spent $xMs without results cut budgets
+			- Percepta's pipeline contracts
+			- But healthcare/government/manufacturing are so far behind that even current models are transformative if deployed correctly
+			- Smaller market, less competition, probably can't reach venture scale
+
+- **What are the hurdles I see?**
+	- Human leverage to product leverage
+		- 2x clients needs ~2x people right now
+		- Consulting can be very profitable (Palantir does $xB+/quarter at 80%+ margins) but doesn't compound
+		- PolyAI (2019): spent 6 months evaluating whether to acquire BPOs for voice AI
+			- Concluded "BPO firms are not trusted to innovate, not rewarded for innovating, not allowed to innovate"
+			- Chose pure software
+			- Now valued ~$xxxM, 25x revenue
+			- BPOs still trade at single-digit multiples
+			- Markets assign different multiples to services and software regardless of AI content
+		- Fortune (June 2025): "AI doesn't turn a services company into a software company"
+		- Sierra proves the transition is possible through pricing innovation
+			- Outcomes-based (per resolution, not per seat)
+			- $xxxM ARR at $xxB valuation
+			- The innovation was in the billing model, not the AI
+		- Palantir's transition took 15 years
+			- Services only dropped from ~25% to ~18-20% over 4 years
+			- Direction proven, speed slow
+		- For Percepta: building on Claude skips platform development
+			- But platform ownership is what enabled Palantir's margin expansion
+			- Without an owned platform, Percepta may reach high-quality consulting but not software economics
+	- Vertical AI companies taking each function
+		- Sierra ($xxxM ARR, customer service, outcomes-based pricing)
+		- Decagon ($xB valuation, 91% autonomous resolution, Agent Operating Procedures let non-technical staff define workflows in natural language, self-serve, no embedded teams needed)
+		- Gartner: 80% of enterprises adopt vertical agents by 2026
+		- If each function gets its own vertical AI provider and those providers go self-serve (like Decagon's AOPs), "deploy AI into your enterprise" has no buyer
+			- Each function deploys its own AI
+			- Percepta is left with either integrating vertical solutions across functions or serving functions where no vertical provider exists
+		- Healthcare operations is the strongest candidate for functions without a vertical provider
+			- Physical patient interactions
+			- Multiple systems (Epic, Cerner, billing, insurance)
+			- Heavy regulation
+			- Organizational complexity
+			- No vertical AI company has cracked end-to-end healthcare operations yet
+		- Worst case: a vertical company starts expanding horizontally
+			- Sierra adapts customer service AI to insurance claims, healthcare intake, government constituent services
+			- Adjacent patterns, $xxB capitalization, deep domain data
+			- If that happens, Percepta's addressable healthcare market shrinks to non-customer-facing clinical/operational work
+
+- **Which path do I think pans out?**
+	- Medium takeoff has the most probability mass
+		- Capabilities improve rapidly but unevenly across domains
+	- Healthcare, government, manufacturing are among the slowest-adopting
+		- HIPAA compliance takes months
+		- Government procurement runs 12-18 months
+		- Manufacturing floor changes need physical modification and sometimes union negotiation
+	- That gives Percepta 3-5 years where deployment expertise matters in its specific verticals
+	- 3-5 years is enough for embed, learn, productize, platform if productization starts early
+		- Not enough for "we'll productize eventually"
+	- 18-36 month productization window
+		- Too early (abstract from 3 clients): build wrong abstractions, waste 6 months rebuilding
+		- Too late (50 bespoke deployments): competitor like Thrive+OpenAI or Accenture+Anthropic ships the platform first
+	- Telecom precedent
+		- 1998-2000: $xxxB+ in fiber laid
+		- By 2005: 85% still dark, those companies went bankrupt
+		- Cheap fiber enabled YouTube and Netflix
+		- First wave built infrastructure and went bust, second wave captured value on it
+		- Is Percepta building YouTube or laying fiber?
+
+- **What would keep me up at night?**
+	- Whether deployments compound or stay bespoke
+		- If deployment #1 produces a reusable playbook that makes #2 50% faster, and #5 produces something that makes #10 self-serve, Percepta is on the Palantir trajectory
+		- If each deployment is custom work with no carryover, Percepta is a consulting firm charging premium rates
+			- Profitable maybe, but not a platform
+			- Not defensible against consulting firms with bigger armies
+		- What I'd want to see
+			- Mosaic exists (positive signal)
+			- Whether it's a compounding ontology or just a deployment toolkit isn't clear from outside
+			- Deployment timelines shortening per client
+			- Headcount per engagement decreasing
+		- There is a plausible compounding mechanism that connects the research arm to the deployment business
+			- Each FDE engagement converts messy enterprise workflows into structured agent action spaces
+			- That structured data could simultaneously solve the customer's problem and generate training data for proprietary RL models
+			- Daskalakis doing RL + optimization, Jacob doing decision systems, positioned for exactly this
+			- If deployment generates structured data, data trains RL models, better models make next deployment easier, then each engagement compounds
+			- Whether that's happening or still aspirational is something I'd need to find out from the team
+	- Whether the quality gap in deployment persists
+		- Right now a Palantir SVP deploying Claude into a hospital produces better results than an Accenture consultant with a Claude certification
+		- That gap is Percepta's niche
+		- Each model improvement makes it easier for the junior consultant to close the gap
+			- If Claude 5 walks someone through a healthcare deployment well enough that a generalist gets to 80% of expert quality, 45,000 generalists beat 35 specialists
+		- Percepta needs advantages that hold up after the gap closes
+			- Institutional relationships models can't replicate
+			- Proprietary deployment IP Accenture can't replicate with scale
+			- Owned model capabilities from the research arm
+	- Whether GC's patience is real
+		- GC needs results from transformation companies to justify non-traditional structures to LPs
+		- Weak traction in 2-3 years and LP pressure pushes toward reallocation
+		- $xxxM+ hospital buy points toward real patience
+		- Standard fund raises alongside point toward patience that could be revoked
+		- Without productization, Percepta's value is its team plus client relationships
+			- Both walk out the door
+			- A hospital is a hard asset GC can sell
+			- An AI consulting team's value evaporates if the people leave
+		- GC's patience needs to outlast the time it takes Percepta to build something that exists independently of its current employees
+
+- **How would I build something directionally correct here?**
+	- Build institutional integration, not technical scaffolding
+		- Scaffolding (prompt chains, routing logic, error handlers) erodes with each model upgrade
+		- Institutional integration (data access agreements, compliance certifications, trust relationships, change management playbooks) persists across model generations
+		- An hour on scaffolding has an 18-month half-life
+		- An hour on institutional integration lasts years
+		- In a hospital
+			- Spend less time building a custom Claude pipeline for billing
+			- More time mapping actual clinical workflows
+			- Building relationships with department heads
+			- Getting HIPAA compliance certification
+			- Integrating with Epic/Cerner at the data level
+			- The pipeline will be obsolete in 18 months, the institutional knowledge and relationships won't
+	- Identify and build persistent primitives
+		- Deployment primitives
+			- Process discovery methodology
+			- Confidence-based routing (when does AI act vs escalate?)
+			- Compliance audit framework
+			- Change management playbook
+			- Enterprise data integration architecture
+		- Must come from deployment experience, not theory
+			- Five deployments is early but may be enough to spot patterns
+			- Does deployment #6 take less time than #1 because of reusable components?
+		- Research primitives
+			- Published work (computers inside transformers, WebAssembly VMs in weights) suggests model-level capability building
+			- If it produces models faster, cheaper, or more capable in enterprise contexts, that's a moat
+			- But the link between research output and deployment advantage has to be explicit
+			- Frontier research disconnected from the deployment business is an academic vanity project at a company with 3-5 years to build something durable
+	- What "productize" actually means (three paths)
+		- Mosaic becomes a standalone orchestration platform (Palantir Foundry path)
+			- Mosaic evolves from internal toolkit into a product enterprises buy and run themselves
+			- Software economics (70-80%+ margins, recurring revenue)
+			- Palantir proved it works, took 15 years
+			- But building a product enterprises can run without Percepta's engineers is a much higher bar than an internal tool
+			- Percepta building on Claude means Mosaic is really "a platform that orchestrates Claude," vulnerable to Anthropic building the same thing
+			- 5 deployments is probably not enough data for a standalone platform, probably need 50-100+ across multiple verticals
+			- Longest timeline, needs patient capital and sustained deployment volume
+		- Healthcare-specific AI workflows as a vertical product (Harvey/Sierra path)
+			- Pick healthcare, build repeatable deployment packages for billing, clinical docs, patient engagement, prior auth, scheduling
+			- Sell semi-standardized with implementation support
+			- Faster path to product economics than Mosaic-as-platform
+			- Healthcare is huge, GC's 20+ health system partnerships and Summa provide development environment and distribution
+			- Aligns with the team
+			- But gives up horizontal flexibility
+			- Competes directly with Hippocratic AI, Abridge, others who may have more deployment data in their niches
+			- Healthcare products need FDA/regulatory consideration
+			- If healthcare adoption stalls, switching back to horizontal is hard once healthcare-specific product is built
+		- Proprietary RL models trained on enterprise data (model company path)
+			- Research lab uses structured data from FDE engagements to train models via RL specifically better at enterprise workflow tasks than generic Claude
+			- Proprietary models on proprietary data are hard to replicate
+			- Every deployment generates more training data
+			- Explains why you'd hire a Nevanlinna Prize winner for an enterprise deployment company
+			- But translation from messy enterprise workflow data to RL reward signals is a hard unsolved research problem
+				- RL needs clear success/failure signals
+				- Enterprise workflows produce ambiguous delayed outcomes
+			- Even if it works, advantage could be temporary
+				- Anthropic sees usage patterns across all Claude deployments and could absorb the capability
+			- And 35 people doing frontier RL AND enterprise deployment AND building a platform is spread across three very different kinds of work
+			- If it works, nothing else can replicate it
+			- If it doesn't, the research spend was a distraction
+			- Leading indicator: whether any engagement has used a proprietary model rather than off-the-shelf Claude
+		- At 35-40 people, doing all three means doing none well
+			- Where Percepta's researchers spend time and what Mosaic gets built to do is the resource allocation question underneath all of this
+	- Use GC leverage with discipline
+		- Capital
+			- GC can fund acquisitions: acquire a business, deploy AI, demonstrate improvement, sell the playbook
+			- Already doing this with HATCo/Summa and Long Lake
+			- Risk: $xB+ of capital chasing the same targets, bidding up multiples
+			- Two-thirds of rollups fail historically
+			- Constellation (the comp every rollup cites) pays sub-1x EV/Sales, holds perpetually, decentralizes
+				- AI rollups pay 6-8x EBITDA, centralize, operate on fund timelines
+				- Opposite mechanics, same cited precedent
+			- GC counter: Creation Strategy is permanent capital, can hold and compound, actually matches Constellation if the patience is real
+		- Distribution
+			- Portfolio is the customer base: Summa Health, Long Lake, Crescendo, Eudia, Titan MSP
+			- Each deployment generates learnings
+			- Portfolio deployment only proves the model in controlled conditions though
+			- Winning Fortune 500 clients choosing between Percepta, Accenture, and Anthropic's own team is the actual validation
+
+- **What are the pillars as I see them?**
+	- **Talent**
+		- Nevanlinna Prize winner as Chief Scientist
+		- Palantir SVPs as CEO/CTO
+		- MIT PhDs in game theory + AI alignment
+		- Berkeley multi-agent RL researchers
+		- BCG consultants
+		- Healthcare operators
+		- Stanford/YC engineers
+		- ~35-40 total
+		- This team could have started a lab, chose enterprise deployment instead
+			- Says something about where they think the bottleneck is
+		- Retention over 3-5 years is a real question
+			- Professors go back to academia
+			- Researchers want to publish
+			- Palantir veterans get restless
+	- **AI Pilled**
+		- Every decision assumes AI transforms industries within 5-10 years
+			- Pricing, hiring, client selection, product roadmap all follow from that
+		- Companies that hedge ("add some AI features") end up overlaying AI on existing processes
+			- Full conviction means redesigning processes around AI from scratch, which produces different architecture
+		- If the thesis is right, conviction compounds because competitors who flinch during the next downturn lose ground Percepta holds
+		- If the thesis is wrong, every decision based on it is wrong at the same time
+	- **Distribution Used Well**
+		- Healthcare and government first
+			- GC's deepest relationships
+			- Highest-regulation verticals
+			- Hardest to deploy into
+			- Most defensible once embedded
+		- Palantir focused on defense for its first decade
+			- That focus produced the depth, references, and platform that let it expand commercially
+		- Predictable failure mode: accepting every GC introduction across six verticals and getting depth in none
+	- **Capital Leverage Used Well**
+		- Held on GC's balance sheet (not in a fund), no deployment clock
+		- Whether GC's patience is real determines everything
+			- $xxxM+ hospital buy and permanent capital point toward real patience
+			- Standard VC fund raises alongside point toward patience that could be conditional
+		- If real, Percepta can compound for a decade, survive mistakes, build something durable
+		- If conditional, about 3 years before GC re-evaluates
+			- That 3 years lines up with the quality-gap window, the productization window, and the Anthropic dependency window
