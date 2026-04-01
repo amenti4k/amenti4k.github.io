@@ -390,6 +390,7 @@ class YouTubeVibes {
     // Add your YouTube video IDs and titles here
     this.videos = [
       { id: 'gfF8jzBVWvM', title: 'vids' },
+      { id: '1sd26pWhfmg', title: 'vids' },
     ];
   }
 
