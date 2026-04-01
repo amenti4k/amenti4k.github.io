@@ -30,6 +30,7 @@ body {
   line-height: $base-line-height;
   margin: 0;
   padding: 32px;
+  overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
@@ -1021,7 +1022,7 @@ img[src*='#center'] {
   border-radius: 3px;
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 1500px) {
   .post-content .marginnote {
     float: none;
     margin-right: 0;
