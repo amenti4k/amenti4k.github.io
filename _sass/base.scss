@@ -218,6 +218,78 @@ li>ol {
   background: var(--highlight-color);
 }
 
+/* Easter egg terminal */
+#egg {
+  position: fixed;
+  inset: 0;
+  background: #0a0a0a;
+  z-index: 200000;
+  display: none;
+  flex-direction: column;
+  padding: 2rem;
+  font-family: $code-font-family;
+  font-size: 14px;
+  color: #33ff33;
+  text-shadow: 0 0 5px rgba(51, 255, 51, 0.25);
+  overflow-y: auto;
+  line-height: 1.6;
+}
+
+#egg.active {
+  display: flex;
+  animation: crt-on 0.15s ease-out;
+}
+
+.egg-scan {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(transparent, transparent 2px, rgba(0, 0, 0, 0.12) 2px, rgba(0, 0, 0, 0.12) 4px);
+  z-index: 1;
+  animation: scanline-flicker 4s ease-in-out infinite;
+}
+
+.egg-out {
+  flex: 1;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.egg-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.25rem;
+}
+
+.egg-ps1 {
+  color: #33ff33;
+  flex-shrink: 0;
+}
+
+#eggIn {
+  flex: 1;
+  background: none;
+  border: none;
+  color: #33ff33;
+  font-family: inherit;
+  font-size: inherit;
+  outline: none;
+  caret-color: #33ff33;
+  text-shadow: 0 0 5px rgba(51, 255, 51, 0.25);
+}
+
+@keyframes crt-on {
+  0% { opacity: 0; transform: scaleY(0.01); filter: brightness(10); }
+  60% { opacity: 1; transform: scaleY(1.02); }
+  100% { transform: scaleY(1); filter: brightness(1); }
+}
+
+@keyframes scanline-flicker {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 0.35; }
+}
+
 /* Window shade canvas */
 #shade {
   position: fixed;

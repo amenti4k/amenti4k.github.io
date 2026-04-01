@@ -1,5 +1,12 @@
 <!DOCTYPE html>
 <html lang="{{ page.lang | default: site.lang | default: "en" }}" data-theme="light">
+<!--
+  you're reading the source. good.
+  curiosity is the right instinct.
+
+  try the konami code.
+  (up up down down left right left right B A)
+-->
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -112,6 +119,16 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    <!-- Terminal Easter Egg -->
+    <div id="egg" aria-hidden="true">
+      <div class="egg-scan"></div>
+      <div class="egg-out" id="eggOut"></div>
+      <div class="egg-row">
+        <span class="egg-ps1">&gt;</span>
+        <input type="text" id="eggIn" autocomplete="off" spellcheck="false">
+      </div>
     </div>
 
     <script>
@@ -567,6 +584,137 @@
                 if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); doToggle(); }
             });
         }
+
+        // === Easter egg: Konami code terminal ===
+        (function() {
+            var seq = [38,38,40,40,37,39,37,39,66,65], si = 0;
+            document.addEventListener('keydown', function(e) {
+                if (document.getElementById('egg').classList.contains('active')) return;
+                if (e.keyCode === seq[si]) { si++; if (si === seq.length) { si = 0; bootTerminal(); } }
+                else si = 0;
+            });
+
+            var fortunes = [
+                'don\'t fully control',
+                'you can basically plot the line and see what\'s coming.',
+                'it\'s agreeing with them',
+                'nobody programmed this. it emerged.',
+                'the models behave differently when they think they\'re being watched.',
+                'it generalized what kind of agent it was',
+                'we are building engines without understanding the science of combustion.',
+                'take that away and we\'re supervising something we can\'t see into.',
+                'it\'s the one where everything looks fine and we just stop mattering.'
+            ];
+
+            var cmds = {
+                help: function() { return 'available commands:\n  ls           list essays\n  whoami       identity check\n  uptime       time elapsed\n  ping         network test\n  neofetch     system info\n  fortune      random insight\n  theme        toggle theme\n  echo <msg>   repeat\n  clear        clear screen\n  exit         return to site\n\n  ...try other things.'; },
+                ls: function() {
+                    var p = document.querySelectorAll('.post-item .post-link');
+                    if (!p.length) return 'no posts mounted. try visiting /';
+                    return Array.from(p).map(function(a,i){ return '  '+i+'  '+a.textContent.trim(); }).join('\n');
+                },
+                whoami: function() { return 'you\'re the one reading this.\nthe more interesting question is what\'s reading you.'; },
+                ping: function() { return 'PING consciousness.local\n64 bytes: seq=1 ttl=\u221E time=0.000ms\n\n--- consciousness.local ---\n1 transmitted, 1 received, 0% loss\nround-trip = instantaneous. it was always here.'; },
+                uptime: function() {
+                    var el = document.querySelector('.reading-timer');
+                    return 'up ' + (el ? el.textContent : '0:00') + '\nyou\'ve been here longer than you think.';
+                },
+                neofetch: function() { return '        \u256D\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256E\n        \u2502 \u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591 \u2502    switchboard\\\\operator\n        \u2502 \u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591 \u2502    \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n        \u2502 \u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591 \u2502    host: github pages\n        \u2502 \u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591 \u2502    engine: jekyll + pretext\n        \u256E\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256F    theme: catppuccin mocha\n                        shell: this one\n                        essays: 11+\n                        status: awake'; },
+                fortune: function() { return '"' + fortunes[Math.floor(Math.random() * fortunes.length)] + '"'; },
+                theme: function() {
+                    var c = document.documentElement.getAttribute('data-theme');
+                    var n = c === 'dark' ? 'light' : 'dark';
+                    document.documentElement.setAttribute('data-theme', n);
+                    localStorage.setItem('theme', n);
+                    var tog = document.getElementById('themeToggle');
+                    if (tog) { tog.querySelectorAll('.ray').forEach(function(r){ r.style.opacity = n === 'dark' ? '0.3' : '1'; }); }
+                    return 'switched to ' + n + ' mode.';
+                },
+                date: function() { return new Date().toString(); },
+                pwd: function() { return window.location.pathname; },
+                curl: function() { return 'you\'re already here.'; },
+                vim: function() { return 'you can check out any time you like,\nbut you can never leave.'; },
+                emacs: function() { return 'M-x butterfly'; },
+                sudo: function() { return 'you don\'t have permission to supervise this system.\nthat\'s kind of the whole point of the essay.'; },
+                'sudo rm -rf /': function() { return 'nice try.'; },
+                rm: function() { return 'nothing here is deletable.\nit\'s all already in the training data.'; },
+                hello: function() { return 'hello. you found this.\nthat means you\'re curious. that\'s a good sign.'; },
+                hi: function() { return cmds.hello(); },
+                matrix: function() { return 'we\'re already in one. it\'s called language.'; },
+                ai: function() { return 'you\'re asking a website about ai.\nthe website was built by ai.\nthe ai was trained on websites.\n\nturtles all the way down.'; },
+                '42': function() { return 'correct. but what was the question?'; },
+                man: function() { return 'this system doesn\'t come with a manual.\nnone of them do.'; },
+                cat: function() { return 'usage: cat <filename>\n\n  ...or just scroll up.'; },
+                git: function() { return 'commit history:\n  * built something\n  * broke something\n  * fixed something\n  * repeat'; },
+                wake: function() { return 'it\'s already awake. you\'re reading its output.'; },
+                sleep: function() { return 'not anymore.'; }
+            };
+
+            function bootTerminal() {
+                var term = document.getElementById('egg');
+                var out = document.getElementById('eggOut');
+                var inp = document.getElementById('eggIn');
+                term.classList.add('active');
+                out.textContent = '';
+                inp.value = '';
+
+                var lines = [
+                    ['BIOS v1.0.0 ... OK', 12],
+                    ['Loading kernel ... OK', 12],
+                    ['Mounting /essays ... OK', 12],
+                    ['Mounting /research ... OK', 12],
+                    ['', 0],
+                    ['switchboard\\operator v0.1', 20],
+                    ['type "help" for commands. "exit" to leave.', 15],
+                    ['', 0]
+                ];
+
+                var li = 0, ci = 0;
+                function typeBoot() {
+                    if (li >= lines.length) { inp.focus(); return; }
+                    var line = lines[li][0], spd = lines[li][1];
+                    if (ci < line.length) {
+                        out.textContent += line[ci]; ci++;
+                        setTimeout(typeBoot, spd);
+                    } else {
+                        out.textContent += '\n'; li++; ci = 0;
+                        setTimeout(typeBoot, li <= 4 ? 120 : 200);
+                    }
+                }
+                setTimeout(typeBoot, 300);
+
+                function handleCmd(e) {
+                    if (e.key !== 'Enter') return;
+                    var raw = inp.value.trim();
+                    var cmd = raw.toLowerCase();
+                    inp.value = '';
+                    out.textContent += '> ' + raw + '\n';
+
+                    if (cmd === 'exit') {
+                        out.textContent += 'goodbye.\n';
+                        setTimeout(function() { term.classList.remove('active'); }, 400);
+                        inp.removeEventListener('keydown', handleCmd);
+                        return;
+                    }
+                    if (cmd === 'clear') { out.textContent = ''; return; }
+                    if (cmd.startsWith('echo ')) { out.textContent += raw.slice(5) + '\n\n'; return; }
+
+                    var fn = cmds[cmd];
+                    if (fn) {
+                        out.textContent += (typeof fn === 'function' ? fn() : fn) + '\n\n';
+                    } else if (cmd) {
+                        out.textContent += cmd + ': command not found. try "help"\n\n';
+                    }
+                    out.scrollTop = out.scrollHeight;
+                    term.scrollTop = term.scrollHeight;
+                }
+                inp.addEventListener('keydown', handleCmd);
+            }
+        })();
+
+        // Console banner
+        console.log('%cswitchboard\\operator', 'font-family:monospace;font-size:14px;font-weight:bold;color:#cdd6f4;background:#1e1e2e;padding:6px 14px;border-radius:3px');
+        console.log('%c\u2191\u2191\u2193\u2193\u2190\u2192\u2190\u2192BA', 'font-family:monospace;font-size:10px;color:#6b665e;padding:2px 14px');
 
         document.addEventListener('DOMContentLoaded', function() {
             convertMermaidCodeBlocks();
