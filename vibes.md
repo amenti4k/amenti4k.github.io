@@ -9,6 +9,16 @@ permalink: /vibes/
   <div id="youtube-grid" class="youtube-grid"></div>
 </div>
 
+<div id="websites-container" class="youtube-container">
+  <h2 class="youtube-title">> bookmarks.url</h2>
+  <div class="website-grid">
+    <a href="https://www.aifuturesmodel.com/" target="_blank" rel="noopener noreferrer" class="website-card">
+      <span class="website-name">aifuturesmodel.com</span>
+      <span class="website-desc">AI futures forecasting model</span>
+    </a>
+  </div>
+</div>
+
 <div id="vibes-container" class="vibes-container">
   <div id="loading" class="loading">
     <span class="blink">> loading_vibes.exe...</span>
@@ -952,6 +962,45 @@ document.addEventListener('DOMContentLoaded', () => {
   margin-top: 8px;
   line-height: 1.4;
   opacity: 0.8;
+}
+
+/* Website bookmarks */
+.website-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.website-card {
+  display: block;
+  text-decoration: none;
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  padding: 14px 16px;
+  opacity: 0;
+  animation: fadeInUp 0.5s ease forwards;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.website-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--text-color);
+}
+
+.website-name {
+  display: block;
+  font-family: 'Inconsolata', monospace;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.website-desc {
+  display: block;
+  font-family: 'Inconsolata', monospace;
+  font-size: 11px;
+  opacity: 0.5;
+  margin-top: 4px;
 }
 
 /* Dark theme YouTube adjustments */
