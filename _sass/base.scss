@@ -923,6 +923,7 @@ img[src*='#center'] {
   max-width: 100%;
   min-width: 0;
   padding-right: 220px;
+  grid-column: 2;
 }
 
 .post-header-content {
