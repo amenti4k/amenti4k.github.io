@@ -25,13 +25,13 @@ permalink: /percepta/
 
 ## Percepta is distinct from the labs
 
-- Intelligence trains centrally but deploys at the edge. Context degrades the further it travels from where it was generated. Running a frontier model from the cloud to manage a hospital's billing exceptions is wasteful for the same reason you wouldn't stream HD to a cloud for a security camera when an edge chip does it at 25x less energy. Percepta is Anthropic's edge in healthcare.
+- Intelligence trains centrally but deploys at the edge. Context degrades the further it travels from where it was generated. Running a frontier model from the cloud to manage a hospital's billing exceptions is wasteful for the same reason you wouldn't stream HD to a cloud for a security camera when an edge chip does it at 25x less energy. Percepta is the lab's edge in healthcare.
 
 - The complementarity is structural. Anthropic sells tokens, Percepta minimizes token burn per outcome. <span class="marginnote">Percepta generates domain-specific training data from trusted deployments that Anthropic can't get from API usage logs. It comes from inside institutions, with consent, in structured form. That data may be worth more to Anthropic than the token revenue.</span>
 
-- The question I'm less sure about: <span class="question-text">is this arrangement permanent?</span> Labs are already hiring forward-deployed teams. Anthropic is building enterprise deployment capability. McGrew (ex-OpenAI head of research) says each enterprise integration problem is "too small" for a frontier lab, <span class="question-text">but if it gets lucrative enough, do they come for it anyway?</span> I'm betting the lab business model makes granular institutional work permanently unattractive. Honest that it's a bet.
+- The question I'm less sure about: <span class="question-text">is this arrangement permanent?</span> Labs are already hiring forward-deployed teams. The labs are building enterprise deployment capability. McGrew (ex-OpenAI head of research) says each enterprise integration problem is "too small" for a frontier lab, <span class="question-text">but if it gets lucrative enough, do they come for it anyway?</span> I'm betting the lab business model makes granular institutional work permanently unattractive. Honest that it's a bet.
 
-- One version of where this goes looks like the OpenAI/Thrive deal. Anthropic researchers embedded in healthcare deployments, producing training data they can't get elsewhere, Percepta getting capabilities nobody else has. Both locked in. <span class="marginnote">Alma matters here too. Deploying inside systems GC owns means you observe context at the source instead of negotiating for access.</span>
+- One version of where this goes looks like the OpenAI/Thrive deal. Lab researchers embedded in healthcare deployments, producing training data they can't get elsewhere, Percepta getting capabilities nobody else has. Both locked in. <span class="marginnote">Alma matters here too. Deploying inside systems GC owns means you observe context at the source instead of negotiating for access.</span>
 
 ## Percepta is not a holding company
 
@@ -98,7 +98,7 @@ permalink: /percepta/
 
 - Whether Mosaic is actually learning or just accumulating the feeling of learning. Playbooks get written, dashboards fill up. <span class="question-text">Does deployment six take less time than deployment one because of something in Mosaic, or because the team got experienced and the playbooks are just a record of that. If the experienced people leave, what does Mosaic actually contain?</span>
 
-- The self-obsolescence problem. Successful deployments train the client to not need you. The better the team, the faster knowledge transfers. Palantir had Foundry creating platform lock-in. Percepta builds on Claude. The client can hire their own engineers and point them at Claude. Each engagement has a ceiling unless Mosaic accumulates institutional intelligence faster than the client absorbs it.
+- The self-obsolescence problem. Successful deployments train the client to not need you. The better the team, the faster knowledge transfers. Palantir had Foundry creating platform lock-in. Percepta builds on a foundation model it doesn't own. The client can hire their own engineers and point them at the same model. Each engagement has a ceiling unless Mosaic accumulates institutional intelligence faster than the client absorbs it.
 
 - The people question. This might matter more than any of the structural analysis above and I can't evaluate it from outside.
 
