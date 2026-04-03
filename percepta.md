@@ -1,10 +1,8 @@
 ---
-layout: post
+layout: page
 title: "How I'm Thinking About Percepta"
-date: 2026-04-03
-tags: [ai, business]
-categories: [research]
-permalink: /2026/04/03/Percepta.html
+permalink: /percepta/
+sitemap: false
 ---
 
 *Healthcare lens throughout, but most of this generalizes.*
