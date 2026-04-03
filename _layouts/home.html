@@ -16,7 +16,7 @@ layout: default
 
 <div class="post-list">
   {% for post in site.posts %}
-    {% unless post.categories contains 'research' %}
+    {% unless post.categories contains 'research' or post.hidden %}
       <div class="post-item" data-tags="{{ post.tags | join: ' ' }}">
         <a class="post-link" href="{{ post.url | relative_url }}">
           <span class="title-text">{{ post.title }}</span>

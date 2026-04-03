@@ -1011,6 +1011,11 @@ img[src*='#center'] {
   padding: 0 0.15rem;
 }
 
+.post-content .question-text {
+  color: var(--question-color);
+  font-style: italic;
+}
+
 .about-page p {
   margin-bottom: 0.4rem;
 }
