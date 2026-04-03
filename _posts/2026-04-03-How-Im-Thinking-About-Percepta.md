@@ -105,3 +105,9 @@ permalink: /percepta/
 - Whether the structural thesis is right about the world but wrong about who captures the value. Deployment complexity persists. That doesn't mean a startup owned by a holding company is the entity that captures it. <span class="marginnote">I keep wanting to collapse "thesis is right" into "Percepta wins" and I don't trust how good that feels.</span>
 
 - The uncomfortable version of the GC relationship: Percepta does the work, GC's assets get smarter, GC captures most of the upside. I don't know how you think about that from inside.
+
+## One more thing I keep thinking about
+
+- Follow the premises far enough and you get somewhere uncomfortable. If intelligence commoditizes on the timeline I described, talent eventually stops being the main differentiator for company outcomes. Not immediately. Right now the specific people in the room are why Percepta works. But past a certain point it becomes more about hard power. Capital. Distribution. Owned assets. Institutional relationships. Data captured over years in structured form.
+
+- GC's balance sheet, the hospital, the Anthropic partnership — those are hard-power assets. Most AI companies are betting entirely on talent. Percepta has both, and the hard-power side is the part that survives commoditization. <span class="marginnote">I find that reassuring and slightly unsettling at the same time, since I'm joining for the team. But it might be the strongest version of the positioning and I'm not sure anyone is framing it that way yet.</span>
