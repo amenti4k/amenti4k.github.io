@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ page.lang | default: site.lang | default: "en" }}" data-theme="light">
+<html lang="{{ page.lang | default: site.lang | default: "en" }}" data-theme="dark">
 <!--
   you're reading the source. good.
   curiosity is the right instinct.
@@ -49,7 +49,7 @@
       (function() {
         var saved = localStorage.getItem('theme');
         var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        var theme = saved || (prefersDark ? 'dark' : 'light');
+        var theme = saved || 'dark';
         document.documentElement.setAttribute('data-theme', theme);
       })();
     </script>

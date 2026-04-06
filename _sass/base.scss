@@ -1002,8 +1002,19 @@ img[src*='#center'] {
   line-height: 1.5;
   color: var(--secondary-text-color);
   padding-left: 1rem;
-  border-left: 2px solid var(--border-color);
+  border-left: 2px solid var(--secondary-text-color);
   position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0.55em;
+    right: 100%;
+    width: 20px;
+    height: 0;
+    border-top: 1px solid var(--secondary-text-color);
+    margin-right: 1rem;
+  }
 }
 
 .post-content .highlight-text,
@@ -1047,6 +1058,10 @@ img[src*='#center'] {
     padding: 0.75rem;
     padding-left: 1rem;
     font-size: 14px;
+
+    &::before {
+      display: none;
+    }
   }
 }
 
