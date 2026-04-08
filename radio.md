@@ -9,7 +9,7 @@ permalink: /radio/
 
 <style>
 #radio {
-  max-width: 620px;
+  max-width: 740px;
   margin: 1rem auto;
   font-family: 'JetBrains Mono', 'Inconsolata', 'Courier New', monospace;
   font-size: 13px;
@@ -23,23 +23,40 @@ permalink: /radio/
 #radio .click { cursor: pointer; }
 #radio .click:hover { background: var(--text-color, #cdd6f4); color: var(--background-color, #1e1e2e); }
 
-#radio .dim { opacity: 0.4; }
+#radio .dim { opacity: 0.35; }
+#radio .mid { opacity: 0.55; }
 #radio .hl { opacity: 1; font-weight: bold; }
 #radio .active-station { background: var(--text-color, #cdd6f4); color: var(--background-color, #1e1e2e); }
 #radio .genre-active { background: var(--text-color, #cdd6f4); color: var(--background-color, #1e1e2e); }
 #radio .vu-fill { opacity: 1; }
-#radio .vu-empty { opacity: 0.15; }
+#radio .vu-empty { opacity: 0.12; }
 #radio .blink { animation: radioBlink 1s step-end infinite; }
-#radio .nowplaying { opacity: 0.7; }
+#radio .pulse { animation: radioPulse 2s ease-in-out infinite; }
+#radio .wave { animation: radioWave 1.5s ease-in-out infinite; }
+#radio .wave2 { animation: radioWave 1.5s ease-in-out 0.3s infinite; }
+#radio .wave3 { animation: radioWave 1.5s ease-in-out 0.6s infinite; }
+#radio .nowplaying { opacity: 0.6; }
 #radio .err { opacity: 0.6; }
+#radio .signal { opacity: 0.7; }
 
 @keyframes radioBlink {
   0%, 100% { opacity: 1; }
   50% { opacity: 0; }
 }
+@keyframes radioPulse {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
+@keyframes radioWave {
+  0%, 100% { opacity: 0.15; }
+  50% { opacity: 0.9; }
+}
 
-@media (max-width: 640px) {
+@media (max-width: 740px) {
   #radio { font-size: 10px; margin: 0.5rem; }
+}
+@media (max-width: 500px) {
+  #radio { font-size: 8px; }
 }
 </style>
 
@@ -59,10 +76,11 @@ permalink: /radio/
   let genre = 'all';
   let page = 0;
   const PAGE_SIZE = 8;
-  let vu = [0, 0];
+  let vu = [0, 0, 0, 0, 0, 0, 0, 0];
   let vuTimer = null;
   let searchMode = false;
   let searchQuery = '';
+  let tick = 0;
 
   const genres = ['all','ambient','jazz','electronic','classical','rock','lofi','world','funk','pop'];
 
@@ -72,17 +90,17 @@ permalink: /radio/
     try {
       let url;
       if (tag && tag !== 'all') {
-        url = API + '/stations/bytag/' + encodeURIComponent(tag) + '?limit=200&order=votes&reverse=true&hidebroken=true&has_extended_info=false';
+        url = API + '/stations/bytag/' + encodeURIComponent(tag) + '?limit=200&order=votes&reverse=true&hidebroken=true';
       } else {
         url = API + '/stations?limit=200&order=votes&reverse=true&hidebroken=true';
       }
       const r = await fetch(url);
       const data = await r.json();
       stations = data.filter(s => s.url_resolved && s.name).map(s => ({
-        name: s.name.replace(/[\n\r\t]/g, ' ').trim().substring(0, 38),
+        name: s.name.replace(/[\n\r\t]/g, ' ').trim().substring(0, 44),
         url: s.url_resolved,
-        tags: (s.tags || '').substring(0, 30),
-        country: (s.country || '').substring(0, 15),
+        tags: (s.tags || '').substring(0, 36),
+        country: (s.country || '').substring(0, 18),
         codec: s.codec || '?',
         bitrate: s.bitrate || 0,
         votes: s.votes || 0,
@@ -105,10 +123,10 @@ permalink: /radio/
       const r = await fetch(url);
       const data = await r.json();
       stations = data.filter(s => s.url_resolved && s.name).map(s => ({
-        name: s.name.replace(/[\n\r\t]/g, ' ').trim().substring(0, 38),
+        name: s.name.replace(/[\n\r\t]/g, ' ').trim().substring(0, 44),
         url: s.url_resolved,
-        tags: (s.tags || '').substring(0, 30),
-        country: (s.country || '').substring(0, 15),
+        tags: (s.tags || '').substring(0, 36),
+        country: (s.country || '').substring(0, 18),
         codec: s.codec || '?',
         bitrate: s.bitrate || 0,
         votes: s.votes || 0,
@@ -156,14 +174,12 @@ permalink: /radio/
 
   function nextStation() {
     if (!filtered.length) return;
-    const n = current + 1 >= filtered.length ? 0 : current + 1;
-    playStation(n);
+    playStation((current + 1) % filtered.length);
   }
 
   function prevStation() {
     if (!filtered.length) return;
-    const n = current - 1 < 0 ? filtered.length - 1 : current - 1;
-    playStation(n);
+    playStation((current - 1 + filtered.length) % filtered.length);
   }
 
   function setVolume(v) {
@@ -174,164 +190,291 @@ permalink: /radio/
 
   function startVU() {
     stopVU();
-    function tick() {
-      if (!playing) { vu = [0,0]; return; }
-      vu[0] = Math.floor(3 + Math.random() * 17);
-      vu[1] = Math.floor(3 + Math.random() * 17);
+    function frame() {
+      if (!playing) { vu = [0,0,0,0,0,0,0,0]; return; }
+      tick++;
+      for (let i = 0; i < 8; i++) {
+        vu[i] = Math.floor(1 + Math.random() * 7);
+      }
       render();
-      vuTimer = setTimeout(tick, 120);
+      vuTimer = setTimeout(frame, 100);
     }
-    tick();
+    frame();
   }
 
   function stopVU() {
     clearTimeout(vuTimer);
-    vu = [0, 0];
+    vu = [0,0,0,0,0,0,0,0];
   }
 
   function pad(s, n) { s = String(s); while (s.length < n) s += ' '; return s.substring(0, n); }
   function padL(s, n) { s = String(s); while (s.length < n) s = ' ' + s; return s.substring(0, n); }
-
-  function vuBar(level, width) {
-    let bar = '';
-    for (let i = 0; i < width; i++) {
-      if (i < level) bar += '<span class="vu-fill">█</span>';
-      else bar += '<span class="vu-empty">░</span>';
-    }
-    return bar;
+  function padC(s, n) {
+    s = String(s);
+    const left = Math.floor((n - s.length) / 2);
+    return ' '.repeat(left) + s + ' '.repeat(n - left - s.length);
   }
 
-  function span(cls, text, onclick) {
-    const esc = text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-    if (onclick) {
-      return '<span class="' + cls + '" data-action="' + onclick + '">' + esc + '</span>';
+  function esc(t) { return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+  function span(cls, text, action) {
+    const e = esc(text);
+    if (action) return '<span class="' + cls + '" data-action="' + action + '">' + e + '</span>';
+    return '<span class="' + cls + '">' + e + '</span>';
+  }
+
+  // vertical VU bars (8 columns, height 7)
+  function vuBlock() {
+    const H = 7;
+    const cols = 8;
+    let rows = [];
+    for (let row = H; row >= 1; row--) {
+      let line = '  ';
+      for (let c = 0; c < cols; c++) {
+        if (vu[c] >= row) {
+          if (row >= 6) line += '<span class="vu-fill">██</span>';
+          else if (row >= 4) line += '<span class="vu-fill">▓▓</span>';
+          else line += '<span class="vu-fill">░░</span>';
+        } else {
+          line += '<span class="vu-empty">░░</span>';
+        }
+        if (c < cols - 1) line += ' ';
+      }
+      line += '  ';
+      rows.push(line);
     }
-    return '<span class="' + cls + '">' + esc + '</span>';
+    return rows;
+  }
+
+  // signal tower ASCII art
+  function signalArt() {
+    if (playing) {
+      return [
+        '       <span class="wave">)</span>  ',
+        '      <span class="wave2">)</span>   ',
+        '     <span class="wave3">)</span>    ',
+        '    ╻      ',
+        '    ║      ',
+        '    ║      ',
+        '   ╱║╲     ',
+        '  ╱ ║ ╲    ',
+      ];
+    }
+    return [
+      '           ',
+      '           ',
+      '           ',
+      '    ╻      ',
+      '    ║      ',
+      '    ║      ',
+      '   ╱║╲     ',
+      '  ╱ ║ ╲    ',
+    ];
+  }
+
+  // speaker grill pattern
+  function speakerGrill(h) {
+    let rows = [];
+    for (let i = 0; i < h; i++) {
+      if (i % 2 === 0) rows.push('● ○ ● ○ ● ○ ●');
+      else             rows.push('○ ● ○ ● ○ ● ○');
+    }
+    return rows;
   }
 
   function render() {
-    const W = 56;
-    const line = (c) => c.repeat(W);
-    const border = (l, fill, r) => l + fill.repeat(W - 2) + r;
+    const W = 68;
+    const inner = W - 2;
     let out = '';
 
-    // top border
-    out += '╔' + '═'.repeat(W-2) + '╗\n';
-
-    // title
-    const title = 'S W I T C H B O A R D    R A D I O';
-    const tpad = Math.floor((W - 2 - title.length) / 2);
-    out += '║' + ' '.repeat(tpad) + title + ' '.repeat(W - 2 - tpad - title.length) + '║\n';
-    out += '╠' + '═'.repeat(W-2) + '╣\n';
-
-    // VU meters
-    const vuW = 20;
-    const vuL = playing ? Math.floor(vu[0] * vuW / 20) : 0;
-    const vuR = playing ? Math.floor(vu[1] * vuW / 20) : 0;
-    out += '║ L ' + vuBar(vuL, vuW) + '  R ' + vuBar(vuR, vuW) + '       ║\n';
-
-    // now playing
-    out += '║' + '─'.repeat(W-2) + '║\n';
-    if (current >= 0 && current < filtered.length) {
-      const s = filtered[current];
-      const status = playing ? '<span class="blink">▶</span> NOW PLAYING' : '■ STOPPED';
-      const statusPlain = playing ? '▶ NOW PLAYING' : '■ STOPPED';
-      const sLine = ' ' + status + ' '.repeat(W - 2 - 1 - statusPlain.length);
-      out += '║' + sLine + '║\n';
-      out += '║ ' + span('hl', pad(s.name, W - 4)) + ' ║\n';
-      const meta = s.tags ? s.tags : s.country;
-      out += '║ <span class="nowplaying">' + pad(meta, W - 4).replace(/&/g,'&amp;').replace(/</g,'&lt;') + '</span> ║\n';
-      const info = s.codec + ' ' + (s.bitrate > 0 ? s.bitrate + 'kbps' : '') + '   votes: ' + s.votes;
-      out += '║ <span class="dim">' + pad(info, W - 4).replace(/&/g,'&amp;').replace(/</g,'&lt;') + '</span> ║\n';
+    // === ANTENNA + TITLE BLOCK ===
+    const signal = signalArt();
+    out += '\n';
+    if (playing) {
+      out += '                  <span class="wave3">              ╭─── ∿∿∿ ───╮</span>\n';
+      out += '                  <span class="wave2">           ╭──┤  ON AIR   ├──╮</span>\n';
+      out += '                  <span class="wave">          ╭───┤           ├───╮</span>\n';
     } else {
-      out += '║ ' + pad('no station selected', W - 4) + ' ║\n';
-      out += '║ ' + pad('pick one below or press [p] to play', W - 4) + ' ║\n';
-      out += '║ ' + ' '.repeat(W - 4) + ' ║\n';
-      out += '║ ' + ' '.repeat(W - 4) + ' ║\n';
+      out += '                  <span class="dim">              ╭───────────╮</span>\n';
+      out += '                  <span class="dim">           ╭──┤  OFF AIR  ├──╮</span>\n';
+      out += '                  <span class="dim">          ╭───┤           ├───╮</span>\n';
     }
 
-    // controls
-    out += '║' + '─'.repeat(W-2) + '║\n';
-    const prevTxt = ' [◄ prev] ';
-    const playTxt = playing ? ' [■ stop] ' : ' [▶ play] ';
-    const nextTxt = ' [next ►] ';
-    const volDn = ' [-] ';
-    const volUp = ' [+] ';
-    const volTxt = 'vol:' + padL(volume, 3);
-    const ctrlLine =
-      span('click', prevTxt, 'prev') + ' ' +
-      span('click', playTxt, 'toggle') + ' ' +
-      span('click', nextTxt, 'next') +
-      '  ' + span('click', volDn, 'vdn') +
-      volTxt +
-      span('click', volUp, 'vup');
-    out += '║' + ctrlLine + ' '.repeat(Math.max(0, W - 2 - prevTxt.length - 1 - playTxt.length - 1 - nextTxt.length - 2 - volDn.length - volTxt.length - volUp.length)) + '║\n';
+    // main box top
+    out += '╔' + '═'.repeat(inner) + '╗\n';
 
-    // genre tabs
-    out += '║' + '─'.repeat(W-2) + '║\n';
-    let genreLine = ' ';
-    genres.forEach(g => {
-      const label = ' ' + g + ' ';
-      if (g === genre) {
-        genreLine += '<span class="genre-active click" data-action="genre:' + g + '">' + label.replace(/&/g,'&amp;').replace(/</g,'&lt;') + '</span>';
-      } else {
-        genreLine += span('click dim', label, 'genre:' + g);
-      }
+    // title area with decorative elements
+    out += '║' + ' '.repeat(inner) + '║\n';
+    const t1 = '███████╗██╗    ██╗██╗████████╗ ██████╗██╗  ██╗';
+    const t2 = '██╔════╝██║    ██║██║╚══██╔══╝██╔════╝██║  ██║';
+    const t3 = '███████╗██║ █╗ ██║██║   ██║   ██║     ███████║';
+    const t4 = '╚════██║██║███╗██║██║   ██║   ██║     ██╔══██║';
+    const t5 = '███████║╚███╔███╔╝██║   ██║   ╚██████╗██║  ██║';
+    const t6 = '╚══════╝ ╚══╝╚══╝ ╚═╝   ╚═╝    ╚═════╝╚═╝  ╚═╝';
+
+    // simpler title that fits
+    const title = '▄▀▄ █ █ █ ▀█▀ ▄▀▀ █▄█ █▀▄ ▄▀▄ ▄▀▄ █▀▄ █▀▄';
+    const sub   = '▀▄  ▀▄▀▄▀ █  ▀█  █ █ █▀█ █ █ █▀█ █▀▄ █ █';
+    const sub2  = '▀▀   ▀ ▀  ▀  ▀▀  ▀ ▀ ▀▀  ▀▀  ▀ ▀ ▀ ▀ ▀▀ ';
+
+    out += '║' + padC('R  A  D  I  O', inner) + '║\n';
+    out += '║' + padC('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━', inner) + '║\n';
+    out += '║' + padC('╭─────────────────────────────────────────╮', inner) + '║\n';
+    out += '║' + padC('│   S W I T C H B O A R D   R A D I O    │', inner) + '║\n';
+    out += '║' + padC('╰─────────────────────────────────────────╯', inner) + '║\n';
+    out += '║' + ' '.repeat(inner) + '║\n';
+
+    // === EQUALIZER + SIGNAL TOWER SIDE BY SIDE ===
+    out += '╠' + '═'.repeat(inner) + '╣\n';
+
+    const vuRows = vuBlock();
+    const sigRows = signalArt();
+    // pad both to same length
+    const eqLabel = '  ╔══ EQUALIZER ══╗  ';
+    const sigLabel = ' ╔═ SIGNAL ═╗ ';
+
+    out += '║ ' + span('mid', eqLabel) + '           ' + span('mid', sigLabel) + '              ║\n';
+
+    for (let i = 0; i < 7; i++) {
+      const vuLine = vuRows[i] || '                        ';
+      const sigLine = (sigRows[i] || '           ');
+      out += '║ ' + vuLine + '     ' + sigLine + '              ║\n';
+    }
+    // signal tower base
+    out += '║ ' + vuRows[vuRows.length - 1] + '     ' + sigRows[7] + '              ║\n';
+
+    // freq labels under EQ
+    if (playing) {
+      out += '║  <span class="dim"> 60 125 250 500 1k 2k 4k 8k</span>                                ║\n';
+    } else {
+      out += '║  <span class="dim"> ── ─── ─── ─── ── ── ── ──</span>                                ║\n';
+    }
+
+    // === NOW PLAYING ===
+    out += '╠' + '═'.repeat(inner) + '╣\n';
+
+    // speaker grill + now playing display side by side
+    const grillL = speakerGrill(4);
+    const grillR = speakerGrill(4);
+
+    if (current >= 0 && current < filtered.length) {
+      const s = filtered[current];
+      const status = playing ? '<span class="blink">▶</span> NOW PLAYING' : '■ PAUSED';
+      const statusPlain = playing ? '▶ NOW PLAYING' : '■ PAUSED';
+      const meta = s.tags ? s.tags : s.country;
+      const info = (s.codec || '') + (s.bitrate > 0 ? ' ' + s.bitrate + 'kbps' : '') + '  ♥ ' + s.votes;
+
+      out += '║ <span class="dim">' + esc(grillL[0]) + '</span>  ' + status + ' '.repeat(inner - 2 - 15 - 1 - statusPlain.length - 15 - 2) + '  <span class="dim">' + esc(grillR[0]) + '</span> ║\n';
+      out += '║ <span class="dim">' + esc(grillL[1]) + '</span>  ' + span('hl', pad(s.name, inner - 2 - 15 - 1 - 15 - 2)) + '  <span class="dim">' + esc(grillR[1]) + '</span> ║\n';
+      out += '║ <span class="dim">' + esc(grillL[2]) + '</span>  <span class="nowplaying">' + esc(pad(meta, inner - 2 - 15 - 1 - 15 - 2)) + '</span>  <span class="dim">' + esc(grillR[2]) + '</span> ║\n';
+      out += '║ <span class="dim">' + esc(grillL[3]) + '</span>  <span class="dim">' + esc(pad(info, inner - 2 - 15 - 1 - 15 - 2)) + '</span>  <span class="dim">' + esc(grillR[3]) + '</span> ║\n';
+    } else {
+      out += '║ <span class="dim">' + esc(grillL[0]) + '</span>  ' + pad('', inner - 2 - 15 - 1 - 15 - 2) + '  <span class="dim">' + esc(grillR[0]) + '</span> ║\n';
+      out += '║ <span class="dim">' + esc(grillL[1]) + '</span>  ' + pad('select a station below...', inner - 2 - 15 - 1 - 15 - 2) + '  <span class="dim">' + esc(grillR[1]) + '</span> ║\n';
+      out += '║ <span class="dim">' + esc(grillL[2]) + '</span>  ' + pad('press [p] to play or click a row', inner - 2 - 15 - 1 - 15 - 2) + '  <span class="dim">' + esc(grillR[2]) + '</span> ║\n';
+      out += '║ <span class="dim">' + esc(grillL[3]) + '</span>  ' + pad('', inner - 2 - 15 - 1 - 15 - 2) + '  <span class="dim">' + esc(grillR[3]) + '</span> ║\n';
+    }
+
+    // === TRANSPORT CONTROLS ===
+    out += '║' + '─'.repeat(inner) + '║\n';
+    const ctrl = '    ' +
+      span('click', ' ◄◄ ', 'prev') + '   ' +
+      span('click', playing ? ' ■ STOP ' : ' ▶ PLAY ', 'toggle') + '   ' +
+      span('click', ' ►► ', 'next') +
+      '          ' +
+      span('click', ' ─ ', 'vdn') + ' VOL ' +
+      '▕' + '█'.repeat(Math.round(volume/5)) + '░'.repeat(20 - Math.round(volume/5)) + '▏' +
+      span('click', ' + ', 'vup') +
+      '  ';
+    out += '║' + ctrl + '║\n';
+
+    // === GENRE SELECTOR - TWO ROWS ===
+    out += '╠' + '═'.repeat(inner) + '╣\n';
+    out += '║ <span class="mid">GENRE:</span>                                                            ║\n';
+
+    const row1 = genres.slice(0, 5);
+    const row2 = genres.slice(5);
+
+    let g1 = ' ';
+    row1.forEach(g => {
+      const label = '  ' + g.toUpperCase() + '  ';
+      if (g === genre) g1 += '<span class="genre-active click" data-action="genre:' + g + '">' + esc(label) + '</span>  ';
+      else g1 += span('click dim', label, 'genre:' + g) + '  ';
     });
-    out += '║' + genreLine + '\n';
+    // pad to inner width (approximate, since spans don't count)
+    const g1plain = ' ' + row1.map(g => '  ' + g.toUpperCase() + '  ').join('  ') + '  ';
+    out += '║' + g1 + ' '.repeat(Math.max(0, inner - g1plain.length)) + '║\n';
 
-    // search
-    out += '║' + '─'.repeat(W-2) + '║\n';
-    const srchLabel = ' search: ';
-    const srchDisp = searchMode
-      ? srchLabel + searchQuery + '<span class="blink">_</span>' + ' '.repeat(Math.max(0, W - 2 - srchLabel.length - searchQuery.length - 1 - 9)) + span('click', ' [clear] ', 'searchclear')
-      : srchLabel + span('click dim', '[type / to search]', 'searchstart') + ' '.repeat(Math.max(0, W - 2 - srchLabel.length - 19));
-    out += '║' + srchDisp + '║\n';
+    let g2 = ' ';
+    row2.forEach(g => {
+      const label = '  ' + g.toUpperCase() + '  ';
+      if (g === genre) g2 += '<span class="genre-active click" data-action="genre:' + g + '">' + esc(label) + '</span>  ';
+      else g2 += span('click dim', label, 'genre:' + g) + '  ';
+    });
+    const g2plain = ' ' + row2.map(g => '  ' + g.toUpperCase() + '  ').join('  ') + '  ';
+    out += '║' + g2 + ' '.repeat(Math.max(0, inner - g2plain.length)) + '║\n';
 
-    // station list header
-    out += '║' + '─'.repeat(W-2) + '║\n';
-    const hdr = ' ' + pad('#', 3) + pad('STATION', 30) + pad('COUNTRY', 16) + ' ';
-    out += '║<span class="dim">' + hdr.replace(/&/g,'&amp;').replace(/</g,'&lt;') + '</span>║\n';
-    out += '║' + '─'.repeat(W-2) + '║\n';
+    // === SEARCH ===
+    out += '║' + '─'.repeat(inner) + '║\n';
+    const srchLabel = ' ⌕ SEARCH: ';
+    if (searchMode) {
+      const qDisp = searchQuery + '<span class="blink">_</span>';
+      const clearBtn = span('click', ' [✕ CLEAR] ', 'searchclear');
+      const plainLen = srchLabel.length + searchQuery.length + 1 + 11;
+      out += '║' + srchLabel + qDisp + ' '.repeat(Math.max(0, inner - plainLen)) + clearBtn + '║\n';
+    } else {
+      const hint = span('click dim', 'type / to search stations...', 'searchstart');
+      out += '║' + srchLabel + hint + ' '.repeat(Math.max(0, inner - srchLabel.length - 28)) + '║\n';
+    }
+
+    // === STATION LIST ===
+    out += '╠' + '═'.repeat(inner) + '╣\n';
+    const hdr = '  #   STATION                                     COUNTRY           ';
+    out += '║<span class="dim">' + hdr.substring(0, inner) + '</span>║\n';
+    out += '║' + '─'.repeat(inner) + '║\n';
 
     if (loading) {
-      out += '║ <span class="blink">loading stations...</span>' + ' '.repeat(W - 22) + '║\n';
-      for (let i = 0; i < PAGE_SIZE - 1; i++) out += '║' + ' '.repeat(W-2) + '║\n';
+      out += '║  <span class="blink">░░░ loading stations from radio-browser.info ░░░</span>' + ' '.repeat(Math.max(0, inner - 51)) + '║\n';
+      for (let i = 0; i < PAGE_SIZE - 1; i++) out += '║' + ' '.repeat(inner) + '║\n';
     } else if (error) {
-      out += '║ <span class="err">' + pad(error, W - 4).replace(/&/g,'&amp;').replace(/</g,'&lt;') + '</span> ║\n';
-      for (let i = 0; i < PAGE_SIZE - 1; i++) out += '║' + ' '.repeat(W-2) + '║\n';
+      out += '║  <span class="err">' + esc(pad(error, inner - 4)) + '</span>  ║\n';
+      for (let i = 0; i < PAGE_SIZE - 1; i++) out += '║' + ' '.repeat(inner) + '║\n';
     } else if (filtered.length === 0) {
-      out += '║ ' + pad('no stations found', W - 4) + ' ║\n';
-      for (let i = 0; i < PAGE_SIZE - 1; i++) out += '║' + ' '.repeat(W-2) + '║\n';
+      out += '║  ' + pad('no stations found', inner - 4) + '  ║\n';
+      for (let i = 0; i < PAGE_SIZE - 1; i++) out += '║' + ' '.repeat(inner) + '║\n';
     } else {
       const start = page * PAGE_SIZE;
       const end = Math.min(start + PAGE_SIZE, filtered.length);
       for (let i = start; i < end; i++) {
         const s = filtered[i];
-        const num = pad(i + 1, 3);
-        const name = pad(s.name, 30);
-        const country = pad(s.country, 16);
-        const row = ' ' + num + name + country + ' ';
+        const num = padL(i + 1, 3);
+        const name = pad(s.name, 44);
+        const country = pad(s.country, 18);
+        const row = '  ' + num + '  ' + name + ' ' + country;
         const cls = (i === current) ? 'active-station click' : 'click';
-        out += '║' + span(cls, row, 'play:' + i) + '║\n';
+        out += '║' + span(cls, row.substring(0, inner), 'play:' + i) + '║\n';
       }
-      for (let i = end - start; i < PAGE_SIZE; i++) out += '║' + ' '.repeat(W-2) + '║\n';
+      for (let i = end - start; i < PAGE_SIZE; i++) out += '║' + ' '.repeat(inner) + '║\n';
     }
 
-    // pagination
-    out += '║' + '─'.repeat(W-2) + '║\n';
+    // === PAGINATION ===
+    out += '║' + '─'.repeat(inner) + '║\n';
     const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
     const pageInfo = 'page ' + (page + 1) + '/' + totalPages + '  (' + filtered.length + ' stations)';
-    const prevP = page > 0 ? span('click', ' [◄ prev page] ', 'pprev') : '<span class="dim"> [◄ prev page] </span>';
-    const nextP = page < totalPages - 1 ? span('click', ' [next page ►] ', 'pnext') : '<span class="dim"> [next page ►] </span>';
-    out += '║ ' + prevP + ' ' + pageInfo + ' ' + nextP + ' '.repeat(Math.max(0, W - 4 - 16 - 1 - pageInfo.length - 1 - 16)) + '║\n';
+    const prevP = page > 0 ? span('click', ' [◄ PREV] ', 'pprev') : span('dim', ' [◄ PREV] ');
+    const nextP = page < totalPages - 1 ? span('click', ' [NEXT ►] ', 'pnext') : span('dim', ' [NEXT ►] ');
+    const pagePlain = '  ' + ' [◄ PREV] ' + '   ' + pageInfo + '   ' + ' [NEXT ►] ';
+    out += '║  ' + prevP + '   ' + pageInfo + '   ' + nextP + ' '.repeat(Math.max(0, inner - pagePlain.length)) + '║\n';
 
-    // bottom
-    out += '╠' + '═'.repeat(W-2) + '╣\n';
-    const help = 'keys: [p]lay  [←][→] prev/next  [/]search  [-][+]vol';
-    const hPad = Math.floor((W - 2 - help.length) / 2);
-    out += '║<span class="dim">' + ' '.repeat(hPad) + help.replace(/&/g,'&amp;').replace(/</g,'&lt;') + ' '.repeat(W - 2 - hPad - help.length) + '</span>║\n';
-    out += '╚' + '═'.repeat(W-2) + '╝\n';
+    // === FOOTER ===
+    out += '╠' + '═'.repeat(inner) + '╣\n';
+    const helpLine = '[p] play/stop   [←][→] prev/next   [/] search   [-][+] volume   [↑][↓] page';
+    out += '║<span class="dim">' + padC(helpLine, inner) + '</span>║\n';
+    out += '╠' + '═'.repeat(inner) + '╣\n';
+
+    // decorative bottom
+    out += '║<span class="dim">' + padC('powered by radio-browser.info  ·  thousands of stations worldwide', inner) + '</span>║\n';
+    out += '╚' + '═'.repeat(inner) + '╝\n';
 
     el.innerHTML = out;
   }
@@ -344,8 +487,8 @@ permalink: /radio/
     if (a === 'prev') prevStation();
     else if (a === 'next') nextStation();
     else if (a === 'toggle') togglePlay();
-    else if (a === 'vdn') setVolume(volume - 10);
-    else if (a === 'vup') setVolume(volume + 10);
+    else if (a === 'vdn') setVolume(volume - 5);
+    else if (a === 'vup') setVolume(volume + 5);
     else if (a === 'pprev') { page = Math.max(0, page - 1); render(); }
     else if (a === 'pnext') { page = Math.min(Math.ceil(filtered.length / PAGE_SIZE) - 1, page + 1); render(); }
     else if (a === 'searchstart') { searchMode = true; searchQuery = ''; render(); }
@@ -365,12 +508,13 @@ permalink: /radio/
 
     if (searchMode) {
       if (e.key === 'Escape') { searchMode = false; searchQuery = ''; render(); return; }
-      if (e.key === 'Backspace') { searchQuery = searchQuery.slice(0, -1); render(); return; }
+      if (e.key === 'Backspace') { e.preventDefault(); searchQuery = searchQuery.slice(0, -1); render(); return; }
       if (e.key === 'Enter') {
         if (searchQuery.length > 0) { searchStations(searchQuery); }
         return;
       }
       if (e.key.length === 1 && !e.ctrlKey && !e.metaKey) {
+        e.preventDefault();
         searchQuery += e.key;
         render();
         return;
@@ -384,18 +528,17 @@ permalink: /radio/
     else if (e.key === 'ArrowLeft') { e.preventDefault(); prevStation(); }
     else if (e.key === 'ArrowDown') { e.preventDefault(); page = Math.min(Math.ceil(filtered.length / PAGE_SIZE) - 1, page + 1); render(); }
     else if (e.key === 'ArrowUp') { e.preventDefault(); page = Math.max(0, page - 1); render(); }
-    else if (e.key === '-' || e.key === '_') { setVolume(volume - 10); }
-    else if (e.key === '=' || e.key === '+') { setVolume(volume + 10); }
+    else if (e.key === '-' || e.key === '_') { setVolume(volume - 5); }
+    else if (e.key === '=' || e.key === '+') { setVolume(volume + 5); }
   });
 
   audio.addEventListener('error', function() {
-    error = 'stream error - try another station';
+    error = 'stream error — try another station';
     playing = false;
     stopVU();
     render();
   });
 
-  // boot
   fetchStations('all');
 })();
 </script>
