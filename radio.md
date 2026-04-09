@@ -279,12 +279,41 @@ permalink: /radio/
 
   function play(i) {
     if (i < 0 || i >= stations.length) return;
-    cur = i; A.src = stations[i].url; A.volume = vol / 100;
-    A.play().then(function() { on = true; startVU(); draw(); }).catch(function() { err = 'playback error'; draw(); });
-    on = true; draw();
+    // stop current stream cleanly before switching
+    A.pause();
+    stopVU();
+    cur = i;
+    err = '';
+    on = false;
+    A.src = stations[i].url;
+    A.volume = vol / 100;
+    A.load();
+    draw();
+    A.play().then(function() {
+      on = true;
+      startVU();
+      draw();
+    }).catch(function(e) {
+      // only show error if we're still on this station
+      if (cur === i) {
+        err = 'playback error - try another station';
+        on = false;
+        draw();
+      }
+    });
   }
-  function stop() { A.pause(); A.src = ''; on = false; stopVU(); draw(); }
-  function toggle() { if (on) stop(); else if (cur >= 0) play(cur); else if (stations.length) play(0); }
+  function stop() {
+    A.pause();
+    try { A.src = ''; } catch(e) {}
+    on = false;
+    stopVU();
+    draw();
+  }
+  function toggle() {
+    if (on) { stop(); }
+    else if (cur >= 0) { play(cur); }
+    else if (stations.length) { play(0); }
+  }
   function next() { if (!stations.length) return; play((cur + 1) % stations.length); }
   function prev() { if (!stations.length) return; play((cur - 1 + stations.length) % stations.length); }
   function setVol(v) { vol = Math.max(0, Math.min(100, v)); A.volume = vol / 100; draw(); }
@@ -336,7 +365,20 @@ permalink: /radio/
     else if (e.key === '=' || e.key === '+') setVol(vol + 5);
   });
 
-  A.addEventListener('error', function() { err = 'stream error — try another'; on = false; stopVU(); draw(); });
+  A.addEventListener('error', function() {
+    err = 'stream error - try another station';
+    on = false;
+    stopVU();
+    draw();
+  });
+  A.addEventListener('stalled', function() {
+    if (on) {
+      err = 'stream stalled - try another station';
+      on = false;
+      stopVU();
+      draw();
+    }
+  });
 
   draw();
   fetchStations('all');
