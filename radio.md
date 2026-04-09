@@ -5,540 +5,340 @@ permalink: /radio/
 ---
 
 <div id="radio"></div>
-<audio id="audio" preload="none"></audio>
+<audio id="aud" preload="none"></audio>
 
 <style>
 #radio {
-  max-width: 740px;
-  margin: 1rem auto;
+  max-width: 800px;
+  margin: 0 auto;
   font-family: 'JetBrains Mono', 'Inconsolata', 'Courier New', monospace;
   font-size: 13px;
-  line-height: 1.35;
+  line-height: 1.4;
   white-space: pre;
-  user-select: none;
-  cursor: default;
   overflow-x: auto;
+  cursor: default;
+  -webkit-user-select: none;
+  user-select: none;
 }
-
-#radio .click { cursor: pointer; }
-#radio .click:hover { background: var(--text-color, #cdd6f4); color: var(--background-color, #1e1e2e); }
-
-#radio .dim { opacity: 0.35; }
-#radio .mid { opacity: 0.55; }
-#radio .hl { opacity: 1; font-weight: bold; }
-#radio .active-station { background: var(--text-color, #cdd6f4); color: var(--background-color, #1e1e2e); }
-#radio .genre-active { background: var(--text-color, #cdd6f4); color: var(--background-color, #1e1e2e); }
-#radio .vu-fill { opacity: 1; }
-#radio .vu-empty { opacity: 0.12; }
-#radio .blink { animation: radioBlink 1s step-end infinite; }
-#radio .pulse { animation: radioPulse 2s ease-in-out infinite; }
-#radio .wave { animation: radioWave 1.5s ease-in-out infinite; }
-#radio .wave2 { animation: radioWave 1.5s ease-in-out 0.3s infinite; }
-#radio .wave3 { animation: radioWave 1.5s ease-in-out 0.6s infinite; }
-#radio .nowplaying { opacity: 0.6; }
-#radio .err { opacity: 0.6; }
-#radio .signal { opacity: 0.7; }
-
-@keyframes radioBlink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0; }
-}
-@keyframes radioPulse {
-  0%, 100% { opacity: 0.3; }
-  50% { opacity: 1; }
-}
-@keyframes radioWave {
-  0%, 100% { opacity: 0.15; }
-  50% { opacity: 0.9; }
-}
-
-@media (max-width: 740px) {
-  #radio { font-size: 10px; margin: 0.5rem; }
-}
-@media (max-width: 500px) {
-  #radio { font-size: 8px; }
-}
+#radio .c { cursor: pointer; }
+#radio .c:hover { background: var(--text-color, #cdd6f4); color: var(--background-color, #1e1e2e); }
+#radio .d { opacity: 0.3; }
+#radio .m { opacity: 0.5; }
+#radio .h { font-weight: bold; }
+#radio .s { background: var(--text-color, #cdd6f4); color: var(--background-color, #1e1e2e); }
+#radio .von { opacity: 1; }
+#radio .voff { opacity: 0.1; }
+#radio .np { opacity: 0.55; }
+#radio .bk { animation: bk 1s step-end infinite; }
+#radio .w1 { animation: wv 1.5s ease-in-out infinite; }
+#radio .w2 { animation: wv 1.5s ease-in-out 0.3s infinite; }
+#radio .w3 { animation: wv 1.5s ease-in-out 0.6s infinite; }
+#radio .glow { animation: gl 3s ease-in-out infinite; }
+@keyframes bk { 0%,100%{opacity:1} 50%{opacity:0} }
+@keyframes wv { 0%,100%{opacity:0.12} 50%{opacity:0.85} }
+@keyframes gl { 0%,100%{opacity:0.3} 50%{opacity:0.7} }
+@media (max-width: 740px) { #radio { font-size: 10px; margin: 0.5rem; } }
+@media (max-width: 500px) { #radio { font-size: 8px; } }
 </style>
 
 <script>
 (function() {
-  const API = 'https://de1.api.radio-browser.info/json';
-  const el = document.getElementById('radio');
-  const audio = document.getElementById('audio');
+  var R = document.getElementById('radio');
+  var A = document.getElementById('aud');
+  if (!R || !A) return;
 
-  let stations = [];
-  let filtered = [];
-  let current = -1;
-  let playing = false;
-  let volume = 70;
-  let loading = true;
-  let error = '';
-  let genre = 'all';
-  let page = 0;
-  const PAGE_SIZE = 8;
-  let vu = [0, 0, 0, 0, 0, 0, 0, 0];
-  let vuTimer = null;
-  let searchMode = false;
-  let searchQuery = '';
-  let tick = 0;
+  var W = 76;
+  var I = W - 2;
+  var stations = [], allStations = [];
+  var cur = -1, on = false, vol = 70;
+  var loading = true, err = '';
+  var genre = 'all', pg = 0, PS = 8;
+  var vu = [0,0,0,0,0,0,0,0,0,0];
+  var vuT = null, srch = false, sq = '';
+  var genres = ['all','music','public radio','african music','religious'];
 
-  const genres = ['all','ambient','jazz','electronic','classical','rock','lofi','world','funk','pop'];
+  function p(s,n) { s=String(s); while(s.length<n) s+=' '; return s.slice(0,n); }
+  function pC(s,n) { s=String(s); var l=Math.floor((n-s.length)/2); return ' '.repeat(Math.max(0,l))+s+' '.repeat(Math.max(0,n-l-s.length)); }
+  function x(t) { return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 
-  async function fetchStations(tag) {
-    loading = true; error = ''; page = 0;
-    render();
+  function ln(html, plainLen) {
+    return '║' + html + ' '.repeat(Math.max(0, I - plainLen)) + '║\n';
+  }
+  function lnC(text) { return '║' + pC(text, I) + '║\n'; }
+  function lnE() { return '║' + ' '.repeat(I) + '║\n'; }
+  function sep() { return '║' + '─'.repeat(I) + '║\n'; }
+  function dsep() { return '╠' + '═'.repeat(I) + '╣\n'; }
+  function span(cls,txt,act) {
+    var e = x(txt);
+    return act ? '<span class="'+cls+'" data-action="'+act+'">'+e+'</span>' : '<span class="'+cls+'">'+e+'</span>';
+  }
+
+  function draw() {
     try {
-      let url;
-      if (tag && tag !== 'all') {
-        url = API + '/stations/bytag/' + encodeURIComponent(tag) + '?limit=200&order=votes&reverse=true&hidebroken=true';
+      var o = '';
+
+      if (on) {
+        o += '                                <span class="w3">·411·</span>\n';
+        o += '                            <span class="w2">·411·</span>   <span class="w1">·411·</span>\n';
+        o += '                               <span class="bk">│</span>\n';
+        o += '                          ╭────┤ <span class="w1">ON AIR</span> ├────╮\n';
       } else {
-        url = API + '/stations?limit=200&order=votes&reverse=true&hidebroken=true';
+        o += '\n\n';
+        o += '                               <span class="d">│</span>\n';
+        o += '                          <span class="d">╭────┤ OFF AIR ├────╮</span>\n';
       }
-      const r = await fetch(url);
-      const data = await r.json();
-      stations = data.filter(s => s.url_resolved && s.name).map(s => ({
-        name: s.name.replace(/[\n\r\t]/g, ' ').trim().substring(0, 44),
-        url: s.url_resolved,
-        tags: (s.tags || '').substring(0, 36),
-        country: (s.country || '').substring(0, 18),
-        codec: s.codec || '?',
-        bitrate: s.bitrate || 0,
-        votes: s.votes || 0,
-      }));
-      filtered = stations;
-      loading = false;
+
+      o += '╔' + '═'.repeat(I) + '╗\n';
+      o += lnE();
+      o += lnC('E T H I O P I A N    R A D I O');
+      o += lnC('የኢትዮጵያ ሬዲዮ');
+      o += lnE();
+
+      o += dsep();
+      o += ln('  <span class="m">EQUALIZER</span>                              <span class="m">SIGNAL</span>', I);
+      o += lnE();
+
+      var eqH = 7;
+      var tower = [
+        on ? '      <span class="w1">)</span>   ' : '          ',
+        on ? '     <span class="w2">)</span>    ' : '          ',
+        on ? '    <span class="w3">)</span>     ' : '          ',
+        '    ╻     ',
+        '    ║     ',
+        '   ╱║╲    ',
+        '  ╱─║─╲   ',
+      ];
+
+      for (var row = eqH; row >= 1; row--) {
+        var eq = '  ';
+        for (var c = 0; c < 10; c++) {
+          if (vu[c] >= row) {
+            if (row >= 6) eq += '<span class="von">██</span>';
+            else if (row >= 4) eq += '<span class="von">▓▓</span>';
+            else eq += '<span class="von">░░</span>';
+          } else {
+            eq += '<span class="voff">░░</span>';
+          }
+          if (c < 9) eq += ' ';
+        }
+        eq += '  ';
+        var ri = eqH - row;
+        var tw = tower[ri] || '          ';
+        o += ln(' ' + eq + '        ' + tw, 52);
+      }
+
+      o += lnE();
+
+      o += dsep();
+      var npW = I - 4;
+
+      if (cur >= 0 && cur < stations.length) {
+        var s = stations[cur];
+        var stTxt = on ? 'NOW PLAYING' : 'PAUSED';
+        var stHtml = on ? '<span class="bk">▶</span> ' + stTxt : '■ ' + stTxt;
+        var stHtmlLen = stTxt.length + 2;
+        o += ln('  ' + stHtml + p('', npW - stHtmlLen), I);
+        o += ln('  <span class="h">' + x(p(s.name, npW)) + '</span>', I);
+        var meta = s.tags || s.country || '';
+        o += ln('  <span class="np">' + x(p(meta, npW)) + '</span>', I);
+        var inf = (s.codec||'') + (s.bitrate > 0 ? ' '+s.bitrate+'kbps':'') + '  ♥ ' + s.votes;
+        o += ln('  <span class="d">' + x(p(inf, npW)) + '</span>', I);
+      } else {
+        o += lnE();
+        o += ln('  select a station below...', I);
+        o += ln('  press [p] to play or click a row', I);
+        o += lnE();
+      }
+
+      o += sep();
+      var vb = Math.round(vol / 5);
+      var ctrlHtml = '   ' +
+        span('c',' |<< ','prev') + '  ' +
+        span('c', on ? ' STOP ' : ' PLAY ', 'toggle') + '  ' +
+        span('c',' >>| ','next') +
+        '      ' +
+        span('c',' - ','vdn') +
+        ' vol ' + '█'.repeat(vb) + '░'.repeat(20 - vb) +
+        span('c',' + ','vup');
+      o += ln(ctrlHtml, 62);
+
+      o += dsep();
+      o += ln('  <span class="m">FILTER</span>', I);
+
+      var gl = '  ';
+      var glp = 2;
+      genres.forEach(function(g) {
+        var lbl = ' ' + g.toUpperCase() + ' ';
+        gl += (g === genre) ? '<span class="s c" data-action="genre:'+g+'">' + x(lbl) + '</span>' : span('c d', lbl, 'genre:'+g);
+        gl += '  ';
+        glp += lbl.length + 2;
+      });
+      o += ln(gl, glp);
+
+      o += sep();
+      if (srch) {
+        var ql = '  search: ' + sq;
+        o += ln(ql + '<span class="bk">_</span>' + ' '.repeat(Math.max(0, I - ql.length - 1 - 10)) + span('c',' [clear] ','searchclear'), I);
+      } else {
+        o += ln('  search: ' + span('c d','type / to search...','searchstart'), 29);
+      }
+
+      o += dsep();
+      o += ln('  <span class="m">STATIONS</span>', I);
+      o += sep();
+
+      var hdr = '  ' + p('#', 4) + p('STATION', 44) + p('COUNTRY', 20) + '  ';
+      o += ln('<span class="d">' + x(hdr.slice(0, I)) + '</span>', I);
+      o += sep();
+
+      if (loading) {
+        o += ln('  <span class="bk">loading stations...</span>', I);
+        for (var i = 0; i < PS - 1; i++) o += lnE();
+      } else if (err) {
+        o += ln('  <span class="d">' + x(p(err, I - 4)) + '</span>', I);
+        for (var i = 0; i < PS - 1; i++) o += lnE();
+      } else if (stations.length === 0) {
+        o += ln('  no stations found', I);
+        for (var i = 0; i < PS - 1; i++) o += lnE();
+      } else {
+        var st = pg * PS;
+        var en = Math.min(st + PS, stations.length);
+        for (var i = st; i < en; i++) {
+          var s = stations[i];
+          var row = '  ' + p(i + 1, 4) + p(s.name, 44) + p(s.country, 20) + '  ';
+          row = row.slice(0, I);
+          var cls = (i === cur) ? 's c' : 'c';
+          o += '║' + span(cls, row, 'play:' + i) + '║\n';
+        }
+        for (var i = en - st; i < PS; i++) o += lnE();
+      }
+
+      o += sep();
+      var tp = Math.max(1, Math.ceil(stations.length / PS));
+      var pi = 'page ' + (pg + 1) + '/' + tp + '  (' + stations.length + ' stations)';
+      var pvT = ' [< prev] ';
+      var nxT = ' [next >] ';
+      var pv = pg > 0 ? span('c', pvT, 'pprev') : span('d', pvT);
+      var nx = pg < tp - 1 ? span('c', nxT, 'pnext') : span('d', nxT);
+      var pgPlain = '  ' + pvT + '   ' + pi + '   ' + nxT;
+      o += ln('  ' + pv + '   ' + pi + '   ' + nx, pgPlain.length);
+
+      o += dsep();
+      var help = '[p] play/stop  [<][>] prev/next  [/] search  [-][+] vol  [up][dn] page';
+      o += ln('<span class="d">' + pC(help, I) + '</span>', I);
+      o += sep();
+      o += ln('<span class="d">' + pC('radio-browser.info  ·  ethiopian radio stations', I) + '</span>', I);
+      o += '╚' + '═'.repeat(I) + '╝\n';
+
+      R.innerHTML = o;
     } catch(e) {
-      loading = false;
-      error = 'fetch failed: ' + e.message;
-      stations = []; filtered = [];
+      R.textContent = 'error: ' + e.message;
     }
-    render();
   }
 
-  async function searchStations(q) {
-    loading = true; error = ''; page = 0;
-    render();
-    try {
-      const url = API + '/stations/byname/' + encodeURIComponent(q) + '?limit=200&order=votes&reverse=true&hidebroken=true';
-      const r = await fetch(url);
-      const data = await r.json();
-      stations = data.filter(s => s.url_resolved && s.name).map(s => ({
-        name: s.name.replace(/[\n\r\t]/g, ' ').trim().substring(0, 44),
-        url: s.url_resolved,
-        tags: (s.tags || '').substring(0, 36),
-        country: (s.country || '').substring(0, 18),
-        codec: s.codec || '?',
-        bitrate: s.bitrate || 0,
-        votes: s.votes || 0,
-      }));
-      filtered = stations;
+  function fetchStations(tag) {
+    loading = true; err = ''; pg = 0;
+    draw();
+    var url = 'https://de1.api.radio-browser.info/json/stations/bycountry/Ethiopia?limit=200&order=votes&reverse=true&hidebroken=true';
+    fetch(url).then(function(r) { return r.json(); }).then(function(data) {
+      allStations = data.filter(function(s) { return s.url_resolved && s.name; }).map(function(s) {
+        return {
+          name: s.name.replace(/[\n\r\t]/g, ' ').trim().slice(0, 42),
+          url: s.url_resolved,
+          tags: (s.tags || '').slice(0, 34),
+          country: (s.country || '').slice(0, 18),
+          codec: s.codec || '?',
+          bitrate: s.bitrate || 0,
+          votes: s.votes || 0
+        };
+      });
+      if (tag && tag !== 'all') {
+        stations = allStations.filter(function(s) { return s.tags.toLowerCase().indexOf(tag.toLowerCase()) >= 0; });
+      } else {
+        stations = allStations;
+      }
       loading = false;
-    } catch(e) {
+      draw();
+    }).catch(function(e) {
       loading = false;
-      error = 'search failed: ' + e.message;
-      stations = []; filtered = [];
-    }
-    render();
-  }
-
-  function playStation(idx) {
-    if (idx < 0 || idx >= filtered.length) return;
-    current = idx;
-    audio.src = filtered[idx].url;
-    audio.volume = volume / 100;
-    audio.play().then(() => {
-      playing = true;
-      startVU();
-      render();
-    }).catch(e => {
-      error = 'playback error';
-      render();
+      err = 'fetch failed: ' + e.message;
+      stations = []; allStations = [];
+      draw();
     });
-    playing = true;
-    render();
   }
 
-  function stop() {
-    audio.pause();
-    audio.src = '';
-    playing = false;
-    stopVU();
-    render();
+  function searchStations(q) {
+    pg = 0;
+    if (!q) { stations = allStations; draw(); return; }
+    stations = allStations.filter(function(s) {
+      return s.name.toLowerCase().indexOf(q.toLowerCase()) >= 0 ||
+             s.tags.toLowerCase().indexOf(q.toLowerCase()) >= 0;
+    });
+    draw();
   }
 
-  function togglePlay() {
-    if (playing) { stop(); }
-    else if (current >= 0) { playStation(current); }
-    else if (filtered.length) { playStation(0); }
+  function play(i) {
+    if (i < 0 || i >= stations.length) return;
+    cur = i; A.src = stations[i].url; A.volume = vol / 100;
+    A.play().then(function() { on = true; startVU(); draw(); }).catch(function() { err = 'playback error'; draw(); });
+    on = true; draw();
   }
-
-  function nextStation() {
-    if (!filtered.length) return;
-    playStation((current + 1) % filtered.length);
-  }
-
-  function prevStation() {
-    if (!filtered.length) return;
-    playStation((current - 1 + filtered.length) % filtered.length);
-  }
-
-  function setVolume(v) {
-    volume = Math.max(0, Math.min(100, v));
-    audio.volume = volume / 100;
-    render();
-  }
+  function stop() { A.pause(); A.src = ''; on = false; stopVU(); draw(); }
+  function toggle() { if (on) stop(); else if (cur >= 0) play(cur); else if (stations.length) play(0); }
+  function next() { if (!stations.length) return; play((cur + 1) % stations.length); }
+  function prev() { if (!stations.length) return; play((cur - 1 + stations.length) % stations.length); }
+  function setVol(v) { vol = Math.max(0, Math.min(100, v)); A.volume = vol / 100; draw(); }
 
   function startVU() {
     stopVU();
-    function frame() {
-      if (!playing) { vu = [0,0,0,0,0,0,0,0]; return; }
-      tick++;
-      for (let i = 0; i < 8; i++) {
-        vu[i] = Math.floor(1 + Math.random() * 7);
-      }
-      render();
-      vuTimer = setTimeout(frame, 100);
-    }
-    frame();
+    (function tick() {
+      if (!on) { vu = [0,0,0,0,0,0,0,0,0,0]; return; }
+      for (var i = 0; i < 10; i++) vu[i] = Math.floor(1 + Math.random() * 8);
+      draw();
+      vuT = setTimeout(tick, 110);
+    })();
   }
+  function stopVU() { clearTimeout(vuT); vu = [0,0,0,0,0,0,0,0,0,0]; }
 
-  function stopVU() {
-    clearTimeout(vuTimer);
-    vu = [0,0,0,0,0,0,0,0];
-  }
-
-  function pad(s, n) { s = String(s); while (s.length < n) s += ' '; return s.substring(0, n); }
-  function padL(s, n) { s = String(s); while (s.length < n) s = ' ' + s; return s.substring(0, n); }
-  function padC(s, n) {
-    s = String(s);
-    const left = Math.floor((n - s.length) / 2);
-    return ' '.repeat(left) + s + ' '.repeat(n - left - s.length);
-  }
-
-  function esc(t) { return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-
-  function span(cls, text, action) {
-    const e = esc(text);
-    if (action) return '<span class="' + cls + '" data-action="' + action + '">' + e + '</span>';
-    return '<span class="' + cls + '">' + e + '</span>';
-  }
-
-  // vertical VU bars (8 columns, height 7)
-  function vuBlock() {
-    const H = 7;
-    const cols = 8;
-    let rows = [];
-    for (let row = H; row >= 1; row--) {
-      let line = '  ';
-      for (let c = 0; c < cols; c++) {
-        if (vu[c] >= row) {
-          if (row >= 6) line += '<span class="vu-fill">██</span>';
-          else if (row >= 4) line += '<span class="vu-fill">▓▓</span>';
-          else line += '<span class="vu-fill">░░</span>';
-        } else {
-          line += '<span class="vu-empty">░░</span>';
-        }
-        if (c < cols - 1) line += ' ';
-      }
-      line += '  ';
-      rows.push(line);
-    }
-    return rows;
-  }
-
-  // signal tower ASCII art
-  function signalArt() {
-    if (playing) {
-      return [
-        '       <span class="wave">)</span>  ',
-        '      <span class="wave2">)</span>   ',
-        '     <span class="wave3">)</span>    ',
-        '    ╻      ',
-        '    ║      ',
-        '    ║      ',
-        '   ╱║╲     ',
-        '  ╱ ║ ╲    ',
-      ];
-    }
-    return [
-      '           ',
-      '           ',
-      '           ',
-      '    ╻      ',
-      '    ║      ',
-      '    ║      ',
-      '   ╱║╲     ',
-      '  ╱ ║ ╲    ',
-    ];
-  }
-
-  // speaker grill pattern
-  function speakerGrill(h) {
-    let rows = [];
-    for (let i = 0; i < h; i++) {
-      if (i % 2 === 0) rows.push('● ○ ● ○ ● ○ ●');
-      else             rows.push('○ ● ○ ● ○ ● ○');
-    }
-    return rows;
-  }
-
-  function render() {
-    const W = 68;
-    const inner = W - 2;
-    let out = '';
-
-    // === ANTENNA + TITLE BLOCK ===
-    const signal = signalArt();
-    out += '\n';
-    if (playing) {
-      out += '                  <span class="wave3">              ╭─── ∿∿∿ ───╮</span>\n';
-      out += '                  <span class="wave2">           ╭──┤  ON AIR   ├──╮</span>\n';
-      out += '                  <span class="wave">          ╭───┤           ├───╮</span>\n';
-    } else {
-      out += '                  <span class="dim">              ╭───────────╮</span>\n';
-      out += '                  <span class="dim">           ╭──┤  OFF AIR  ├──╮</span>\n';
-      out += '                  <span class="dim">          ╭───┤           ├───╮</span>\n';
-    }
-
-    // main box top
-    out += '╔' + '═'.repeat(inner) + '╗\n';
-
-    // title area with decorative elements
-    out += '║' + ' '.repeat(inner) + '║\n';
-    const t1 = '███████╗██╗    ██╗██╗████████╗ ██████╗██╗  ██╗';
-    const t2 = '██╔════╝██║    ██║██║╚══██╔══╝██╔════╝██║  ██║';
-    const t3 = '███████╗██║ █╗ ██║██║   ██║   ██║     ███████║';
-    const t4 = '╚════██║██║███╗██║██║   ██║   ██║     ██╔══██║';
-    const t5 = '███████║╚███╔███╔╝██║   ██║   ╚██████╗██║  ██║';
-    const t6 = '╚══════╝ ╚══╝╚══╝ ╚═╝   ╚═╝    ╚═════╝╚═╝  ╚═╝';
-
-    // simpler title that fits
-    const title = '▄▀▄ █ █ █ ▀█▀ ▄▀▀ █▄█ █▀▄ ▄▀▄ ▄▀▄ █▀▄ █▀▄';
-    const sub   = '▀▄  ▀▄▀▄▀ █  ▀█  █ █ █▀█ █ █ █▀█ █▀▄ █ █';
-    const sub2  = '▀▀   ▀ ▀  ▀  ▀▀  ▀ ▀ ▀▀  ▀▀  ▀ ▀ ▀ ▀ ▀▀ ';
-
-    out += '║' + padC('R  A  D  I  O', inner) + '║\n';
-    out += '║' + padC('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━', inner) + '║\n';
-    out += '║' + padC('╭─────────────────────────────────────────╮', inner) + '║\n';
-    out += '║' + padC('│   S W I T C H B O A R D   R A D I O    │', inner) + '║\n';
-    out += '║' + padC('╰─────────────────────────────────────────╯', inner) + '║\n';
-    out += '║' + ' '.repeat(inner) + '║\n';
-
-    // === EQUALIZER + SIGNAL TOWER SIDE BY SIDE ===
-    out += '╠' + '═'.repeat(inner) + '╣\n';
-
-    const vuRows = vuBlock();
-    const sigRows = signalArt();
-    // pad both to same length
-    const eqLabel = '  ╔══ EQUALIZER ══╗  ';
-    const sigLabel = ' ╔═ SIGNAL ═╗ ';
-
-    out += '║ ' + span('mid', eqLabel) + '           ' + span('mid', sigLabel) + '              ║\n';
-
-    for (let i = 0; i < 7; i++) {
-      const vuLine = vuRows[i] || '                        ';
-      const sigLine = (sigRows[i] || '           ');
-      out += '║ ' + vuLine + '     ' + sigLine + '              ║\n';
-    }
-    // signal tower base
-    out += '║ ' + vuRows[vuRows.length - 1] + '     ' + sigRows[7] + '              ║\n';
-
-    // freq labels under EQ
-    if (playing) {
-      out += '║  <span class="dim"> 60 125 250 500 1k 2k 4k 8k</span>                                ║\n';
-    } else {
-      out += '║  <span class="dim"> ── ─── ─── ─── ── ── ── ──</span>                                ║\n';
-    }
-
-    // === NOW PLAYING ===
-    out += '╠' + '═'.repeat(inner) + '╣\n';
-
-    // speaker grill + now playing display side by side
-    const grillL = speakerGrill(4);
-    const grillR = speakerGrill(4);
-
-    if (current >= 0 && current < filtered.length) {
-      const s = filtered[current];
-      const status = playing ? '<span class="blink">▶</span> NOW PLAYING' : '■ PAUSED';
-      const statusPlain = playing ? '▶ NOW PLAYING' : '■ PAUSED';
-      const meta = s.tags ? s.tags : s.country;
-      const info = (s.codec || '') + (s.bitrate > 0 ? ' ' + s.bitrate + 'kbps' : '') + '  ♥ ' + s.votes;
-
-      out += '║ <span class="dim">' + esc(grillL[0]) + '</span>  ' + status + ' '.repeat(inner - 2 - 15 - 1 - statusPlain.length - 15 - 2) + '  <span class="dim">' + esc(grillR[0]) + '</span> ║\n';
-      out += '║ <span class="dim">' + esc(grillL[1]) + '</span>  ' + span('hl', pad(s.name, inner - 2 - 15 - 1 - 15 - 2)) + '  <span class="dim">' + esc(grillR[1]) + '</span> ║\n';
-      out += '║ <span class="dim">' + esc(grillL[2]) + '</span>  <span class="nowplaying">' + esc(pad(meta, inner - 2 - 15 - 1 - 15 - 2)) + '</span>  <span class="dim">' + esc(grillR[2]) + '</span> ║\n';
-      out += '║ <span class="dim">' + esc(grillL[3]) + '</span>  <span class="dim">' + esc(pad(info, inner - 2 - 15 - 1 - 15 - 2)) + '</span>  <span class="dim">' + esc(grillR[3]) + '</span> ║\n';
-    } else {
-      out += '║ <span class="dim">' + esc(grillL[0]) + '</span>  ' + pad('', inner - 2 - 15 - 1 - 15 - 2) + '  <span class="dim">' + esc(grillR[0]) + '</span> ║\n';
-      out += '║ <span class="dim">' + esc(grillL[1]) + '</span>  ' + pad('select a station below...', inner - 2 - 15 - 1 - 15 - 2) + '  <span class="dim">' + esc(grillR[1]) + '</span> ║\n';
-      out += '║ <span class="dim">' + esc(grillL[2]) + '</span>  ' + pad('press [p] to play or click a row', inner - 2 - 15 - 1 - 15 - 2) + '  <span class="dim">' + esc(grillR[2]) + '</span> ║\n';
-      out += '║ <span class="dim">' + esc(grillL[3]) + '</span>  ' + pad('', inner - 2 - 15 - 1 - 15 - 2) + '  <span class="dim">' + esc(grillR[3]) + '</span> ║\n';
-    }
-
-    // === TRANSPORT CONTROLS ===
-    out += '║' + '─'.repeat(inner) + '║\n';
-    const ctrl = '    ' +
-      span('click', ' ◄◄ ', 'prev') + '   ' +
-      span('click', playing ? ' ■ STOP ' : ' ▶ PLAY ', 'toggle') + '   ' +
-      span('click', ' ►► ', 'next') +
-      '          ' +
-      span('click', ' ─ ', 'vdn') + ' VOL ' +
-      '▕' + '█'.repeat(Math.round(volume/5)) + '░'.repeat(20 - Math.round(volume/5)) + '▏' +
-      span('click', ' + ', 'vup') +
-      '  ';
-    out += '║' + ctrl + '║\n';
-
-    // === GENRE SELECTOR - TWO ROWS ===
-    out += '╠' + '═'.repeat(inner) + '╣\n';
-    out += '║ <span class="mid">GENRE:</span>                                                            ║\n';
-
-    const row1 = genres.slice(0, 5);
-    const row2 = genres.slice(5);
-
-    let g1 = ' ';
-    row1.forEach(g => {
-      const label = '  ' + g.toUpperCase() + '  ';
-      if (g === genre) g1 += '<span class="genre-active click" data-action="genre:' + g + '">' + esc(label) + '</span>  ';
-      else g1 += span('click dim', label, 'genre:' + g) + '  ';
-    });
-    // pad to inner width (approximate, since spans don't count)
-    const g1plain = ' ' + row1.map(g => '  ' + g.toUpperCase() + '  ').join('  ') + '  ';
-    out += '║' + g1 + ' '.repeat(Math.max(0, inner - g1plain.length)) + '║\n';
-
-    let g2 = ' ';
-    row2.forEach(g => {
-      const label = '  ' + g.toUpperCase() + '  ';
-      if (g === genre) g2 += '<span class="genre-active click" data-action="genre:' + g + '">' + esc(label) + '</span>  ';
-      else g2 += span('click dim', label, 'genre:' + g) + '  ';
-    });
-    const g2plain = ' ' + row2.map(g => '  ' + g.toUpperCase() + '  ').join('  ') + '  ';
-    out += '║' + g2 + ' '.repeat(Math.max(0, inner - g2plain.length)) + '║\n';
-
-    // === SEARCH ===
-    out += '║' + '─'.repeat(inner) + '║\n';
-    const srchLabel = ' ⌕ SEARCH: ';
-    if (searchMode) {
-      const qDisp = searchQuery + '<span class="blink">_</span>';
-      const clearBtn = span('click', ' [✕ CLEAR] ', 'searchclear');
-      const plainLen = srchLabel.length + searchQuery.length + 1 + 11;
-      out += '║' + srchLabel + qDisp + ' '.repeat(Math.max(0, inner - plainLen)) + clearBtn + '║\n';
-    } else {
-      const hint = span('click dim', 'type / to search stations...', 'searchstart');
-      out += '║' + srchLabel + hint + ' '.repeat(Math.max(0, inner - srchLabel.length - 28)) + '║\n';
-    }
-
-    // === STATION LIST ===
-    out += '╠' + '═'.repeat(inner) + '╣\n';
-    const hdr = '  #   STATION                                     COUNTRY           ';
-    out += '║<span class="dim">' + hdr.substring(0, inner) + '</span>║\n';
-    out += '║' + '─'.repeat(inner) + '║\n';
-
-    if (loading) {
-      out += '║  <span class="blink">░░░ loading stations from radio-browser.info ░░░</span>' + ' '.repeat(Math.max(0, inner - 51)) + '║\n';
-      for (let i = 0; i < PAGE_SIZE - 1; i++) out += '║' + ' '.repeat(inner) + '║\n';
-    } else if (error) {
-      out += '║  <span class="err">' + esc(pad(error, inner - 4)) + '</span>  ║\n';
-      for (let i = 0; i < PAGE_SIZE - 1; i++) out += '║' + ' '.repeat(inner) + '║\n';
-    } else if (filtered.length === 0) {
-      out += '║  ' + pad('no stations found', inner - 4) + '  ║\n';
-      for (let i = 0; i < PAGE_SIZE - 1; i++) out += '║' + ' '.repeat(inner) + '║\n';
-    } else {
-      const start = page * PAGE_SIZE;
-      const end = Math.min(start + PAGE_SIZE, filtered.length);
-      for (let i = start; i < end; i++) {
-        const s = filtered[i];
-        const num = padL(i + 1, 3);
-        const name = pad(s.name, 44);
-        const country = pad(s.country, 18);
-        const row = '  ' + num + '  ' + name + ' ' + country;
-        const cls = (i === current) ? 'active-station click' : 'click';
-        out += '║' + span(cls, row.substring(0, inner), 'play:' + i) + '║\n';
-      }
-      for (let i = end - start; i < PAGE_SIZE; i++) out += '║' + ' '.repeat(inner) + '║\n';
-    }
-
-    // === PAGINATION ===
-    out += '║' + '─'.repeat(inner) + '║\n';
-    const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
-    const pageInfo = 'page ' + (page + 1) + '/' + totalPages + '  (' + filtered.length + ' stations)';
-    const prevP = page > 0 ? span('click', ' [◄ PREV] ', 'pprev') : span('dim', ' [◄ PREV] ');
-    const nextP = page < totalPages - 1 ? span('click', ' [NEXT ►] ', 'pnext') : span('dim', ' [NEXT ►] ');
-    const pagePlain = '  ' + ' [◄ PREV] ' + '   ' + pageInfo + '   ' + ' [NEXT ►] ';
-    out += '║  ' + prevP + '   ' + pageInfo + '   ' + nextP + ' '.repeat(Math.max(0, inner - pagePlain.length)) + '║\n';
-
-    // === FOOTER ===
-    out += '╠' + '═'.repeat(inner) + '╣\n';
-    const helpLine = '[p] play/stop   [←][→] prev/next   [/] search   [-][+] volume   [↑][↓] page';
-    out += '║<span class="dim">' + padC(helpLine, inner) + '</span>║\n';
-    out += '╠' + '═'.repeat(inner) + '╣\n';
-
-    // decorative bottom
-    out += '║<span class="dim">' + padC('powered by radio-browser.info  ·  thousands of stations worldwide', inner) + '</span>║\n';
-    out += '╚' + '═'.repeat(inner) + '╝\n';
-
-    el.innerHTML = out;
-  }
-
-  // click handler
-  el.addEventListener('click', function(e) {
-    const t = e.target.closest('[data-action]');
+  R.addEventListener('click', function(e) {
+    var t = e.target.closest('[data-action]');
     if (!t) return;
-    const a = t.dataset.action;
-    if (a === 'prev') prevStation();
-    else if (a === 'next') nextStation();
-    else if (a === 'toggle') togglePlay();
-    else if (a === 'vdn') setVolume(volume - 5);
-    else if (a === 'vup') setVolume(volume + 5);
-    else if (a === 'pprev') { page = Math.max(0, page - 1); render(); }
-    else if (a === 'pnext') { page = Math.min(Math.ceil(filtered.length / PAGE_SIZE) - 1, page + 1); render(); }
-    else if (a === 'searchstart') { searchMode = true; searchQuery = ''; render(); }
-    else if (a === 'searchclear') { searchMode = false; searchQuery = ''; genre = 'all'; fetchStations('all'); }
-    else if (a.startsWith('play:')) { playStation(parseInt(a.split(':')[1])); }
-    else if (a.startsWith('genre:')) {
-      genre = a.split(':')[1];
-      searchMode = false; searchQuery = '';
-      fetchStations(genre);
-    }
+    var a = t.dataset.action;
+    if (a === 'prev') prev();
+    else if (a === 'next') next();
+    else if (a === 'toggle') toggle();
+    else if (a === 'vdn') setVol(vol - 5);
+    else if (a === 'vup') setVol(vol + 5);
+    else if (a === 'pprev') { pg = Math.max(0, pg - 1); draw(); }
+    else if (a === 'pnext') { pg = Math.min(Math.ceil(stations.length / PS) - 1, pg + 1); draw(); }
+    else if (a === 'searchstart') { srch = true; sq = ''; draw(); }
+    else if (a === 'searchclear') { srch = false; sq = ''; genre = 'all'; stations = allStations; draw(); }
+    else if (a.indexOf('play:') === 0) play(parseInt(a.split(':')[1]));
+    else if (a.indexOf('genre:') === 0) { genre = a.split(':')[1]; srch = false; sq = ''; fetchStations(genre); }
   });
 
-  // keyboard handler
   document.addEventListener('keydown', function(e) {
-    if (['INPUT', 'TEXTAREA', 'SELECT'].includes(e.target.tagName)) return;
-    if (e.target.isContentEditable) return;
-
-    if (searchMode) {
-      if (e.key === 'Escape') { searchMode = false; searchQuery = ''; render(); return; }
-      if (e.key === 'Backspace') { e.preventDefault(); searchQuery = searchQuery.slice(0, -1); render(); return; }
-      if (e.key === 'Enter') {
-        if (searchQuery.length > 0) { searchStations(searchQuery); }
-        return;
-      }
-      if (e.key.length === 1 && !e.ctrlKey && !e.metaKey) {
-        e.preventDefault();
-        searchQuery += e.key;
-        render();
-        return;
-      }
+    if (['INPUT', 'TEXTAREA', 'SELECT'].indexOf(e.target.tagName) >= 0) return;
+    if (srch) {
+      if (e.key === 'Escape') { srch = false; sq = ''; draw(); return; }
+      if (e.key === 'Backspace') { e.preventDefault(); sq = sq.slice(0, -1); draw(); return; }
+      if (e.key === 'Enter') { if (sq.length) searchStations(sq); return; }
+      if (e.key.length === 1 && !e.ctrlKey && !e.metaKey) { e.preventDefault(); sq += e.key; draw(); return; }
       return;
     }
-
-    if (e.key === '/') { e.preventDefault(); searchMode = true; searchQuery = ''; render(); }
-    else if (e.key === 'p' || e.key === ' ') { e.preventDefault(); togglePlay(); }
-    else if (e.key === 'ArrowRight') { e.preventDefault(); nextStation(); }
-    else if (e.key === 'ArrowLeft') { e.preventDefault(); prevStation(); }
-    else if (e.key === 'ArrowDown') { e.preventDefault(); page = Math.min(Math.ceil(filtered.length / PAGE_SIZE) - 1, page + 1); render(); }
-    else if (e.key === 'ArrowUp') { e.preventDefault(); page = Math.max(0, page - 1); render(); }
-    else if (e.key === '-' || e.key === '_') { setVolume(volume - 5); }
-    else if (e.key === '=' || e.key === '+') { setVolume(volume + 5); }
+    if (e.key === '/') { e.preventDefault(); srch = true; sq = ''; draw(); }
+    else if (e.key === 'p' || e.key === ' ') { e.preventDefault(); toggle(); }
+    else if (e.key === 'ArrowRight') { e.preventDefault(); next(); }
+    else if (e.key === 'ArrowLeft') { e.preventDefault(); prev(); }
+    else if (e.key === 'ArrowDown') { e.preventDefault(); pg = Math.min(Math.ceil(stations.length / PS) - 1, pg + 1); draw(); }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); pg = Math.max(0, pg - 1); draw(); }
+    else if (e.key === '-' || e.key === '_') setVol(vol - 5);
+    else if (e.key === '=' || e.key === '+') setVol(vol + 5);
   });
 
-  audio.addEventListener('error', function() {
-    error = 'stream error — try another station';
-    playing = false;
-    stopVU();
-    render();
-  });
+  A.addEventListener('error', function() { err = 'stream error — try another'; on = false; stopVU(); draw(); });
 
+  draw();
   fetchStations('all');
 })();
 </script>
