@@ -7,6 +7,17 @@ permalink: /radio/
 <div id="radio"></div>
 <audio id="aud" preload="none"></audio>
 
+<div id="radio-footer">
+<pre>
+   ╭─────────────────────────────────────────────────────────────╮
+   │                                                             │
+   │     transmitting from addis ababa to everywhere else        │
+   │     ከአዲስ አበባ ወደ ሌላ ሁሉ ቦታ                                │
+   │                                                             │
+   ╰─────────────────────────────────────────────────────────────╯
+</pre>
+</div>
+
 <style>
 #radio {
   max-width: 800px;
@@ -39,6 +50,27 @@ permalink: /radio/
 @keyframes gl { 0%,100%{opacity:0.3} 50%{opacity:0.7} }
 @media (max-width: 740px) { #radio { font-size: 10px; margin: 0.5rem; } }
 @media (max-width: 500px) { #radio { font-size: 8px; } }
+
+#radio-footer {
+  max-width: 800px;
+  margin: 1.5rem auto 2rem;
+  font-family: 'JetBrains Mono', 'Inconsolata', 'Courier New', monospace;
+  font-size: 12px;
+  opacity: 0.4;
+  text-align: center;
+}
+#radio-footer pre {
+  margin: 0;
+  white-space: pre;
+  overflow-x: auto;
+  line-height: 1.4;
+}
+#radio-footer a {
+  color: inherit;
+  text-decoration: underline;
+}
+#radio-footer:hover { opacity: 0.7; }
+@media (max-width: 740px) { #radio-footer { font-size: 9px; } }
 </style>
 
 <script>
@@ -50,11 +82,12 @@ permalink: /radio/
   var W = 76;
   var I = W - 2;
   var stations = [], allStations = [];
-  var cur = -1, on = false, vol = 70;
+  var cur = -1, on = false, connecting = false, vol = 70;
   var loading = true, err = '';
   var genre = 'all', pg = 0, PS = 8;
   var vu = [0,0,0,0,0,0,0,0,0,0];
   var vuT = null, srch = false, sq = '';
+  var playGen = 0;
   var genres = ['all','music','public radio','african music','religious'];
 
   function p(s,n) { s=String(s); while(s.length<n) s+=' '; return s.slice(0,n); }
@@ -134,9 +167,20 @@ permalink: /radio/
 
       if (cur >= 0 && cur < stations.length) {
         var s = stations[cur];
-        var stTxt = on ? 'NOW PLAYING' : 'PAUSED';
-        var stHtml = on ? '<span class="bk">▶</span> ' + stTxt : '■ ' + stTxt;
-        var stHtmlLen = stTxt.length + 2;
+        var stTxt, stHtml, stHtmlLen;
+        if (connecting) {
+          stTxt = 'CONNECTING...';
+          stHtml = '<span class="bk">◉</span> ' + stTxt;
+          stHtmlLen = stTxt.length + 2;
+        } else if (on) {
+          stTxt = 'NOW PLAYING';
+          stHtml = '<span class="bk">▶</span> ' + stTxt;
+          stHtmlLen = stTxt.length + 2;
+        } else {
+          stTxt = 'PAUSED';
+          stHtml = '■ ' + stTxt;
+          stHtmlLen = stTxt.length + 2;
+        }
         o += ln('  ' + stHtml + p('', npW - stHtmlLen), I);
         o += ln('  <span class="h">' + x(p(s.name, npW)) + '</span>', I);
         var meta = s.tags || s.country || '';
@@ -152,9 +196,10 @@ permalink: /radio/
 
       o += sep();
       var vb = Math.round(vol / 5);
+      var playLbl = connecting ? ' WAIT ' : on ? ' STOP ' : ' PLAY ';
       var ctrlHtml = '   ' +
         span('c',' |<< ','prev') + '  ' +
-        span('c', on ? ' STOP ' : ' PLAY ', 'toggle') + '  ' +
+        span('c', playLbl, 'toggle') + '  ' +
         span('c',' >>| ','next') +
         '      ' +
         span('c',' - ','vdn') +
@@ -228,6 +273,7 @@ permalink: /radio/
       o += ln('<span class="d">' + pC(help, I) + '</span>', I);
       o += sep();
       o += ln('<span class="d">' + pC('radio-browser.info  ·  ethiopian radio stations', I) + '</span>', I);
+      o += ln('<span class="d">' + pC('note: some free streams play a short ad before music', I) + '</span>', I);
       o += '╚' + '═'.repeat(I) + '╝\n';
 
       R.innerHTML = o;
@@ -279,38 +325,49 @@ permalink: /radio/
 
   function play(i) {
     if (i < 0 || i >= stations.length) return;
-    // stop current stream cleanly before switching
+    // bump generation - any pending play callbacks from previous station are now stale
+    var gen = ++playGen;
+    // stop current stream fully
     A.pause();
+    try { A.removeAttribute('src'); A.load(); } catch(e) {}
     stopVU();
     cur = i;
     err = '';
     on = false;
+    connecting = true;
+    draw();
+    // assign new source
     A.src = stations[i].url;
     A.volume = vol / 100;
-    A.load();
-    draw();
-    A.play().then(function() {
-      on = true;
-      startVU();
-      draw();
-    }).catch(function(e) {
-      // only show error if we're still on this station
-      if (cur === i) {
-        err = 'playback error - try another station';
-        on = false;
+    // try to play
+    var playPromise = A.play();
+    if (playPromise && playPromise.then) {
+      playPromise.then(function() {
+        if (gen !== playGen) return; // stale
+        connecting = false;
+        on = true;
+        startVU();
         draw();
-      }
-    });
+      }).catch(function(e) {
+        if (gen !== playGen) return; // stale
+        connecting = false;
+        on = false;
+        err = 'playback error - try another station';
+        draw();
+      });
+    }
   }
   function stop() {
+    playGen++;
     A.pause();
-    try { A.src = ''; } catch(e) {}
+    try { A.removeAttribute('src'); A.load(); } catch(e) {}
     on = false;
+    connecting = false;
     stopVU();
     draw();
   }
   function toggle() {
-    if (on) { stop(); }
+    if (on || connecting) { stop(); }
     else if (cur >= 0) { play(cur); }
     else if (stations.length) { play(0); }
   }
@@ -365,19 +422,25 @@ permalink: /radio/
     else if (e.key === '=' || e.key === '+') setVol(vol + 5);
   });
 
-  A.addEventListener('error', function() {
-    err = 'stream error - try another station';
-    on = false;
-    stopVU();
+  A.addEventListener('playing', function() {
+    connecting = false;
+    on = true;
+    err = '';
+    startVU();
     draw();
   });
-  A.addEventListener('stalled', function() {
-    if (on) {
-      err = 'stream stalled - try another station';
-      on = false;
-      stopVU();
-      draw();
-    }
+  A.addEventListener('waiting', function() {
+    if (on) { connecting = true; draw(); }
+  });
+  A.addEventListener('pause', function() {
+    if (on) { on = false; connecting = false; stopVU(); draw(); }
+  });
+  A.addEventListener('error', function() {
+    connecting = false;
+    on = false;
+    err = 'stream error - try another station';
+    stopVU();
+    draw();
   });
 
   draw();
