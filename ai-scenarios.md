@@ -1,5 +1,5 @@
 ---
-layout: page
+layout: password-protected
 title: "AI Scenario Simulator"
 permalink: /ai-scenarios/
 ---

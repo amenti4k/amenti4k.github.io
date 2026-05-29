@@ -1,5 +1,5 @@
 ---
-layout: page
+layout: password-protected
 title: "How AI Wakes Up"
 permalink: /ai-wake-up/
 ---
