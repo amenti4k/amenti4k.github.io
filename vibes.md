@@ -401,6 +401,7 @@ class YouTubeVibes {
     this.videos = [
       { id: 'gfF8jzBVWvM', title: 'vids' },
       { id: '1sd26pWhfmg', title: 'vids' },
+      { id: 'q5dqCeNEIFU', title: 'vids' },
     ];
   }
 
