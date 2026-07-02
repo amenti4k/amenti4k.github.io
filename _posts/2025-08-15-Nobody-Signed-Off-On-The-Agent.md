@@ -1,13 +1,13 @@
 ---
 layout: post
-title: "The Three-Week PO: Context Moves at Machine Speed. Trust Doesn't."
+title: "Nobody Signed Off on the Agent: Context Moves at Machine Speed. Trust Doesn't."
 date: 2025-08-15
 categories: [economics, ai, transformation]
 tags: [ai-orchestration, procurement, trust, decision-rights, didero-ai, ai-rollups]
 excerpt: "Same agent, same two-line PO mismatch. One company resolved it in forty seconds; the other took three weeks, because nobody there had ever decided an agent was allowed to act."
 ---
 
-# The Three-Week PO
+# Nobody Signed Off on the Agent
 
 Last spring I watched the same AI agent resolve the same problem at two different companies. The problem was small: a purchase order and an invoice disagreed by two lines. The agent read both documents, found the discrepancy, pulled the contract terms, drafted the correction, and staged it for commit.
 
