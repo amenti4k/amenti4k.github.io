@@ -7,8 +7,6 @@ tags: [holdcos, permanent-capital, private-equity, serial-acquirers, capital-all
 excerpt: "Private equity ran $240 billion of secondaries last year, and nearly half of it was firms selling companies to themselves. When the best buyer your industry can find is a mirror, the exit was the problem all along."
 ---
 
-# The Exit Is a Mirror
-
 Private equity spent last year doing something strange: selling companies to itself. The secondary market ran [$240 billion of volume in 2025](https://www.jefferies.com/insights/the-big-picture/2025-global-secondary-market-review-another-record-breaking-year/), a record, and $115 billion of it was GP-led: mostly continuation vehicles, where the same firm sits on both sides of the table, moving an asset out of its old fund into a new vehicle it also controls, setting the price, picking the asset, and collecting fresh fees on the way through. Continuation funds were a niche product in 2019. By 2024 they accounted for about one exit in seven, and [2025 set a record with 147 of them](https://www.kroll.com/en/publications/transaction-opinions/secondary-market-evolution-continuation-funds-alternative-traditional-exits).
 
 The industry files this under liquidity management. I read it as a confession. The sharpest sellers in the world looked at their best assets, ran the auction, and found that the highest bidder was the face in the mirror. When your exit is a mirror, the exit was the problem.

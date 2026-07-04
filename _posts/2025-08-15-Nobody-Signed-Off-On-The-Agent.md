@@ -7,8 +7,6 @@ tags: [ai-orchestration, procurement, trust, decision-rights, didero-ai, ai-roll
 excerpt: "Same agent, same two-line PO mismatch. One company resolved it in forty seconds; the other took three weeks, because nobody there had ever decided an agent was allowed to act."
 ---
 
-# Nobody Signed Off on the Agent
-
 Last spring I watched the same AI agent resolve the same problem at two different companies. The problem was small: a purchase order and an invoice disagreed by two lines. The agent read both documents, found the discrepancy, pulled the contract terms, drafted the correction, and staged it for commit.
 
 At the first company, the fix went through in about forty seconds.
