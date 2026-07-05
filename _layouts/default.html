@@ -10,7 +10,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    {% seo %}
+    {% if page.url == "/" %}{% seo title=false %}<title>{{ page.title }}</title>{% else %}{% seo %}{% endif %}
 
     <!-- JSON-LD Structured Data for Person Schema -->
     <script type="application/ld+json">

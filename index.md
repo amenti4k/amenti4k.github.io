@@ -1,8 +1,8 @@
 ---
-title: Amenti Kenea - AI Engineer, Writer, Builder
+title: "amenti kenea | switchboard operator"
 layout: home
 permalink: /
-description: "Amenti Kenea's personal website - writings on AI systems, distributed computing, autonomous agents, and building the future. Founding Engineer at Didero AI."
+description: "amenti kenea | switchboard operator"
 author: Amenti Kenea
 ---
 
