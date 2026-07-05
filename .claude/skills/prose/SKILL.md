@@ -109,3 +109,20 @@ pass generates many changes, the editor is the noise source — stop editing. Ne
 "improve" protected material (the author's scenes, deadpan details, earned closers).
 The goal is prose where something is at stake and every gesture is cashed — a sharp
 human on a good day, not a system at its ceiling.
+
+## Rule 7 — The slow reread (last pass before shipping)
+
+Grep and panels cannot catch reference and honesty bugs. Read every sentence several
+times, slowly, and check three things nothing else checks:
+
+- **Every pronoun and definite article points at something.** "The binder," "it,"
+  "the same man" — trace each to its antecedent in the text, not in the draft history.
+  Ghost referents survive every other pass because every editor already knows what
+  was meant.
+- **Every epistemic verb matches the evidence the essay itself contains.** "Suggests,"
+  "proves," "shows," "will" — if the essay says the answer isn't in yet, the verb is
+  "tests," not "suggests." Claims must not outrun their own falsifiers.
+- **First-read parse = intended parse.** Read each sentence pretending you've never
+  seen it. If it takes two reads to resolve, either fix it or confirm the double-take
+  is doing deliberate work (some are: an "it" that chains across a paragraph break can
+  be a strength). Report false alarms honestly instead of "fixing" them.
