@@ -27,6 +27,23 @@ header_pages:
   - resume.md
   - now.md
 
+# Email gate for articles (_includes/email-gate.html)
+# Visitors request access with their email; you reply with the access code.
+# Rotate the code by replacing access_code_hash with sha256 of a new code:
+#   printf '%s' "new-code" | sha256sum
+gate:
+  enabled: true
+  access_code_hash: "a18c366b51b41e6529ffe643c60870f20cde392fe122b19e8b895ccb64e03ccb"
+  # Free key from https://web3forms.com (enter your email there, key arrives by email).
+  # Delivers access requests straight to your inbox. Until it's set, the gate
+  # falls back to opening the visitor's own mail client addressed to contact_email.
+  web3forms_key: "REPLACE_WITH_WEB3FORMS_KEY"
+  contact_email: amenti4k@gmail.com
+
+# Gate: feed shows excerpts only, not full article text
+feed:
+  excerpt_only: true
+
 # Build settings
 # theme: jekyll-theme-console
 remote_theme: b2a3e8/jekyll-theme-console

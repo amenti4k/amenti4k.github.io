@@ -2,7 +2,9 @@
 layout: default
 ---
 
-<div class="post-page">
+{% include email-gate.html %}
+
+<div class="post-page" {% if site.gate.enabled %}id="gate-content" style="display:none"{% endif %}>
     {% include toc_left.html %}
 
     <article class="post">
