@@ -1,0 +1,130 @@
+{% if site.gate.enabled %}
+<div id="gate" style="max-width:460px;margin:4rem auto;padding:2rem;text-align:center;border:1px solid var(--border-color);border-radius:6px">
+  <div id="gate-step-email">
+    <h2 style="margin-top:0;font-size:1.1rem;font-weight:500;color:var(--text-color)">this article is locked</h2>
+    <p style="color:var(--secondary-text-color);font-size:13px;margin-bottom:1.5rem">enter your email to request access — i'll send you a code</p>
+    <form id="gate-email-form" autocomplete="off">
+      <input type="email" id="gate-email" placeholder="you@example.com" required style="padding:0.5rem;border:1px solid var(--border-color);background:var(--background-color);color:var(--text-color);font-family:inherit;font-size:14px;width:220px">
+      <input type="checkbox" id="gate-botcheck" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
+      <button type="submit" style="padding:0.5rem 1rem;border:1px solid var(--border-color);background:var(--text-color);color:var(--background-color);font-family:inherit;font-size:14px;cursor:pointer;margin-left:0.5rem">→</button>
+    </form>
+    <p id="gate-email-status" style="color:var(--secondary-text-color);font-size:12px;margin-top:1rem;display:none"></p>
+  </div>
+  <div id="gate-step-code" style="display:none">
+    <h2 style="margin-top:0;font-size:1.1rem;font-weight:500;color:var(--text-color)">enter your access code</h2>
+    <p style="color:var(--secondary-text-color);font-size:13px;margin-bottom:1.5rem">request received for <span id="gate-email-echo" style="color:var(--text-color)"></span> — you'll get a code by email once approved</p>
+    <form id="gate-code-form" autocomplete="off">
+      <input type="text" id="gate-code" placeholder="access code" autocomplete="off" style="padding:0.5rem;border:1px solid var(--border-color);background:var(--background-color);color:var(--text-color);font-family:inherit;font-size:14px;width:220px">
+      <button type="submit" style="padding:0.5rem 1rem;border:1px solid var(--border-color);background:var(--text-color);color:var(--background-color);font-family:inherit;font-size:14px;cursor:pointer;margin-left:0.5rem">unlock</button>
+    </form>
+    <p id="gate-code-error" style="color:#ef4444;font-size:12px;margin-top:1rem;display:none">incorrect code</p>
+    <p style="margin-top:1.5rem"><a href="#" id="gate-change-email" style="color:var(--secondary-text-color);font-size:12px">use a different email</a></p>
+  </div>
+  <noscript><p style="color:var(--secondary-text-color);font-size:13px">javascript is required to unlock articles</p></noscript>
+</div>
+
+<script>
+(function() {
+  var HASH = '{{ site.gate.access_code_hash }}';
+  var FORM_KEY = '{{ site.gate.web3forms_key }}';
+  var CONTACT = '{{ site.gate.contact_email }}';
+  var UNLOCK_KEY = 'siteGateUnlocked';
+  var EMAIL_KEY = 'siteGateEmail';
+
+  function store(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+  function read(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function isUnlocked() { return read(UNLOCK_KEY) === HASH; }
+  function show(id, on) { var el = document.getElementById(id); if (el) el.style.display = on ? '' : 'none'; }
+
+  async function sha256(text) {
+    var buf = new TextEncoder().encode(text);
+    var hash = await crypto.subtle.digest('SHA-256', buf);
+    return Array.from(new Uint8Array(hash)).map(function(b) {
+      return b.toString(16).padStart(2, '0');
+    }).join('');
+  }
+
+  function render() {
+    if (isUnlocked()) {
+      show('gate', false);
+      show('gate-content', true);
+      return;
+    }
+    var email = read(EMAIL_KEY);
+    if (email) {
+      document.getElementById('gate-email-echo').textContent = email;
+      show('gate-step-email', false);
+      show('gate-step-code', true);
+    } else {
+      show('gate-step-email', true);
+      show('gate-step-code', false);
+    }
+  }
+
+  function mailtoFallback(email) {
+    var subject = encodeURIComponent('access request: ' + email);
+    var body = encodeURIComponent('requesting an access code for ' + location.hostname + '\nemail: ' + email + '\npage: ' + location.href);
+    window.location.href = 'mailto:' + CONTACT + '?subject=' + subject + '&body=' + body;
+  }
+
+  function sendRequest(email) {
+    if (!FORM_KEY || FORM_KEY === 'REPLACE_WITH_WEB3FORMS_KEY') {
+      mailtoFallback(email);
+      return Promise.resolve();
+    }
+    return fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({
+        access_key: FORM_KEY,
+        email: email,
+        subject: 'access request: ' + email,
+        message: 'access request from ' + email + '\npage: ' + location.href,
+        botcheck: document.getElementById('gate-botcheck').checked
+      })
+    }).then(function(res) {
+      if (!res.ok) throw new Error('send failed');
+    }).catch(function() {
+      mailtoFallback(email);
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    render();
+
+    document.getElementById('gate-email-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      var email = document.getElementById('gate-email').value.trim();
+      if (!email) return;
+      var status = document.getElementById('gate-email-status');
+      status.textContent = 'sending…';
+      status.style.display = 'block';
+      sendRequest(email).then(function() {
+        store(EMAIL_KEY, email);
+        render();
+      });
+    });
+
+    document.getElementById('gate-code-form').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      var input = document.getElementById('gate-code');
+      var hash = await sha256(input.value.trim());
+      if (hash === HASH) {
+        store(UNLOCK_KEY, hash);
+        render();
+      } else {
+        show('gate-code-error', true);
+        input.value = '';
+        input.focus();
+      }
+    });
+
+    document.getElementById('gate-change-email').addEventListener('click', function(e) {
+      e.preventDefault();
+      try { localStorage.removeItem(EMAIL_KEY); } catch (err) {}
+      render();
+    });
+  });
+})();
+</script>
+{% endif %}
