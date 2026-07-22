@@ -9,9 +9,7 @@ author: Amenti Kenea
 # Amenti Kenea
 
 ----
-Currently sitting between engineering and our GTM team to build <span class="highlight-text">large enterprise deployments for [Decagon AI](https://decagon.ai)</span>.
-Previously a founding engineer at <span class="highlight-text">[Didero AI](https://didero.ai)</span>, where we built systems to process tons of POs daily through AI agents that somehow handle procurement chaos better than humans.
-In 2022-2024 I was learning how big tech actually works as a <span class="highlight-text">data scientist on the Core Ads team at Meta</span>.
+currently: <span class="highlight-text">[percepta.ai](https://percepta.ai)</span>, prev: decagon ai, didero.ai, meta
 
 ----
 
