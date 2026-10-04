@@ -2,6 +2,16 @@
 layout: default
 ---
 
+{% if site.writing_enabled == false %}
+<section style="max-width:680px;padding:2.5rem 0 4rem">
+  <h1 style="font-size:1.8rem;margin:0 0 1rem">Amenti Kenea</h1>
+  <p style="font-size:1.1rem;line-height:1.7">Building AI systems. Based in NYC, originally from Addis Ababa.</p>
+  <p style="line-height:1.7">Currently at <a href="https://percepta.ai">Percepta</a>. Previously Decagon, Didero, and Meta.</p>
+  <p style="margin-top:2rem;color:var(--secondary-text-color)">I'm reworking my essays. Writing will return here soon.</p>
+  <p style="line-height:1.8"><a href="{{ '/about/' | relative_url }}">About me</a> &middot; <a href="{{ '/research/' | relative_url }}">Projects</a> &middot; <a href="mailto:amenti4k@gmail.com">Get in touch</a></p>
+</section>
+{% else %}
+
 <div class="home-content">
   {% if site.gate.enabled %}
   <div id="gate-banner" style="margin-bottom:1rem;padding:0.5rem 0.75rem;border:1px solid var(--border-color);border-radius:4px;font-size:12px;color:var(--secondary-text-color)">
@@ -64,3 +74,5 @@ document.querySelectorAll('.tag-btn').forEach(button => {
   });
 });
 </script>
+
+{% endif %}

@@ -92,3 +92,9 @@ kramdown:
 #   - vendor/cache/
 #   - vendor/gems/
 #   - vendor/ruby/
+
+# Temporarily remove the blog from generated pages, feeds, and the sitemap.
+# Sources stay in git; remove _posts from exclude and set writing_enabled to true to restore.
+writing_enabled: false
+exclude:
+  - _posts
